@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2023-09-30T18:34:07.330Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.0.0 Safari/537.36" etag="XRMZDKGBl-xJRMUbWJ3J" version="22.0.0" type="device">
+<mxfile host="app.diagrams.net" modified="2023-09-30T18:50:36.069Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.0.0 Safari/537.36" etag="uKkKVxcbagZ8ZjPHLWEw" version="22.0.0" type="device">
   <diagram name="Seite-1" id="5qrD_rZEPfoOGHy2Bp49">
-    <mxGraphModel dx="1595" dy="838" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="11750" pageHeight="1989" math="0" shadow="0">
+    <mxGraphModel dx="3771" dy="1980" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="11750" pageHeight="1989" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -46,7 +46,7 @@
         <mxCell id="aqF09K9uqTcHMtoUNb3W-48" value="API" style="rounded=0;whiteSpace=wrap;html=1;" parent="bFwfax9SEUYBs_7XjRhE-26" vertex="1">
           <mxGeometry x="910.14" y="120" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="R3ZnWNxD2FqQg4-nSXbg-8" value="Fetch Refresh/AccessToken, Fetch user account" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="bFwfax9SEUYBs_7XjRhE-26" source="R3ZnWNxD2FqQg4-nSXbg-7" target="bFwfax9SEUYBs_7XjRhE-20">
+        <mxCell id="R3ZnWNxD2FqQg4-nSXbg-8" value="Fetch Refresh/AccessToken, Fetch user account" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;endArrow=block;endFill=0;dashed=1;dashPattern=1 1;" edge="1" parent="bFwfax9SEUYBs_7XjRhE-26" source="R3ZnWNxD2FqQg4-nSXbg-7" target="bFwfax9SEUYBs_7XjRhE-20">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="R3ZnWNxD2FqQg4-nSXbg-35" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;endArrow=none;endFill=0;" edge="1" parent="bFwfax9SEUYBs_7XjRhE-26" source="R3ZnWNxD2FqQg4-nSXbg-7" target="R3ZnWNxD2FqQg4-nSXbg-34">
