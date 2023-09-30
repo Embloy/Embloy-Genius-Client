@@ -39,8 +39,8 @@ const Logo = () => {
                 <Image
                     src="/img/logo_on_dark.png"
                     alt="Logo"
-                    width={width < 1024 ? "100" : "150"}
-                    height={width < 1024 ? "45" : "74"}
+                    height="20"
+                    width="100"
                     className="relative"
                 />
             </Link>

@@ -15,7 +15,12 @@
     "axios": "latest",
     "cookies-next": "latest",
     "tailwindcss": "latest",
-    "daisyui": "latest"
+    "tailwind-merge": "latest",
+    "daisyui": "latest",
+    "clsx": "latest",
+    "@radix-ui/react-alert-dialog": "latest",
+    "@radix-ui/react-icons": "latest"
+
   },
   "devDependencies": {
     "autoprefixer": "latest",

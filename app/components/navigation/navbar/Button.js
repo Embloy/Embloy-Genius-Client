@@ -1,6 +1,6 @@
 const Button = () => {
     return (
-        <button className="h-12 rounded-lg bg-white font-bold px-5">Sign In</button>
+        <button className="px-4 h-10 rounded-full font-normal border-[1px] border-gray-700 text-gray-400">Sign In</button>
     );
 };
 
