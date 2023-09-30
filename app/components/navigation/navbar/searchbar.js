@@ -1,21 +1,22 @@
 "use client";
 import React from "react";
-import { useRouter } from "next/navigation"
-import { cn } from "@/lib/utils"
-import {
-    CircleIcon,
-    FileIcon,
-    LaptopIcon,
-    MoonIcon,
-    SunIcon,
-} from "@radix-ui/react-icons"
-import { DialogProps } from "@radix-ui/react-alert-dialog"
 
+export function SearchBar(props) {
+    const handleKeyPress = (event) => {
+        if(event.key === 'Enter'){
+            console.log('enter press here! ')
+        }
+    }
 
-export function SearchBar(){
     return (
-        <>
 
-        </>
+        <input
+            className="bg-black text-gray-400 border-[1px] border-gray-700 rounded-full h-10 w-52 px-4"
+            type="text"
+            name="name"
+            placeholder="Search"
+            onKeyDown={handleKeyPress}
+        />
+
     )
 }
