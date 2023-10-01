@@ -1,7 +1,15 @@
 import React from "react";
 
-const Calendar = () => {
-    return <div>Calendar</div>;
-};
-
-export default Calendar;
+export default function Calendar() {
+    return (
+        <>
+            <div>
+                <p>This is a content to make our page longer</p>
+                <div className="w-full h-screen"></div>
+                <p>
+                    Lorem Ipsum is simply dummy text ...
+                </p>
+            </div>
+        </>
+    );
+}

@@ -17,7 +17,10 @@
     "tailwindcss": "latest",
     "tailwind-merge": "latest",
     "daisyui": "latest",
-    "clsx": "latest"
+    "clsx": "latest",
+    "@fullcalendar/core": "latest",
+    "@fullcalendar/daygrid": "latest",
+    "@fullcalendar/react": "latest"
   },
   "devDependencies": {
     "autoprefixer": "latest",
