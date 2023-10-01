@@ -1,16 +1,16 @@
-import Image from 'next/image';
 import React from "react";
+import Image from "next/image";
 
 //TODO: notifications system
 export function Notifications(props) {
     return (
-        <button>
+        <button className="h-full ">
             <Image
-                priority
                 src="/icons/bell.svg"
-                height={32}
-                width={32}
-                alt="Notifications"
+                alt="Logo"
+                height="21"
+                width="21"
+                className="relative"
             />
         </button>
     )
