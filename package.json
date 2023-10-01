@@ -20,7 +20,11 @@
     "clsx": "latest",
     "@fullcalendar/core": "latest",
     "@fullcalendar/daygrid": "latest",
-    "@fullcalendar/react": "latest"
+    "@fullcalendar/react": "latest",
+    "@fullcalendar/interaction": "latest",
+    "@fullcalendar/timegrid": "latest",
+    "@headlessui/react": "latest",
+    "@heroicons/react": "latest"
   },
   "devDependencies": {
     "autoprefixer": "latest",
