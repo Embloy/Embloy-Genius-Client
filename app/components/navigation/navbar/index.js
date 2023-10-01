@@ -4,7 +4,8 @@ import Logo from "./Logo";
 import Button from "./Button";
 import {cn} from "@/lib/utils";
 import { usePathname } from "next/navigation";
-import {SearchBar} from "@/app/components/navigation/navbar/searchbar";
+import {SearchBar} from "@/app/components/navigation/navbar/SearchBar";
+import {Notifications} from "@/app/components/navigation/navbar/Notifications";
 
 const Navbar = () => {
     const pathname = usePathname()
@@ -35,6 +36,7 @@ const Navbar = () => {
                     </div>
                     <div className="flex horizontal end-0 items-center h-full gap-x-6">
                         <SearchBar />
+                        <Notifications />
                         <Button />
                     </div>
                 </div>

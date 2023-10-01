@@ -17,14 +17,7 @@
     "tailwindcss": "latest",
     "tailwind-merge": "latest",
     "daisyui": "latest",
-    "clsx": "latest",
-    "@radix-ui/react-alert-dialog": "latest",
-    "@radix-ui/react-icons": "latest",
-    "@radix-ui/react-slot": "latest",
-    "@radix-ui/react-dialog": "latest",
-    "class-variance-authority": "latest",
-    "cmdk": "latest"
-
+    "clsx": "latest"
   },
   "devDependencies": {
     "autoprefixer": "latest",
