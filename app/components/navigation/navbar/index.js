@@ -11,8 +11,8 @@ const Navbar = () => {
     const pathname = usePathname()
     return (
         <>
-            <div className="bg-black w-full h-14 sticky top-0 border-b-[1px] border-gray-700 flex flex-row items-center justify-center">
-                <div className="container h-full w-7/12 flex flex-row items-center justify-between">
+            <div className="z-20 bg-black w-full h-14 sticky top-0 border-b-[1px] border-gray-700 flex flex-row items-center justify-center">
+                <div className="container h-full max-w-7/12 flex flex-row items-center justify-between">
                     <div className="flex horizontal start-0 items-center h-full gap-x-6">
                         <Logo />
                         <div className=" h-3/5 w-[1px] rounded-full bg-gray-700" />

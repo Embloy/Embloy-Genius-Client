@@ -15,7 +15,7 @@ export default function RootLayout({children}) {
             <body className={lexend.className}>
                 <div className="bg-black flex flex-col items-center justify-center" >
                     <Navigation />
-                    <div className="flex flex-col items-center justify-center w-7/12">
+                    <div className="flex flex-col items-center justify-center max-w-7/12">
                         {children}
                     </div>
                 </div>
