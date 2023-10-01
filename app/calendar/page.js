@@ -10,6 +10,16 @@ import {EventSourceInput} from '@fullcalendar/core/index.js'
 
 
 export default function Calendar() {
+    const currentDate = new Date();
+    const currentYear = currentDate.getFullYear();
+    const currentMonth = String(currentDate.getMonth() + 1).padStart(2, '0'); // Month is 0-based
+    const currentDay = String(currentDate.getDate()).padStart(2, '0');
+    const currentHour = String(currentDate.getHours()).padStart(2, '0');
+    const currentMinute = String(currentDate.getMinutes()).padStart(2, '0');
+    const formattedCurrentDate = `${currentYear}-${currentMonth}-${currentDay}T${currentHour}:${currentMinute}`;
+
+
+
     const [events, setEvents] = useState([
         {title: 'event 1', id: '1', start: '2023-08-29 06:16:28', end: '2023-08-29 16:00:00'},
         {title: 'event 2', id: '2', start: '2023-08-30 06:16:28', end: '2023-08-30 16:00:00'},
@@ -34,7 +44,6 @@ export default function Calendar() {
         title: '',
         start: '',
         end: '',
-        allDay: false,
         id: 0,
     })
 
@@ -57,7 +66,29 @@ export default function Calendar() {
     }, [])
 
     function handleDateClick(arg) {
-        setNewEvent({...newEvent, start: arg.start, allDay: arg.allDay, id: new Date().getTime()})
+        const clickDate = arg.dateStr
+        const formattedClickDate = `${clickDate}T${currentHour}:${currentMinute}`;
+        const clickDateObject = new Date(formattedClickDate);
+
+// Calculate two hours after the click date
+        const twoHoursAfterClickDate = new Date(clickDateObject);
+        twoHoursAfterClickDate.setHours(clickDateObject.getHours() + 2);
+
+// Check if we've crossed midnight
+        if (twoHoursAfterClickDate.getDate() !== clickDateObject.getDate()) {
+            // Adjust the date to the next day
+            twoHoursAfterClickDate.setDate(clickDateObject.getDate() + 1);
+        }
+
+// Format the result into the desired string format
+        const currentYear2 = twoHoursAfterClickDate.getFullYear();
+        const currentMonth2 = String(twoHoursAfterClickDate.getMonth() + 1).padStart(2, '0');
+        const currentDay2 = String(twoHoursAfterClickDate.getDate()).padStart(2, '0');
+        const currentHour2 = String(twoHoursAfterClickDate.getHours()).padStart(2, '0');
+        const currentMinute2 = String(twoHoursAfterClickDate.getMinutes()).padStart(2, '0');
+        const formattedTwoHoursAfterClickDate = `${currentYear2}-${currentMonth2}-${currentDay2}T${currentHour2}:${currentMinute2}`;
+
+        setNewEvent({...newEvent, start: formattedClickDate, end:formattedTwoHoursAfterClickDate,  id: new Date().getTime()})
         setShowModal(true)
     }
 
@@ -66,7 +97,6 @@ export default function Calendar() {
             ...newEvent,
             start: data.date.toISOString(),
             title: data.draggedEl.innerText,
-            allDay: false,
             id: new Date().getTime()
         }
         setAllEvents([...allEvents, event])
@@ -88,30 +118,10 @@ export default function Calendar() {
         setNewEvent({
             title: '',
             start: '',
-            allDay: false,
             id: 0
         })
         setShowDeleteModal(false)
         setIdToDelete(null)
-    }
-
-    const handleTitleChange = (e) => {
-        console.log("before: ", newEvent);
-        setNewEvent({
-            ...newEvent,
-            title: e.target.value,
-        })
-        console.log("after: ", newEvent);
-        console.log("|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|");
-    }
-
-    const handleStartChange = (e) => {
-
-        setNewEvent({
-            ...newEvent,
-            start: e.target.value,
-        })
-
     }
 
     const handleChange = (e) => {
@@ -127,13 +137,12 @@ export default function Calendar() {
 
     function handleSubmit(e) {
         e.preventDefault()
-        console.log(e)
+        console.log("neues event ",newEvent)
         setAllEvents([...allEvents, newEvent])
         setShowModal(false) // schließt dialog fenster
         setNewEvent({
             title: '',
             start: '',
-            allDay: false,
             id: 0
         })
     }
@@ -296,7 +305,12 @@ export default function Calendar() {
                                                     <div className="mt-2">
                                                         <input type="datetime-local" name="start"
                                                                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-violet-600 sm:text-sm sm:leading-6"
-                                                               value={newEvent.start} onChange={(e) => handleChange(e)} placeholder="Start"/>
+                                                               value={newEvent.start} onChange={(e) => handleChange(e)}/>
+                                                    </div>
+                                                    <div className="mt-2">
+                                                        <input type="datetime-local" name="end"
+                                                               className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-violet-600 sm:text-sm sm:leading-6"
+                                                               value={newEvent.end} onChange={(e) => handleChange(e)}/>
                                                     </div>
                                                     <div
                                                         className="mt-5 sm:mt-6 sm:grid sm:grid-flow-row-dense sm:grid-cols-2 sm:gap-3">
