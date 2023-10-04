@@ -24,7 +24,8 @@
     "@fullcalendar/interaction": "latest",
     "@fullcalendar/timegrid": "latest",
     "@headlessui/react": "latest",
-    "@heroicons/react": "latest"
+    "@heroicons/react": "latest",
+    "swr": "latest"
   },
   "devDependencies": {
     "autoprefixer": "latest",
