@@ -214,7 +214,7 @@ export default function Calendar() {
     }, [])
 
 
-    const {data, error} = useSWR('http://192.168.178.126:8000/api/v0/assignment/?user_id=77', fetcher)
+    const {data, error} = useSWR('http://192.168.1.28:8000/api/v0/assignment/?user_id=77', fetcher)
 
 
     const bin = () => {
