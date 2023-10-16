@@ -21,7 +21,7 @@ const Signin = () => {
                         <div className="flex flex-row items-center justify-between">
                             <button
                                 type="button"
-                                className="mt-3 inline-flex mx-2 justify-center py-2 text-sm font-semibold text-gray-400 hover:text-gray-200"
+                                className="mt-3 inline-flex mx-2 justify-center py-2 text-sm font-semibold text-gray-400 hover:text-white"
                             >
                                 Create account
                             </button>
