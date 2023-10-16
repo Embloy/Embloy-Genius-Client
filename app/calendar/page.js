@@ -41,14 +41,14 @@ export default function Calendar() {
         title: '',
         start: '',
         end: '',
-        id: 0,
+        id: '',
     })
     const [showEventModal, setShowEventModal] = useState(false)
     const [showEvent, setShowEvent] = useState({
         title: '',
         start: '',
         end: '',
-        id: 0,
+        id: '',
     })
 
 
@@ -111,8 +111,9 @@ export default function Calendar() {
 
     function handleEventModal(data) {
         const bin = data.event
+        console.log(data)
         setShowEvent({
-            id: Number(bin.id),
+            id: bin.id,
             title: bin.title,
             start: formatDateTime(bin.start),
             end: formatDateTime(bin.end)
@@ -135,7 +136,7 @@ export default function Calendar() {
         setNewEvent({
             title: '',
             start: '',
-            id: 0
+            id: ''
         })
         setShowDeleteModal(false)
         setIdToDelete(null)
@@ -144,7 +145,7 @@ export default function Calendar() {
             title: '',
             start: '',
             end: '',
-            id: 0,
+            id: '',
         })
     }
 
@@ -177,22 +178,11 @@ export default function Calendar() {
         setNewEvent({
             title: '',
             start: '',
-            id: 0
+            id: ''
         })
     }
 
-    function handleEdit(e) {
-        e.preventDefault()
-        //logic
-        setShowEventModal(false)
 
-        setShowEvent({
-            title: '',
-            start: '',
-            end: '',
-            id: 0,
-        })
-    }
 
     useEffect(() => {
 
@@ -214,33 +204,135 @@ export default function Calendar() {
     }, [])
 
 
-    const {data, error} = useSWR('http://192.168.1.28:8000/api/v0/assignment/?user_id=77', fetcher)
 
 
-    const bin = () => {
+    const {data, error} = useSWR('http://192.168.178.126:8000/api/v0/assignment/?user_id=77', fetcher)
+
+    const bin = (data) => {
         let assignments = [];
         for (const key in data) {
+            let id = `j${data[key].job_id}u${data[key].user_id}`;
             assignments.push({
                 title: `assignment ${key}`,
-                id: data[key].job_id,
+                id: id,
                 start: data[key].start,
                 end: data[key].end,
             });
         }
-        return assignments;
-    };
+        //console.log("ASSIGNMNENTS", assignments)
+        setAllEvents(assignments)
 
 
-    useEffect(() => {
-        const initialAssignments = bin();
-        setAllEvents(initialAssignments);
-    }, []);
-
-    if (!data) {
-        return <LoadingScreen/>;
     }
 
-    // account for initial problems
+    useEffect(() => {
+        // Only call bin when data changes
+        if (data) {
+            bin(data);
+        }
+    }, [data]);
+
+
+    function handleEdit(e) {
+        e.preventDefault()
+        let event = showEvent;
+
+        let updated_event = {};
+        const regex = /j(\d+)u(\d+)/;
+        const id_match = event.id.match(regex);
+
+        updated_event["job_id"] = id_match[1];
+        updated_event["user_id"] = id_match[2];
+
+
+        for (const key in event) {
+            updated_event[key] = event[key];
+        }
+
+        delete updated_event.id
+        delete updated_event.title //TODO:REMOVE
+
+
+        //TODO: add logic => find current event by id and look whetere smth was changed
+
+        fetch('http://192.168.178.126:8000/api/v0/assignment/', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({job_assignment: updated_event}),
+        })
+            .then((response) => {
+                if (response.status === 200) {
+                    // Handle a successful response with status code 200
+                    fetchUpdatedEventData();
+                    return response.json();
+                } else if (response.status === 400) {
+                    // Handle a Bad Request response with status code 400
+                    throw new Error('Bad Request');
+                } else if (response.status === 404) {
+                    // Handle a Not Found response with status code 404
+                    throw new Error('Not Found');
+                } else {
+                    // Handle other status codes here
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+            })
+            .then((data) => {
+                // Handle the successful response data here
+                console.log('Success:', data);
+            })
+            .catch((error) => {
+                // Handle specific errors and other errors here
+                if (error.message === 'Bad Request') {
+                    console.error('Bad Request');
+                } else if (error.message === 'Not Found') {
+                    console.error('Not Found');
+                } else {
+                    console.error('Error:', error);
+                }
+            });
+
+
+        setShowEventModal(false)
+
+        setShowEvent({
+            title: '',
+            start: '',
+            end: '',
+            id: '',
+        })
+    }
+
+
+
+    function fetchUpdatedEventData() {
+        // Make a GET request to fetch the updated event data
+        fetch('http://192.168.178.126:8000/api/v0/assignment/?user_id=77', fetcher)
+            .then((response) => response.json())
+            .then((data) => {
+                // Update 'allEvents' with the updated data
+                bin(data);
+            })
+            .catch((error) => {
+                console.error('Error fetching updated data:', error);
+            });
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+    if (!data || allEvents == undefined) {
+        return <LoadingScreen/>;
+    }
     if (allEvents.length === 0) {
         let counter = 0;
         while (allEvents.length === 0 && counter < 5) {
@@ -252,6 +344,7 @@ export default function Calendar() {
             return <LoadingScreen/>;
         }
     }
+
 
 
     return (
