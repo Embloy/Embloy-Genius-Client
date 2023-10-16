@@ -16,7 +16,7 @@ const Navbar = () => {
                     <div className="flex horizontal start-0 items-center h-full gap-x-6">
                         <Logo />
                         <div className=" h-3/5 w-[1px] rounded-full bg-gray-700" />
-                        <ul className="hidden md:flex gap-x-6 font-normal text-sm">
+                        <ul className="hidden md:flex gap-x-6 font-normal">
                             <li className={cn(
                                 pathname === "/" ? "text-white" : "text-gray-400 hover:text-gray-200"
                             )}>

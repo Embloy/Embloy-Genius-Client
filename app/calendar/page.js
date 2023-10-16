@@ -11,6 +11,7 @@ import useSWR from 'swr'
 import Image from "next/image";
 import Logo from "@/app/components/navigation/navbar/Logo";
 import LoadingScreen from "@/app/components/misc/LoadingScreen";
+import ErrorScreen from "@/app/components/misc/ErrorScreen";
 
 const fetcher = (args) => fetch(args).then((res) => res.json())
 export default function Calendar() {
@@ -250,10 +251,7 @@ export default function Calendar() {
         }
 
         delete updated_event.id
-        delete updated_event.title //TODO:REMOVE
-
-
-        //TODO: add logic => find current event by id and look whetere smth was changed
+        delete updated_event.title
 
         fetch('http://192.168.178.126:8000/api/v0/assignment/', {
             method: 'PUT',
@@ -325,14 +323,13 @@ export default function Calendar() {
 
 
 
-
-
-
-
-
     if (!data || allEvents == undefined) {
         return <LoadingScreen/>;
+    } else if (error) {
+        return <ErrorScreen/>;
     }
+
+
     if (allEvents.length === 0) {
         let counter = 0;
         while (allEvents.length === 0 && counter < 5) {
