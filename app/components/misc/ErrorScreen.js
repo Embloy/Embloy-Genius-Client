@@ -1,6 +1,4 @@
-"use client";
-import Image from "next/image";
-
+"use client"
 const ErrorScreen = () => {
     return (
         <div className="fixed inset-0 flex flex-col justify-center items-center z-50 bg-black overflow-hidden">
