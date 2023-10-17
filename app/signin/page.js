@@ -33,8 +33,22 @@ const Signin = () => {
                             </button>
                         </div>
                     </form>
-                    <></>
+
                 </div>
+            </div>
+            <div className="flex flex-row text-xs items-center justify-center">
+                <button
+                    type="button"
+                    className="mt-3 inline-flex mx-2 justify-center py-2 text-gray-700 hover:text-gray-400"
+                >
+                    Help
+                </button>
+                <button
+                    type="button"
+                    className="mt-3 inline-flex mx-2 justify-center py-2 text-gray-700 hover:text-gray-400"
+                >
+                    Privacy & Terms
+                </button>
             </div>
 
 
