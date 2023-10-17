@@ -1,6 +1,35 @@
-import React from "react";
+"use client"
+import React, {useState} from "react";
 import Image from "next/image";
+import {useRouter} from "next/navigation";
 const Signin = () => {
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+    const router = useRouter();
+    const handleLogin = async (e) => {
+        e.preventDefault(); // Prevent default form submission
+
+        try {
+            const response = await fetch("/api/login", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    username,
+                    password,
+                }),
+            });
+
+            if (!response.ok) throw new Error("Login failed");
+
+            const { token } = await response.json();
+            document.cookie = `token=${token}; path=/`;
+            router.push("/protected");
+        } catch (error) {
+            console.error(error);
+        }
+    };
     return (
         <div className="fixed inset-0 flex flex-col justify-center items-center z-50 bg-black overflow-hidden">
             <div className="border-[1px] border-gray-700 rounded-lg flex flex-col items-center justify-center px-10 py-8">
@@ -14,7 +43,7 @@ const Signin = () => {
                 <h1 className="mb-4 text-white text-2xl">Sign in</h1>
                 <p className="mb-8 text-white text-md">Use your Embloy Account</p>
                 <div className="flex flex-col items-center justify-center">
-                    <form action="submit">
+                    <form onSubmit={handleLogin}>
                         <input className="mb-2 px-5 bg-black hover:bg-gray-800 text-gray-400 border-[1px] border-gray-700 rounded-full h-14 w-96 rounded-lg" minLength="3" name="username" id="username" type="text" placeholder='Email' required></input><br/>
                         <input className="mb-2 px-5 bg-black hover:bg-gray-800 text-gray-400 border-[1px] border-gray-700 rounded-full h-14 w-96 rounded-lg " minLength="5" name="password" id="password" type="password" placeholder='Password' required></input><br/>
                         <div className="h-16"></div>
@@ -26,7 +55,7 @@ const Signin = () => {
                                 Create account
                             </button>
                             <button
-                                type="button"
+                                type="submit"
                                 className="mt-3 inline-flex w-20 h-10 rounded-lg border-[2px] border-black items-center justify-center rounded-full text-sm font-semibold bg-gradient-to-r from-embloy-green to-embloy-blue text-green-950 hover:text-white hover:border-[2px] hover:border-white"
                             >
                                 Next
