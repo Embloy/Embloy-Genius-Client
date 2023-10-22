@@ -7,7 +7,7 @@ import {cn} from "@/lib/utils";
 import {usePathname, useRouter} from "next/navigation";
 import {SearchBar} from "@/app/components/navigation/navbar/SearchBar";
 import {Notifications} from "@/app/components/navigation/navbar/Notifications";
-import {UserContext} from "@/app/components/misc/AuthWrapper";
+import {UserContext} from "@/app/components/misc/UserContext";
 
 const Navbar = () => {
     const pathname = usePathname()
@@ -45,7 +45,7 @@ const Navbar = () => {
                         {user && user.image_url ? (
                             <Button imageSrc={user.image_url} />
                         ) : (
-                            <Button /> // You can pass a default image or no image as needed
+                            <Button />
                         )}
                     </div>
                 </div>

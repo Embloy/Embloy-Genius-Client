@@ -25,9 +25,7 @@ const Signin = () => {
                     request_access(getCookie("refresh", {path: "/"}))
                         .then((token) => {
                             setCookie("access", token, {path: "/"})
-                            console.log('Access Token:', token);
                             router.replace("/");
-                            // Here you can proceed to use the access token for your API requests.
                         })
                         .catch((error) => {
                             setLoginError(true);

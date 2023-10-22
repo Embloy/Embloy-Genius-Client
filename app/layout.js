@@ -2,6 +2,7 @@ import './globals.css'
 import {Lexend} from 'next/font/google'
 import Navigation from "@/app/components/navigation";
 import AuthWrapper from "@/app/components/misc/AuthWrapper";
+import UserWrapper from "@/app/components/misc/UserContext";
 
 const lexend = Lexend({subsets: ['latin']})
 
@@ -16,10 +17,12 @@ export default function RootLayout({children}) {
         <body className={lexend.className}>
         <div className="bg-black flex flex-col items-center justify-center">
             <AuthWrapper>
-                <Navigation/>
-                <div className="flex flex-col items-center justify-center max-w-7/12">
-                    {children}
-                </div>
+                <UserWrapper>
+                    <Navigation/>
+                    <div className="flex flex-col items-center justify-center max-w-7/12">
+                        {children}
+                    </div>
+                </UserWrapper>
             </AuthWrapper>
         </div>
         </body>
