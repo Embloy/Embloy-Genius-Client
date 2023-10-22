@@ -1,38 +1,72 @@
-"use client"
+"use client";
 import React, {useState} from "react";
 import Image from "next/image";
 import {useRouter} from "next/navigation";
+import {request_refresh, request_access} from "@/lib/authentication";
+import {getCookie, getCookies, setCookie} from "cookies-next";
+import ErrorScreen from "@/app/components/misc/ErrorScreen";
+
 const Signin = () => {
+    const router = useRouter();
+    const [loginError, setLoginError] = useState(false);
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    const router = useRouter();
+
+
+    async function signin(username, password) {
+        try {
+            if (username === "" || password === "") {
+                throw new Error("No username / pw provided");
+            }
+
+            request_refresh(username, password)
+                .then((token) => {
+                    setCookie("refresh", token, {path: "/"})
+                    request_access(getCookie("refresh", {path: "/"}))
+                        .then((token) => {
+                            setCookie("access", token, {path: "/"})
+                            console.log('Access Token:', token);
+                            router.replace("/");
+                            // Here you can proceed to use the access token for your API requests.
+                        })
+                        .catch((error) => {
+                            setLoginError(true);
+                            setUsername("");
+                            setPassword("");
+                            throw new Error("Login failed" + " : " + error);
+                        });
+
+
+                })
+                .catch(() => {
+                    setLoginError(true);
+                    setUsername("");
+                    setPassword("");
+                });
+
+
+        } catch (error) {
+            console.log("Login failed: " + error);
+
+        }
+    }
+
     const handleLogin = async (e) => {
         e.preventDefault(); // Prevent default form submission
-
         try {
-            const response = await fetch("/api/login", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    username,
-                    password,
-                }),
-            });
+            await signin(username, password);
+            setLoginError(false);
 
-            if (!response.ok) throw new Error("Login failed");
-
-            const { token } = await response.json();
-            document.cookie = `token=${token}; path=/`;
-            router.push("/protected");
         } catch (error) {
             console.error(error);
         }
     };
+
+
     return (
-        <div className="fixed inset-0 flex flex-col justify-center items-center z-50 bg-black overflow-hidden">
-            <div className="border-[1px] border-gray-700 rounded-lg flex flex-col items-center justify-center px-10 py-8">
+        <div className={`fixed inset-0 flex flex-col justify-center items-center z-50 bg-black overflow-hidden`}>
+            <div
+                className="border-[1px] border-gray-700 rounded-lg flex flex-col items-center justify-center px-10 py-8">
                 <Image
                     src="/img/logo_on_dark.png"
                     alt="Logo"
@@ -44,8 +78,62 @@ const Signin = () => {
                 <p className="mb-8 text-white text-md">Use your Embloy Account</p>
                 <div className="flex flex-col items-center justify-center">
                     <form onSubmit={handleLogin}>
-                        <input className="mb-2 px-5 bg-black hover:bg-gray-800 text-gray-400 border-[1px] border-gray-700 rounded-full h-14 w-96 rounded-lg" minLength="3" name="username" id="username" type="text" placeholder='Email' required></input><br/>
-                        <input className="mb-2 px-5 bg-black hover:bg-gray-800 text-gray-400 border-[1px] border-gray-700 rounded-full h-14 w-96 rounded-lg " minLength="5" name="password" id="password" type="password" placeholder='Password' required></input><br/>
+                        {loginError ? (
+                            <>
+                                <input
+                                    className="mb-2 px-5 bg-black hover:bg-gray-800 text-gray-400 border-[1px] border-red-500 rounded-full h-14 w-96 rounded-lg"
+                                    minLength="3"
+                                    name="username"
+                                    id="username"
+                                    type="text"
+                                    placeholder="Email"
+                                    required
+                                    value={username}
+                                    onChange={(e) => setUsername(e.target.value)}
+                                />
+                                <br />
+                                <input
+                                    className="mb-2 px-5 bg-black hover-bg-gray-800 text-gray-400 border-[1px] border-red-500 rounded-full h-14 w-96 rounded-lg"
+                                    minLength="5"
+                                    name="password"
+                                    id="password"
+                                    type="password"
+                                    placeholder="Password"
+                                    required
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                />
+                                <br />
+                                <p className="text-sm text-red-500">Login failed.</p>
+                            </>
+                        ) : (
+                            <>
+                                <input
+                                    className="mb-2 px-5 bg-black hover:bg-gray-800 text-gray-400 border-[1px] border-gray-700 rounded-full h-14 w-96 rounded-lg"
+                                    minLength="3"
+                                    name="username"
+                                    id="username"
+                                    type="text"
+                                    placeholder="Email"
+                                    required
+                                    value={username}
+                                    onChange={(e) => setUsername(e.target.value)}
+                                />
+                                <br />
+                                <input
+                                    className="mb-2 px-5 bg-black hover-bg-gray-800 text-gray-400 border-[1px] border-gray-700 rounded-full h-14 w-96 rounded-lg"
+                                    minLength="5"
+                                    name="password"
+                                    id="password"
+                                    type="password"
+                                    placeholder="Password"
+                                    required
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                />
+                                <br />
+                            </>
+                        )}
                         <div className="h-16"></div>
                         <div className="flex flex-row items-center justify-between">
                             <button
@@ -79,7 +167,6 @@ const Signin = () => {
                     Privacy & Terms
                 </button>
             </div>
-
 
             <p className=" absolute bottom-5 text-white font-normal text-sm"> by Embloy Platforms GbR </p>
         </div>
