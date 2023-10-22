@@ -1,8 +1,43 @@
+"use client";
 import Image from 'next/image'
 import AuthWrapper from "@/app/components/misc/AuthWrapper";
+import {useRouter} from "next/navigation";
+import {useEffect, useState} from "react";
+import {get_core} from "@/lib/misc_requests";
+import LoadingScreen from "@/app/components/misc/LoadingScreen";
 
 
 export default function Home() {
+
+  const router = useRouter();
+  const [ussrData, setUserData] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    load();
+  }, []);
+
+  const load = () => {
+    try{
+      setLoading(true)
+      get_core("user", router).then(data => {
+        console.log(data.user)
+        localStorage.setItem("id", data.user.id)
+      })
+      setLoading(false)
+    }
+    catch (e) {
+      console.log(e)
+    }
+  }
+
+
+  if (loading){
+    return <LoadingScreen/>;
+  }
+
+
+
   return (
       <>
         <div>
