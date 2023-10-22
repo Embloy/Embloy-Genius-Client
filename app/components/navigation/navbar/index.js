@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import Link from "next/link";
 import Logo from "./Logo";
@@ -9,6 +10,11 @@ import {Notifications} from "@/app/components/navigation/navbar/Notifications";
 
 const Navbar = () => {
     const pathname = usePathname()
+
+
+
+
+
     return (
         <>
             <div className="z-20 bg-black w-full h-14 sticky top-0 border-b-[1px] border-gray-700 flex flex-row items-center justify-center">
