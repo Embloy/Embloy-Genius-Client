@@ -1,18 +1,17 @@
 "use client";
-import React from "react";
+import React, {useContext, useEffect, useState} from "react";
 import Link from "next/link";
 import Logo from "./Logo";
 import Button from "./Button";
 import {cn} from "@/lib/utils";
-import { usePathname } from "next/navigation";
+import {usePathname, useRouter} from "next/navigation";
 import {SearchBar} from "@/app/components/navigation/navbar/SearchBar";
 import {Notifications} from "@/app/components/navigation/navbar/Notifications";
+import {UserContext} from "@/app/components/misc/AuthWrapper";
 
 const Navbar = () => {
     const pathname = usePathname()
-
-
-
+    let user = useContext(UserContext)
 
 
     return (
@@ -43,7 +42,11 @@ const Navbar = () => {
                     <div className="flex horizontal end-0 items-center h-full gap-x-6">
                         <SearchBar />
                         <Notifications />
-                        <Button />
+                        {user && user.image_url ? (
+                            <Button imageSrc={user.image_url} />
+                        ) : (
+                            <Button /> // You can pass a default image or no image as needed
+                        )}
                     </div>
                 </div>
             </div>
