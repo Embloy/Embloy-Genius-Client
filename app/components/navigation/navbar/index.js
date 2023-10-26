@@ -8,15 +8,22 @@ import {usePathname, useRouter} from "next/navigation";
 import {SearchBar} from "@/app/components/navigation/navbar/SearchBar";
 import {Notifications} from "@/app/components/navigation/navbar/Notifications";
 import {UserContext} from "@/app/components/misc/UserContext";
+import {UserBar} from "@/app/components/navigation/userbar";
 
 const Navbar = () => {
     const pathname = usePathname()
+    const [isUserbarVisible, setUserbarVisible] = useState(false);
+    function toggleUserbar() {
+        setUserbarVisible(!isUserbarVisible);
+    }
+
+
     let user = useContext(UserContext)
 
 
     return (
         <>
-            <div className="z-20 bg-black w-full h-14 sticky top-0 border-b-[1px] border-gray-700 flex flex-row items-center justify-center">
+            <div className="z-20 bg-black w-full h-14 sticky top-0 border-b-[1px] border-gray-700 flex flex-row items-center justify-center"  >
                 <div className="container h-full max-w-7/12 flex flex-row items-center justify-between">
                     <div className="flex horizontal start-0 items-center h-full gap-x-6">
                         <Logo />
@@ -42,14 +49,13 @@ const Navbar = () => {
                     <div className="flex horizontal end-0 items-center h-full gap-x-6">
                         <SearchBar />
                         <Notifications />
-                        {user && user.image_url ? (
-                            <Button imageSrc={user.image_url} />
-                        ) : (
-                            <Button />
-                        )}
+                        <div onClick={toggleUserbar}>
+                            <Button onClick={toggleUserbar}></Button>
+                        </div>
                     </div>
                 </div>
             </div>
+            <UserBar isVisible={isUserbarVisible} onClose={toggleUserbar} userData={user}/>
         </>
     );
 };
