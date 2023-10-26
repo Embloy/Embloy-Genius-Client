@@ -2,7 +2,7 @@
 import React from "react";
 
 export const UserBar = ({ isVisible, onClose, userData }) => {
-    const sidebarClass = `fixed top-0 right-0 h-full w-64 bg-black border-l-[1px] border-gray-700 transition-transform transform ${isVisible ? 'translate-x-0' : 'translate-x-full'}`;
+    const sidebarClass = `fixed top-0 right-0 h-full w-72 bg-black border-l-[1px] border-gray-700 transition-transform transform ${isVisible ? 'translate-x-0' : 'translate-x-full'}`;
     return (
         <div className={sidebarClass}>
             <div className="sidebar-content">
