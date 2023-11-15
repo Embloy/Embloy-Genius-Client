@@ -9,29 +9,30 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "react": "latest",
-    "react-dom": "latest",
-    "next": "latest",
-    "axios": "latest",
-    "cookies-next": "latest",
-    "tailwindcss": "latest",
-    "tailwind-merge": "latest",
-    "daisyui": "latest",
-    "clsx": "latest",
     "@fullcalendar/core": "latest",
     "@fullcalendar/daygrid": "latest",
-    "@fullcalendar/react": "latest",
     "@fullcalendar/interaction": "latest",
+    "@fullcalendar/react": "latest",
     "@fullcalendar/timegrid": "latest",
     "@headlessui/react": "latest",
     "@heroicons/react": "latest",
-    "swr": "latest"
+    "axios": "latest",
+    "clsx": "latest",
+    "cookies-next": "latest",
+    "daisyui": "latest",
+    "next": "latest",
+    "react": "latest",
+    "react-dom": "latest",
+    "swr": "latest",
+    "tailwind-merge": "latest",
+    "tailwindcss": "latest"
   },
   "devDependencies": {
     "autoprefixer": "latest",
-    "postcss": "latest",
-    "tailwindcss": "latest",
+    "bpmn-js": "latest",
     "eslint": "latest",
-    "eslint-config-next": "latest"
+    "eslint-config-next": "latest",
+    "postcss": "latest",
+    "tailwindcss": "latest"
   }
 }
