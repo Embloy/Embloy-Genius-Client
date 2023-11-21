@@ -2,24 +2,24 @@
 import React, {useEffect} from "react";
 import {getCookie} from "cookies-next";
 import {login, logout} from "@/lib/authentication";
-import { useRouter} from "next/navigation";
+import {useRouter, usePathname} from "next/navigation";
 
 
 const AuthWrapper = ({children}) => {
     const router = useRouter();
+    const path = usePathname();
 
+    useEffect(() => {
+        if (!path.startsWith("/resource/public")) {
+            if (!getCookie("refresh", {path: "/"})) {
+                logout(router);
 
-
-    useEffect( () => {
-        if (!getCookie("refresh", {path: "/"})) {
-            logout(router);
-
-        } else {
-            login(router);
+            } else {
+                login(router);
+            }
         }
 
     }, []);
-
 
 
     return (
@@ -27,7 +27,6 @@ const AuthWrapper = ({children}) => {
             {children}
         </>
     );
-
 
 
 };

@@ -18,7 +18,7 @@ const UserWrapper = ({children}) => {
             }).catch(e => {
                 console.log(e)
             });
-        } else {
+        } else if (!pathname.startsWith("/resource/public")){
             logout(router);
         }
     }, [pathname])

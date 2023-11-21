@@ -1,19 +1,24 @@
 "use client";
 import { useState } from "react";
 import Navbar from "./navbar";
+import {usePathname, useRouter} from "next/navigation";
 
 
 const Navigation = () => {
     // toggle sidebar
     const [isOpen, setIsOpen] = useState(false);
+    const pathname = usePathname();
     const toggle = () => {
         setIsOpen(!isOpen);
     };
-    return (
-        <>
-            <Navbar toggle={toggle} />
-        </>
-    );
+    if (!pathname.startsWith("/resource/public")){
+        return (
+            <>
+                <Navbar toggle={toggle} />
+            </>
+        );
+    }
+
 };
 
 export default Navigation;
