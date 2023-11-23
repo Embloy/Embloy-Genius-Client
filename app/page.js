@@ -12,6 +12,16 @@ export default function Hme() {
   const [topJobIsHovered, setTopJobIsHovered] = useState(false);
   const [embedTopJobIsHovered, setEmbedTopJobIsHovered] = useState(false);
   const [plusIsHovered, setPlusIsHovered] = useState(false);
+  const [uploadIsHovered, setUploadIsHovered] = useState(false);
+
+
+  const handleUploadMouseEnter = () => {
+    setUploadIsHovered(true);
+  };
+
+  const handleUploadMouseLeave = () => {
+    setUploadIsHovered(false);
+  };
 
   const handlePlusMouseEnter = () => {
     setPlusIsHovered(true);
@@ -44,15 +54,27 @@ export default function Hme() {
       <div className="z-10 max-w-6xl w-full min-h-screen h-full border-l-[1px] border-r-[1px] border-gray-700 justify-between p-4">
         <div className="w-full flex flex-row items-center justify-between my-4">
           <h1 className="font-medium text-2xl ">Genius Dashboard</h1>
-          <a href="https://www.about.embloy.com" onMouseEnter={handlePlusMouseEnter} onMouseLeave={handlePlusMouseLeave}>
-            <Image
-                src={plusIsHovered ? "/icons/plus-light.svg" : "/icons/plus-dark.svg"}
-                alt="Logo"
-                height="35"
-                width="35"
-                className="relative"
-            />
-          </a>
+          <div className="flex flex-row items-center justify-end gap-4">
+            <a href="https://www.about.embloy.com" onMouseEnter={handlePlusMouseEnter} onMouseLeave={handlePlusMouseLeave}>
+              <Image
+                  src={plusIsHovered ? "/icons/plus-light.svg" : "/icons/plus-dark.svg"}
+                  alt="Logo"
+                  height="35"
+                  width="35"
+                  className="relative"
+              />
+            </a>
+            <a href="https://www.about.embloy.com" onMouseEnter={handleUploadMouseEnter} onMouseLeave={handleUploadMouseLeave}>
+              <Image
+                  src={uploadIsHovered ? "/icons/upload-light.svg" : "/icons/upload-dark.svg"}
+                  alt="Logo"
+                  height="35"
+                  width="35"
+                  className="relative"
+              />
+            </a>
+          </div>
+
 
         </div>
         <div className="w-full h-6" />
