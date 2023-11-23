@@ -91,7 +91,7 @@ const Signin = () => {
                                 />
                                 <br />
                                 <input
-                                    className="mb-2 px-5 bg-black hover-bg-gray-800 text-gray-400 border-[1px] border-red-500 rounded-full h-14 w-96 rounded-lg"
+                                    className="mb-2 px-5 bg-black hover:bg-gray-800 text-gray-400 border-[1px] border-red-500 rounded-full h-14 w-96 rounded-lg"
                                     minLength="5"
                                     name="password"
                                     id="password"
