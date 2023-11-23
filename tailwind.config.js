@@ -15,6 +15,9 @@ module.exports = {
       colors: {
         'embloy-green': '#99F7CB',
         'embloy-blue': '#99FFFF',
+        'embloy-purple': '#3F3356',
+        'embloy-purple-light': '#987ACF',
+        'embloy-purple-lighter': '#C9B3FF'
       }
     },
   },

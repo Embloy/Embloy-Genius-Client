@@ -6,8 +6,8 @@ import interactionPlugin, {Draggable, DropArg} from "@fullcalendar/interaction"
 import timeGridPlugin from "@fullcalendar/timegrid"
 import {Dialog, Transition} from '@headlessui/react'
 import {CheckIcon, ExclamationTriangleIcon} from '@heroicons/react/20/solid'
-import {EventSourceInput} from '@fullcalendar/core/index.js'
-import useSWR from 'swr'
+import {EventSourceInput} from '@fullcalendar/core/index.js';
+import useSWR from 'swr';
 import Image from "next/image";
 import Logo from "@/app/components/navigation/navbar/Logo";
 import LoadingScreen from "@/app/components/misc/LoadingScreen";
@@ -208,8 +208,8 @@ export default function Calendar() {
 
 
 
-    const {data, error} = useSWR('http://192.168.56.1:8080/api/v0/assignment/?user_id=77', fetcher)
-    //const {data, error} = useSWR('http://192.168.178.126:8080/api/v0/assignment/?user_id=77', fetcher)
+    //const {data, error} = useSWR('http://192.168.56.1:8080/api/v0/assignment/?user_id=77', fetcher)
+    const {data, error} = useSWR('http://192.168.178.126:8080/api/v0/assignment/?user_id=77', fetcher)
 
     const bin = (data) => {
         let assignments = [];
@@ -254,8 +254,8 @@ export default function Calendar() {
 
         delete updated_event.id
         delete updated_event.title
-        fetch('http://192.168.56.1:8080/api/v0/assignment/', {
-        //fetch('http://192.168.178.126:8080/api/v0/assignment/', {
+        //fetch('http://192.168.56.1:8080/api/v0/assignment/', {
+        fetch('http://192.168.178.126:8080/api/v0/assignment/', {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
@@ -308,6 +308,7 @@ export default function Calendar() {
 
     function fetchUpdatedEventData() {
         // Make a GET request to fetch the updated event data
+        //fetch('http://192.168.56.1:8080/api/v0/assignment/?user_id=77', fetcher)
         fetch('http://192.168.178.126:8080/api/v0/assignment/?user_id=77', fetcher)
             .then((response) => response.json())
             .then((data) => {

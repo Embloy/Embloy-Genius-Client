@@ -17,11 +17,11 @@ export default function RootLayout({children}) {
     return (
         <html lang="en">
             <body className={lexend.className}>
-                <div className="bg-black flex flex-col items-center justify-center">
+                <div className="bg-black flex flex-col items-center justify-center max-w-full ">
                     <AuthWrapper>
                         <UserWrapper>
                             <Navigation/>
-                            <div className="flex flex-col items-center justify-center max-w-7/12">
+                            <div className="flex flex-col items-center justify-center ">
                                 {children}
                             </div>
                         </UserWrapper>
