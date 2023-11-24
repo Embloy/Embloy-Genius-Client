@@ -6,8 +6,33 @@ import React, {useEffect, useState} from "react";
 import {get_core} from "@/lib/misc_requests";
 import LoadingScreen from "@/app/components/misc/LoadingScreen";
 
+
+const newsItems = [
+  {
+    id: 1,
+    imageUrl: '/img/news1.png',
+    title: 'News 1',
+    description: 'Description for News 1...',
+    link: 'https://www.about.embloy.com',
+  },
+  {
+    id: 2,
+    imageUrl: '/img/news2.png',
+    title: 'News 2',
+    description: 'Description for News 2...',
+    link: 'https://www.about.embloy.com',
+  },
+];
+
+
 export default function Hme() {
   //todo: make analytics api endpoints
+  //todo: make news endpoints
+
+
+  // real time insights box
+
+
 
   const [topJobIsHovered, setTopJobIsHovered] = useState(false);
   const [embedTopJobIsHovered, setEmbedTopJobIsHovered] = useState(false);
@@ -48,6 +73,24 @@ export default function Hme() {
   const handleTopJobMouseLeave = () => {
     setTopJobIsHovered(false);
   };
+
+  //news box
+
+  const [currentNewsIndex, setCurrentNewsIndex] = useState(0);
+  const handleNextNews = () => {
+    // Increment the current index to move to the next news item
+    setCurrentNewsIndex((prevIndex) => (prevIndex + 1) % newsItems.length);
+  };
+
+  const handlePrevNews = () => {
+    // Decrement the current index to move to the previous news item
+    setCurrentNewsIndex((prevIndex) => (prevIndex - 1 + newsItems.length) % newsItems.length);
+  };
+
+  const currentNews = newsItems[currentNewsIndex]; // Get the currently displayed news item
+
+
+
   return (
 
     <main className=" text-white flex min-h-screen h-full flex-col items-center ">
@@ -79,7 +122,7 @@ export default function Hme() {
         </div>
         <div className="w-full h-6" />
 
-        <div className="w-full flex flex-row items-center justify-first my-6 gap-6">
+        <div className="w-full flex flex-row items-start justify-first my-6 gap-6">
 
           <div className="max-w-3/10 py-4 px-8 flex flex-col items-start justify-start gap-2 bg-embloy-purple text-white rounded-lg border-[1px] border-transparent transition duration-200 ease-in-out hover:border-white ">
             <div className="px-4 py-2 rounded-full border-[1px] border-white">
@@ -168,94 +211,48 @@ export default function Hme() {
           </div>
 
 
-          <div className="max-w-3/10 py-4 px-8 flex flex-col items-start justify-start gap-2 bg-embloy-purple text-white rounded-lg border-[1px] border-transparent transition duration-200 ease-in-out hover:border-white ">
-            <div className="px-4 py-2 rounded-full border-[1px] border-white">
-              <h1 className="font-medium text-xl">Real-time insights</h1>
+          <div className="max-w-6/10 py-4 px-8 flex flex-col items-start justify-start gap-2 bg-embloy-purple text-white rounded-lg border-[1px] border-transparent transition duration-200 ease-in-out hover:border-white ">
+            <div className="w-full flex flex-row items-start justify-between">
+              <div className="px-4 py-2 rounded-full border-[1px] border-white">
+                <h1 className="font-medium text-xl">News</h1>
+              </div>
+
+              <div className="py-2 flex flex-row items-center justify-between gap-2">
+                <p className="font-normal text-sm text-embloy-purple-light">{currentNewsIndex + 1}</p>
+                <p className="font-normal text-sm text-embloy-purple-light"> | </p>
+                <p className="font-normal text-sm text-embloy-purple-light">{newsItems.length}</p>
+              </div>
+
+              <div className="py-2 flex flex-row items-center justify-between gap-2">
+                <button className="font-medium text-sm text-embloy-purple-light hover:text-embloy-purple-lighter" onClick={handlePrevNews}>Previous</button>
+                <button className="font-medium text-sm text-embloy-purple-light hover:text-embloy-purple-lighter" onClick={handleNextNews}>Next</button>
+              </div>
+
             </div>
 
             <div className="w-full flex flex-row items-center justify-center">
               <div className="my-2 h-[1px] w-10/12 rounded-full " />
             </div>
 
-            <div className="flex flex-col gap-0.5 w-full" >
+            <div className="flex flex-col gap-0.5 w-full">
+              <Image
+                  src={currentNews.imageUrl}
+                  alt={currentNews.title}
+                  height="200"
+                  width="300"
+                  className="relative"
+              />
+              <div className="h-1" />
               <div className="h-[1px] w-full rounded-full bg-embloy-purple-lighter" />
-              <h1 className="font-medium text-sm text-embloy-purple-lighter">Summary:</h1>
+              <p className="font-medium text-sm text-embloy-purple-lighter" >{currentNews.title}</p>
+              <div className="h-1" />
+              <p className="font-normal text-sm" >{currentNews.description}</p>
             </div>
-
-            <div className="flex flex-row gap-5" >
-              <p className="font-normal text-sm">You have <strong>8 jobs</strong> running publicly</p>
-            </div>
-
-            <div className="flex flex-row gap-5" >
-              <p className="font-normal text-sm">Your jobs currently average <strong>750 clicks/hour</strong></p>
-            </div>
-
             <div className="h-4" />
-
-            <div className="flex flex-col gap-0.5 w-full" >
-              <div className="h-[1px] w-full rounded-full bg-embloy-purple-lighter" />
-              <h1 className="font-medium text-sm text-embloy-purple-lighter">Top job:</h1>
-            </div>
-
-            <button className="w-full flex flex-col items-center justify-start border-white border-[1px] rounded-lg p-2"  onMouseEnter={handleTopJobMouseEnter} onMouseLeave={handleTopJobMouseLeave}>
-              <div className="w-full flex flex-row items-center justify-between">
-                {!topJobIsHovered && (
-                    <div className="flex flex-row items-center justify-start gap-2">
-                      <Image
-                          src="/icons/rev-v-purple-lighter.svg"
-                          alt="Logo"
-                          height="10"
-                          width="10"
-                          className="relative"
-                      />
-                      <p className="font-semibold text-sm text-embloy-purple-lighter">1430/hr</p>
-                      <p className="font-bold text-sm">Barista</p>
-                    </div>
-                )}
-                {topJobIsHovered && (
-                    <div className="flex flex-row items-center justify-start gap-2">
-                      <Image
-                          src="/icons/rev-v-green.svg"
-                          alt="Logo"
-                          height="10"
-                          width="10"
-                          className="relative"
-                      />
-                      <p className="font-semibold text-sm text-embloy-green">1430/hr</p>
-                      <p className="font-bold text-sm">Barista</p>
-                    </div>
-                )}
-
-                <a href="https://www.about.embloy.com" onMouseEnter={handleEmbedTopJobMouseEnter} onMouseLeave={handleEmbedTopJobMouseLeave}>
-                  <Image
-                      src={embedTopJobIsHovered ? "/icons/embed-purple-lighter.svg" : "/icons/embed-white.svg"}
-                      alt="Logo"
-                      height="25"
-                      width="25"
-                      className="relative"
-                  />
-                </a>
-              </div>
-              {topJobIsHovered && (
-                  <>
-                    <div className="h-2" />
-                    <div className="w-full flex flex-row items-center justify-start g-2">
-                      <p className="font-light text-xs text-embloy-purple-lighter opacity-50">00:42 2023/11/23</p>
-                    </div>
-                  </>
-              )}
-
-            </button>
-
-            <div className="h-12" />
-
             <div className="w-full flex flex-row items-center justify-between">
-              <a className="font-medium text-sm text-embloy-purple-light hover:text-embloy-purple-lighter" href="https://www.about.embloy.com">GO TO ANALYTICS</a>
+              <a className="font-medium text-sm text-embloy-purple-light hover:text-embloy-purple-lighter" href={currentNews.description}>DETAILS</a>
             </div>
           </div>
-
-
-
 
 
         </div>
