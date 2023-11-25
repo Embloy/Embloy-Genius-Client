@@ -37,6 +37,13 @@ const Navbar = () => {
                                 </Link>
                             </li>
                             <li className={cn(
+                                pathname?.startsWith("/recruitment") ? "text-white" : "text-gray-400 hover:text-gray-200"
+                            )}>
+                                <Link href="/recruitment">
+                                    <p>Hire</p>
+                                </Link>
+                            </li>
+                            <li className={cn(
                                 pathname?.startsWith("/calendar") ? "text-white" : "text-gray-400 hover:text-gray-200"
                             )}>
                                 <Link href="/calendar">
