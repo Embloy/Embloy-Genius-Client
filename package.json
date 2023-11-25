@@ -25,7 +25,8 @@
     "react-dom": "latest",
     "swr": "latest",
     "tailwind-merge": "latest",
-    "tailwindcss": "latest"
+    "tailwindcss": "latest",
+    "@tanstack/react-table": "latest"
   },
   "devDependencies": {
     "autoprefixer": "latest",
