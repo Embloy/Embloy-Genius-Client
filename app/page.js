@@ -120,7 +120,7 @@ export default function Hme() {
 
 
         </div>
-        <div className="w-full h-6" />
+        <div className="w-screen h-6" />
 
         <div className="w-full flex flex-row items-start justify-first my-6 gap-6">
 
