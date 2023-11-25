@@ -3,7 +3,8 @@ import React, {useState} from "react";
 import {cn} from "@/lib/utils";
 import { columns} from "@/app/recruitment/columns";
 import { DataTable} from "@/app/components/misc/DataTable";
-
+import './locals.css'
+import Image from "next/image";
 
 const test_jobs = [{position: "CEO", salary:500, currency: 0}, {position: "CTO", salary:400, currency: 0}, {position: "COO", salary:400, currency: 0}]
 
@@ -11,6 +12,7 @@ const test_jobs = [{position: "CEO", salary:500, currency: 0}, {position: "CTO",
 
 
 export default function Jobs() {
+    // subpages
     const [currentSubPageID, setcurrentSubPageID] = useState(0);
     const switchSubPage = (id) => {
         console.log("Old page = " + currentSubPageID)
@@ -34,7 +36,15 @@ export default function Jobs() {
     };
 
 
+    // filter
+    const [filterIsHovered, setFilterIsHovered] = useState(false);
 
+    const handleFilterHover = () => {
+        setFilterIsHovered(true)
+    }
+    const handleFilterNotHover = () => {
+        setFilterIsHovered(false)
+    }
 
     // fetch data
     // todo: remove dummy and fetch actual jobs
@@ -51,19 +61,20 @@ export default function Jobs() {
                     </div>
                     <div className="w-full h-4" />
                 </div>
+
                 <div className="w-full flex flex-col items-center justify-start">
                     <ul className="text-sm w-full flex flex-row items-center justify-start">
-                        <li onClick={jobsSubPage} className={cn(currentSubPageID === jobsSubPageID ? "flex flex-row items-center justify-start border-b-[1px] border-embloy-green py-2 px-4 text-white cursor-pointer" : "flex flex-row items-center justify-start border-b-[1px] border-gray-700 hover:border-gray-500 py-2 px-4 text-gray-500 hover:text-white cursor-pointer")} >
+                        <li onClick={jobsSubPage} className={cn(currentSubPageID === jobsSubPageID ? "flex flex-row items-center justify-start border-b-[1px] border-embloy-green py-2 px-4 text-white cursor-pointer" : "flex flex-row items-center justify-start border-b-[1px] border-gray-700 hover:border-gray-400 py-2 px-4 text-gray-400 hover:text-white cursor-pointer")} >
                             <div className="h-full w-full" >
                                 <p>Jobs</p>
                             </div>
                         </li>
-                        <li onClick={applicationsSubPage} className={cn(currentSubPageID === applicationsSubPageID ? "flex flex-row items-center justify-start border-b-[1px] border-embloy-green py-2 px-4 text-white cursor-pointer" : "flex flex-row items-center justify-start border-b-[1px] border-gray-700 hover:border-gray-500 py-2 px-4 text-gray-500 hover:text-white cursor-pointer")} >
+                        <li onClick={applicationsSubPage} className={cn(currentSubPageID === applicationsSubPageID ? "flex flex-row items-center justify-start border-b-[1px] border-embloy-green py-2 px-4 text-white cursor-pointer" : "flex flex-row items-center justify-start border-b-[1px] border-gray-700 hover:border-gray-400 py-2 px-4 text-gray-400 hover:text-white cursor-pointer")} >
                             <div className="h-full w-full" >
                                 <p>Applications</p>
                             </div>
                         </li>
-                        <li onClick={promosSubPage} className={cn(currentSubPageID === promosSubPageID ? "flex flex-row items-center justify-start border-b-[1px] border-embloy-green py-2 px-4 text-white cursor-pointer" : "flex flex-row items-center justify-start border-b-[1px] border-gray-700 hover:border-gray-500 py-2 px-4 text-gray-500 hover:text-white cursor-pointer")} >
+                        <li onClick={promosSubPage} className={cn(currentSubPageID === promosSubPageID ? "flex flex-row items-center justify-start border-b-[1px] border-embloy-green py-2 px-4 text-white cursor-pointer" : "flex flex-row items-center justify-start border-b-[1px] border-gray-700 hover:border-gray-400 py-2 px-4 text-gray-400 hover:text-white cursor-pointer")} >
                             <div className="h-full w-full" >
                                 <p>Promotions</p>
                             </div>
@@ -76,9 +87,29 @@ export default function Jobs() {
                     </ul>
                 </div>
 
-                <div className="w-full flex flex-col items-center justify-start p-4">
-                    <div className="container mx-auto py-10">
-                        <DataTable columns={columns} data={data} />
+                <div className="w-full flex flex-col items-center justify-start">
+                    <div className="text-sm w-full flex flex-row items-center justify-between">
+                        <div className="px-4 bg-black hover:bg-gray-900 flex flex-row items-center justify-start" onMouseEnter={handleFilterHover} onMouseLeave={handleFilterNotHover}>
+                            <Image
+                                src={"/icons/filter-dark.svg"}
+                                alt="Logo"
+                                height="25"
+                                width="25"
+                                className="relative"
+                            />
+                            <input className={filterIsHovered ? "bg-gray-900 text-white h-10 w-96 px-2 placeholder-gray-900 border-none outline-none" : "bg-black text-white h-10 w-96 px-2 placeholder-gray-900 border-none outline-none"}
+                                   type="text"
+                                   name="name"
+                                   placeholder="Filter"
+                            />
+                        </div>
+
+                    </div>
+                </div>
+
+                <div className="w-full flex flex-col items-center justify-start">
+                    <div className="container mx-auto">
+                        <DataTable columns={columns} data={data}  />
                     </div>
                 </div>
 

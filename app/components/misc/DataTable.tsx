@@ -30,14 +30,14 @@ export function DataTable<TData, TValue>({columns,data}: DataTableProps<TData, T
     })
 
     return (
-        <div className="rounded-md border">
-            <Table>
+        <div className="rounded-sm border-x-0 border-y border-gray-700 text-gray-400">
+            <Table >
                 <TableHeader>
                     {table.getHeaderGroups().map((headerGroup) => (
-                        <TableRow key={headerGroup.id}>
+                        <TableRow className="border-gray-700" key={headerGroup.id}>
                             {headerGroup.headers.map((header) => {
                                 return (
-                                    <TableHead key={header.id}>
+                                    <TableHead className="cursor-pointer hover:text-white hover:bg-gray-900" key={header.id}>
                                         {header.isPlaceholder
                                             ? null
                                             : flexRender(
@@ -50,15 +50,15 @@ export function DataTable<TData, TValue>({columns,data}: DataTableProps<TData, T
                         </TableRow>
                     ))}
                 </TableHeader>
-                <TableBody>
+                <TableBody >
                     {table.getRowModel().rows?.length ? (
                         table.getRowModel().rows.map((row) => (
-                            <TableRow
+                            <TableRow className="border-gray-700 hover:bg-gray-900"
                                 key={row.id}
                                 data-state={row.getIsSelected() && "selected"}
                             >
                                 {row.getVisibleCells().map((cell) => (
-                                    <TableCell key={cell.id}>
+                                    <TableCell  key={cell.id}>
                                         {flexRender(cell.column.columnDef.cell, cell.getContext())}
                                     </TableCell>
                                 ))}
