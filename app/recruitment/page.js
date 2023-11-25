@@ -1,7 +1,14 @@
 "use client";
 import React, {useState} from "react";
 import {cn} from "@/lib/utils";
-import Link from "next/link";
+import { columns} from "@/app/recruitment/columns";
+import { DataTable} from "@/app/components/misc/DataTable";
+
+
+const test_jobs = [{position: "CEO", salary:500, currency: 0}, {position: "CTO", salary:400, currency: 0}, {position: "COO", salary:400, currency: 0}]
+
+
+
 
 export default function Jobs() {
     const [currentSubPageID, setcurrentSubPageID] = useState(0);
@@ -25,6 +32,16 @@ export default function Jobs() {
     const promosSubPage = () => {
         switchSubPage(promosSubPageID);
     };
+
+
+
+
+    // fetch data
+    // todo: remove dummy and fetch actual jobs
+
+    const data = test_jobs
+
+
     return (
         <main className=" text-white flex min-h-screen h-full flex-col items-center justify-start">
             <div className="z-10 max-w-6xl w-full min-h-screen h-full border-l-[1px] border-r-[1px] border-gray-700 flex flex-col items-center justify-start">
@@ -58,6 +75,13 @@ export default function Jobs() {
                         </li>
                     </ul>
                 </div>
+
+                <div className="w-full flex flex-col items-center justify-start p-4">
+                    <div className="container mx-auto py-10">
+                        <DataTable columns={columns} data={data} />
+                    </div>
+                </div>
+
             </div>
         </main>
 

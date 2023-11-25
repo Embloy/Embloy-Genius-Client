@@ -16,7 +16,7 @@
     "@fullcalendar/timegrid": "latest",
     "@headlessui/react": "latest",
     "@heroicons/react": "latest",
-    "@tanstack/react-table": "latest",
+    "@tanstack/react-table": "^8.10.7",
     "axios": "latest",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",

@@ -125,7 +125,7 @@ export default function Hme() {
         <div className="w-full flex flex-row items-start justify-first my-6 gap-6">
 
           <div className="max-w-3/10 py-4 px-8 flex flex-col items-start justify-start gap-2 bg-embloy-purple text-white rounded-lg border-[1px] border-transparent transition duration-200 ease-in-out hover:border-white ">
-            <div className="px-4 py-2 rounded-full border-[1px] border-white">
+            <div className="px-4 py-2 rounded-full border-[2px] border-white">
               <h1 className="font-medium text-xl">Real-time insights</h1>
             </div>
 
@@ -213,7 +213,7 @@ export default function Hme() {
 
           <div className="max-w-6/10 py-4 px-8 flex flex-col items-start justify-start gap-2 bg-embloy-purple text-white rounded-lg border-[1px] border-transparent transition duration-200 ease-in-out hover:border-white ">
             <div className="w-full flex flex-row items-start justify-between">
-              <div className="px-4 py-2 rounded-full border-[1px] border-white">
+              <div className="px-4 py-2 rounded-full border-[2px] border-white">
                 <h1 className="font-medium text-xl">News</h1>
               </div>
 
