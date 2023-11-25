@@ -18,15 +18,18 @@
     "@heroicons/react": "latest",
     "@tanstack/react-table": "latest",
     "axios": "latest",
-    "clsx": "latest",
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.0.0",
     "cookies-next": "latest",
     "daisyui": "latest",
+    "lucide-react": "^0.293.0",
     "next": "latest",
     "react": "latest",
     "react-dom": "latest",
     "swr": "latest",
-    "tailwind-merge": "latest",
-    "tailwindcss": "latest"
+    "tailwind-merge": "^2.0.0",
+    "tailwindcss": "latest",
+    "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
     "@types/react": "18.2.38",
