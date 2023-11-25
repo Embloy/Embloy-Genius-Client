@@ -16,6 +16,7 @@
     "@fullcalendar/timegrid": "latest",
     "@headlessui/react": "latest",
     "@heroicons/react": "latest",
+    "@tanstack/react-table": "latest",
     "axios": "latest",
     "clsx": "latest",
     "cookies-next": "latest",
@@ -25,10 +26,10 @@
     "react-dom": "latest",
     "swr": "latest",
     "tailwind-merge": "latest",
-    "tailwindcss": "latest",
-    "@tanstack/react-table": "latest"
+    "tailwindcss": "latest"
   },
   "devDependencies": {
+    "@types/react": "18.2.38",
     "autoprefixer": "latest",
     "bpmn-js": "latest",
     "eslint": "latest",
