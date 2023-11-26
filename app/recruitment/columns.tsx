@@ -37,5 +37,13 @@ export const columns: ColumnDef<Job>[] = [
     {
         accessorKey: "currency",
         header: "Currency",
+        cell: ({row}) => {
+            const currencies = {0:"EUR", 1:"CHF", 2:"USD"}
+            let new_currency = row.getValue('currency')
+            if (currencies[row.getValue('currency')] !== undefined) {
+                new_currency = currencies[row.getValue('currency')]
+            }
+            return <div>{new_currency}</div>
+        }
     },
 ]
