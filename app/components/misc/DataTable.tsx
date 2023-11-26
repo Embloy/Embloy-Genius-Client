@@ -91,7 +91,18 @@ export function DataTable<TData, TValue>({columns,data}: DataTableProps<TData, T
                            name="name"
                            placeholder="Filter"
                            value={(table.getColumn("position")?.getFilterValue() as string) ?? ""}
-                           onChange={(event) => table.getColumn("position")?.setFilterValue(event.target.value)}
+                           onChange=
+                               {
+                                    (event) => {
+                                        if(window.scrollY !== 0){
+                                            window.scrollTo({
+                                                top: 0,
+                                                behavior: "smooth"
+                                            });
+                                        }
+                                        table.getColumn("position")?.setFilterValue(event.target.value)
+                                    }
+                                }
 
                     />
                 </div>
