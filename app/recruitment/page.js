@@ -6,7 +6,28 @@ import { DataTable} from "@/app/components/misc/DataTable";
 import './locals.css'
 import Image from "next/image";
 
-const test_jobs = [{id:0, position: "CEO", salary:500, currency: 0}, {id:1, position: "CTO", salary:400, currency: 0}, {id:2, position: "COO", salary:400, currency: 0}]
+const test_jobs = [
+    {id:0, position: "CEO", salary:500, currency: 0},
+    {id:1, position: "CTO", salary:400, currency: 0},
+    {id:2, position: "COO", salary:400, currency: 0},
+    {id:3, position: "CScrumO (prsudo c level Lakei als joke)", salary:400, currency: 0},
+    {id:4, position: "CBarO", salary:400, currency: 0},
+    {id:5, position: "CIO", salary:400, currency: 0},
+    {id:6, position: "CHrO", salary:400, currency: 0},
+    {id:7, position: "CPO", salary:400, currency: 0},
+    {id:8, position: "CLO", salary:400, currency: 0},
+    {id:9, position: "Depp", salary:400, currency: 0},
+    {id:10, position: "Lakei", salary:400, currency: 0},
+    {id:11, position: "Lakei", salary:400, currency: 0},
+    {id:12, position: "Lakei", salary:400, currency: 0},
+    {id:13, position: "Lakei", salary:400, currency: 0},
+    {id:14, position: "Lakei", salary:400, currency: 0},
+    {id:15, position: "Lakei", salary:400, currency: 0},
+    {id:16, position: "Lakei", salary:400, currency: 0},
+    {id:17, position: "Lakei", salary:400, currency: 0},
+    {id:18, position: "Lakei", salary:400, currency: 0},
+
+]
 
 
 
