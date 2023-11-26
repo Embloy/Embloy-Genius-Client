@@ -1,6 +1,17 @@
 "use client"
 import { ColumnDef } from "@tanstack/react-table"
 import * as inspector from "inspector";
+import { MoreHorizontal } from "lucide-react"
+
+import { Button } from "@/app/components/ui/button"
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
+} from "@/app/components/ui/dropdown-menu"
 
 export type Jb = {
     id: number
@@ -46,4 +57,29 @@ export const columns: ColumnDef<Job>[] = [
             return <div>{new_currency}</div>
         }
     },
+    {
+        id: 'actions',
+        cell: ({row}) => {
+            const job = row.original
+            return (
+                <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                        <Button variant="ghost" className="h-8 w-8 p-0">
+                            <span className="sr-only">Open menu</span>
+                            <MoreHorizontal className="h-4 w-4" color="#9DA2AE" />
+                        </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end">
+                        <DropdownMenuItem
+                            onClick={() => navigator.clipboard.writeText(String(job.id))}
+                        >
+                            Copy Job ID
+                        </DropdownMenuItem>
+                        <DropdownMenuItem>View job details</DropdownMenuItem>
+                        <DropdownMenuItem>Share job</DropdownMenuItem>
+                    </DropdownMenuContent>
+                </DropdownMenu>
+            )
+        }
+    }
 ]

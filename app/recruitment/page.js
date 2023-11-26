@@ -6,7 +6,7 @@ import { DataTable} from "@/app/components/misc/DataTable";
 import './locals.css'
 import Image from "next/image";
 
-const test_jobs = [{position: "CEO", salary:500, currency: 0}, {position: "CTO", salary:400, currency: 0}, {position: "COO", salary:400, currency: 0}]
+const test_jobs = [{id:0, position: "CEO", salary:500, currency: 0}, {id:1, position: "CTO", salary:400, currency: 0}, {id:2, position: "COO", salary:400, currency: 0}]
 
 
 

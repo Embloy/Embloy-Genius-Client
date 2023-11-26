@@ -36,6 +36,19 @@ export function DataTable<TData, TValue>({columns,data}: DataTableProps<TData, T
                     {table.getHeaderGroups().map((headerGroup) => (
                         <TableRow className="border-gray-700" key={headerGroup.id}>
                             {headerGroup.headers.map((header) => {
+
+                                if (typeof header.column.columnDef.header !== "string"){
+                                    return (
+                                        <TableHead className="cursor-default" key={header.id}>
+                                            {header.isPlaceholder
+                                                ? null
+                                                : flexRender(
+                                                    header.column.columnDef.header,
+                                                    header.getContext()
+                                                )}
+                                        </TableHead>
+                                    )
+                                }
                                 return (
                                     <TableHead className="cursor-pointer hover:text-white hover:bg-gray-900" key={header.id}>
                                         {header.isPlaceholder
