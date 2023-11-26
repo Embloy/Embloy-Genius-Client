@@ -6,6 +6,8 @@ import {
     getCoreRowModel,
     useReactTable,
     getPaginationRowModel,
+    SortingState,
+    getSortedRowModel,
 } from "@tanstack/react-table"
 
 import {
@@ -44,12 +46,19 @@ export function DataTable<TData, TValue>({columns,data}: DataTableProps<TData, T
         setNextIsHovered(false)
     }
 
+    const [sorting, setSorting] = useState<SortingState>([])
+
 
     const table = useReactTable({
         data,
         columns,
         getCoreRowModel: getCoreRowModel(),
         getPaginationRowModel: getPaginationRowModel(),
+        onSortingChange: setSorting,
+        getSortedRowModel: getSortedRowModel(),
+        state: {
+            sorting,
+        },
     })
 
     return (
@@ -60,8 +69,7 @@ export function DataTable<TData, TValue>({columns,data}: DataTableProps<TData, T
                         {table.getHeaderGroups().map((headerGroup) => (
                             <TableRow className="border-gray-700" key={headerGroup.id}>
                                 {headerGroup.headers.map((header) => {
-
-                                    if (typeof header.column.columnDef.header !== "string"){
+                                    if (typeof header.column.columnDef['accessorKey'] === "undefined"){
                                         return (
                                             <TableHead className="cursor-default" key={header.id}>
                                                 {header.isPlaceholder
