@@ -8,6 +8,8 @@ import {
     getPaginationRowModel,
     SortingState,
     getSortedRowModel,
+    ColumnFiltersState,
+    getFilteredRowModel,
 } from "@tanstack/react-table"
 
 import {
@@ -45,8 +47,17 @@ export function DataTable<TData, TValue>({columns,data}: DataTableProps<TData, T
     const handleNextNotHover = () => {
         setNextIsHovered(false)
     }
+    const [filterIsHovered, setFilterIsHovered] = useState(false);
+
+    const handleFilterHover = () => {
+        setFilterIsHovered(true)
+    }
+    const handleFilterNotHover = () => {
+        setFilterIsHovered(false)
+    }
 
     const [sorting, setSorting] = useState<SortingState>([])
+    const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
 
 
     const table = useReactTable({
@@ -56,13 +67,36 @@ export function DataTable<TData, TValue>({columns,data}: DataTableProps<TData, T
         getPaginationRowModel: getPaginationRowModel(),
         onSortingChange: setSorting,
         getSortedRowModel: getSortedRowModel(),
+        onColumnFiltersChange: setColumnFilters,
+        getFilteredRowModel: getFilteredRowModel(),
         state: {
             sorting,
+            columnFilters,
         },
     })
 
     return (
         <div>
+            <div className="text-sm w-full flex flex-row items-center justify-between">
+                <div className="px-4 bg-black hover:bg-gray-900 flex flex-row items-center justify-start" onMouseEnter={handleFilterHover} onMouseLeave={handleFilterNotHover}>
+                    <Image
+                        src={"/icons/filter-dark.svg"}
+                        alt="Logo"
+                        height="25"
+                        width="25"
+                        className="relative"
+                    />
+                    <input className={filterIsHovered ? "bg-gray-900 text-white h-10 w-96 px-2 placeholder-gray-900 border-none outline-none" : "bg-black text-white h-10 w-96 px-2 placeholder-gray-900 border-none outline-none"}
+                           type="text"
+                           name="name"
+                           placeholder="Filter"
+                           value={(table.getColumn("position")?.getFilterValue() as string) ?? ""}
+                           onChange={(event) => table.getColumn("position")?.setFilterValue(event.target.value)}
+
+                    />
+                </div>
+
+            </div>
             <div className="rounded-sm border-x-0 border-y border-gray-700 text-gray-400">
                 <Table >
                     <TableHeader>

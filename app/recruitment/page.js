@@ -57,15 +57,7 @@ export default function Jobs() {
     };
 
 
-    // filter
-    const [filterIsHovered, setFilterIsHovered] = useState(false);
 
-    const handleFilterHover = () => {
-        setFilterIsHovered(true)
-    }
-    const handleFilterNotHover = () => {
-        setFilterIsHovered(false)
-    }
 
     // fetch data
     // todo: remove dummy and fetch actual jobs
@@ -106,26 +98,6 @@ export default function Jobs() {
                             </button>
                         </li>
                     </ul>
-                </div>
-
-                <div className="w-full flex flex-col items-center justify-start">
-                    <div className="text-sm w-full flex flex-row items-center justify-between">
-                        <div className="px-4 bg-black hover:bg-gray-900 flex flex-row items-center justify-start" onMouseEnter={handleFilterHover} onMouseLeave={handleFilterNotHover}>
-                            <Image
-                                src={"/icons/filter-dark.svg"}
-                                alt="Logo"
-                                height="25"
-                                width="25"
-                                className="relative"
-                            />
-                            <input className={filterIsHovered ? "bg-gray-900 text-white h-10 w-96 px-2 placeholder-gray-900 border-none outline-none" : "bg-black text-white h-10 w-96 px-2 placeholder-gray-900 border-none outline-none"}
-                                   type="text"
-                                   name="name"
-                                   placeholder="Filter"
-                            />
-                        </div>
-
-                    </div>
                 </div>
 
                 <div className="w-full flex flex-col items-center justify-start">
