@@ -13,6 +13,7 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/app/components/ui/dropdown-menu"
+import {DataTableColumnHeader} from "@/app/components/datatable/DataTableColumnHeader";
 
 export type Jb = {
     id: number
@@ -62,21 +63,15 @@ export const columns: ColumnDef<Job>[] = [
     },
     {
         accessorKey: "position",
-        header: ({ column }) => {
-            return (
-                <Button
-                    variant="ghost"
-                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-                >
-                    Position
-                    <ArrowUpDown className="ml-2 h-4 w-4" />
-                </Button>
-            )
-        },
+        header: ({ column }) => (
+            <DataTableColumnHeader column={column} title="Position"/>
+        ),
     },
     {
         accessorKey: "salary",
-        header: "Salary",
+        header: ({ column }) => (
+            <DataTableColumnHeader column={column} title="Salary"/>
+        ),
     },
     {
         accessorKey: "currency",

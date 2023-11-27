@@ -171,7 +171,7 @@ export function DataTable<TData, TValue>({columns, data}: DataTableProps<TData, 
                 <Table>
                     <TableHeader>
                         {table.getHeaderGroups().map((headerGroup) => (
-                            <TableRow className="border-gray-700" key={headerGroup.id}>
+                            <TableRow className="border-gray-700 hover:bg-gray-900" key={headerGroup.id}>
                                 {headerGroup.headers.map((header) => {
                                     if (typeof header.column.columnDef['accessorKey'] === "undefined") {
                                         return (
@@ -186,7 +186,7 @@ export function DataTable<TData, TValue>({columns, data}: DataTableProps<TData, 
                                         )
                                     }
                                     return (
-                                        <TableHead className="cursor-pointer hover:text-white hover:bg-gray-900"
+                                        <TableHead
                                                    key={header.id}>
                                             {header.isPlaceholder
                                                 ? null
@@ -200,7 +200,7 @@ export function DataTable<TData, TValue>({columns, data}: DataTableProps<TData, 
                             </TableRow>
                         ))}
                     </TableHeader>
-                    <TableBody>
+                    <TableBody className="text-white">
                         {table.getRowModel().rows?.length ? (
                             table.getRowModel().rows.map((row) => (
                                 <TableRow className="border-gray-700 hover:bg-gray-900"

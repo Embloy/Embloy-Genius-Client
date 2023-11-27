@@ -2,7 +2,7 @@
 import React, {useState} from "react";
 import {cn} from "@/lib/utils";
 import { columns} from "@/app/recruitment/columns";
-import { DataTable} from "@/app/components/misc/DataTable";
+import { DataTable} from "@/app/components/datatable/DataTable";
 import './locals.css'
 import Image from "next/image";
 
