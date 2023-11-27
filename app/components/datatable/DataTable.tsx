@@ -31,6 +31,7 @@ import {Button} from "@/app/components/ui/button"
 import {cn} from "@/lib/utils";
 import Image from "next/image";
 import React, {useState} from "react";
+import {DataTablePagination} from "@/app/components/datatable/DataTablePagination";
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
@@ -38,23 +39,9 @@ interface DataTableProps<TData, TValue> {
 }
 
 export function DataTable<TData, TValue>({columns, data}: DataTableProps<TData, TValue>) {
-    const [previousIsHovered, setPreviousIsHovered] = useState(false)
-    const [nextIsHovered, setNextIsHovered] = useState(false)
     const [filterIsHovered, setFilterIsHovered] = useState(false);
     const [columnsIsHovered, setColumnsIsHovered] = useState(false)
-    const handlePreviousHover = () => {
-        setPreviousIsHovered(true)
-    }
-    const handlePreviousNotHover = () => {
-        setPreviousIsHovered(false)
-    }
 
-    const handleNextHover = () => {
-        setNextIsHovered(true)
-    }
-    const handleNextNotHover = () => {
-        setNextIsHovered(false)
-    }
 
     const handleFilterHover = () => {
         setFilterIsHovered(true)
@@ -232,39 +219,7 @@ export function DataTable<TData, TValue>({columns, data}: DataTableProps<TData, 
                             {table.getFilteredRowModel().rows.length} row(s) selected.</p>
                     )}
                 </div>
-                <div className="flex items-center justify-end space-x-2">
-
-                    <button
-                        onMouseEnter={handlePreviousHover}
-                        onMouseLeave={handlePreviousNotHover}
-                        onClick={() => table.previousPage()}
-                        disabled={!table.getCanPreviousPage()}
-                        className={cn(table.getCanPreviousPage() ? "cursor-pointer flex items-center justify-center" : "cursor-not-allowed flex items-center justify-center")}
-                    >
-                        <Image
-                            src={cn(table.getCanPreviousPage() ? cn(previousIsHovered ? "/icons/left-white.svg" : "/icons/left-light.svg") : "/icons/left-dark.svg")}
-                            alt="previous"
-                            height="10"
-                            width="10"
-                            className="relative"
-                        />
-                    </button>
-                    <button
-                        onMouseEnter={handleNextHover}
-                        onMouseLeave={handleNextNotHover}
-                        onClick={() => table.nextPage()}
-                        disabled={!table.getCanNextPage()}
-                        className={cn(table.getCanNextPage() ? "cursor-pointer flex items-center justify-center" : "cursor-not-allowed flex items-center justify-center")}
-                    >
-                        <Image
-                            src={cn(table.getCanNextPage() ? cn(nextIsHovered ? "/icons/right-white.svg" : "/icons/right-light.svg") : "/icons/right-dark.svg")}
-                            alt="previous"
-                            height="10"
-                            width="10"
-                            className="relative"
-                        />
-                    </button>
-                </div>
+                <DataTablePagination table={table} />
             </div>
 
         </div>
