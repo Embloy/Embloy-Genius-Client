@@ -10,6 +10,7 @@ import {
     getSortedRowModel,
     ColumnFiltersState,
     getFilteredRowModel,
+    VisibilityState,
 } from "@tanstack/react-table"
 
 import {
@@ -20,6 +21,12 @@ import {
     TableHeader,
     TableRow,
 } from "@/app/components/ui/table"
+import {
+    DropdownMenu,
+    DropdownMenuCheckboxItem,
+    DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel,
+    DropdownMenuTrigger,
+} from "@/app/components/ui/dropdown-menu"
 import { Button } from "@/app/components/ui/button"
 import {cn} from "@/lib/utils";
 import Image from "next/image";
@@ -33,7 +40,8 @@ interface DataTableProps<TData, TValue> {
 export function DataTable<TData, TValue>({columns,data}: DataTableProps<TData, TValue>) {
     const [previousIsHovered, setPreviousIsHovered] = useState(false)
     const [nextIsHovered, setNextIsHovered] = useState(false)
-
+    const [filterIsHovered, setFilterIsHovered] = useState(false);
+    const [columnsIsHovered, setColumnsIsHovered] = useState(false)
     const handlePreviousHover = () => {
         setPreviousIsHovered(true)
     }
@@ -47,7 +55,6 @@ export function DataTable<TData, TValue>({columns,data}: DataTableProps<TData, T
     const handleNextNotHover = () => {
         setNextIsHovered(false)
     }
-    const [filterIsHovered, setFilterIsHovered] = useState(false);
 
     const handleFilterHover = () => {
         setFilterIsHovered(true)
@@ -56,9 +63,16 @@ export function DataTable<TData, TValue>({columns,data}: DataTableProps<TData, T
         setFilterIsHovered(false)
     }
 
+    const handleColumnsHover = () => {
+        setColumnsIsHovered(true)
+    }
+    const handleColumnsNotHover = () => {
+        setColumnsIsHovered(false)
+    }
+
     const [sorting, setSorting] = useState<SortingState>([])
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
-
+    const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
 
     const table = useReactTable({
         data,
@@ -69,16 +83,18 @@ export function DataTable<TData, TValue>({columns,data}: DataTableProps<TData, T
         getSortedRowModel: getSortedRowModel(),
         onColumnFiltersChange: setColumnFilters,
         getFilteredRowModel: getFilteredRowModel(),
+        onColumnVisibilityChange: setColumnVisibility,
         state: {
             sorting,
             columnFilters,
+            columnVisibility,
         },
     })
 
     return (
         <div>
-            <div className="text-sm w-full flex flex-row items-center justify-between">
-                <div className="px-4 bg-black hover:bg-gray-900 flex flex-row items-center justify-start" onMouseEnter={handleFilterHover} onMouseLeave={handleFilterNotHover}>
+            <div className="text-sm w-full flex flex-row items-center justify-between select-none">
+                <div className="px-4 bg-black hover:bg-gray-900 flex flex-row items-center justify-between" onMouseEnter={handleFilterHover} onMouseLeave={handleFilterNotHover}>
                     <Image
                         src={"/icons/filter-dark.svg"}
                         alt="Logo"
@@ -86,7 +102,7 @@ export function DataTable<TData, TValue>({columns,data}: DataTableProps<TData, T
                         width="25"
                         className="relative"
                     />
-                    <input className={filterIsHovered ? "bg-gray-900 text-white h-10 w-96 px-2 placeholder-gray-900 border-none outline-none" : "bg-black text-white h-10 w-96 px-2 placeholder-gray-900 border-none outline-none"}
+                    <input className={filterIsHovered ? "bg-gray-900 text-white h-10 w-96 px-2 placeholder-gray-900 border-none outline-none select-all" : "bg-black text-white h-10 w-96 px-2 placeholder-gray-900 border-none outline-none select-all"}
                            type="text"
                            name="name"
                            placeholder="Filter"
@@ -106,7 +122,45 @@ export function DataTable<TData, TValue>({columns,data}: DataTableProps<TData, T
 
                     />
                 </div>
-
+                <div className="px-4 flex flex-row items-center justify-end gap-4">
+                    <DropdownMenu >
+                        <DropdownMenuTrigger asChild className="outline-none">
+                            <button className="px-1">
+                                <Image
+                                    src={cn(columnsIsHovered ? "/icons/columns-light.svg":"/icons/columns-dark.svg")}
+                                    alt="columns"
+                                    height="25"
+                                    width="25"
+                                    className="relative"
+                                    onMouseEnter={handleColumnsHover}
+                                    onMouseLeave={handleColumnsNotHover}
+                                />
+                            </button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end">
+                            <DropdownMenuLabel >Hide columns</DropdownMenuLabel>
+                            {table
+                                .getAllColumns()
+                                .filter(
+                                    (column) => column.getCanHide()
+                                )
+                                .map((column) => {
+                                    return (
+                                        <DropdownMenuCheckboxItem
+                                            key={column.id}
+                                            className="capitalize text-gray-400 hover:text-white"
+                                            checked={column.getIsVisible()}
+                                            onCheckedChange={(value) =>
+                                                column.toggleVisibility(!!value)
+                                            }
+                                        >
+                                            {column.id}
+                                        </DropdownMenuCheckboxItem>
+                                    )
+                                })}
+                        </DropdownMenuContent>
+                    </DropdownMenu>
+                </div>
             </div>
             <div className="rounded-sm border-x-0 border-y border-gray-700 text-gray-400">
                 <Table >

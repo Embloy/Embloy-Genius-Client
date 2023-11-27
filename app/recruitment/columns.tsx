@@ -73,11 +73,11 @@ export const columns: ColumnDef<Job>[] = [
             const job = row.original
             return (
                 <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" className="h-8 w-8 p-0">
+                    <DropdownMenuTrigger asChild className="outline-none">
+                        <button className="h-8 w-8 p-0">
                             <span className="sr-only">Open menu</span>
-                            <MoreHorizontal className="h-4 w-4" color="#9DA2AE" />
-                        </Button>
+                            <MoreHorizontal className="h-4 w-4" color="#384051" />
+                        </button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
                         <DropdownMenuItem
