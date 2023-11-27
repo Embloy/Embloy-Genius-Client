@@ -30,7 +30,7 @@ import {
 import {Button} from "@/app/components/ui/button"
 import {cn} from "@/lib/utils";
 import Image from "next/image";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {DataTablePagination} from "@/app/components/datatable/DataTablePagination";
 
 interface DataTableProps<TData, TValue> {
@@ -81,6 +81,14 @@ export function DataTable<TData, TValue>({columns, data}: DataTableProps<TData, 
         },
     })
 
+    const default_hides = () => {
+        table.getColumn("job_id").toggleVisibility(false)
+    }
+    useEffect(() => {
+        default_hides()
+    }, [])
+
+
     return (
         <div>
             <div className="text-sm w-full flex flex-row items-center justify-between select-none">
@@ -98,7 +106,7 @@ export function DataTable<TData, TValue>({columns, data}: DataTableProps<TData, 
                         type="text"
                         name="name"
                         placeholder="Filter"
-                        value={(table.getColumn("position")?.getFilterValue() as string) ?? ""}
+                        value={(table.getColumn("job_type")?.getFilterValue() as string) ?? ""}
                         onChange=
                             {
                                 (event) => {
@@ -108,7 +116,7 @@ export function DataTable<TData, TValue>({columns, data}: DataTableProps<TData, 
                                             behavior: "smooth"
                                         });
                                     }
-                                    table.getColumn("position")?.setFilterValue(event.target.value)
+                                    table.getColumn("job_type")?.setFilterValue(event.target.value)
                                 }
                             }
 

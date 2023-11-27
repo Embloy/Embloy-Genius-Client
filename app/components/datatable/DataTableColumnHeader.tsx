@@ -34,7 +34,7 @@ export function DataTableColumnHeader<TData, TValue>({
     return (
         <div className={cn("w-full flex items-center space-x-2", className)}>
             <DropdownMenu className="focus:outline-none">
-                <DropdownMenuTrigger asChild className="focus:outline-none hover:bg-gray-700 cursor-pointer hover:text-white">
+                <DropdownMenuTrigger asChild className="focus:outline-none hover:bg-gray-700 cursor-pointer hover:text-white rounded-full">
                     <Button
                         variant="ghost"
                         size="sm"

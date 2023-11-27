@@ -1,12 +1,12 @@
 "use client";
 import React, {useState} from "react";
 import {cn} from "@/lib/utils";
-import { columns} from "@/app/recruitment/columns";
+import { columns} from "@/app/recruitment/jobs_columns";
 import { DataTable} from "@/app/components/datatable/DataTable";
 import './locals.css'
 import Image from "next/image";
 
-const test_jobs = [
+const tet_jobs = [
     {id:0, position: "CEO", salary:500, currency: 0},
     {id:1, position: "CTO", salary:400, currency: 0},
     {id:2, position: "COO", salary:400, currency: 0},
@@ -29,6 +29,16 @@ const test_jobs = [
 
 ]
 
+
+const test_jobs = [
+    {job_id:0, job_type:"Scrum"},
+    {job_id:1, job_type:"Scrum"},
+    {job_id:2, job_type:"Scrum"},
+    {job_id:3, job_type:"Scrum"},
+    {job_id:4, job_type:"Scrum"},
+    {job_id:5, job_type:"Scrum"},
+
+]
 
 
 
