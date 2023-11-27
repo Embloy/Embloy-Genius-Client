@@ -33,6 +33,7 @@ import Image from "next/image";
 import React, {useEffect, useState} from "react";
 import {DataTablePagination} from "@/app/components/datatable/DataTablePagination";
 import {extractContent} from "@/lib/utils/helpers";
+import {list} from "postcss";
 
 
 interface DataTableProps<TData, TValue> {
@@ -91,21 +92,24 @@ export function JobDataTable<TData, TValue>({columns, data}: DataTableProps<TDat
         default_hides()
     }, [])
 
+    const [openRows, setOpenRows] = useState<list<number>>(null)
 
-    const [openRows, setOpenRows] = useState([])
     const toggle_row = (row) => {
-        let new_rows = openRows
 
-        if (openRows.includes(row)){ // removal case
-            const i = new_rows.indexOf(row)
-            if (i !== -1){
+        let new_rows: list<number> = []
+        if (openRows !== null) {
+            new_rows = openRows
+        }
+        if (new_rows.includes(Number(row))) { // removal case
+            const i = new_rows.indexOf(Number(row))
+            if (i !== -1) {
                 new_rows.splice(i, 1)
             }
         } else { // addition case
-            new_rows.push(row)
+            new_rows.push(Number(row))
         }
 
-        setOpenRows(new_rows)
+        setOpenRows(new_rows.length === 0 ? null : new_rows);
     }
 
 
@@ -203,7 +207,7 @@ export function JobDataTable<TData, TValue>({columns, data}: DataTableProps<TDat
                                     }
                                     return (
                                         <TableHead
-                                                   key={header.id}>
+                                            key={header.id}>
                                             {header.isPlaceholder
                                                 ? null
                                                 : flexRender(
@@ -219,17 +223,31 @@ export function JobDataTable<TData, TValue>({columns, data}: DataTableProps<TDat
                     <TableBody className="text-white">
                         {table.getRowModel().rows?.length ? (
                             table.getRowModel().rows.map((row) => (
-                                <TableRow className="border-gray-700 hover:bg-gray-900 cursor-pointer"
-                                          key={row.id}
-                                          data-state={row.getIsSelected() && "selected"}
-                                          onClick={() => toggle_row(row.id)}
-                                >
-                                    {row.getVisibleCells().map((cell) => (
-                                        <TableCell key={cell.id}>
-                                            {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                                        </TableCell>
-                                    ))}
-                                </TableRow>
+                                openRows !== null && openRows.includes(Number(row.id)) ? (
+                                    <TableRow className="border-white hover:bg-gray-900 cursor-pointer"
+                                              key={row.id}
+                                              data-state={row.getIsSelected() && "selected"}
+                                              onClick={() => toggle_row(row.id)}
+                                    >
+                                        {row.getVisibleCells().map((cell) => (
+                                            <TableCell key={cell.id}>
+                                                {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                                            </TableCell>
+                                        ))}
+                                    </TableRow>
+                                ) : (
+                                    <TableRow className="border-gray-700 hover:bg-gray-900 cursor-pointer"
+                                              key={row.id}
+                                              data-state={row.getIsSelected() && "selected"}
+                                              onClick={() => toggle_row(row.id)}
+                                    > {row.getVisibleCells().map((cell) => (
+                                            <TableCell key={cell.id}>
+                                                {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                                            </TableCell>
+                                        ))}
+                                    </TableRow>
+                                )
+
                             ))
                         ) : (
                             <TableRow>
@@ -249,7 +267,7 @@ export function JobDataTable<TData, TValue>({columns, data}: DataTableProps<TDat
                             {table.getFilteredRowModel().rows.length} row(s) selected.</p>
                     )}
                 </div>
-                <DataTablePagination table={table} />
+                <DataTablePagination table={table}/>
             </div>
 
         </div>

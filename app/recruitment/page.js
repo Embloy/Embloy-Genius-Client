@@ -47,7 +47,6 @@ export default function Jobs() {
         if (currentSubPageID != id){
             setcurrentSubPageID(id);
         }
-        console.log("new page = " + currentSubPageID)
     }
     const jobsSubPageID = 0;
     const jobsSubPage = () => {
@@ -99,7 +98,7 @@ export default function Jobs() {
                                 <p>Promotions</p>
                             </div>
                         </li>
-                        <li className="text-transparent select-none w-screen flex flex-row items-center justify-start border-b-[1px] border-gray-700 p-2" >
+                        <li className="cursor-hidden text-transparent select-none w-screen flex flex-row items-center justify-start border-b-[1px] border-gray-700 p-2" >
                             <button className="cursor-hidden">
                                 <p>Promotions</p>
                             </button>
