@@ -27,7 +27,7 @@ import {
     DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel,
     DropdownMenuTrigger,
 } from "@/app/components/ui/dropdown-menu"
-import { Button } from "@/app/components/ui/button"
+import {Button} from "@/app/components/ui/button"
 import {cn} from "@/lib/utils";
 import Image from "next/image";
 import React, {useState} from "react";
@@ -37,7 +37,7 @@ interface DataTableProps<TData, TValue> {
     data: TData[]
 }
 
-export function DataTable<TData, TValue>({columns,data}: DataTableProps<TData, TValue>) {
+export function DataTable<TData, TValue>({columns, data}: DataTableProps<TData, TValue>) {
     const [previousIsHovered, setPreviousIsHovered] = useState(false)
     const [nextIsHovered, setNextIsHovered] = useState(false)
     const [filterIsHovered, setFilterIsHovered] = useState(false);
@@ -73,6 +73,7 @@ export function DataTable<TData, TValue>({columns,data}: DataTableProps<TData, T
     const [sorting, setSorting] = useState<SortingState>([])
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
     const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
+    const [rowSelection, setRowSelection] = useState({})
 
     const table = useReactTable({
         data,
@@ -84,17 +85,20 @@ export function DataTable<TData, TValue>({columns,data}: DataTableProps<TData, T
         onColumnFiltersChange: setColumnFilters,
         getFilteredRowModel: getFilteredRowModel(),
         onColumnVisibilityChange: setColumnVisibility,
+        onRowSelectionChange: setRowSelection,
         state: {
             sorting,
             columnFilters,
             columnVisibility,
+            rowSelection,
         },
     })
 
     return (
         <div>
             <div className="text-sm w-full flex flex-row items-center justify-between select-none">
-                <div className="px-4 bg-black hover:bg-gray-900 flex flex-row items-center justify-between" onMouseEnter={handleFilterHover} onMouseLeave={handleFilterNotHover}>
+                <div className="px-4 bg-black hover:bg-gray-900 flex flex-row items-center justify-between"
+                     onMouseEnter={handleFilterHover} onMouseLeave={handleFilterNotHover}>
                     <Image
                         src={"/icons/filter-dark.svg"}
                         alt="Logo"
@@ -102,32 +106,33 @@ export function DataTable<TData, TValue>({columns,data}: DataTableProps<TData, T
                         width="25"
                         className="relative"
                     />
-                    <input className={filterIsHovered ? "bg-gray-900 text-white h-10 w-96 px-2 placeholder-gray-900 border-none outline-none select-all" : "bg-black text-white h-10 w-96 px-2 placeholder-gray-900 border-none outline-none select-all"}
-                           type="text"
-                           name="name"
-                           placeholder="Filter"
-                           value={(table.getColumn("position")?.getFilterValue() as string) ?? ""}
-                           onChange=
-                               {
-                                    (event) => {
-                                        if(window.scrollY !== 0){
-                                            window.scrollTo({
-                                                top: 0,
-                                                behavior: "smooth"
-                                            });
-                                        }
-                                        table.getColumn("position")?.setFilterValue(event.target.value)
+                    <input
+                        className={filterIsHovered ? "bg-gray-900 text-white h-10 w-96 px-2 placeholder-gray-900 border-none outline-none select-all" : "bg-black text-white h-10 w-96 px-2 placeholder-gray-900 border-none outline-none select-all"}
+                        type="text"
+                        name="name"
+                        placeholder="Filter"
+                        value={(table.getColumn("position")?.getFilterValue() as string) ?? ""}
+                        onChange=
+                            {
+                                (event) => {
+                                    if (window.scrollY !== 0) {
+                                        window.scrollTo({
+                                            top: 0,
+                                            behavior: "smooth"
+                                        });
                                     }
+                                    table.getColumn("position")?.setFilterValue(event.target.value)
                                 }
+                            }
 
                     />
                 </div>
                 <div className="px-4 flex flex-row items-center justify-end gap-4">
-                    <DropdownMenu >
+                    <DropdownMenu>
                         <DropdownMenuTrigger asChild className="outline-none">
                             <button className="px-1">
                                 <Image
-                                    src={cn(columnsIsHovered ? "/icons/columns-light.svg":"/icons/columns-dark.svg")}
+                                    src={cn(columnsIsHovered ? "/icons/columns-light.svg" : "/icons/columns-dark.svg")}
                                     alt="columns"
                                     height="25"
                                     width="25"
@@ -138,7 +143,7 @@ export function DataTable<TData, TValue>({columns,data}: DataTableProps<TData, T
                             </button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end">
-                            <DropdownMenuLabel >Hide columns</DropdownMenuLabel>
+                            <DropdownMenuLabel>Hide columns</DropdownMenuLabel>
                             {table
                                 .getAllColumns()
                                 .filter(
@@ -163,12 +168,12 @@ export function DataTable<TData, TValue>({columns,data}: DataTableProps<TData, T
                 </div>
             </div>
             <div className="rounded-sm border-x-0 border-y border-gray-700 text-gray-400">
-                <Table >
+                <Table>
                     <TableHeader>
                         {table.getHeaderGroups().map((headerGroup) => (
                             <TableRow className="border-gray-700" key={headerGroup.id}>
                                 {headerGroup.headers.map((header) => {
-                                    if (typeof header.column.columnDef['accessorKey'] === "undefined"){
+                                    if (typeof header.column.columnDef['accessorKey'] === "undefined") {
                                         return (
                                             <TableHead className="cursor-default" key={header.id}>
                                                 {header.isPlaceholder
@@ -181,7 +186,8 @@ export function DataTable<TData, TValue>({columns,data}: DataTableProps<TData, T
                                         )
                                     }
                                     return (
-                                        <TableHead className="cursor-pointer hover:text-white hover:bg-gray-900" key={header.id}>
+                                        <TableHead className="cursor-pointer hover:text-white hover:bg-gray-900"
+                                                   key={header.id}>
                                             {header.isPlaceholder
                                                 ? null
                                                 : flexRender(
@@ -194,15 +200,15 @@ export function DataTable<TData, TValue>({columns,data}: DataTableProps<TData, T
                             </TableRow>
                         ))}
                     </TableHeader>
-                    <TableBody >
+                    <TableBody>
                         {table.getRowModel().rows?.length ? (
                             table.getRowModel().rows.map((row) => (
                                 <TableRow className="border-gray-700 hover:bg-gray-900"
-                                    key={row.id}
-                                    data-state={row.getIsSelected() && "selected"}
+                                          key={row.id}
+                                          data-state={row.getIsSelected() && "selected"}
                                 >
                                     {row.getVisibleCells().map((cell) => (
-                                        <TableCell  key={cell.id}>
+                                        <TableCell key={cell.id}>
                                             {flexRender(cell.column.columnDef.cell, cell.getContext())}
                                         </TableCell>
                                     ))}
@@ -218,39 +224,52 @@ export function DataTable<TData, TValue>({columns,data}: DataTableProps<TData, T
                     </TableBody>
                 </Table>
             </div>
-            <div className="flex items-center justify-end space-x-2 p-4">
+            <div className="p-4 flex flex-row items-center justify-between">
+                <div className="flex items-center justify-start space-x-2">
+                    {table.getFilteredSelectedRowModel().rows.length > 0 ? (
+                        // If the condition is true
+                        <p className="text-sm font-normal text-gray-700">{table.getFilteredSelectedRowModel().rows.length} of{" "}
+                            {table.getFilteredRowModel().rows.length} row(s) selected.</p>
+                    ) : (
+                        <div/>
+                    )
+                    }
+                </div>
+                <div className="flex items-center justify-end space-x-2">
 
-                <button
-                    onMouseEnter={handlePreviousHover}
-                    onMouseLeave={handlePreviousNotHover}
-                    onClick={() => table.previousPage()}
-                    disabled={!table.getCanPreviousPage()}
-                    className={cn(table.getCanPreviousPage() ? "cursor-pointer flex items-center justify-center" : "cursor-not-allowed flex items-center justify-center")}
-                >
-                    <Image
-                        src={cn(table.getCanPreviousPage() ? cn(previousIsHovered ? "/icons/left-white.svg":"/icons/left-light.svg") : "/icons/left-dark.svg")}
-                        alt="previous"
-                        height="10"
-                        width="10"
-                        className="relative"
-                    />
-                </button>
-                <button
-                    onMouseEnter={handleNextHover}
-                    onMouseLeave={handleNextNotHover}
-                    onClick={() => table.nextPage()}
-                    disabled={!table.getCanNextPage()}
-                    className={cn(table.getCanNextPage() ? "cursor-pointer flex items-center justify-center" : "cursor-not-allowed flex items-center justify-center")}
-                >
-                    <Image
-                        src={cn(table.getCanNextPage() ? cn(nextIsHovered ? "/icons/right-white.svg":"/icons/right-light.svg") : "/icons/right-dark.svg")}
-                        alt="previous"
-                        height="10"
-                        width="10"
-                        className="relative"
-                    />
-                </button>
+                    <button
+                        onMouseEnter={handlePreviousHover}
+                        onMouseLeave={handlePreviousNotHover}
+                        onClick={() => table.previousPage()}
+                        disabled={!table.getCanPreviousPage()}
+                        className={cn(table.getCanPreviousPage() ? "cursor-pointer flex items-center justify-center" : "cursor-not-allowed flex items-center justify-center")}
+                    >
+                        <Image
+                            src={cn(table.getCanPreviousPage() ? cn(previousIsHovered ? "/icons/left-white.svg" : "/icons/left-light.svg") : "/icons/left-dark.svg")}
+                            alt="previous"
+                            height="10"
+                            width="10"
+                            className="relative"
+                        />
+                    </button>
+                    <button
+                        onMouseEnter={handleNextHover}
+                        onMouseLeave={handleNextNotHover}
+                        onClick={() => table.nextPage()}
+                        disabled={!table.getCanNextPage()}
+                        className={cn(table.getCanNextPage() ? "cursor-pointer flex items-center justify-center" : "cursor-not-allowed flex items-center justify-center")}
+                    >
+                        <Image
+                            src={cn(table.getCanNextPage() ? cn(nextIsHovered ? "/icons/right-white.svg" : "/icons/right-light.svg") : "/icons/right-dark.svg")}
+                            alt="previous"
+                            height="10"
+                            width="10"
+                            className="relative"
+                        />
+                    </button>
+                </div>
             </div>
+
         </div>
     )
 }
