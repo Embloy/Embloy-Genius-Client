@@ -20,6 +20,7 @@ import {
     TableHead,
     TableHeader,
     TableRow,
+    TableRowExtendable,
 } from "@/app/components/ui/table"
 import {
     DropdownMenu,
@@ -93,13 +94,20 @@ export function JobDataTable<TData, TValue>({columns, data}: DataTableProps<TDat
     }, [])
 
     const [openRows, setOpenRows] = useState<list<number>>(null)
-
+    const [openRow, setOpenRow] = useState<number>(null)
     const toggle_row = (row) => {
-
+        let new_row = null
+        if (openRow !== Number(row)) {
+            new_row = Number(row)
+        }
+        console.log(new_row)
+        setOpenRow(new_row)
+        /*
         let new_rows: list<number> = []
         if (openRows !== null) {
             new_rows = openRows
         }
+
         if (new_rows.includes(Number(row))) { // removal case
             const i = new_rows.indexOf(Number(row))
             if (i !== -1) {
@@ -108,8 +116,10 @@ export function JobDataTable<TData, TValue>({columns, data}: DataTableProps<TDat
         } else { // addition case
             new_rows.push(Number(row))
         }
-
+        console.log(new_rows)
         setOpenRows(new_rows.length === 0 ? null : new_rows);
+
+         */
     }
 
 
@@ -223,30 +233,19 @@ export function JobDataTable<TData, TValue>({columns, data}: DataTableProps<TDat
                     <TableBody className="text-white">
                         {table.getRowModel().rows?.length ? (
                             table.getRowModel().rows.map((row) => (
-                                openRows !== null && openRows.includes(Number(row.id)) ? (
-                                    <TableRow className="border-white hover:bg-gray-900 cursor-pointer"
-                                              key={row.id}
-                                              data-state={row.getIsSelected() && "selected"}
-                                              onClick={() => toggle_row(row.id)}
-                                    >
-                                        {row.getVisibleCells().map((cell) => (
-                                            <TableCell key={cell.id}>
-                                                {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                                            </TableCell>
-                                        ))}
-                                    </TableRow>
-                                ) : (
-                                    <TableRow className="border-gray-700 hover:bg-gray-900 cursor-pointer"
-                                              key={row.id}
-                                              data-state={row.getIsSelected() && "selected"}
-                                              onClick={() => toggle_row(row.id)}
-                                    > {row.getVisibleCells().map((cell) => (
-                                            <TableCell key={cell.id}>
-                                                {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                                            </TableCell>
-                                        ))}
-                                    </TableRow>
-                                )
+                                <TableRowExtendable className="border-gray-700 hover:bg-gray-900 cursor-pointer"
+                                          key={row.id}
+                                          extended={!!(openRow !== null && openRow === Number(row.id)) }
+                                          data-state={row.getIsSelected() && "selected"}
+                                          onClick={() => toggle_row(row.id)}
+                                >
+                                    {row.getVisibleCells().map((cell) => (
+                                        <TableCell key={cell.id}>
+                                            {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                                        </TableCell>
+                                    ))}
+
+                                </TableRowExtendable>
 
                             ))
                         ) : (
