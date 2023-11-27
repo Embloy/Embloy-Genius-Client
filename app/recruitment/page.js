@@ -101,9 +101,11 @@ export default function Jobs() {
                 </div>
 
                 <div className="w-full flex flex-col items-center justify-start">
-                    <div className="container mx-auto">
-                        <DataTable columns={columns} data={data}  />
-                    </div>
+                    {currentSubPageID === jobsSubPageID && (
+                        <div className="container mx-auto">
+                            <DataTable columns={columns} data={data}  />
+                        </div>
+                    )}
                 </div>
 
             </div>

@@ -226,14 +226,11 @@ export function DataTable<TData, TValue>({columns, data}: DataTableProps<TData, 
             </div>
             <div className="p-4 flex flex-row items-center justify-between">
                 <div className="flex items-center justify-start space-x-2">
-                    {table.getFilteredSelectedRowModel().rows.length > 0 ? (
+                    {table.getFilteredSelectedRowModel().rows.length > 0 && (
                         // If the condition is true
                         <p className="text-sm font-normal text-gray-700">{table.getFilteredSelectedRowModel().rows.length} of{" "}
                             {table.getFilteredRowModel().rows.length} row(s) selected.</p>
-                    ) : (
-                        <div/>
-                    )
-                    }
+                    )}
                 </div>
                 <div className="flex items-center justify-end space-x-2">
 

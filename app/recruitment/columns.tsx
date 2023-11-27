@@ -113,6 +113,8 @@ export const columns: ColumnDef<Job>[] = [
                     </DropdownMenuContent>
                 </DropdownMenu>
             )
-        }
+        },
+        enableSorting: false,
+        enableHiding: false,
     }
 ]
