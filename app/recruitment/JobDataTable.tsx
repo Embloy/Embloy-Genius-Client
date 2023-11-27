@@ -34,6 +34,7 @@ import React, {useEffect, useState} from "react";
 import {DataTablePagination} from "@/app/components/datatable/DataTablePagination";
 import {extractContent} from "@/lib/utils/helpers";
 
+
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
     data: TData[]
@@ -89,6 +90,23 @@ export function JobDataTable<TData, TValue>({columns, data}: DataTableProps<TDat
     useEffect(() => {
         default_hides()
     }, [])
+
+
+    const [openRows, setOpenRows] = useState([])
+    const toggle_row = (row) => {
+        let new_rows = openRows
+
+        if (openRows.includes(row)){ // removal case
+            const i = new_rows.indexOf(row)
+            if (i !== -1){
+                new_rows.splice(i, 1)
+            }
+        } else { // addition case
+            new_rows.push(row)
+        }
+
+        setOpenRows(new_rows)
+    }
 
 
     return (
@@ -201,9 +219,10 @@ export function JobDataTable<TData, TValue>({columns, data}: DataTableProps<TDat
                     <TableBody className="text-white">
                         {table.getRowModel().rows?.length ? (
                             table.getRowModel().rows.map((row) => (
-                                <TableRow className="border-gray-700 hover:bg-gray-900"
+                                <TableRow className="border-gray-700 hover:bg-gray-900 cursor-pointer"
                                           key={row.id}
                                           data-state={row.getIsSelected() && "selected"}
+                                          onClick={() => toggle_row(row.id)}
                                 >
                                     {row.getVisibleCells().map((cell) => (
                                         <TableCell key={cell.id}>
