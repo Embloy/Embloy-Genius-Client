@@ -32,13 +32,14 @@ import {cn} from "@/lib/utils";
 import Image from "next/image";
 import React, {useEffect, useState} from "react";
 import {DataTablePagination} from "@/app/components/datatable/DataTablePagination";
+import {extractContent} from "@/lib/utils/helpers";
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
     data: TData[]
 }
 
-export function DataTable<TData, TValue>({columns, data}: DataTableProps<TData, TValue>) {
+export function JobDataTable<TData, TValue>({columns, data}: DataTableProps<TData, TValue>) {
     const [filterIsHovered, setFilterIsHovered] = useState(false);
     const [columnsIsHovered, setColumnsIsHovered] = useState(false)
 
@@ -83,6 +84,7 @@ export function DataTable<TData, TValue>({columns, data}: DataTableProps<TData, 
 
     const default_hides = () => {
         table.getColumn("job_id").toggleVisibility(false)
+        table.getColumn("job_type").toggleVisibility(false)
     }
     useEffect(() => {
         default_hides()
@@ -145,16 +147,17 @@ export function DataTable<TData, TValue>({columns, data}: DataTableProps<TData, 
                                     (column) => column.getCanHide()
                                 )
                                 .map((column) => {
+                                    const column_title = extractContent(column.columnDef.header.toString(), 'title')
                                     return (
                                         <DropdownMenuCheckboxItem
                                             key={column.id}
-                                            className="capitalize text-gray-400 hover:text-white"
+                                            className="capitalize text-gray-400 hover:text-white cursor-pointer"
                                             checked={column.getIsVisible()}
                                             onCheckedChange={(value) =>
                                                 column.toggleVisibility(!!value)
                                             }
                                         >
-                                            {column.id}
+                                            {column_title}
                                         </DropdownMenuCheckboxItem>
                                     )
                                 })}

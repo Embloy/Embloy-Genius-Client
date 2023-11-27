@@ -15,12 +15,13 @@ import {
 } from "@/app/components/ui/dropdown-menu"
 import {DataTableColumnHeader} from "@/app/components/datatable/DataTableColumnHeader";
 import {Job} from "@/app/recruitment/job_type";
+import {cast_date} from "@/lib/utils/formats";
 
 
 export const columns: ColumnDef<Job>[] = [
     {
         id: "select",
-        header: ({ table }) => (
+        header: ({table}) => (
             <Checkbox
                 checked={
                     table.getIsAllPageRowsSelected() ||
@@ -30,7 +31,7 @@ export const columns: ColumnDef<Job>[] = [
                 aria-label="Select all"
             />
         ),
-        cell: ({ row }) => (
+        cell: ({row}) => (
             <Checkbox
                 checked={row.getIsSelected()}
                 onCheckedChange={(value) => row.toggleSelected(!!value)}
@@ -42,7 +43,7 @@ export const columns: ColumnDef<Job>[] = [
     },
     {
         accessorKey: "job_id",
-        header: ({ column }) => (
+        header: ({column}) => (
             <DataTableColumnHeader column={column} title="Job ID"/>
         ),
         enableSorting: true,
@@ -50,10 +51,80 @@ export const columns: ColumnDef<Job>[] = [
     },
     {
         accessorKey: "job_type",
-        header: ({ column }) => (
-            <DataTableColumnHeader column={column} title="Type"/>
+        header: ({column}) => (
+            <DataTableColumnHeader column={column} title="Category"/>
+        ),
+        enableSorting: false,
+        enableHiding: true,
+    },
+    {
+        accessorKey: "position",
+        header: ({column}) => (
+            <DataTableColumnHeader column={column} title="Position"/>
+        ),
+        enableSorting: false,
+        enableHiding: true,
+    },
+    {
+        accessorKey: "status",
+        header: ({column}) => (
+            <DataTableColumnHeader column={column} title="Visibility"/>
         ),
         enableSorting: true,
         enableHiding: true,
+        cell: ({row}) => {
+            let visibility = ""
+            if (row.getValue('status') === 0) {
+                visibility = "Unlisted"
+            } else if (row.getValue('status') === 1) {
+                visibility = "Public"
+            } else {
+                visibility = undefined
+            }
+            return <div>{visibility}</div>
+
+        },
     },
+    {
+        accessorKey: "start_slot",
+        header: ({column}) => (
+            <DataTableColumnHeader column={column} title="Onboarding On"/>
+        ),
+        enableSorting: true,
+        enableHiding: true,
+        cell: ({row}) => {
+            const date = cast_date(row.getValue('start_slot'), 'us')
+            return <div>{date}</div>
+        },
+    },
+    {
+        accessorKey: "view_count",
+        header: ({column}) => (
+            <DataTableColumnHeader column={column} title="Views"/>
+        ),
+        enableSorting: false,
+        enableHiding: true,
+    },
+    {
+        accessorKey: "application_count",
+        header: ({column}) => (
+            <DataTableColumnHeader column={column} title="Applications"/>
+        ),
+        enableSorting: false,
+        enableHiding: true,
+    },
+    {
+        accessorKey: "created_at",
+        header: ({column}) => (
+            <DataTableColumnHeader column={column} title="Created On"/>
+        ),
+        enableSorting: true,
+        enableHiding: true,
+        cell: ({row}) => {
+            const date = cast_date(row.getValue('created_at'), 'us')
+            return <div>{date}</div>
+        },
+    },
+
+
 ]
