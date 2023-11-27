@@ -64,7 +64,7 @@ const Signin = () => {
     return (
         <div className={`fixed inset-0 flex flex-col justify-center items-center z-50 bg-black overflow-hidden`}>
             <div
-                className="border-[1px] border-gray-700 rounded-lg flex flex-col items-center justify-center px-10 py-8">
+                className=" border-[1px] border-gray-700 rounded-lg flex flex-col items-center justify-center px-10 py-8">
                 <Image
                     src="/img/logo_on_dark.png"
                     alt="Logo"
@@ -79,7 +79,7 @@ const Signin = () => {
                         {loginError ? (
                             <>
                                 <input
-                                    className="mb-2 px-5 bg-black hover:bg-gray-800 text-gray-400 border-[1px] border-red-500 rounded-full h-14 w-96 rounded-lg"
+                                    className="focus:outline-none mb-2 px-5 bg-black hover:bg-gray-800 text-gray-400 border-[1px] border-red-500 rounded-full h-14 w-96 rounded-lg"
                                     minLength="3"
                                     name="username"
                                     id="username"
@@ -91,7 +91,7 @@ const Signin = () => {
                                 />
                                 <br />
                                 <input
-                                    className="mb-2 px-5 bg-black hover:bg-gray-800 text-gray-400 border-[1px] border-red-500 rounded-full h-14 w-96 rounded-lg"
+                                    className="focus:outline-none mb-2 px-5 bg-black hover:bg-gray-800 text-gray-400 border-[1px] border-red-500 rounded-full h-14 w-96 rounded-lg"
                                     minLength="5"
                                     name="password"
                                     id="password"
@@ -107,7 +107,7 @@ const Signin = () => {
                         ) : (
                             <>
                                 <input
-                                    className="mb-2 px-5 bg-black hover:bg-gray-800 text-gray-400 border-[1px] border-gray-700 rounded-full h-14 w-96 rounded-lg"
+                                    className="focus:outline-none mb-2 px-5 bg-black hover:bg-gray-800 text-gray-400 border-[1px] border-gray-700 rounded-full h-14 w-96 rounded-lg"
                                     minLength="3"
                                     name="username"
                                     id="username"
@@ -119,7 +119,7 @@ const Signin = () => {
                                 />
                                 <br />
                                 <input
-                                    className="mb-2 px-5 bg-black hover-bg-gray-800 text-gray-400 border-[1px] border-gray-700 rounded-full h-14 w-96 rounded-lg"
+                                    className="focus:outline-none mb-2 px-5 bg-black hover-bg-gray-800 text-gray-400 border-[1px] border-gray-700 rounded-full h-14 w-96 rounded-lg"
                                     minLength="5"
                                     name="password"
                                     id="password"
