@@ -1,12 +1,12 @@
 "use client";
 import React, {useState} from "react";
 import {cn} from "@/lib/utils";
-import { columns} from "@/app/recruitment/columns";
-import { DataTable} from "@/app/components/datatable/DataTable";
+import { columns} from "@/app/recruitment/jobs_columns";
+import { JobDataTable} from "@/app/recruitment/JobDataTable";
 import './locals.css'
 import Image from "next/image";
 
-const test_jobs = [
+const tet_jobs = [
     {id:0, position: "CEO", salary:500, currency: 0},
     {id:1, position: "CTO", salary:400, currency: 0},
     {id:2, position: "COO", salary:400, currency: 0},
@@ -30,6 +30,13 @@ const test_jobs = [
 ]
 
 
+const test_jobs = [
+    {job_id:0, job_type:"Scrum", status:1, start_slot:"2029-06-08T08:12:00.000Z", position:"CEO", view_count:1289, application_count:23, created_at: "2023-11-21T09:52:58.547Z", updated_at: "2023-11-21T09:52:58.547Z"},
+    {job_id:1, job_type:"Scrum", status:0, start_slot:"2029-06-08T08:12:00.000Z", position:"COO", view_count:9289, application_count:13, created_at: "2023-11-21T09:52:58.547Z", updated_at: "2023-11-21T09:52:58.547Z"},
+
+
+]
+
 
 
 export default function Jobs() {
@@ -40,7 +47,6 @@ export default function Jobs() {
         if (currentSubPageID != id){
             setcurrentSubPageID(id);
         }
-        console.log("new page = " + currentSubPageID)
     }
     const jobsSubPageID = 0;
     const jobsSubPage = () => {
@@ -92,7 +98,7 @@ export default function Jobs() {
                                 <p>Promotions</p>
                             </div>
                         </li>
-                        <li className="text-transparent select-none w-screen flex flex-row items-center justify-start border-b-[1px] border-gray-700 p-2" >
+                        <li className="cursor-hidden text-transparent select-none w-screen flex flex-row items-center justify-start border-b-[1px] border-gray-700 p-2" >
                             <button className="cursor-hidden">
                                 <p>Promotions</p>
                             </button>
@@ -103,7 +109,7 @@ export default function Jobs() {
                 <div className="w-full flex flex-col items-center justify-start">
                     {currentSubPageID === jobsSubPageID && (
                         <div className="container mx-auto">
-                            <DataTable columns={columns} data={data}  />
+                            <JobDataTable columns={columns} data={data}  />
                         </div>
                     )}
                 </div>

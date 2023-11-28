@@ -20,6 +20,7 @@ import {
     TableHead,
     TableHeader,
     TableRow,
+    JobTableRowExtendable,
 } from "@/app/components/ui/table"
 import {
     DropdownMenu,
@@ -30,15 +31,18 @@ import {
 import {Button} from "@/app/components/ui/button"
 import {cn} from "@/lib/utils";
 import Image from "next/image";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {DataTablePagination} from "@/app/components/datatable/DataTablePagination";
+import {extractContent} from "@/lib/utils/helpers";
+import {list} from "postcss";
+
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
     data: TData[]
 }
 
-export function DataTable<TData, TValue>({columns, data}: DataTableProps<TData, TValue>) {
+export function JobDataTable<TData, TValue>({columns, data}: DataTableProps<TData, TValue>) {
     const [filterIsHovered, setFilterIsHovered] = useState(false);
     const [columnsIsHovered, setColumnsIsHovered] = useState(false)
 
@@ -81,6 +85,44 @@ export function DataTable<TData, TValue>({columns, data}: DataTableProps<TData, 
         },
     })
 
+    const default_hides = () => {
+        table.getColumn("job_id").toggleVisibility(false)
+        table.getColumn("job_type").toggleVisibility(false)
+    }
+    useEffect(() => {
+        default_hides()
+    }, [])
+
+    const [openRows, setOpenRows] = useState<list<number>>(null)
+    const [openRow, setOpenRow] = useState<number>(null)
+    const toggle_row = (row) => {
+        let new_row = null
+        if (openRow !== Number(row)) {
+            new_row = Number(row)
+        }
+        console.log(new_row)
+        setOpenRow(new_row)
+        /*
+        let new_rows: list<number> = []
+        if (openRows !== null) {
+            new_rows = openRows
+        }
+
+        if (new_rows.includes(Number(row))) { // removal case
+            const i = new_rows.indexOf(Number(row))
+            if (i !== -1) {
+                new_rows.splice(i, 1)
+            }
+        } else { // addition case
+            new_rows.push(Number(row))
+        }
+        console.log(new_rows)
+        setOpenRows(new_rows.length === 0 ? null : new_rows);
+
+         */
+    }
+
+
     return (
         <div>
             <div className="text-sm w-full flex flex-row items-center justify-between select-none">
@@ -98,7 +140,7 @@ export function DataTable<TData, TValue>({columns, data}: DataTableProps<TData, 
                         type="text"
                         name="name"
                         placeholder="Filter"
-                        value={(table.getColumn("position")?.getFilterValue() as string) ?? ""}
+                        value={(table.getColumn("job_type")?.getFilterValue() as string) ?? ""}
                         onChange=
                             {
                                 (event) => {
@@ -108,7 +150,7 @@ export function DataTable<TData, TValue>({columns, data}: DataTableProps<TData, 
                                             behavior: "smooth"
                                         });
                                     }
-                                    table.getColumn("position")?.setFilterValue(event.target.value)
+                                    table.getColumn("job_type")?.setFilterValue(event.target.value)
                                 }
                             }
 
@@ -137,16 +179,17 @@ export function DataTable<TData, TValue>({columns, data}: DataTableProps<TData, 
                                     (column) => column.getCanHide()
                                 )
                                 .map((column) => {
+                                    const column_title = extractContent(column.columnDef.header.toString(), 'title')
                                     return (
                                         <DropdownMenuCheckboxItem
                                             key={column.id}
-                                            className="capitalize text-gray-400 hover:text-white"
+                                            className="capitalize text-gray-400 hover:text-white cursor-pointer"
                                             checked={column.getIsVisible()}
                                             onCheckedChange={(value) =>
                                                 column.toggleVisibility(!!value)
                                             }
                                         >
-                                            {column.id}
+                                            {column_title}
                                         </DropdownMenuCheckboxItem>
                                     )
                                 })}
@@ -174,7 +217,7 @@ export function DataTable<TData, TValue>({columns, data}: DataTableProps<TData, 
                                     }
                                     return (
                                         <TableHead
-                                                   key={header.id}>
+                                            key={header.id}>
                                             {header.isPlaceholder
                                                 ? null
                                                 : flexRender(
@@ -190,16 +233,21 @@ export function DataTable<TData, TValue>({columns, data}: DataTableProps<TData, 
                     <TableBody className="text-white">
                         {table.getRowModel().rows?.length ? (
                             table.getRowModel().rows.map((row) => (
-                                <TableRow className="border-gray-700 hover:bg-gray-900"
+                                <JobTableRowExtendable className="border-gray-700 hover:bg-gray-900 cursor-pointer"
                                           key={row.id}
+                                          extended={!!(openRow !== null && openRow === Number(row.id)) }
+                                          job={data.find(job => job.job_id === Number(row.id))}
                                           data-state={row.getIsSelected() && "selected"}
+                                          onClick={() => toggle_row(row.id)}
                                 >
                                     {row.getVisibleCells().map((cell) => (
                                         <TableCell key={cell.id}>
                                             {flexRender(cell.column.columnDef.cell, cell.getContext())}
                                         </TableCell>
                                     ))}
-                                </TableRow>
+
+                                </JobTableRowExtendable>
+
                             ))
                         ) : (
                             <TableRow>
@@ -219,7 +267,7 @@ export function DataTable<TData, TValue>({columns, data}: DataTableProps<TData, 
                             {table.getFilteredRowModel().rows.length} row(s) selected.</p>
                     )}
                 </div>
-                <DataTablePagination table={table} />
+                <DataTablePagination table={table}/>
             </div>
 
         </div>
