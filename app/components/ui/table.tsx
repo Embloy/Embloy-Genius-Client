@@ -1,6 +1,7 @@
 import * as React from "react"
 
 import {cn} from "@/lib/utils"
+import {JobDetails} from "@/app/recruitment/job_details";
 
 const Table = React.forwardRef<
     HTMLTableElement,
@@ -66,20 +67,20 @@ const TableRow = React.forwardRef<
 ))
 TableRow.displayName = "TableRow"
 
-const TableRowExtendable = React.forwardRef<
+const JobTableRowExtendable = React.forwardRef<
     HTMLTableRowElement,
     {
         className?: string;
         extended?: boolean;
         onClick?: () => void;
     }
->(({className, extended, ...props}, ref) => {
+>(({className, extended, job, ...props}, ref) => {
     const rowClasses = cn(
         "border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted",
         className
     );
 
-    const extendedRowClasses = "data-[state=selected]:bg-muted w-full flex flex-column"
+    const extendedRowClasses = "relative data-[state=selected]:bg-muted w-full flex flex-column"
 
     const {children, ...otherProps} = props;
 
@@ -87,18 +88,20 @@ const TableRowExtendable = React.forwardRef<
         extended ? (
             <>
                 <tr
-                        ref={ref}
-                        className={rowClasses}
-                        {...otherProps}
-                    >
-                        {children}
+                    ref={ref}
+                    className={rowClasses}
+                    {...otherProps}
+                >
+                    {children}
+
                 </tr>
-                <tr>
-                    <td className={extendedRowClasses}>
-                        <p>Guck mal her</p>
-                    </td>
+                <tr  className={cn(rowClasses, "relative, w-screen, bg-transparent, hover:bg-transparent")}>
+                    <div className="h-[500px]">
+                        <JobDetails job={job}/>
+                    </div>
                 </tr>
             </>
+
         ) : (
             <tr
                 ref={ref}
@@ -159,7 +162,7 @@ export {
     TableFooter,
     TableHead,
     TableRow,
-    TableRowExtendable,
+    JobTableRowExtendable,
     TableCell,
     TableCaption,
 }

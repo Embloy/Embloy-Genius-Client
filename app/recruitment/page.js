@@ -31,8 +31,8 @@ const tet_jobs = [
 
 
 const test_jobs = [
-    {job_id:0, job_type:"Scrum", status:1, start_slot:"2029-06-08T08:12:00.000Z", position:"CEO", view_count:1289, application_count:23, created_at: "2023-11-21T09:52:58.547Z"},
-    {job_id:1, job_type:"Scrum", status:0, start_slot:"2029-06-08T08:12:00.000Z", position:"COO", view_count:9289, application_count:13, created_at: "2023-11-21T09:52:58.547Z"},
+    {job_id:0, job_type:"Scrum", status:1, start_slot:"2029-06-08T08:12:00.000Z", position:"CEO", view_count:1289, application_count:23, created_at: "2023-11-21T09:52:58.547Z", updated_at: "2023-11-21T09:52:58.547Z"},
+    {job_id:1, job_type:"Scrum", status:0, start_slot:"2029-06-08T08:12:00.000Z", position:"COO", view_count:9289, application_count:13, created_at: "2023-11-21T09:52:58.547Z", updated_at: "2023-11-21T09:52:58.547Z"},
 
 
 ]

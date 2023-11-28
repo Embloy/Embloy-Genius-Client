@@ -20,7 +20,7 @@ import {
     TableHead,
     TableHeader,
     TableRow,
-    TableRowExtendable,
+    JobTableRowExtendable,
 } from "@/app/components/ui/table"
 import {
     DropdownMenu,
@@ -233,9 +233,10 @@ export function JobDataTable<TData, TValue>({columns, data}: DataTableProps<TDat
                     <TableBody className="text-white">
                         {table.getRowModel().rows?.length ? (
                             table.getRowModel().rows.map((row) => (
-                                <TableRowExtendable className="border-gray-700 hover:bg-gray-900 cursor-pointer"
+                                <JobTableRowExtendable className="border-gray-700 hover:bg-gray-900 cursor-pointer"
                                           key={row.id}
                                           extended={!!(openRow !== null && openRow === Number(row.id)) }
+                                          job={data.find(job => job.job_id === Number(row.id))}
                                           data-state={row.getIsSelected() && "selected"}
                                           onClick={() => toggle_row(row.id)}
                                 >
@@ -245,7 +246,7 @@ export function JobDataTable<TData, TValue>({columns, data}: DataTableProps<TDat
                                         </TableCell>
                                     ))}
 
-                                </TableRowExtendable>
+                                </JobTableRowExtendable>
 
                             ))
                         ) : (
