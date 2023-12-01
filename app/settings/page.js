@@ -2,6 +2,9 @@
 import React, {useState} from "react";
 import {cn} from "@/lib/utils";
 import Image from "next/image";
+import {JobDataTable} from "@/app/recruitment/JobDataTable";
+import {columns} from "@/app/recruitment/jobs_columns";
+import {AccessSettings} from "@/app/settings/access";
 
 export default function Settings() {
     const [currentSubPageID, setcurrentSubPageID] = useState(0);
@@ -143,6 +146,13 @@ export default function Settings() {
                             </button>
                         </li>
                     </ul>
+                </div>
+                <div className="w-full flex flex-col items-center justify-start">
+                    {currentSubPageID === accessSubPageID && (
+                        <div className="container mx-auto">
+                            <AccessSettings  />
+                        </div>
+                    )}
                 </div>
 
             </div>
