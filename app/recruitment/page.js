@@ -43,7 +43,6 @@ export default function Jobs() {
     // subpages
     const [currentSubPageID, setcurrentSubPageID] = useState(0);
     const switchSubPage = (id) => {
-        console.log("Old page = " + currentSubPageID)
         if (currentSubPageID != id){
             setcurrentSubPageID(id);
         }
@@ -51,7 +50,6 @@ export default function Jobs() {
     const jobsSubPageID = 0;
     const jobsSubPage = () => {
         switchSubPage(jobsSubPageID);
-
     };
     const applicationsSubPageID = 1;
     const applicationsSubPage = () => {
@@ -98,8 +96,8 @@ export default function Jobs() {
                                 <p>Promotions</p>
                             </div>
                         </li>
-                        <li className="cursor-hidden text-transparent select-none w-screen flex flex-row items-center justify-start border-b-[1px] border-gray-700 p-2" >
-                            <button className="cursor-hidden">
+                        <li className="cursor-default text-transparent select-none w-screen flex flex-row items-center justify-start border-b-[1px] border-gray-700 p-2" >
+                            <button className="cursor-default">
                                 <p>Promotions</p>
                             </button>
                         </li>

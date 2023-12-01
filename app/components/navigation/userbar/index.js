@@ -3,7 +3,7 @@ import React, {useContext} from "react";
 import Image from "next/image";
 import {useRouter} from "next/navigation";
 import {logout} from "@/lib/authentication";
-
+import Link from "next/link";
 
 export const UserBar = ({ isVisible, onClose, userData }) => {
     const router = useRouter();
@@ -119,7 +119,7 @@ export const UserBar = ({ isVisible, onClose, userData }) => {
                             </div>
 
 
-                            <div className={sidebarfieldClass} onClick={out}>
+                            <Link className={sidebarfieldClass} href="/settings" onClick={onClose}>
                                 <div className={sidebarfieldleftClass}>
                                     <Image
                                         src="/icons/settings.svg"
@@ -132,7 +132,7 @@ export const UserBar = ({ isVisible, onClose, userData }) => {
                                 <div className={sidebarfieldrightClass}>
                                     <p className="text-sm" >Settings</p>
                                 </div>
-                            </div>
+                            </Link>
 
 
                             <div className="w-full h-4" />
