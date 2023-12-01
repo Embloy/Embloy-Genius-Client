@@ -78,60 +78,60 @@ export default function Settings() {
                 <div className="w-full flex flex-col items-center justify-start">
                     <ul className="text-sm w-full flex flex-row items-center justify-start">
                         <li onClick={profileSubPage} onMouseEnter={handleProfileHover} onMouseLeave={handleProfileNotHover} className={cn(currentSubPageID === profileSubPageID ? "flex flex-row items-center justify-start border-b-[1px] border-embloy-green py-2 px-6 text-white cursor-pointer" : "flex flex-row items-center justify-start border-b-[1px] border-gray-700 hover:border-gray-400 py-2 px-6 text-gray-400 hover:text-white cursor-pointer")} >
-                            <div className="h-full w-full flex flex-row items-center justify-center gap-2" >
+                            <div className="h-full w-full flex flex-row items-center justify-center gap-1" >
                                 <Image
                                     src={cn(currentSubPageID === profileSubPageID ? "/icons/profile-white.svg" : cn(profileIsHovered ? "/icons/profile-white.svg" : "/icons/profile-light.svg"))}
                                     alt="Logo"
-                                    height="15"
-                                    width="15"
+                                    height="20"
+                                    width="20"
                                     className="relative"
                                 />
                                 <p>Profile</p>
                             </div>
                         </li>
                         <li onClick={accessSubPage} onMouseEnter={handleAccessHover} onMouseLeave={handleAccessNotHover} className={cn(currentSubPageID === accessSubPageID ? "flex flex-row items-center justify-start border-b-[1px] border-embloy-green py-2 px-6 text-white cursor-pointer" : "flex flex-row items-center justify-start border-b-[1px] border-gray-700 hover:border-gray-400 py-2 px-6 text-gray-400 hover:text-white cursor-pointer")} >
-                            <div className="h-full w-full flex flex-row items-center justify-center gap-2" >
+                            <div className="h-full w-full flex flex-row items-center justify-center gap-1" >
                                 <Image
                                     src={cn(currentSubPageID === accessSubPageID ? "/icons/access-white.svg" : cn(accessIsHovered ? "/icons/access-white.svg" : "/icons/access-light.svg"))}
                                     alt="Logo"
-                                    height="15"
-                                    width="15"
+                                    height="20"
+                                    width="20"
                                     className="relative"
                                 />
                                 <p>Access</p>
                             </div>
                         </li>
                         <li onClick={securitySubPage} onMouseEnter={handleSecurityHover} onMouseLeave={handleSecurityNotHover} className={cn(currentSubPageID === securitySubPageID ? "flex flex-row items-center justify-start border-b-[1px] border-embloy-green py-2 px-6 text-white cursor-pointer" : "flex flex-row items-center justify-start border-b-[1px] border-gray-700 hover:border-gray-400 py-2 px-6 text-gray-400 hover:text-white cursor-pointer")} >
-                            <div className="h-full w-full flex flex-row items-center justify-center gap-2" >
+                            <div className="h-full w-full flex flex-row items-center justify-center gap-1" >
                                 <Image
                                     src={cn(currentSubPageID === securitySubPageID ? "/icons/security-white.svg" : cn(securityIsHovered ? "/icons/security-white.svg" : "/icons/security-light.svg"))}
                                     alt="Logo"
-                                    height="15"
-                                    width="15"
+                                    height="20"
+                                    width="20"
                                     className="relative"
                                 />
                                 <p>Security</p>
                             </div>
                         </li>
                         <li onClick={integrationsSubPage} onMouseEnter={handleIntegrationsHover} onMouseLeave={handleIntegrationsNotHover} className={cn(currentSubPageID === integrationsSubPageID ? "flex flex-row items-center justify-start border-b-[1px] border-embloy-green py-2 px-6 text-white cursor-pointer" : "flex flex-row items-center justify-start border-b-[1px] border-gray-700 hover:border-gray-400 py-2 px-6 text-gray-400 hover:text-white cursor-pointer")} >
-                            <div className="h-full w-full flex flex-row items-center justify-center gap-2" >
+                            <div className="h-full w-full flex flex-row items-center justify-center gap-1" >
                                 <Image
                                     src={cn(currentSubPageID === integrationsSubPageID ? "/icons/integrations-white.svg" : cn(integrationsIsHovered ? "/icons/integrations-white.svg" : "/icons/integrations-light.svg"))}
                                     alt="Logo"
-                                    height="15"
-                                    width="15"
+                                    height="20"
+                                    width="20"
                                     className="relative"
                                 />
                                 <p>Integrations</p>
                             </div>
                         </li>
                         <li onClick={archiveSubPage} onMouseEnter={handleArchiveHover} onMouseLeave={handleArchiveNotHover} className={cn(currentSubPageID === archiveSubPageID ? "flex flex-row items-center justify-start border-b-[1px] border-embloy-green py-2 px-6 text-white cursor-pointer" : "flex flex-row items-center justify-start border-b-[1px] border-gray-700 hover:border-gray-400 py-2 px-6 text-gray-400 hover:text-white cursor-pointer")} >
-                            <div className="h-full w-full flex flex-row items-center justify-center gap-2" >
+                            <div className="h-full w-full flex flex-row items-center justify-center gap-1" >
                                 <Image
                                     src={cn(currentSubPageID === archiveSubPageID ? "/icons/archive-white.svg" : cn(archiveIsHovered ? "/icons/archive-white.svg" : "/icons/archive-light.svg"))}
                                     alt="Logo"
-                                    height="15"
-                                    width="15"
+                                    height="20"
+                                    width="20"
                                     className="relative"
                                 />
                                 <p>Archive</p>
