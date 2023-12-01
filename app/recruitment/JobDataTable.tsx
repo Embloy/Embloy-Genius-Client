@@ -230,7 +230,7 @@ export function JobDataTable<TData, TValue>({columns, data}: DataTableProps<TDat
                             </TableRow>
                         ))}
                     </TableHeader>
-                    <TableBody className="text-white">
+                    <TableBody className="text-gray-200">
                         {table.getRowModel().rows?.length ? (
                             table.getRowModel().rows.map((row) => (
                                 <JobTableRowExtendable className="border-gray-700 hover:bg-gray-900 cursor-pointer"
