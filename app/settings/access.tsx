@@ -1,7 +1,7 @@
 "use client"
 import './locals.css'
 
-import React, {useState} from "react";
+import React, {useRef, useState} from "react";
 import {
     DropdownMenu,
     DropdownMenuCheckboxItem,
@@ -13,6 +13,9 @@ import {cn} from "@/lib/utils";
 import {extractContent} from "@/lib/utils/helpers";
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/app/components/ui/select";
 import {cast_date, date_seconds_from_now} from "@/lib/utils/formats";
+import {logout, request_access, request_refresh} from "@/lib/authentication";
+import {getCookie, setCookie} from "cookies-next";
+import {useRouter} from "next/navigation";
 
 interface Expiration {
     [key: string]: number;
@@ -27,6 +30,7 @@ const expirations: Expiration[] = [
 ];
 
 function AccessTokenClaim() {
+    const router = useRouter();
 
     const [note, setNote] = useState('');
     const [noteIsHovered, setNoteIsHovered] = useState(false);
@@ -50,6 +54,58 @@ function AccessTokenClaim() {
     };
     const handleExpires = (e) => {
         setExpires(e);
+    }
+
+
+    async function fetch_access_token() {
+        try {
+            // todo: check parameters, if any given
+            try {
+                return request_access(getCookie("refresh", {path: "/"}))
+                    .then((token) => {
+                        return token
+                    })
+                    .catch((error) => {
+                        logout(router);
+                    });
+
+            } catch (error) {
+                logout(router);
+            }
+
+        } catch (error) {
+            console.log("Fetching failed: " + error);
+
+        }
+    }
+
+
+    const [isLoading, setIsLoading] = useState(false);
+    const [success, setSucess] = useState(null);
+    const accessTokenRef = useRef(null);
+    const handleGenerate = async(e) => {
+        //todo: take parameters into account
+        e.preventDefault();
+        setIsLoading(true);
+        try {
+            const token = await fetch_access_token();
+            if (token) {
+                accessTokenRef.current.value = token;
+                accessTokenRef.current.select();
+                document.execCommand('copy'); // all browsers except firefox don't support mozillas new standard function yet...; https://developer.mozilla.org/en-US/docs/Web/API/Document/execCommand?retiredLocale=de#browser_compatibility
+                setSucess(true);
+            } else {
+                setSucess(false);
+            }
+
+
+            setIsLoading(false);
+        } catch (error) {
+            console.error(error);
+            setSucess(false);
+            setIsLoading(false);
+        }
+
     }
 
 
@@ -119,12 +175,18 @@ function AccessTokenClaim() {
                 </div>
 
                 <div className="w-full flex flex-row items-center justify-end gap-6">
-                    <button className="bg-black text-embloy-purple-light hover:text-embloy-purple-lighter h-7 px-4 border-[1.4px] border-embloy-purple-light hover:border-embloy-purple-lighter outline-none select-all rounded-full">
+                    <button onClick={handleGenerate} className="bg-black text-embloy-purple-light hover:text-embloy-purple-lighter h-7 px-4 border-[1.4px] border-embloy-purple-light hover:border-embloy-purple-lighter outline-none select-all rounded-full">
                         <p className="select-none">Generate</p>
                     </button>
                 </div>
 
             </div>
+            <input
+                ref={accessTokenRef}
+                type="text"
+                style={{ position: 'absolute', left: '-9999px' }}
+                readOnly
+            />
         </div>
     );
 }
