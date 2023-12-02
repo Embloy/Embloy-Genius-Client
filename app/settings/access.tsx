@@ -83,7 +83,7 @@ function AccessTokenClaim() {
     const [isLoading, setIsLoading] = useState(false);
     const [success, setSucess] = useState(null);
     const accessTokenRef = useRef(null);
-    const handleGenerate = async(e) => {
+    const handleGenerate = async (e) => {
         //todo: take parameters into account
         e.preventDefault();
         setIsLoading(true);
@@ -107,7 +107,6 @@ function AccessTokenClaim() {
         }
 
     }
-
 
 
     return (
@@ -142,8 +141,10 @@ function AccessTokenClaim() {
                     <div className="flex flex-col items-start justify-start gap-1">
                         <p className="font-medium text-gray-200">Expiration*</p>
                         <DropdownMenu>
-                            <DropdownMenuTrigger asChild className="outline-none" onMouseEnter={handleExpiresHover} onMouseLeave={handleExpiresNotHover}>
-                                <button className={expiresIsHovered ? "bg-gray-900 text-white h-7 w-40 px-2 border-[1.4px] border-gray-700 outline-none select-all rounded-lg text-left" : "bg-black text-white h-7 w-40 px-2 border-[1.4px] border-gray-700 outline-none select-all rounded-lg text-left"}>
+                            <DropdownMenuTrigger asChild className="outline-none" onMouseEnter={handleExpiresHover}
+                                                 onMouseLeave={handleExpiresNotHover}>
+                                <button
+                                    className={expiresIsHovered ? "bg-gray-900 text-white h-7 w-40 px-2 border-[1.4px] border-gray-700 outline-none select-all rounded-lg text-left" : "bg-black text-white h-7 w-40 px-2 border-[1.4px] border-gray-700 outline-none select-all rounded-lg text-left"}>
                                     <p>{expires} sec.</p>
                                 </button>
                             </DropdownMenuTrigger>
@@ -169,22 +170,55 @@ function AccessTokenClaim() {
                                     })}
                             </DropdownMenuContent>
                         </DropdownMenu>
-                        <p className="text-xs text-gray-700">This token will expire on {cast_date( date_seconds_from_now(expires), "us")} {cast_date( date_seconds_from_now(expires), "time-us")}</p>
+                        <p className="text-xs text-gray-700">This token will expire
+                            on {cast_date(date_seconds_from_now(expires), "us")} {cast_date(date_seconds_from_now(expires), "time-us")}</p>
                     </div>
 
                 </div>
+                {isLoading ? (
+                    <div className="w-full flex flex-row items-center justify-end gap-6">
+                        <div
+                            className="bg-black text-embloy-purple-lighter h-7 px-4 border-[1.4px] border-embloy-purple-lighter outline-none select-all rounded-full">
+                            <p className="select-none">Loading</p>
+                        </div>
+                    </div>
 
-                <div className="w-full flex flex-row items-center justify-end gap-6">
-                    <button onClick={handleGenerate} className="bg-black text-embloy-purple-light hover:text-embloy-purple-lighter h-7 px-4 border-[1.4px] border-embloy-purple-light hover:border-embloy-purple-lighter outline-none select-all rounded-full">
-                        <p className="select-none">Generate</p>
-                    </button>
-                </div>
+                ) : (
+                    <div className="w-full flex flex-row items-center justify-end gap-6">
+                        {success != null ? (
+                            success ? (
+                                <div
+                                    className="bg-black text-embloy-purple-light h-7 px-4 border-[1.4px] border-transparent hover:border-transparent outline-none select-all rounded-full">
+                                    <p className="select-none">Copied to clipboard!</p>
+                                </div>
+                            ) : (
+                                <div className="flex flex-row items-center justify-end gap-2">
+                                    <p className="select-none text-red-500">Something went wrong. Try again!</p>
+                                    <button onClick={handleGenerate}
+                                            className="bg-black text-embloy-purple-light hover:text-embloy-purple-lighter h-7 px-4 border-[1.4px] border-embloy-purple-light hover:border-embloy-purple-lighter outline-none select-all rounded-full">
+                                        <p className="select-none">Generate</p>
+                                    </button>
+                                </div>
+
+                            )
+
+                        ) : (
+                            <button onClick={handleGenerate}
+                                    className="bg-black text-embloy-purple-light hover:text-embloy-purple-lighter h-7 px-4 border-[1.4px] border-embloy-purple-light hover:border-embloy-purple-lighter outline-none select-all rounded-full">
+                                <p className="select-none">Generate</p>
+                            </button>
+                        )}
+
+                    </div>
+                )}
+
+
 
             </div>
             <input
                 ref={accessTokenRef}
                 type="text"
-                style={{ position: 'absolute', left: '-9999px' }}
+                style={{position: 'absolute', left: '-9999px'}}
                 readOnly
             />
         </div>
@@ -202,7 +236,7 @@ function TokenClaimScaffold({title, pre_text, link_url, link_text, post_text, bu
         setClicked(true);
     }
 
-    const handleCancel = () => {
+    const handleClose = () => {
         setClicked(false); //todo: remove
         //Cancel process and delete everything
     }
@@ -213,9 +247,9 @@ function TokenClaimScaffold({title, pre_text, link_url, link_text, post_text, bu
             <div className="w-full flex flex-row items-center justify-between">
                 <h1 className="text-lg font-medium">{title}</h1>
                 {clicked ? (
-                    <button onClick={handleCancel}
+                    <button onClick={handleClose}
                             className="px-4 py-1 rounded-full flex items-center justify center bg-black border-[2px] border-gray-400 hover:border-gray-200 text-gray-400 hover:text-gray-200">
-                        <p className>Cancel</p>
+                        <p className>Close</p>
                     </button>) : (
                     <button onClick={handleRequest}
                             className="px-4 py-1 rounded-full flex items-center justify center border-[2px] border-transparent bg-embloy-purple-light hover:bg-embloy-purple-lighter">
