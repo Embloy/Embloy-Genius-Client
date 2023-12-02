@@ -1,7 +1,7 @@
 "use client"
 import './locals.css'
 
-import React, {useRef, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {
     DropdownMenu,
     DropdownMenuCheckboxItem,
@@ -110,7 +110,7 @@ function AccessTokenClaim() {
 
 
     return (
-        <div className="text-sm w-full flex flex-col items-center justify-start border border-gray-700 rounded-lg">
+        <div className="text-sm w-full flex flex-col items-center justify-start border border-gray-700 rounded-lg mt-2 mb-6">
             <div
                 className="w-full flex flex-row items-center justify-start text-gray-200 border-b border-gray-700 px-4 py-2">
                 <h1 className="font-semibold">Access Token Request</h1>
@@ -178,7 +178,7 @@ function AccessTokenClaim() {
                 {isLoading ? (
                     <div className="w-full flex flex-row items-center justify-end gap-6">
                         <div
-                            className="bg-black text-embloy-purple-lighter h-7 px-4 border-[1.4px] border-embloy-purple-lighter outline-none select-all rounded-full">
+                            className="bg-black text-embloy-purple-lighter h-7 px-4 border-[1.4px] border-embloy-purple-lighter outline-none select-all rounded-full cursor-wait">
                             <p className="select-none">Loading</p>
                         </div>
                     </div>
@@ -231,15 +231,31 @@ function ClientTokenClaim() {
 
 function TokenClaimScaffold({title, pre_text, link_url, link_text, post_text, button_text, child}) {
     const [clicked, setClicked] = useState(false);
+    const [disableRequest, setDisableRequest] = useState(false);
+    const [timeOutID, setTimeOutID] = useState(null);
 
     const handleRequest = () => {
-        setClicked(true);
+        if (!disableRequest) {
+            setClicked(true);
+            setDisableRequest(true);
+            const id =setTimeout(() => {
+                setDisableRequest(false);
+            }, 60000); // in milliseconds => 1 min
+            setTimeOutID(id);
+        }
     }
 
     const handleClose = () => {
-        setClicked(false); //todo: remove
-        //Cancel process and delete everything
+        setClicked(false);
     }
+
+    useEffect(() => {
+        return () => {
+            if (timeOutID) {
+                clearTimeout(Number(timeOutID)); // Clear the timeout on component unmount
+            }
+        };
+    }, [timeOutID]);
 
 
     return (
@@ -252,8 +268,13 @@ function TokenClaimScaffold({title, pre_text, link_url, link_text, post_text, bu
                         <p className>Close</p>
                     </button>) : (
                     <button onClick={handleRequest}
-                            className="px-4 py-1 rounded-full flex items-center justify center border-[2px] border-transparent bg-embloy-purple-light hover:bg-embloy-purple-lighter">
-                        <p className="text-white">{button_text}</p>
+                            className={cn(disableRequest ? "px-4 py-1 rounded-full flex items-center justify center border-[2px] border-transparent bg-gray-700 cursor-not-allowed" : "px-4 py-1 rounded-full flex items-center justify center border-[2px] border-transparent bg-embloy-purple-light hover:bg-embloy-purple-lighter")}>
+                        {disableRequest ? (
+                            <p className="text-gray-400">Disabled</p>
+                            ):(
+                            <p className="text-white">{button_text}</p>
+                        )}
+
                     </button>
                 )}
             </div>
