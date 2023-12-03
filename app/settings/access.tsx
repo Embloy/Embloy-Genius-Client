@@ -5,6 +5,8 @@ import React, {useEffect, useRef, useState} from "react";
 import {cn} from "@/lib/utils";
 import {AccessTokenClaim} from "@/app/settings/AccessTokenClaim";
 import {ClientTokenClaim} from "@/app/settings/ClientTokenClaim";
+import {ChangePassword} from "@/app/settings/ChangePassword";
+
 
 
 function TokenClaimScaffold({title, pre_text, link_url, link_text, post_text, button_text, child}) {
@@ -80,7 +82,7 @@ export function AccessSettings() {
             <div className="w-full flex flex-col items-center justify-between ">
                 <div
                     className="text-sm w-full flex flex-row items-center justify-between border-b border-gray-700 p-4">
-                    <div className="font-normal text-gray-700 text-2xl flex flex-row items-center justify-start gap-4 ">
+                    <div className="text-lg font-medium text-gray-700 flex flex-row items-center justify-start gap-4 ">
                         <h1>Tokens</h1>
                     </div>
                     <div className="text-gray-700 flex flex-row items-center justify-start">
@@ -114,6 +116,23 @@ export function AccessSettings() {
                         button_text="New Client Token"
                         child={<ClientTokenClaim/>}
                     />
+                </div>
+            </div>
+
+            <div className="w-full flex flex-col items-center justify-between ">
+                <div
+                    className="text-sm w-full flex flex-row items-center justify-between border-b border-gray-700 p-4">
+                    <div className="text-lg font-medium text-gray-700 flex flex-row items-center justify-start gap-4 ">
+                        <h1>Password & 2FA</h1>
+                    </div>
+                    <div className="text-gray-700 flex flex-row items-center justify-start">
+                        <p>Change your password and set up Two-factor authentication.</p>
+                    </div>
+                </div>
+
+                <div
+                    className="text-sm text-gray-400 w-full flex flex-col items-start justify-start gap-4 border-b border-gray-700 p-4">
+                    <ChangePassword />
                 </div>
             </div>
         </div>
