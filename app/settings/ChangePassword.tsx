@@ -124,7 +124,9 @@ export function ChangePassword() {
                 setDisableRequest(true);
                 const access = await fetch_refresh_and_access(email, password, router);
                 const res = await change_password(access, new_password, newnew_password)
-
+                setOldPassword('');
+                setNewPassword('');
+                setNewNewPassword('');
 
                 if (res) {
                     setSucess(true);
@@ -134,9 +136,7 @@ export function ChangePassword() {
                 }
 
 
-                setOldPassword('');
-                setNewPassword('');
-                setNewNewPassword('');
+
                 setPasswordMissmatch(false);
                 setIsLoading(false);
                 const id = setTimeout(() => {
@@ -152,6 +152,10 @@ export function ChangePassword() {
                 }
                 setSucess(false);
                 setIsLoading(false);
+                const id = setTimeout(() => {
+                    setDisableRequest(false);
+                }, 30000); // in milliseconds => 1 min
+                setTimeOutID(id);
 
             }
         }
@@ -232,55 +236,75 @@ export function ChangePassword() {
                         <div className="flex flex-col items-end justify-start gap-1">
                             <p className="font-medium text-transparent select-none">*</p>
                             {disableRequest ? (
-                                success ? (
-                                    <div
-                                        className="bg-black text-embloy-purple-light h-7 px-4 border-[1.4px] border-transparent hover:border-transparent outline-none rounded-full">
-                                        <p className="select-none">Password updated!</p>
-                                    </div>
-                                ) : (
-                                    <div
-                                        className="bg-black text-gray-700 h-7 px-4 border-[1.4px] border-gray-700 outline-none rounded-full cursor-not-allowed">
-                                        <p className="select-none">Disabled</p>
-                                    </div>
-                                )
-
-                            ) : (
                                 isLoading ? (
-                                    <div
+                                    <button
+                                        disabled={true}
                                         className="bg-black text-embloy-purple-lighter h-7 px-4 border-[1.4px] border-embloy-purple-lighter outline-none rounded-full cursor-wait">
                                         <p className="select-none">Loading</p>
-                                    </div>
+                                    </button>
+                                ) : (success ? (
+                                    <button
+                                        disabled={true}
+                                        className="bg-black text-embloy-purple-light h-7 px-4 border-[1.4px] border-transparent hover:border-transparent outline-none rounded-full">
+                                        <p className="select-none">Password updated!</p>
+                                    </button>
                                 ) : (
-                                    (success !== null && success === false) ? (
-
-                                            passwordMissmatch ? (
-                                                <div className="flex flex-row items-center justify-end gap-2">
-                                                    <p className="select-none text-xs text-red-500">New Password doesn't
-                                                        match confirmation password.</p>
-                                                    <button onClick={handleUpdate}
-                                                            className="bg-black text-embloy-purple-light hover:text-embloy-purple-lighter h-7 px-4 border-[1.4px] border-embloy-purple-light hover:border-embloy-purple-lighter outline-none rounded-full">
-                                                        <p className="select-none">Try again</p>
-                                                    </button>
-                                                </div>
-                                            ) : (
-                                                <div className="flex flex-row items-center justify-end gap-2">
-                                                    <p className="select-none text-xs text-red-500">Something went
-                                                        wrong.</p>
-                                                    <button onClick={handleUpdate}
-                                                            className="bg-black text-embloy-purple-light hover:text-embloy-purple-lighter h-7 px-4 border-[1.4px] border-embloy-purple-light hover:border-embloy-purple-lighter outline-none rounded-full">
-                                                        <p className="select-none">Try again</p>
-                                                    </button>
-                                                </div>
-                                            )
-
-
+                                    passwordMissmatch ? (
+                                        <div className="flex flex-row items-center justify-end gap-2">
+                                            <p className="select-none text-xs text-red-500">New Password doesn't
+                                                match confirmation password.</p>
+                                            <button
+                                                disabled={true}
+                                                className="bg-black text-gray-700 h-7 px-4 border-[1.4px] border-gray-700 outline-none rounded-full cursor-not-allowed">
+                                                <p className="select-none">Wait...</p>
+                                            </button>
+                                        </div>
                                     ) : (
-                                        <button onClick={handleUpdate}
-                                                className="bg-black text-embloy-purple-light hover:text-embloy-purple-lighter h-7 px-4 border-[1.4px] border-embloy-purple-light hover:border-embloy-purple-lighter outline-none rounded-full">
-                                            <p className="select-none">Update</p>
-                                        </button>
+                                            <div className="flex flex-row items-center justify-end gap-2">
+                                                <p className="select-none text-xs text-red-500">Something went
+                                                    wrong.</p>
+                                                <button
+                                                    disabled={true}
+                                                    className="bg-black text-gray-700 h-7 px-4 border-[1.4px] border-gray-700 outline-none rounded-full cursor-not-allowed">
+                                                    <p className="select-none">Wait...</p>
+                                                </button>
+                                            </div>
+                                        )
+
+                                ))
+
+                            ) : (
+
+                                (success !== null && success === false) ? (
+
+                                    passwordMissmatch ? (
+                                        <div className="flex flex-row items-center justify-end gap-2">
+                                            <p className="select-none text-xs text-red-500">New Password doesn't
+                                                match confirmation password.</p>
+                                            <button onClick={handleUpdate}
+                                                    className="bg-black text-embloy-purple-light hover:text-embloy-purple-lighter h-7 px-4 border-[1.4px] border-embloy-purple-light hover:border-embloy-purple-lighter outline-none rounded-full">
+                                                <p className="select-none">Try again</p>
+                                            </button>
+                                        </div>
+                                    ) : (
+                                        <div className="flex flex-row items-center justify-end gap-2">
+                                            <p className="select-none text-xs text-red-500">Something went
+                                                wrong.</p>
+                                            <button onClick={handleUpdate}
+                                                    className="bg-black text-embloy-purple-light hover:text-embloy-purple-lighter h-7 px-4 border-[1.4px] border-embloy-purple-light hover:border-embloy-purple-lighter outline-none rounded-full">
+                                                <p className="select-none">Try again</p>
+                                            </button>
+                                        </div>
                                     )
+
+
+                                ) : (
+                                    <button onClick={handleUpdate}
+                                            className="bg-black text-embloy-purple-light hover:text-embloy-purple-lighter h-7 px-4 border-[1.4px] border-embloy-purple-light hover:border-embloy-purple-lighter outline-none rounded-full">
+                                        <p className="select-none">Update</p>
+                                    </button>
                                 )
+
                             )}
                             {!disableRequest && (
                                 (success === null || success === false) && (

@@ -126,7 +126,7 @@ export function AccessSettings() {
                         <h1>Password & 2FA</h1>
                     </div>
                     <div className="text-gray-700 flex flex-row items-center justify-start">
-                        <p>Change your password and set up Two-factor authentication.</p>
+                        <p>Change your password and set up two-factor authentication.</p>
                     </div>
                 </div>
 
