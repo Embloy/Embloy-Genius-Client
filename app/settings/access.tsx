@@ -6,6 +6,7 @@ import {cn} from "@/lib/utils";
 import {AccessTokenClaim} from "@/app/settings/AccessTokenClaim";
 import {ClientTokenClaim} from "@/app/settings/ClientTokenClaim";
 import {ChangePassword} from "@/app/settings/ChangePassword";
+import {TwoFactorAuthentication} from "@/app/settings/TwoFactorAuthentication";
 
 
 
@@ -44,11 +45,11 @@ function TokenClaimScaffold({title, pre_text, link_url, link_text, post_text, bu
                 <h1 className="text-lg font-medium">{title}</h1>
                 {clicked ? (
                     <button onClick={handleClose}
-                            className="px-4 py-1 rounded-full flex items-center justify center bg-black border-[2px] border-gray-400 hover:border-gray-200 text-gray-400 hover:text-gray-200">
+                            className="px-4 py-1 rounded-full flex items-center justify-center bg-black border-[2px] border-gray-400 hover:border-gray-200 text-gray-400 hover:text-gray-200">
                         <p className>Close</p>
                     </button>) : (
                     <button onClick={handleRequest}
-                            className={cn(disableRequest ? "px-4 py-1 rounded-full flex items-center justify center border-[2px] border-transparent bg-gray-700 cursor-not-allowed" : "px-4 py-1 rounded-full flex items-center justify center border-[2px] border-transparent bg-embloy-purple-light hover:bg-embloy-purple-lighter")}>
+                            className={cn(disableRequest ? "px-4 py-1 rounded-full flex items-center justify-center border-[2px] border-transparent bg-gray-700 cursor-not-allowed" : "px-4 py-1 rounded-full flex items-center justify center border-[2px] border-transparent bg-embloy-purple-light hover:bg-embloy-purple-lighter")}>
                         {disableRequest ? (
                             <p className="text-gray-400">Disabled</p>
                             ):(
@@ -133,6 +134,8 @@ export function AccessSettings() {
                 <div
                     className="text-sm text-gray-400 w-full flex flex-col items-start justify-start gap-4 border-b border-gray-700 p-4">
                     <ChangePassword />
+                    <div className="h-3"/>
+                    <TwoFactorAuthentication />
                 </div>
             </div>
         </div>
