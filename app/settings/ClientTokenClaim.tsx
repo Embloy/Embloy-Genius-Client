@@ -97,7 +97,7 @@ export function ClientTokenClaim() {
                     <div className="flex flex-col items-start justify-start gap-1">
                         <p className="font-medium text-gray-200">Note</p>
                         <input
-                            className={noteIsHovered ? "bg-gray-900 text-white h-7 w-40 px-2 border-[1.4px] border-gray-700 outline-none select-all rounded-lg" : "bg-black text-white h-7 w-40 px-2 border-[1.4px] border-gray-700 outline-none select-all rounded-lg"}
+                            className={noteIsHovered ? "bg-gray-900 text-white h-7 w-40 px-2 border-[2px] border-gray-700 outline-none select-all rounded-lg" : "bg-black text-white h-7 w-40 px-2 border-[2px] border-gray-700 outline-none select-all rounded-lg"}
                             type="text"
                             name="note"
                             value={note}
@@ -118,7 +118,7 @@ export function ClientTokenClaim() {
                 {isLoading ? (
                     <div className="w-full flex flex-row items-center justify-end gap-6">
                         <div
-                            className="bg-black text-embloy-purple-lighter h-7 px-4 border-[1.4px] border-embloy-purple-lighter outline-none select-all rounded-full cursor-wait">
+                            className="bg-black text-embloy-purple-lighter h-7 px-4 border-[2px] border-embloy-purple-lighter outline-none select-all rounded-full cursor-wait">
                             <p className="select-none">Loading</p>
                         </div>
                     </div>
@@ -128,14 +128,14 @@ export function ClientTokenClaim() {
                         {success != null ? (
                             success ? (
                                 <div
-                                    className="bg-black text-embloy-purple-light h-7 px-4 border-[1.4px] border-transparent hover:border-transparent outline-none select-all rounded-full">
+                                    className="bg-black text-embloy-purple-light h-7 px-4 border-[2px] border-transparent hover:border-transparent outline-none select-all rounded-full">
                                     <p className="select-none">Copied to clipboard!</p>
                                 </div>
                             ) : (
                                 <div className="flex flex-row items-center justify-end gap-2">
                                     <p className="select-none text-red-500">Something went wrong. Try again!</p>
                                     <button onClick={handleGenerate}
-                                            className="bg-black text-embloy-purple-light hover:text-embloy-purple-lighter h-7 px-4 border-[1.4px] border-embloy-purple-light hover:border-embloy-purple-lighter outline-none select-all rounded-full">
+                                            className="bg-black text-embloy-purple-light hover:text-embloy-purple-lighter h-7 px-4 border-[2px] border-embloy-purple-light hover:border-embloy-purple-lighter outline-none select-all rounded-full">
                                         <p className="select-none">Generate</p>
                                     </button>
                                 </div>
@@ -144,7 +144,7 @@ export function ClientTokenClaim() {
 
                         ) : (
                             <button onClick={handleGenerate}
-                                    className="bg-black text-embloy-purple-light hover:text-embloy-purple-lighter h-7 px-4 border-[1.4px] border-embloy-purple-light hover:border-embloy-purple-lighter outline-none select-all rounded-full">
+                                    className="bg-black text-embloy-purple-light hover:text-embloy-purple-lighter h-7 px-4 border-[2px] border-embloy-purple-light hover:border-embloy-purple-lighter outline-none select-all rounded-full">
                                 <p className="select-none">Generate</p>
                             </button>
                         )}
