@@ -199,7 +199,7 @@ export function TwoFactorAuthentication() {
             <div className="w-full flex flex-row items-center justify-between">
                 <div className="w-full flex flex-col items-start justify-start gap-1">
                     <div className="w-full flex flex-row items-start justify-between">
-                        <div className="w-full flex flex-col items-start justify-start border border-gray-700 rounded-lg">
+                        <div className="w-full flex flex-col items-start justify-start border border-gray-700 rounded-lg mt-2 mb-6">
 
 
 
