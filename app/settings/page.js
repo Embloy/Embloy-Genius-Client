@@ -5,6 +5,7 @@ import Image from "next/image";
 import {JobDataTable} from "@/app/recruitment/JobDataTable";
 import {columns} from "@/app/recruitment/jobs_columns";
 import {AccessSettings} from "@/app/settings/access";
+import {ProfileSettings} from "@/app/settings/profile";
 
 export default function Settings() {
     const [currentSubPageID, setcurrentSubPageID] = useState(0);
@@ -151,6 +152,11 @@ export default function Settings() {
                     {currentSubPageID === accessSubPageID && (
                         <div className="container mx-auto">
                             <AccessSettings  />
+                        </div>
+                    )}
+                    {currentSubPageID === profileSubPageID && (
+                        <div className="container mx-auto">
+                            <ProfileSettings  />
                         </div>
                     )}
                 </div>
