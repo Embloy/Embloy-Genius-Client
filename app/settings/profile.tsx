@@ -79,7 +79,7 @@ function TokenClaimScaffold({title, pre_text, link_url, link_text, post_text, bu
 
 function ProfileInfo() {
     let user = useContext(UserContext)
-
+    const [changesMade, setChangesMade] = useState(false);
     const [nameIsHovered, setNameIsHovered] = useState(false);
     const [nameIsClicked, setNameIsClicked] = useState(false);
     const [firstName, setFirstName] = useState('');
@@ -102,6 +102,7 @@ function ProfileInfo() {
     const handleNameSubmit = (e) => {
         if (e.key === 'Enter') {
             nameClick();
+            checkChanges();
         }
     }
 
@@ -139,8 +140,23 @@ function ProfileInfo() {
     const handleEmailSubmit = (e) => {
         if (e.key === 'Enter') {
             emailClick();
+            checkChanges();
+
         }
     }
+
+    const checkChanges = () => {
+        if(email != '' && email != user.email && !changesMade){
+            setChangesMade(true);
+        }
+        if((firstName != '' && firstName != user.first_name || lastName != '' && lastName != user.last_name)&& !changesMade  ){
+            setChangesMade(true);
+        }
+        if (email == user.email && firstName == user.first_name && lastName == user.last_name){
+            setChangesMade(false)
+        }
+    }
+
 
 
     return (
@@ -225,6 +241,14 @@ function ProfileInfo() {
                                 <p className="w-[150px] left font-medium text-gray-400">Company</p>
                                 <p className="w-[300px] left px-4">@MUSS NOCH WEG</p>
                             </div>
+                        )}
+
+                        {changesMade && (
+                            <button
+                                className="my-4 px-4 py-1 bg-black border-[2px] border-embloy-purple-light hover:border-embloy-purple-lighter text-embloy-purple-light hover:text-embloy-purple-lighter rounded-full cursor-pointer"
+                            >
+                                Update
+                            </button>
                         )}
                     </div>
                     <div>
