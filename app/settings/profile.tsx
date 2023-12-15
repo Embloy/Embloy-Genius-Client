@@ -91,8 +91,12 @@ function ProfileInfo() {
         setNameIsHovered(false);
     }
     const nameClick = () => {
-        setFirstName(user.first_name)
-        setLastName(user.last_name)
+        if (firstName == '') {
+            setFirstName(user.first_name)
+        }
+        if (lastName == '') {
+            setLastName(user.last_name)
+        }
         setNameIsClicked(!nameIsClicked);
     }
     const handleNameSubmit = (e) => {
@@ -101,8 +105,25 @@ function ProfileInfo() {
         }
     }
 
+    const [fNameIsHovered, setfNameIsHovered] = useState(false);
+    const fNameHover = () => {
+        setfNameIsHovered(true);
+    }
+    const fNameNotHover = () => {
+        setfNameIsHovered(false);
+    }
+
+    const [lNameIsHovered, setlNameIsHovered] = useState(false);
+    const lNameHover = () => {
+        setlNameIsHovered(true);
+    }
+    const lNameNotHover = () => {
+        setlNameIsHovered(false);
+    }
+
     const [emailIsHovered, setEmailIsHovered] = useState(false);
     const [emailIsClicked, setEmailIsClicked] = useState(false);
+    const [email, setEmail] = useState('');
     const emailHover = () => {
         setEmailIsHovered(true);
     }
@@ -110,7 +131,15 @@ function ProfileInfo() {
         setEmailIsHovered(false);
     }
     const emailClick = () => {
+        if (email == ''){
+            setEmail(user.email);
+        }
         setEmailIsClicked(!emailIsClicked);
+    }
+    const handleEmailSubmit = (e) => {
+        if (e.key === 'Enter') {
+            emailClick();
+        }
     }
 
 
@@ -124,14 +153,35 @@ function ProfileInfo() {
                             <div
                                  className="flex flex-row items-start justify-start py-4 rounded-lg">
                                 <p className="w-[150px] left font-medium text-gray-400">Name</p>
-                                <input onKeyPress={handleNameSubmit} type="text" value={firstName} onChange={(e) => setFirstName(e.target.value)} className="w-[75px] left px-4 bg-black text-white rounded-lg" />
-                                <input onKeyPress={handleNameSubmit} type="text" value={lastName} onChange={(e) => setLastName(e.target.value)} className="w-[125px] left px-4 bg-black text-white rounded-lg" />
+                                <input
+                                    className={fNameIsHovered ? "bg-gray-900 text-white h-7 w-40 px-2 border-[2px] border-gray-700 outline-none rounded-lg" : "bg-black text-white h-7 w-40 px-2 border-[2px] border-gray-700 outline-none rounded-lg"}
+                                    type="text"
+                                    name="First Name"
+                                    value={firstName}
+                                    required={true}
+                                    onChange={(e) => setFirstName(e.target.value)}
+                                    onMouseEnter={fNameHover}
+                                    onMouseLeave={fNameNotHover}
+                                    onKeyPress={handleNameSubmit}
+                                />
+                                <div className="w-2" />
+                                <input
+                                    className={lNameIsHovered ? "bg-gray-900 text-white h-7 w-40 px-2 border-[2px] border-gray-700 outline-none rounded-lg" : "bg-black text-white h-7 w-40 px-2 border-[2px] border-gray-700 outline-none rounded-lg"}
+                                    type="text"
+                                    name="Last Name"
+                                    value={lastName}
+                                    required={true}
+                                    onChange={(e) => setLastName(e.target.value)}
+                                    onMouseEnter={lNameHover}
+                                    onMouseLeave={lNameNotHover}
+                                    onKeyPress={handleNameSubmit}
+                                />
                             </div>
                         ) : (
                             <div onMouseEnter={nameHover} onMouseLeave={nameNotHover}
                                  className="flex flex-row items-start justify-start py-4 rounded-lg">
                                 <p className="w-[150px] left font-medium text-gray-400">Name</p>
-                                <p className="w-[200px] left px-4">{user.first_name} {user.last_name}</p>
+                                <p className="w-[200px] left px-4">{firstName == '' ? user.first_name : firstName} {lastName == '' ? user.last_name : lastName}</p>
                                 {nameIsHovered && (
                                     <button onClick={nameClick}
                                             className="text-xs italic text-gray-600 hover:underline cursor-pointer">
@@ -140,18 +190,36 @@ function ProfileInfo() {
                                 )}
                             </div>
                         )}
+                        {emailIsClicked ? (
+                            <div
+                                className="flex flex-row items-start justify-start py-4 rounded-lg">
+                                <p className="w-[150px] left font-medium text-gray-400">Email</p>
+                                <input
+                                    className={emailIsHovered ? "bg-gray-900 text-white h-7 w-40 px-2 border-[2px] border-gray-700 outline-none rounded-lg" : "bg-black text-white h-7 w-40 px-2 border-[2px] border-gray-700 outline-none rounded-lg"}
+                                    type="email"
+                                    name="Email"
+                                    value={email}
+                                    required={true}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    onMouseEnter={emailHover}
+                                    onMouseLeave={emailNotHover}
+                                    onKeyPress={handleEmailSubmit}
+                                />
+                            </div>
+                        ) : (
+                            <div onMouseEnter={emailHover} onMouseLeave={emailNotHover}
+                                 className="flex flex-row items-start justify-start py-4 rounded-lg">
+                                <p className="w-[150px] left font-medium text-gray-400">Email</p>
+                                <p className="w-[200px] left px-4">{email == '' ? user.email : email}</p>
+                                {emailIsHovered && (
+                                    <button onClick={emailClick}
+                                            className="text-xs italic text-gray-600 hover:underline cursor-pointer">
+                                        <p>Edit</p>
+                                    </button>
+                                )}
+                            </div>
+                        )}
 
-                        <div onMouseEnter={emailHover} onMouseLeave={emailNotHover}
-                             className="flex flex-row items-start justify-start py-4 rounded-lg">
-                            <p className="w-[150px] left font-medium text-gray-400">Email</p>
-                            <p className="w-[200px] left px-4">{user.email}</p>
-                            {emailIsHovered && (
-                                <button onClick={emailClick}
-                                        className="text-xs italic text-gray-600 hover:underline cursor-pointer">
-                                    <p>Edit</p>
-                                </button>
-                            )}
-                        </div>
                         {user.user_type == "company" && (
                             <div className="flex flex-row items-start justify-between py-4 rounded-lg">
                                 <p className="w-[150px] left font-medium text-gray-400">Company</p>
