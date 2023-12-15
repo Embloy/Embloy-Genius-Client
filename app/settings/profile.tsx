@@ -162,9 +162,11 @@ function ProfileInfo() {
     return (
 
         <div className="w-full flex flex-col items-start justify-start gap-4">
+
             {user ? (
                 <div className="w-full flex flex-row items-start justify-between">
-                    <div className=" flex flex-col items-start justify-start">
+                    <div className="flex flex-col items-start justify-start border border-gray-700 rounded-lg mb-6 px-4">
+
                         {nameIsClicked ? (
                             <div
                                  className="flex flex-row items-start justify-start py-4 rounded-lg">
@@ -258,7 +260,7 @@ function ProfileInfo() {
                                 alt="Logo"
                                 height="30"
                                 width="30"
-                                className="rounded-full w-64 h-64"
+                                className="rounded-full w-40 h-40"
                             />
                             <button
                                 className="absolute bottom-4 left-4 px-4 py-1 bg-black border-[2px] border-embloy-purple-light hover:border-embloy-purple-lighter text-embloy-purple-light hover:text-embloy-purple-lighter rounded-full cursor-pointer"
