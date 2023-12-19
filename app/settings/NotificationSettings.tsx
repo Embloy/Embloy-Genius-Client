@@ -58,7 +58,7 @@ export function NotificationSettings() {
     return (
         <div className="w-full flex flex-col items-start justify-start gap-4">
             <div className="w-full flex flex-row items-center justify-start gap-3">
-                <h1 className="text-lg font-medium">Notifications Email</h1>
+                <h1 className="text-lg font-medium">Verified Emails</h1>
                 <div className="border border-gray-700 bg-black px-2 rounded-full">
                     <p className="text-gray-700 text-xs">Functionality disabled</p>
                 </div>
@@ -66,7 +66,7 @@ export function NotificationSettings() {
 
             <div className="flex flex-row items-center justify-start">
                 <p className="text-gray-400">
-                    Choose where you would like emails to be sent. You can add more than one email address.
+                    Add Email additional Email addresses to your account and choose where you would like emails to be sent. You can choose more than one email address.
                 </p>
             </div>
             <div className="w-full flex flex-col items-start justify-start gap-1">

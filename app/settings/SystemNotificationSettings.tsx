@@ -144,7 +144,7 @@ export function SystemNotificationSettings() {
 
             <div className="flex flex-row items-center justify-start">
                 <p className="text-gray-400">
-                    Toggle receiving status notifications about certain system properties.
+                    Toggle receiving notifications about certain system properties.
                 </p>
             </div>
             <div className="w-full flex flex-col items-start justify-start gap-1">
