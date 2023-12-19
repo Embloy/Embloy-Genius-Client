@@ -128,7 +128,7 @@ export function AccessTokenClaim() {
                             onMouseEnter={handleNoteHover}
                             onMouseLeave={handleNoteNotHover}
                         />
-                        <p className="text-xs text-gray-700">What's this token for?</p>
+                        <p className="text-xs text-gray-700">What`s this token for?</p>
                     </div>
 
                     <div className="flex flex-col items-start justify-start gap-1">
