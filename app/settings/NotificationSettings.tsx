@@ -33,6 +33,7 @@ export function NotificationSettings() {
         setNotificationEmails(e)
     }
 
+    const [newEmail, setNewEmail] = useState(null);
 
     useEffect(() => {
         if (user && !notificationEmails.includes(user.email)){
@@ -40,6 +41,7 @@ export function NotificationSettings() {
             handleNotificationEmails(bin)
         }
     }, [user, notificationEmails]);
+
 
     return (
         <div className="w-full flex flex-col items-start justify-start gap-4">
@@ -72,7 +74,7 @@ export function NotificationSettings() {
                         >
                             <p>
                                 {notificationEmails.length > 0
-                                    ? notificationEmails.join(", ")
+                                    ? notificationEmails[0]
                                     : "None selected"}
                             </p>
                         </button>
@@ -81,7 +83,7 @@ export function NotificationSettings() {
                         {notificationEmails.map((email, index) => (
                             <DropdownMenuCheckboxItem
                                 key={index}
-                                className="capitalize text-gray-400 hover:text-white cursor-pointer"
+                                className="text-gray-400 hover:text-white cursor-pointer"
                                 checked={true}
                                 onCheckedChange={(check) => {
                                     const updatedNotificationEmails = check
@@ -97,6 +99,29 @@ export function NotificationSettings() {
                                 {email}
                             </DropdownMenuCheckboxItem>
                         ))}
+                        <div className="flex items-center justify-between mt-2">
+                            <input
+                                type="text"
+                                placeholder="Enter new email"
+                                className="border border-gray-700 px-2 py-1 rounded-lg text-gray-400 focus:outline-none"
+                                onChange={(e) => setNewEmail(e.target.value)}
+                            />
+                            <button
+                                className="bg-gray-900 text-white h-7 px-2 border-[2px] border-gray-700 rounded-lg text-sm focus:outline-none"
+                                onClick={() => {
+                                    // Add the new email to the list
+                                    if (newEmail.trim() !== "") {
+                                        handleNotificationEmails([
+                                            ...notificationEmails,
+                                            newEmail.trim(),
+                                        ]);
+                                        setNewEmail(""); // Clear the input field
+                                    }
+                                }}
+                            >
+                                Add
+                            </button>
+                        </div>
                     </DropdownMenuContent>
                 </DropdownMenu>
             </div>
