@@ -7,6 +7,7 @@ import {TwoFactorAuthentication} from "@/app/settings/TwoFactorAuthentication";
 import {UserContext} from "@/app/components/misc/UserContext";
 import Image from "next/image";
 import {NotificationSettings} from "@/app/settings/NotificationSettings";
+import {SystemNotificationSettings} from "@/app/settings/SystemNotificationSettings";
 
 
 
@@ -247,6 +248,8 @@ export function ProfileSettings() {
                     <ProfileInfo/>
                     <div className="h-3"/>
                     <NotificationSettings/>
+                    <div className="h-3"/>
+                    <SystemNotificationSettings/>
                 </div>
             </div>
 
