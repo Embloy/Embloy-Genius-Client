@@ -9,6 +9,7 @@ import {ChangePassword} from "@/app/settings/ChangePassword";
 import {TwoFactorAuthentication} from "@/app/settings/TwoFactorAuthentication";
 import {UserContext} from "@/app/components/misc/UserContext";
 import Image from "next/image";
+import {NotificationSettings} from "@/app/settings/NotificationSettings";
 
 
 function TokenClaimScaffold({title, pre_text, link_url, link_text, post_text, button_text, child}) {
@@ -300,25 +301,8 @@ export function ProfileSettings() {
                 <div
                     className="text-sm text-gray-400 w-full flex flex-col items-start justify-start gap-4 border-b border-gray-700 p-4">
                     <ProfileInfo/>
-                    <TokenClaimScaffold
-                        title="Access Token"
-                        pre_text="Access Tokens are used for every interaction with the"
-                        link_text="Embloy API"
-                        link_url="https://documenter.getpostman.com/view/24977803/2s9YRB2rkE"
-                        post_text="."
-                        button_text="New Access Token"
-                        child={<AccessTokenClaim/>}
-                    />
                     <div className="h-3"/>
-                    <TokenClaimScaffold
-                        title="Client Token"
-                        pre_text="Client Tokens are used for embedding Embloy Products on the client-side using the"
-                        link_text="Embloy SDK"
-                        link_url="https://developer.embloy.com"
-                        post_text="."
-                        button_text="New Client Token"
-                        child={<ClientTokenClaim/>}
-                    />
+                    <NotificationSettings/>
                 </div>
             </div>
 
@@ -326,10 +310,10 @@ export function ProfileSettings() {
                 <div
                     className="text-sm w-full flex flex-row items-center justify-between border-b border-gray-700 p-4">
                     <div className="text-lg font-medium text-gray-700 flex flex-row items-center justify-start gap-4 ">
-                        <h1>Password & 2FA</h1>
+                        <h1>Appearance</h1>
                     </div>
                     <div className="text-gray-700 flex flex-row items-center justify-start">
-                        <p>Change your password and set up two-factor authentication.</p>
+                        <p>Choose how Embloy looks to you..</p>
                     </div>
                 </div>
 
