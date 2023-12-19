@@ -151,7 +151,7 @@ export function SystemNotificationSettings() {
                 <div className="w-full flex flex-row items-center justify-between">
                     <div className="w-full flex flex-row items-start justify-start gap-6">
                         <div className="flex flex-col items-start justify-start gap-1">
-                            <p className="font-medium text-gray-200">Email weekly sum-up</p>
+                            <p className="font-medium text-gray-200">Weekly sum-up email</p>
                             <DropdownMenu>
                                 <DropdownMenuTrigger asChild className="outline-none" onMouseEnter={handleExpiresHover}
                                                      onMouseLeave={handleExpiresNotHover}>
