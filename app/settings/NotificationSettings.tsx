@@ -66,7 +66,7 @@ export function NotificationSettings() {
 
             <div className="flex flex-row items-center justify-start">
                 <p className="text-gray-400">
-                    Add Email additional Email addresses to your account and choose where you would like emails to be sent. You can choose more than one email address.
+                    Add extra email addresses to your account and specify where you´d like notifications to be sent. You´re able to select multiple email addresses.
                 </p>
             </div>
             <div className="w-full flex flex-col items-start justify-start gap-1">
