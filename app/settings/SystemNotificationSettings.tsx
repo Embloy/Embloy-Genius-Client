@@ -14,123 +14,51 @@ import {
 import {ChevronDown} from "lucide-react";
 import {cast_date, date_seconds_from_now} from "@/lib/utils/formats";
 
+interface Expiration {
+    [key: string]: number;
+}
 
+const priors: Expiration[] = [
+    {"1 day": 1},
+    {"2 days": 2},
+    {"1 Week": 7},
+    {"2 Weeks": 14}
+];
 export function SystemNotificationSettings() {
-    const [notificationsIsHovered, setNotificationsIsHovered] = useState(false);
-    const handleNotificationsHover = () => {
-        setNotificationsIsHovered(true);
+
+    const [weeklyReport, setWeeklyReport] = useState(false); //todo: replace with backend integration
+    const [weeklyReportIsHovered, setWeeklyReportIsHovered] = useState(false);
+    const handleWeeklyReportHover = () => {
+        setWeeklyReportIsHovered(true);
+    };
+    const handleWeeklyReportNotHover = () => {
+        setWeeklyReportIsHovered(false);
+    };
+    const [dmPushAlert, setDmPushAlert] = useState(false); //todo: replace with backend integration
+    const [dmPushAlertIsHovered, setDmPushAlertIsHovered] = useState(false);
+    const handleDmPushAlertHover = () => {
+        setDmPushAlertIsHovered(true);
+    };
+    const handleDmPushAlertNotHover = () => {
+        setDmPushAlertIsHovered(false);
+    };
+    const [sysPushAlert, setSysPushAlert] = useState(false); //todo: replace with backend integration
+    const [sysPushAlertIsHovered, setSysPushAlertIsHovered] = useState(false);
+    const handleSysPushAlertHover = () => {
+        setSysPushAlertIsHovered(true);
+    };
+    const handleSysPushAlertNotHover = () => {
+        setSysPushAlertIsHovered(false);
     };
 
-    const handleNotificationsNotHover = () => {
-        setNotificationsIsHovered(false);
+    const [ctExpirationAlertIsHovered, setCtExpirationAlertIsHovered] = useState(false);
+    const [prior,setPrior] = useState(1);
+    const handleCtExpirationAlertHover = () => {
+        setCtExpirationAlertIsHovered(true);
     };
-
-    let user = useContext(UserContext);
-    const [notificationEmails, setNotificationEmails] = useState({});
-    const [newEmail, setNewEmail] = useState('');
-
-    useEffect(() => {
-        if (user && !notificationEmails[user.email]) {
-            setNotificationEmails((prevEmails) => ({
-                ...prevEmails,
-                [user.email]: true, // todo: repace with locic that checks wheter this mail is actually in the notifications
-            }));
-        }
-    }, [user, notificationEmails]);
-
-    const handleNotificationEmails = (email, isChecked) => {
-        setNotificationEmails((prevEmails) => ({
-            ...prevEmails,
-            [email]: isChecked,
-        }));
+    const handleCtExpirationAlertNotHover = () => {
+        setCtExpirationAlertIsHovered(false);
     };
-
-    const addNewEmail = () => {
-        if (newEmail.trim() !== '') {
-            setNotificationEmails((prevEmails) => ({
-                ...prevEmails,
-                [newEmail.trim()]: false,
-            }));
-            setNewEmail('');
-        }
-    };
-    const router = useRouter();
-
-    const [note, setNote] = useState('');
-    const [noteIsHovered, setNoteIsHovered] = useState(false);
-    const handleNoteHover = () => {
-        setNoteIsHovered(true);
-    };
-    const handleNoteNotHover = () => {
-        setNoteIsHovered(false);
-    };
-    const handleNoteChange = (e) => {
-        setNote(e.target.value);
-    };
-
-    const [expires, setExpires] = useState(60);
-    const [expiresIsHovered, setExpiresIsHovered] = useState(false);
-    const handleExpiresHover = () => {
-        setExpiresIsHovered(true);
-    };
-    const handleExpiresNotHover = () => {
-        setExpiresIsHovered(false);
-    };
-    const handleExpires = (e) => {
-        setExpires(e);
-    }
-
-    let expirations = [];
-    async function fetch_access_token() {
-        try {
-            // todo: check parameters, if any given
-            try {
-                return request_access(getCookie("refresh", {path: "/"}))
-                    .then((token) => {
-                        return token
-                    })
-                    .catch((error) => {
-                        logout(router);
-                    });
-
-            } catch (error) {
-                logout(router);
-            }
-
-        } catch (error) {
-            console.log("Fetching failed: " + error);
-
-        }
-    }
-
-
-    const [isLoading, setIsLoading] = useState(false);
-    const [success, setSucess] = useState(null);
-    const accessTokenRef = useRef(null);
-    const handleGenerate = async (e) => {
-        //todo: take parameters into account
-        e.preventDefault();
-        setIsLoading(true);
-        try {
-            const token = await fetch_access_token();
-            if (token) {
-                accessTokenRef.current.value = token;
-                accessTokenRef.current.select();
-                document.execCommand('copy'); // all browsers except firefox don't support mozillas new standard function yet...; https://developer.mozilla.org/en-US/docs/Web/API/Document/execCommand?retiredLocale=de#browser_compatibility
-                setSucess(true);
-            } else {
-                setSucess(false);
-            }
-
-
-            setIsLoading(false);
-        } catch (error) {
-            console.error(error);
-            setSucess(false);
-            setIsLoading(false);
-        }
-
-    }
 
 
     return (
@@ -153,33 +81,38 @@ export function SystemNotificationSettings() {
                         <div className="flex flex-col items-start justify-start gap-1">
                             <p className="font-medium text-gray-200">Weekly sum-up email</p>
                             <DropdownMenu>
-                                <DropdownMenuTrigger asChild className="outline-none" onMouseEnter={handleExpiresHover}
-                                                     onMouseLeave={handleExpiresNotHover}>
+                                <DropdownMenuTrigger asChild className="outline-none" onMouseEnter={handleWeeklyReportHover}
+                                                     onMouseLeave={handleWeeklyReportNotHover}>
                                     <button
-                                        className={expiresIsHovered ? "bg-gray-900 text-white h-7 w-40 px-2 border-[2px] border-gray-700 outline-none select-all rounded-lg text-left" : "bg-black text-white h-7 w-40 px-2 border-[2px] border-gray-700 outline-none select-all rounded-lg text-left"}>
-                                        <p>{expires} sec.</p>
+                                        className={weeklyReportIsHovered ? "bg-gray-900 text-white h-7 w-40 px-2 border-[2px] border-gray-700 outline-none select-all rounded-lg text-left" : "bg-black text-white h-7 w-40 px-2 border-[2px] border-gray-700 outline-none select-all rounded-lg text-left"}>
+                                        <p>{weeklyReport ? "Enabled" : "Disabled"}</p>
                                     </button>
                                 </DropdownMenuTrigger>
                                 <DropdownMenuContent align="end">
-                                    {
-                                        expirations.map((expiration, index) => {
-                                            const key = Object.keys(expiration)[0];
-                                            const value = Object.values(expiration)[0];
-                                            return (
-                                                <DropdownMenuCheckboxItem
-                                                    key={index}
-                                                    className="capitalize text-gray-400 hover:text-white cursor-pointer"
-                                                    checked={value == expires}
-                                                    onCheckedChange={(check) => {
-                                                        if (check) {
-                                                            handleExpires(value)
-                                                        }
-                                                    }}
-                                                >
-                                                    {key}
-                                                </DropdownMenuCheckboxItem>
-                                            )
-                                        })}
+                                    <DropdownMenuCheckboxItem
+                                        key={"Enabled"}
+                                        className="capitalize text-gray-400 hover:text-white cursor-pointer"
+                                        checked={weeklyReport == true}
+                                        onCheckedChange={(check) => {
+                                            if (check) {
+                                                setWeeklyReport(true)
+                                            }
+                                        }}
+                                    >
+                                        {"Enabled"}
+                                    </DropdownMenuCheckboxItem>
+                                    <DropdownMenuCheckboxItem
+                                        key={"Disabled"}
+                                        className="capitalize text-gray-400 hover:text-white cursor-pointer"
+                                        checked={weeklyReport == false}
+                                        onCheckedChange={(check) => {
+                                            if (check) {
+                                                setWeeklyReport(false)
+                                            }
+                                        }}
+                                    >
+                                        {"Disabled"}
+                                    </DropdownMenuCheckboxItem>
                                 </DropdownMenuContent>
                             </DropdownMenu>
                             <p className="text-xs text-gray-700">Weekly user traffic survey reception.</p>
@@ -189,26 +122,26 @@ export function SystemNotificationSettings() {
                         <div className="flex flex-col items-start justify-start gap-1">
                             <p className="font-medium text-gray-200">Client token expiration reminder</p>
                             <DropdownMenu>
-                                <DropdownMenuTrigger asChild className="outline-none" onMouseEnter={handleExpiresHover}
-                                                     onMouseLeave={handleExpiresNotHover}>
+                                <DropdownMenuTrigger asChild className="outline-none" onMouseEnter={handleCtExpirationAlertHover}
+                                                     onMouseLeave={handleCtExpirationAlertNotHover}>
                                     <button
-                                        className={expiresIsHovered ? "bg-gray-900 text-white h-7 w-40 px-2 border-[2px] border-gray-700 outline-none select-all rounded-lg text-left" : "bg-black text-white h-7 w-40 px-2 border-[2px] border-gray-700 outline-none select-all rounded-lg text-left"}>
-                                        <p>{expires} sec.</p>
+                                        className={ctExpirationAlertIsHovered ? "bg-gray-900 text-white h-7 w-40 px-2 border-[2px] border-gray-700 outline-none select-all rounded-lg text-left" : "bg-black text-white h-7 w-40 px-2 border-[2px] border-gray-700 outline-none select-all rounded-lg text-left"}>
+                                        <p>{prior} days</p>
                                     </button>
                                 </DropdownMenuTrigger>
                                 <DropdownMenuContent align="end">
                                     {
-                                        expirations.map((expiration, index) => {
+                                        priors.map((expiration, index) => {
                                             const key = Object.keys(expiration)[0];
                                             const value = Object.values(expiration)[0];
                                             return (
                                                 <DropdownMenuCheckboxItem
                                                     key={index}
                                                     className="capitalize text-gray-400 hover:text-white cursor-pointer"
-                                                    checked={value == expires}
+                                                    checked={value == prior}
                                                     onCheckedChange={(check) => {
                                                         if (check) {
-                                                            handleExpires(value)
+                                                            setPrior(value)
                                                         }
                                                     }}
                                                 >
@@ -226,33 +159,38 @@ export function SystemNotificationSettings() {
                         <div className="flex flex-col items-start justify-start gap-1">
                             <p className="font-medium text-gray-200">DM push alert</p>
                             <DropdownMenu>
-                                <DropdownMenuTrigger asChild className="outline-none" onMouseEnter={handleExpiresHover}
-                                                     onMouseLeave={handleExpiresNotHover}>
+                                <DropdownMenuTrigger asChild className="outline-none" onMouseEnter={handleDmPushAlertHover}
+                                                     onMouseLeave={handleDmPushAlertNotHover}>
                                     <button
-                                        className={expiresIsHovered ? "bg-gray-900 text-white h-7 w-40 px-2 border-[2px] border-gray-700 outline-none select-all rounded-lg text-left" : "bg-black text-white h-7 w-40 px-2 border-[2px] border-gray-700 outline-none select-all rounded-lg text-left"}>
-                                        <p>{expires} sec.</p>
+                                        className={dmPushAlertIsHovered ? "bg-gray-900 text-white h-7 w-40 px-2 border-[2px] border-gray-700 outline-none select-all rounded-lg text-left" : "bg-black text-white h-7 w-40 px-2 border-[2px] border-gray-700 outline-none select-all rounded-lg text-left"}>
+                                        <p>{dmPushAlert ? "Enabled" : "Disabled"}</p>
                                     </button>
                                 </DropdownMenuTrigger>
                                 <DropdownMenuContent align="end">
-                                    {
-                                        expirations.map((expiration, index) => {
-                                            const key = Object.keys(expiration)[0];
-                                            const value = Object.values(expiration)[0];
-                                            return (
-                                                <DropdownMenuCheckboxItem
-                                                    key={index}
-                                                    className="capitalize text-gray-400 hover:text-white cursor-pointer"
-                                                    checked={value == expires}
-                                                    onCheckedChange={(check) => {
-                                                        if (check) {
-                                                            handleExpires(value)
-                                                        }
-                                                    }}
-                                                >
-                                                    {key}
-                                                </DropdownMenuCheckboxItem>
-                                            )
-                                        })}
+                                    <DropdownMenuCheckboxItem
+                                        key={"Enabled"}
+                                        className="capitalize text-gray-400 hover:text-white cursor-pointer"
+                                        checked={dmPushAlert == true}
+                                        onCheckedChange={(check) => {
+                                            if (check) {
+                                                setDmPushAlert(true)
+                                            }
+                                        }}
+                                    >
+                                        {"Enabled"}
+                                    </DropdownMenuCheckboxItem>
+                                    <DropdownMenuCheckboxItem
+                                        key={"Disabled"}
+                                        className="capitalize text-gray-400 hover:text-white cursor-pointer"
+                                        checked={dmPushAlert == false}
+                                        onCheckedChange={(check) => {
+                                            if (check) {
+                                                setDmPushAlert(false)
+                                            }
+                                        }}
+                                    >
+                                        {"Disabled"}
+                                    </DropdownMenuCheckboxItem>
                                 </DropdownMenuContent>
                             </DropdownMenu>
                             <p className="text-xs text-gray-700">Direct message reception alerts.</p>
@@ -261,33 +199,38 @@ export function SystemNotificationSettings() {
                         <div className="flex flex-col items-start justify-start gap-1">
                             <p className="font-medium text-gray-200">System status push alert</p>
                             <DropdownMenu>
-                                <DropdownMenuTrigger asChild className="outline-none" onMouseEnter={handleExpiresHover}
-                                                     onMouseLeave={handleExpiresNotHover}>
+                                <DropdownMenuTrigger asChild className="outline-none" onMouseEnter={handleSysPushAlertHover}
+                                                     onMouseLeave={handleSysPushAlertNotHover}>
                                     <button
-                                        className={expiresIsHovered ? "bg-gray-900 text-white h-7 w-40 px-2 border-[2px] border-gray-700 outline-none select-all rounded-lg text-left" : "bg-black text-white h-7 w-40 px-2 border-[2px] border-gray-700 outline-none select-all rounded-lg text-left"}>
-                                        <p>{expires} sec.</p>
+                                        className={sysPushAlertIsHovered ? "bg-gray-900 text-white h-7 w-40 px-2 border-[2px] border-gray-700 outline-none select-all rounded-lg text-left" : "bg-black text-white h-7 w-40 px-2 border-[2px] border-gray-700 outline-none select-all rounded-lg text-left"}>
+                                        <p>{sysPushAlert ? "Enabled" : "Disabled"}</p>
                                     </button>
                                 </DropdownMenuTrigger>
                                 <DropdownMenuContent align="end">
-                                    {
-                                        expirations.map((expiration, index) => {
-                                            const key = Object.keys(expiration)[0];
-                                            const value = Object.values(expiration)[0];
-                                            return (
-                                                <DropdownMenuCheckboxItem
-                                                    key={index}
-                                                    className="capitalize text-gray-400 hover:text-white cursor-pointer"
-                                                    checked={value == expires}
-                                                    onCheckedChange={(check) => {
-                                                        if (check) {
-                                                            handleExpires(value)
-                                                        }
-                                                    }}
-                                                >
-                                                    {key}
-                                                </DropdownMenuCheckboxItem>
-                                            )
-                                        })}
+                                    <DropdownMenuCheckboxItem
+                                        key={"Enabled"}
+                                        className="capitalize text-gray-400 hover:text-white cursor-pointer"
+                                        checked={sysPushAlert == true}
+                                        onCheckedChange={(check) => {
+                                            if (check) {
+                                                setSysPushAlert(true)
+                                            }
+                                        }}
+                                    >
+                                        {"Enabled"}
+                                    </DropdownMenuCheckboxItem>
+                                    <DropdownMenuCheckboxItem
+                                        key={"Disabled"}
+                                        className="capitalize text-gray-400 hover:text-white cursor-pointer"
+                                        checked={sysPushAlert == false}
+                                        onCheckedChange={(check) => {
+                                            if (check) {
+                                                setSysPushAlert(false)
+                                            }
+                                        }}
+                                    >
+                                        {"Disabled"}
+                                    </DropdownMenuCheckboxItem>
                                 </DropdownMenuContent>
                             </DropdownMenu>
                             <p className="text-xs text-gray-700">Real-time system functionality notifications.</p>
