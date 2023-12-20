@@ -82,9 +82,11 @@ export function SystemNotificationSettings() {
                             <p className="font-medium text-gray-200">Weekly sum-up email</p>
                             <DropdownMenu>
                                 <DropdownMenuTrigger asChild className="outline-none" onMouseEnter={handleWeeklyReportHover}
-                                                     onMouseLeave={handleWeeklyReportNotHover}>
+                                                     onMouseLeave={handleWeeklyReportNotHover}
+                                                     disabled={true}
+                                >
                                     <button
-                                        className={weeklyReportIsHovered ? "bg-gray-900 text-white h-7 w-40 px-2 border-[2px] border-gray-700 outline-none select-all rounded-lg text-left" : "bg-black text-white h-7 w-40 px-2 border-[2px] border-gray-700 outline-none select-all rounded-lg text-left"}>
+                                        className={weeklyReportIsHovered ? "bg-gray-900 text-white h-7 w-40 px-2 border-[2px] border-gray-700 outline-none select-all rounded-lg text-left cursor-not-allowed" : "bg-black text-white h-7 w-40 px-2 border-[2px] border-gray-700 outline-none select-all rounded-lg text-left cursor-not-allowed"}>
                                         <p>{weeklyReport ? "Enabled" : "Disabled"}</p>
                                     </button>
                                 </DropdownMenuTrigger>
@@ -123,9 +125,11 @@ export function SystemNotificationSettings() {
                             <p className="font-medium text-gray-200">Client token expiration reminder</p>
                             <DropdownMenu>
                                 <DropdownMenuTrigger asChild className="outline-none" onMouseEnter={handleCtExpirationAlertHover}
-                                                     onMouseLeave={handleCtExpirationAlertNotHover}>
+                                                     onMouseLeave={handleCtExpirationAlertNotHover}
+                                                     disabled={true}
+                                >
                                     <button
-                                        className={ctExpirationAlertIsHovered ? "bg-gray-900 text-white h-7 w-40 px-2 border-[2px] border-gray-700 outline-none select-all rounded-lg text-left" : "bg-black text-white h-7 w-40 px-2 border-[2px] border-gray-700 outline-none select-all rounded-lg text-left"}>
+                                        className={ctExpirationAlertIsHovered ? "bg-gray-900 text-white h-7 w-40 px-2 border-[2px] border-gray-700 outline-none select-all rounded-lg text-left cursor-not-allowed" : "bg-black text-white h-7 w-40 px-2 border-[2px] border-gray-700 outline-none select-all rounded-lg text-left cursor-not-allowed"}>
                                         <p>{prior} days</p>
                                     </button>
                                 </DropdownMenuTrigger>
