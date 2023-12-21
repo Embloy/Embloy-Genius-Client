@@ -80,14 +80,15 @@ export function SystemNotificationSettings() {
                     <div className="w-full flex flex-row items-start justify-start gap-6">
                         <div className="flex flex-col items-start justify-start gap-1">
                             <p className="font-medium text-gray-200">Weekly sum-up email</p>
-                            <DropdownMenu>
+                            <DropdownMenu >
                                 <DropdownMenuTrigger asChild className="outline-none" onMouseEnter={handleWeeklyReportHover}
                                                      onMouseLeave={handleWeeklyReportNotHover}
                                                      disabled={true}
+
                                 >
                                     <button
                                         className={weeklyReportIsHovered ? "bg-gray-900 text-white h-7 w-40 px-2 border-[2px] border-gray-700 outline-none select-all rounded-lg text-left cursor-not-allowed" : "bg-black text-white h-7 w-40 px-2 border-[2px] border-gray-700 outline-none select-all rounded-lg text-left cursor-not-allowed"}>
-                                        <p>{weeklyReport ? "Enabled" : "Disabled"}</p>
+                                        <p className="text-gray-700">{weeklyReport ? "Enabled" : "Disabled"}</p>
                                     </button>
                                 </DropdownMenuTrigger>
                                 <DropdownMenuContent align="end">
@@ -130,7 +131,7 @@ export function SystemNotificationSettings() {
                                 >
                                     <button
                                         className={ctExpirationAlertIsHovered ? "bg-gray-900 text-white h-7 w-40 px-2 border-[2px] border-gray-700 outline-none select-all rounded-lg text-left cursor-not-allowed" : "bg-black text-white h-7 w-40 px-2 border-[2px] border-gray-700 outline-none select-all rounded-lg text-left cursor-not-allowed"}>
-                                        <p>{prior} days</p>
+                                        <p className="text-gray-700">{prior} days</p>
                                     </button>
                                 </DropdownMenuTrigger>
                                 <DropdownMenuContent align="end">
@@ -164,10 +165,12 @@ export function SystemNotificationSettings() {
                             <p className="font-medium text-gray-200">DM push alert</p>
                             <DropdownMenu>
                                 <DropdownMenuTrigger asChild className="outline-none" onMouseEnter={handleDmPushAlertHover}
-                                                     onMouseLeave={handleDmPushAlertNotHover}>
+                                                     onMouseLeave={handleDmPushAlertNotHover}
+                                                     disabled={true}
+                                >
                                     <button
-                                        className={dmPushAlertIsHovered ? "bg-gray-900 text-white h-7 w-40 px-2 border-[2px] border-gray-700 outline-none select-all rounded-lg text-left" : "bg-black text-white h-7 w-40 px-2 border-[2px] border-gray-700 outline-none select-all rounded-lg text-left"}>
-                                        <p>{dmPushAlert ? "Enabled" : "Disabled"}</p>
+                                        className={dmPushAlertIsHovered ? "bg-gray-900 text-white h-7 w-40 px-2 border-[2px] border-gray-700 outline-none select-all rounded-lg text-left cursor-not-allowed" : "bg-black text-white h-7 w-40 px-2 border-[2px] border-gray-700 outline-none select-all rounded-lg text-left cursor-not-allowed"}>
+                                        <p className="text-gray-700">{dmPushAlert ? "Enabled" : "Disabled"}</p>
                                     </button>
                                 </DropdownMenuTrigger>
                                 <DropdownMenuContent align="end">
@@ -204,10 +207,13 @@ export function SystemNotificationSettings() {
                             <p className="font-medium text-gray-200">System status push alert</p>
                             <DropdownMenu>
                                 <DropdownMenuTrigger asChild className="outline-none" onMouseEnter={handleSysPushAlertHover}
-                                                     onMouseLeave={handleSysPushAlertNotHover}>
+                                                     onMouseLeave={handleSysPushAlertNotHover}
+                                                     disabled={true}
+
+                                >
                                     <button
-                                        className={sysPushAlertIsHovered ? "bg-gray-900 text-white h-7 w-40 px-2 border-[2px] border-gray-700 outline-none select-all rounded-lg text-left" : "bg-black text-white h-7 w-40 px-2 border-[2px] border-gray-700 outline-none select-all rounded-lg text-left"}>
-                                        <p>{sysPushAlert ? "Enabled" : "Disabled"}</p>
+                                        className={sysPushAlertIsHovered ? "bg-gray-900 text-white h-7 w-40 px-2 border-[2px] border-gray-700 outline-none select-all rounded-lg text-left cursor-not-allowed" : "bg-black text-white h-7 w-40 px-2 border-[2px] border-gray-700 outline-none select-all rounded-lg text-left cursor-not-allowed"}>
+                                        <p className="text-gray-700">{sysPushAlert ? "Enabled" : "Disabled"}</p>
                                     </button>
                                 </DropdownMenuTrigger>
                                 <DropdownMenuContent align="end">
