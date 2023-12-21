@@ -236,11 +236,11 @@ export function ProfileSettings() {
                     <div className="text-lg font-medium text-gray-700 flex flex-row items-center justify-start gap-4 ">
                         <h1>Personal information & preferences</h1>
                     </div>
-                    <div className="text-gray-600 flex flex-row items-center justify-start">
+                    <div className="text-gray-700 flex flex-row items-center justify-start">
                         <p>Some information may be visible to other people using Embloy services.</p>
                         <div className="w-1"/>
                         <a className="italic text-gray-700 hover:underline cursor-pointer"
-                           href="https://about.embloy.com"><p>Learn more</p></a>
+                           href="https://about.embloy.com"><p className="text-gray-600">Learn more</p></a>
                     </div>
                 </div>
 
@@ -263,7 +263,7 @@ export function ProfileSettings() {
                         <h1>Appearance</h1>
                     </div>
                     <div className="text-gray-700 flex flex-row items-center justify-start">
-                        <p>Choose how Embloy looks to you..</p>
+                        <p>Choose how Embloy looks to you.</p>
                     </div>
                 </div>
 
