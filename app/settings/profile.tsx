@@ -234,9 +234,9 @@ export function ProfileSettings() {
                 <div
                     className="text-sm w-full flex flex-row items-center justify-between border-b border-gray-700 p-4">
                     <div className="text-lg font-medium text-gray-700 flex flex-row items-center justify-start gap-4 ">
-                        <h1>Personal information</h1>
+                        <h1>Personal information & preferences</h1>
                     </div>
-                    <div className="text-gray-700 flex flex-row items-center justify-start">
+                    <div className="text-gray-600 flex flex-row items-center justify-start">
                         <p>Some information may be visible to other people using Embloy services.</p>
                         <div className="w-1"/>
                         <a className="italic text-gray-700 hover:underline cursor-pointer"
