@@ -8,6 +8,7 @@ import {UserContext} from "@/app/components/misc/UserContext";
 import Image from "next/image";
 import {NotificationSettings} from "@/app/settings/NotificationSettings";
 import {SystemNotificationSettings} from "@/app/settings/SystemNotificationSettings";
+import {GeniusSettings} from "@/app/settings/GeniusSettings";
 
 
 
@@ -250,6 +251,8 @@ export function ProfileSettings() {
                     <NotificationSettings/>
                     <div className="h-3"/>
                     <SystemNotificationSettings/>
+                    <div className="h-3"/>
+                    <GeniusSettings/>
                 </div>
             </div>
 
