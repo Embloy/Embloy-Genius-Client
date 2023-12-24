@@ -66,7 +66,7 @@ export function SubscriptionSettings() {
 
             <div className="flex flex-row items-center justify-start">
                 <p className="text-gray-400">
-                    Manage subscription plans for personal or commercial use.
+                    Manage plans for personal and commercial use.
                     <a
                         className="px-1 italic text-embloy-purple-lighter hover:underline cursor-pointer"
                         href="https://about.embloy.com"
