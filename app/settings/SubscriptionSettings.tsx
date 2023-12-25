@@ -1,17 +1,87 @@
 import React, {useContext, useEffect, useState} from "react";
 
 import {UserContext} from "@/app/components/misc/UserContext";
-import {login, logout, request_access, request_client, request_refresh, update_password} from "@/lib/authentication";
-import {getCookie, setCookie} from "cookies-next";
-import {useRouter} from "next/navigation";
 import Image from "next/image";
-import {
-    DropdownMenu,
-    DropdownMenuCheckboxItem,
-    DropdownMenuContent,
-    DropdownMenuTrigger
-} from "@/app/components/ui/dropdown-menu";
-import {ChevronDown} from "lucide-react";
+
+enum Subscription {
+    basic = "Embloy Smart",
+    premium = "Embloy Genius"
+}
+
+enum Interval {
+    cpa = "/application",
+    l = " lumpsum",
+    m = "/month",
+    y = "/year"
+}
+type FunctionalitiesType = { [key: string]: string };
+function SubscriptionItem({name, text, disabled, img, subscribed, functionalities, price, interval }) {
+    let subscription_name = Subscription[name];
+    let interval_name = Interval[interval];
+    if (subscription_name !== undefined && interval_name !== undefined){
+        if (!subscribed){ //unsubscribed
+            return (
+                <div className="max-w-[350px] flex flex-col items-start justify-start gap-4">
+                    <div className="flex flex-col items-start justify-start border border-gray-700 rounded-lg ">
+                        <div className="flex flex-col items-start justify-start px-4 py-2 gap-4">
+                            <div className="flex flex-row items-center justify-start">
+                                <Image
+                                    src={img}
+                                    alt={name}
+                                    height="50"
+                                    width="50"
+                                    className="relative ml-1"
+                                />
+                                {disabled && (
+                                    <div className="ml-3 border border-gray-700 bg-black px-2 rounded-full">
+                                        <p className="text-gray-700 text-xs">Functionality disabled</p>
+                                    </div>
+                                )}
+                            </div>
+
+                        </div>
+                        <div className="w-full h-px bg-gray-700" />
+                        <div className="flex flex-col items-start justify-start px-4 py-2">
+                            <h1 className="text-white">{text}</h1>
+                        </div>
+                        <div className="w-full h-px bg-gray-700" />
+                        <div className="w-full flex flex-col items-start justify-start px-4 py-2 gap-4">
+                            {Object.entries(functionalities).map(([key, value]) => (
+                                <div key={key} className="w-full flex flex-row items-center justify-between text-white">
+                                    <p>{key}</p>
+                                    <p>{value}</p>
+                                </div>
+                            ))}
+                            <div className="w-full flex flex-row items-center justify-between text-white">
+                                <p>Price</p>
+                                <p>{price}{interval_name}</p>
+                            </div>
+                        </div>
+                        <div className="w-full h-px bg-gray-700" />
+                        <div className="w-full flex flex-col items-start justify-start px-4 py-2 gap-4">
+                            <div className="w-full flex flex-row items-center justify-between">
+                                <button className="rounded-full text-embloy-purple-light hover:underline text-sm">
+                                    <p>Learn more</p>
+                                </button>
+                                <button className="border-[2px] border-embloy-purple-light hover:border-embloy-purple-lighter rounded-full px-2 text-embloy-purple-light hover:text-embloy-purple-lighter text-sm">
+                                    <p>Buy</p>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )
+
+        }
+
+        //subscribed
+
+        return (
+            <div />
+        )
+    }
+}
+
 
 
 export function SubscriptionSettings() {
@@ -79,61 +149,10 @@ export function SubscriptionSettings() {
                 </p>
             </div>
             <div className="w-full flex flex-col items-start justify-start gap-1">
-
-                <DropdownMenu>
-                    <DropdownMenuTrigger
-                        asChild
-                        className="outline-none"
-                        onMouseEnter={handleNotificationsHover}
-                        onMouseLeave={handleNotificationsNotHover}
-                        disabled={true}
-                    >
-                        <button
-                            className={
-                                notificationsIsHovered
-                                    ? 'bg-gray-900 text-white h-7 w-40 px-2 border-[2px] border-gray-700 outline-none select-none rounded-lg text-left flex flex-row cursor-not-allowed'
-                                    : 'bg-black text-white h-7 w-40 px-2 border-[2px] border-gray-700 outline-none select-none rounded-lg text-left flex flex-row cursor-not-allowed'
-                            }
-                        >
-                            <p className="text-gray-700">
-                                {Object.keys(notificationEmails).length > 0
-                                    ? Object.keys(notificationEmails).find(
-                                    (email) => notificationEmails[email]
-                                ) || 'None selected'
-                                    : 'None selected'}
-                            </p>
-                        </button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                        {Object.keys(notificationEmails).map((email, index) => (
-                            <DropdownMenuCheckboxItem
-                                key={index}
-                                className="text-gray-400 hover:text-white cursor-pointer"
-                                checked={notificationEmails[email]}
-                                onCheckedChange={(check) =>
-                                    handleNotificationEmails(email, check)
-                                }
-                            >
-                                {email}
-                            </DropdownMenuCheckboxItem>
-                        ))}
-                        <div className="flex items-center justify-between mt-2">
-                            <input
-                                type="text"
-                                placeholder="Enter new email"
-                                value={newEmail}
-                                className="border border-gray-700 px-2 py-1 rounded-lg text-gray-400 focus:outline-none"
-                                onChange={(e) => setNewEmail(e.target.value)}
-                            />
-                            <button
-                                className="bg-gray-900 text-white h-7 px-2 border-[2px] border-gray-700 rounded-lg text-sm focus:outline-none"
-                                onClick={addNewEmail}
-                            >
-                                Add
-                            </button>
-                        </div>
-                    </DropdownMenuContent>
-                </DropdownMenu>
+                <div className="flex flex-wrap gap-4 justify-center">
+                    <SubscriptionItem name={"basic"} text={"Integrate Embloy in your website and receive applications via the Embloy API."} disabled={false} img={"/img/smart.svg"} subscribed={false} price={"€2"} interval={"cpa"} functionalities={{test: 'Description of feature 1',}}  />
+                    <SubscriptionItem name={"premium"} text={"Smart becomes REALLY smart. Gain access to candidate profiles AI assessed to match your indiviual requirements."} disabled={true} img={"/img/genius.svg"} subscribed={false} price={"€2"} interval={"cpa"} functionalities={{feature1: 'Description of feature 1',}}/>
+                </div>
             </div>
         </div>
     )
