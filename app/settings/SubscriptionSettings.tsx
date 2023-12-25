@@ -151,7 +151,7 @@ export function SubscriptionSettings() {
             <div className="w-full flex flex-col items-start justify-start gap-1">
                 <div className="flex flex-wrap gap-4 justify-center">
                     <SubscriptionItem name={"basic"} text={"Integrate Embloy in your website and receive applications via the Embloy API."} disabled={false} img={"/img/smart.svg"} subscribed={false} price={"€2"} interval={"cpa"} functionalities={{test: 'Description of feature 1',}}  />
-                    <SubscriptionItem name={"premium"} text={"Smart becomes REALLY smart. Gain access to candidate profiles AI assessed to match your indiviual requirements."} disabled={true} img={"/img/genius.svg"} subscribed={false} price={"€2"} interval={"cpa"} functionalities={{feature1: 'Description of feature 1',}}/>
+                    <SubscriptionItem name={"premium"} text={"Smart becomes REALLY smart. Gain access to candidate profiles AI assessed to match your indiviual requirements."} disabled={false} img={"/img/genius.svg"} subscribed={false} price={"€2"} interval={"cpa"} functionalities={{feature1: 'Description of feature 1',}}/>
                 </div>
             </div>
         </div>
