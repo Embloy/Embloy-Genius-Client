@@ -30,7 +30,7 @@ function SubscriptionItem({name, text, disabled, img, subscribed, functionalitie
                                     alt={name}
                                     height="50"
                                     width="50"
-                                    className="relative ml-1"
+                                    className="relative"
                                 />
                                 {disabled && (
                                     <div className="ml-3 border border-gray-700 bg-black px-2 rounded-full">
@@ -60,7 +60,7 @@ function SubscriptionItem({name, text, disabled, img, subscribed, functionalitie
                         <div className="w-full h-px bg-gray-700" />
                         <div className="w-full flex flex-col items-start justify-start px-4 py-2 gap-4">
                             <div className="w-full flex flex-row items-center justify-between">
-                                <button className="rounded-full text-embloy-purple-light hover:underline text-sm">
+                                <button className="rounded-full text-embloy-purple-lighter hover:underline text-sm">
                                     <p>Learn more</p>
                                 </button>
                                 <button className="border-[2px] border-embloy-purple-light hover:border-embloy-purple-lighter rounded-full px-2 text-embloy-purple-light hover:text-embloy-purple-lighter text-sm">
