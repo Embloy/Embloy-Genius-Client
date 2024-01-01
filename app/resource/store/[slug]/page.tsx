@@ -13,6 +13,7 @@ export default function Page({params}) {
     useEffect(() => {
         get_ops('store/' + params.slug + '/', router).then( data => {
             console.log(data)
+            setContent("HI")
         })
     }, [])
     if(content == null) {
