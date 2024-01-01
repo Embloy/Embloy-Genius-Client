@@ -18,3 +18,6 @@ export function extractContent(inputString: string, substring: string): string |
     const content = inputString.substring(startQuoteIndex + 1, endQuoteIndex);
     return content;
 }
+export function isNotNumeric(value) {
+    return isNaN(value);
+}

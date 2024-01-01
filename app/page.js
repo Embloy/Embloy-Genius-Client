@@ -1,10 +1,7 @@
 "use client";
 import Image from 'next/image'
-import AuthWrapper from "@/app/components/misc/AuthWrapper";
-import {useRouter} from "next/navigation";
 import React, {useEffect, useState} from "react";
-import {get_core} from "@/lib/misc_requests";
-import LoadingScreen from "@/app/components/misc/LoadingScreen";
+
 
 
 const newsItems = [
