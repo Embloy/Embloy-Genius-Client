@@ -5,7 +5,7 @@ import {useRouter} from "next/navigation";
 import {logout} from "@/lib/authentication";
 import Link from "next/link";
 
-export const UserBar = ({ isVisible, onClose, userData }) => {
+export const UserBar = ({ isVisible, onClose, userData, storeData }) => {
     const router = useRouter();
     function calculateMinutesFromNow(timestamp) {
         const currentTime = new Date();
@@ -31,7 +31,7 @@ export const UserBar = ({ isVisible, onClose, userData }) => {
     return (
         <div className={sidebarClass}>
             <div className="flex h-full w-full">
-                    {userData ? (
+                    {userData && storeData ? (
                         <div className="h-full w-full flex flex-col justify-start items-center">
                             <div className="w-full h-4" />
                             <div className="w-full flex flex-col justify-start items-start text-white px-2.5">

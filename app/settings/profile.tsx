@@ -14,8 +14,7 @@ import {SubscriptionSettings} from "@/app/settings/SubscriptionSettings";
 
 
 
-export function ProfileSettings() {
-    let user = useContext(UserContext)
+export function ProfileSettings({store, user}) {
     return (
         <div>
             <div className="w-full flex flex-col items-center justify-between ">
@@ -40,7 +39,7 @@ export function ProfileSettings() {
                     <div className="h-3"/>
                     <SystemNotificationSettings/>
                     <div className="h-3"/>
-                    <SubscriptionSettings/>
+                    <SubscriptionSettings store={store}/>
                     <div className="h-3"/>
                     <GeniusSettings/>
                 </div>

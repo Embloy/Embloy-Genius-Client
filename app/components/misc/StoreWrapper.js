@@ -1,20 +1,20 @@
 "use client";
 import React, {useEffect} from "react";
 import {getCookie} from "cookies-next";
-import {logout} from "@/lib/authentication";
-import { createContext, useState } from 'react';
-import {get_core} from "@/lib/misc_requests";
+import {login, logout} from "@/lib/authentication";
+import { createContext, useContext, useState } from 'react';
+import { get_ops} from "@/lib/misc_requests";
 import {usePathname, useRouter} from "next/navigation";
-export const UserContext = createContext();
-const UserWrapper = ({children}) => {
-    const [user, setUser] = useState(null);
+export const StoreContext = createContext();
+const StoreWrapper = ({children}) => {
+    const [store, setStore] = useState(null);
     const router = useRouter();
     const pathname = usePathname();
 
     useEffect(() => {
         if(pathname!=="/signin" && getCookie("refresh", {path: "/"})) {
-            get_core("user", router).then(data => {
-                setUser(data.user)
+            get_ops("store", router).then(data => {
+                setStore(data)
             }).catch(e => {
                 console.log(e)
             });
@@ -26,11 +26,11 @@ const UserWrapper = ({children}) => {
 
 
     return (
-        <UserContext.Provider value={user}>
+        <StoreContext.Provider value={store}>
             {children}
-        </UserContext.Provider>
+        </StoreContext.Provider>
     );
 
 };
 
-export default UserWrapper;
+export default StoreWrapper;

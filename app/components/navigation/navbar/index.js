@@ -9,6 +9,7 @@ import {SearchBar} from "@/app/components/navigation/navbar/SearchBar";
 import {Notifications} from "@/app/components/navigation/navbar/Notifications";
 import {UserContext} from "@/app/components/misc/UserContext";
 import {UserBar} from "@/app/components/navigation/userbar";
+import {StoreContext} from "@/app/components/misc/StoreWrapper";
 
 const Navbar = () => {
     const pathname = usePathname()
@@ -19,6 +20,7 @@ const Navbar = () => {
 
 
     let user = useContext(UserContext)
+    let store = useContext(StoreContext)
 
 
     return (
@@ -62,7 +64,7 @@ const Navbar = () => {
                     </div>
                 </div>
             </div>
-            <UserBar isVisible={isUserbarVisible} onClose={toggleUserbar} userData={user}/>
+            <UserBar isVisible={isUserbarVisible} onClose={toggleUserbar} userData={user} storeData={store}/>
         </>
     );
 };
