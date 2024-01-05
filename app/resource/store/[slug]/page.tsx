@@ -14,6 +14,7 @@ export default function Page({params}) {
     const [content, setContent] = useState({})
     const router = useRouter();
     const [selectedOption, setSelectedOption] = useState(null);
+    const [accepted, setAccepted] = useState(false);
 
     const purchase_allowed = () => {
         if (selectedOption === null) {
@@ -79,13 +80,13 @@ export default function Page({params}) {
                             )}
                     </div>
                     <p className="text-center text-white font-normal text-base">Brain-boosting your recruitment</p>
-                    <div className="h-12"/>
+                    <div className="h-6"/>
                     <div
-                        className="w-4/6 bg-black border border-gray-700 rounded-lg flex flex-col items-start justify-start p-4">
-                        <h1 className="text-white font-medium text-xl">Enable {subscription_name} for your
+                        className="w-4/6 bg-black border border-gray-700 rounded-lg flex flex-col items-center justify-center p-4">
+                        <h1 className="text-white font-medium underline text-xl">Enable {subscription_name} for your
                             organization</h1>
-                        <div className="h-2"/>
-                        <p className="text-white font-normal text-sm">{subscriptionText}</p>
+                        <div className="h-4"/>
+                        <p className="text-white font-normal text-base">{subscriptionText}</p>
                         <div className="h-6"/>
                         <div
                             className="w-full flex flex-row item-center justify-center">
@@ -93,16 +94,16 @@ export default function Page({params}) {
                         </div>
                         <div className="h-4"/>
                         <div
-                            className="p-2 border rounded-lg border-white w-full flex flex-col item-start justify-start gap-4">
+                            className=" w-full flex flex-col item-start justify-start gap-4">
                             {subscriptionFeatures.map((feature, index) => {
                                 const featureKeys = Object.keys(feature);
                                 const key = featureKeys.find(key => key !== 'icon_url');
                                 const iconUrl = feature['icon_url'];
 
                                 return (
-                                    <div key={index} className="w-full flex flex-row item-center justify-start">
+                                    <div key={index} className=" p-2 border rounded-lg border-transparent w-full flex flex-row item-center justify-start gap-4 bg-gradient-to-r from-slate-900 via-purple-900 to-slate-900 backdrop-blur-xl transition duration-200 ease-in-out hover:border-white">
                                         <div
-                                            className="w-1/3 flex flex-row items-start justify-start cursor-default gap-2">
+                                            className=" w-1/3 flex flex-row items-start justify-start cursor-default gap-2 ">
                                             <Image
                                                 src={"/icons/" + iconUrl}
                                                 alt={content["product_name"]}
@@ -110,7 +111,7 @@ export default function Page({params}) {
                                                 width="35"
                                                 className="relative"
                                             />
-                                            <h1 className="left text-sm font-normal text-white">{key}</h1>
+                                            <h1 className="left text-base font-normal text-white">{key}</h1>
                                         </div>
                                         <div className="w-2/3 flex flex-row items-start justify-start ">
                                             <p className="left text-sm font-normal text-white">{feature[key]}</p>
@@ -119,13 +120,13 @@ export default function Page({params}) {
                                 )
                             })}
                         </div>
-                        <div className="h-6"/>
+                        <div className="h-12"/>
                         <div
                             className="w-full flex flex-row item-center justify-center">
                             <h1 className="px-4 py-1 rounded-lg bg-embloy-purple-light text-embloy-purple text-center text-sm font-semibold cursor-default">Options</h1>
                         </div>
                         <div className="h-4"/>
-                        <div className="w-full flex flex-row item-start justify-start gap-px ">
+                        <div className="w-full flex flex-row item-start justify-center gap-px ">
                             <div className="border rounded-lg border-white flex flex-row item-start justify-start">
                                 {subscriptionOptions.map((option, index) => (
                                     <React.Fragment key={index}>
@@ -134,9 +135,9 @@ export default function Page({params}) {
                                             onClick={() => setSelectedOption(subscriptionOptions[index])}
                                         >
                                             <div className="h-2" />
-                                            <h1 className="center text-sm font-semibold text-white">{option.duration} {option.unit}</h1>
+                                            <h1 className="center text-lg font-normal text-white">{option.duration} {option.unit}</h1>
                                             <p className="center text-sm font-normal text-embloy-purple-lighter">{`${option.currency} ${option.price} ${option.type}*`}</p>
-                                            <div className="h-2" />
+                                            <div className="h-4" />
                                         </div>
                                         {index !== subscriptionOptions.length - 1 && <div className="h-full w-px bg-white" />}
                                     </React.Fragment>
@@ -144,25 +145,53 @@ export default function Page({params}) {
 
                             </div>
                         </div>
-                        <div className="h-12"/>
-
-                        <div className="h-2"/>
+                        <div className="h-24"/>
+                        <div className="w-full flex flex-row item-center justify-between">
+                            <label className="text-sm font-normal text-white ">
+                                <input
+                                    type="checkbox"
+                                    checked={accepted}
+                                    onChange={() =>{setAccepted(!accepted)}}
+                                    style={{
+                                        appearance: 'none',
+                                        width: '15px',
+                                        height: '15px',
+                                        border: '2px solid white',
+                                        borderRadius: '100%',
+                                        backgroundColor: accepted ? '#C9B3FF' : 'transparent',
+                                        marginRight: '8px',
+                                        cursor: 'pointer',
+                                    }}
+                                />
+                                I sign & accept <a href="about.embloy.com" className="text-embloy-purple-lighter hover:underline">Embloys Customer Agreement</a> (required)
+                            </label>
+                        </div>
+                        <div className="h-4"/>
                         <div className="w-full flex flex-row item-center justify-between">
                             <div className="w-1/3">
-                                {purchase_allowed() ? (
-                                    <h1
-                                        className="flex flex-row items-center justify-start py-2 text-white text-sm">
-                                        {`Your plan:${selectedOption.currency} ${selectedOption.price} ${selectedOption.type} for ${selectedOption.duration} ${selectedOption.unit}*`}
-                                    </h1>
+                                {purchase_allowed() && accepted ? (
+                                    <div
+                                        className=" border-[2px] border-white flex flex-row items-start justify-start px-4 py-2 bg-transparent gap-4 rounded-full">
+                                        <h1 className="text-white text-base font-normal">
+                                            {`${selectedOption.currency} ${selectedOption.price}`}
+                                        </h1>
+                                        <h1 className="text-gray-700 text-xs italic">
+                                            {`${selectedOption.type} payment*`}
+                                        </h1>
+                                    </div>
                                 ) : (
-                                    <h1
-                                        className="flex flex-row items-center justify-start py-2 text-red-500 text-sm">
-                                        No option selected
-                                    </h1>
+                                    <div
+                                        className="border-[2px] border-gray-700 flex flex-row items-start justify-start px-4 py-2 bg-transparent gap-4 rounded-full">
+                                        <h1 className="text-gray-700 text-base font-normal">
+                                            {`-`}
+                                        </h1>
+                                    </div>
+
+
                                 )}
                             </div>
                             <div className="w-1/3 flex flex-row items-center justify-center">
-                                {purchase_allowed() ? (
+                                {purchase_allowed() && accepted ? (
                                     <button
                                         className="rounded-full py-1 px-4 bg-embloy-purple-light hover:bg-embloy-purple-lighter text-embloy-purple text-center text-sm font-semibold">
                                         Buy
@@ -176,7 +205,7 @@ export default function Page({params}) {
                                 )}
 
                             </div>
-                            <button className="w-1/3 flex flex-row py-2 text-gray-700 hover:text-gray-400 text-xs items-center justify-end">
+                            <button className="w-1/3 flex flex-row py-4 py-2 text-gray-700 hover:underline text-xs items-center justify-end">
                                 <a href="https://about.embloy.com"> * see Embloys payment terms</a>
                             </button>
                         </div>
