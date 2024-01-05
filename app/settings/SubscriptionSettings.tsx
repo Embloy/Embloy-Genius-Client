@@ -72,9 +72,9 @@ export function SubscriptionSettings({store}) {
         <div className="w-full flex flex-col items-start justify-start gap-4">
             <div className="w-full flex flex-row items-center justify-start gap-3">
                 <h1 className="text-lg font-medium">Subscriptions</h1>
-                <div className="border border-gray-700 bg-black px-2 rounded-full">
+                {/*<div className="border border-gray-700 bg-black px-2 rounded-full">
                     <p className="text-gray-700 text-xs">Functionality disabled</p>
-                </div>
+                </div>*/}
             </div>
 
             <div className="flex flex-row items-center justify-start">
