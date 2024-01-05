@@ -5,6 +5,8 @@ import Navigation from "@/app/components/navigation";
 import AuthWrapper from "@/app/components/misc/AuthWrapper";
 import UserWrapper from "@/app/components/misc/UserContext";
 import StoreWrapper from "@/app/components/misc/StoreWrapper";
+import Bottom from "@/app/components/bottom";
+
 
 const lexend = Lexend({subsets: ['latin']})
 
@@ -26,6 +28,7 @@ export default function RootLayout({children}) {
                         <div className="flex flex-col items-center justify-center ">
                             {children}
                         </div>
+                        <Bottom/>
                     </StoreWrapper>
                 </UserWrapper>
             </AuthWrapper>
