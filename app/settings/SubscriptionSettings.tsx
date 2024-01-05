@@ -2,18 +2,9 @@ import React, {useContext, useEffect, useState} from "react";
 
 import {UserContext} from "@/app/components/misc/UserContext";
 import Image from "next/image";
+import {Interval, Subscription} from "@/lib/utils/enums";
 
-enum Subscription {
-    basic = "Embloy Smart",
-    premium = "Embloy Genius"
-}
 
-enum Interval {
-    cpa = "/application",
-    l = " lumpsum",
-    m = "/month",
-    y = "/year"
-}
 type FunctionalitiesType = { [key: string]: string };
 function SubscriptionItem({name, text, disabled, img, subscribed, functionalities, price, interval }) {
     let subscription_name = Subscription[name];
@@ -49,7 +40,7 @@ function SubscriptionItem({name, text, disabled, img, subscribed, functionalitie
                             {Object.entries(functionalities).map(([key, value]) => (
                                 <div key={key} className="w-full flex flex-row items-center justify-between text-white">
                                     <p>{key}</p>
-                                    <p>{value}</p>
+                                    <p >{value}</p>
                                 </div>
                             ))}
                             <div className="w-full flex flex-row items-center justify-between text-white">
