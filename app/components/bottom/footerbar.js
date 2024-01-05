@@ -32,15 +32,15 @@ const Footerbar = () => {
 
                     <div className="flex flex-row items-center justify-start gap-2">
                         <Image
-                            src="/icons/logo_light_white.svg"
+                            src="/icons/logo_dark_white.svg"
                             alt="Logo"
                             height="25"
                             width="25"
                             className="relative"
                         />
-                        <p className="text-gray-400 text-xs font-normal">© 2024 Embloy Platforms GbR</p>
+                        <p className="text-gray-700 text-xs font-normal">© 2024 Embloy Platforms GbR</p>
                     </div>
-                    <ul className="hidden md:flex gap-x-6 text-gray-400 text-xs font-normal">
+                    <ul className="hidden md:flex gap-x-6 text-gray-700 text-xs font-normal">
                         <li>
                             <a href="https://about.embloy.com">
                                 <p className="hover:underline">About</p>
