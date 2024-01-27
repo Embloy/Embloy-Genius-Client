@@ -14,6 +14,7 @@ const StoreWrapper = ({children}) => {
     useEffect(() => {
         if(pathname!=="/signin" && getCookie("refresh", {path: "/"})) {
             get_ops("store", router).then(data => {
+                console.log("DATA : ", data)
                 setStore(data)
             }).catch(e => {
                 console.log(e)

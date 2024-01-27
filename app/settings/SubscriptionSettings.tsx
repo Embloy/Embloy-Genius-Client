@@ -69,6 +69,7 @@ function SubscriptionItem({name, text, disabled, img, subscribed}) {
 export function SubscriptionSettings({store}) {
 
     return (
+
         <div className="w-full flex flex-col items-start justify-start gap-4">
             <div className="w-full flex flex-row items-center justify-start gap-3">
                 <h1 className="text-lg font-medium">Subscriptions</h1>
@@ -93,19 +94,20 @@ export function SubscriptionSettings({store}) {
             </div>
             <div className="w-full flex flex-col items-start justify-start gap-1">
                 <div className="flex flex-wrap gap-4 justify-center">
-                    {store.map((product, index) => {
+                    {
+                        store.map((product, index) => {
 
-                        const icon_url = product["product_image_url"];
-                        const product_name = product["product_name"];
-                        const product_text = product["description"]["short_text"];
-                        return (
-                            <SubscriptionItem name={product_name}
-                                              text={product_text}
-                                              disabled={false} img={icon_url} subscribed={false}
-                                              key={index}
-                            />
-                        )
-                    })
+                            const icon_url = product["product_image_url"];
+                            const product_name = product["product_name"];
+                            const product_text = product["description"]["short_text"];
+                            return (
+                                <SubscriptionItem name={product_name}
+                                                  text={product_text}
+                                                  disabled={false} img={icon_url} subscribed={false}
+                                                  key={index}
+                                />
+                            )
+                        })
                     }
 
                 </div>

@@ -38,8 +38,12 @@ export function ProfileSettings({store, user}) {
                     <NotificationSettings/>
                     <div className="h-3"/>
                     <SystemNotificationSettings/>
-                    <div className="h-3"/>
-                    <SubscriptionSettings store={store}/>
+                    {store.length > 0 && (
+                        <>
+                            <div className="h-3"/>
+                            <SubscriptionSettings store={store}/>
+                        </>
+                    )}
                     <div className="h-3"/>
                     <GeniusSettings/>
                 </div>
