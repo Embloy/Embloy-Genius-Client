@@ -11,7 +11,7 @@ import Bottom from "@/app/components/bottom";
 const lexend = Lexend({subsets: ['latin']})
 
 export const metadata = {
-    title: 'embloy',
+    title: 'Embloy Genius',
     description: 'Embloy Genius',
 }
 

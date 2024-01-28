@@ -8,6 +8,7 @@ import {isNotNumeric} from "@/lib/utils/helpers";
 import {useRouter} from "next/navigation";
 import {Interval, Subscription} from "@/lib/utils/enums";
 import {cn} from "@/lib/utils";
+import Head from 'next/head'
 
 export default function Page({params}) {
     //TODO: make fucking string json parsable

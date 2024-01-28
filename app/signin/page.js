@@ -79,7 +79,7 @@ const Signin = () => {
                         {loginError ? (
                             <>
                                 <input
-                                    className="focus:outline-none mb-2 px-5 bg-black hover:bg-gray-700 text-white border-[1px] border-red-500 rounded-full h-14 w-96 rounded-lg"
+                                    className="focus:bg-gray-700 mb-2 px-5 bg-black text-white border-[1px] border-red-500 rounded-full h-14 w-96 rounded-lg"
                                     minLength="3"
                                     name="username"
                                     id="username"
@@ -91,7 +91,7 @@ const Signin = () => {
                                 />
                                 <br />
                                 <input
-                                    className="focus:outline-none mb-2 px-5 bg-black hover:bg-gray-700 text-white border-[1px] border-red-500 rounded-full h-14 w-96 rounded-lg"
+                                    className="focus:bg-gray-700 mb-2 px-5 bg-black text-white border-[1px] border-red-500 rounded-full h-14 w-96 rounded-lg"
                                     minLength="5"
                                     name="password"
                                     id="password"
@@ -107,7 +107,7 @@ const Signin = () => {
                         ) : (
                             <>
                                 <input
-                                    className="focus:outline-none mb-2 px-5 bg-black hover:bg-gray-700 text-white border-[1px] border-gray-700 rounded-full h-14 w-96 rounded-lg"
+                                    className="focus:bg-gray-700 mb-2 px-5 bg-black text-white border-[1px] border-gray-700 rounded-full h-14 w-96 rounded-lg"
                                     minLength="3"
                                     name="username"
                                     id="username"
@@ -119,7 +119,7 @@ const Signin = () => {
                                 />
                                 <br />
                                 <input
-                                    className="focus:outline-none mb-2 px-5 bg-black hover:bg-gray-700 text-white border-[1px] border-gray-700 rounded-full h-14 w-96 rounded-lg"
+                                    className="focus:bg-gray-700 mb-2 px-5 bg-black text-white border-[1px] border-gray-700 rounded-full h-14 w-96 rounded-lg"
                                     minLength="5"
                                     name="password"
                                     id="password"

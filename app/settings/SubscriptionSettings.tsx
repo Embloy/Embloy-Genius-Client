@@ -9,7 +9,7 @@ import LoadingScreen from "@/app/components/misc/LoadingScreen";
 
 type FunctionalitiesType = { [key: string]: string };
 
-function SubscriptionItem({name, text, disabled, img, subscribed}) {
+function SubscriptionItem({name, text, disabled, img, subscribed, uri}) {
     let subscription_name = Subscription[name];
     if (subscription_name !== undefined) {
         if (!subscribed) { //unsubscribed
@@ -45,7 +45,7 @@ function SubscriptionItem({name, text, disabled, img, subscribed}) {
                                     <p>Learn more</p>
                                 </button>
                                 <a
-                                    href="http://localhost:8080/resource/store/5f888fba-055a-49c0-a005-895a4068ae7f"
+                                    href={"http://localhost:8080/resource/store/" + uri}
                                     className="border-[2px] border-embloy-purple-light hover:border-embloy-purple-lighter rounded-full px-2 text-embloy-purple-light hover:text-embloy-purple-lighter text-sm">
                                     <p>Buy</p>
                                 </a>
@@ -100,11 +100,13 @@ export function SubscriptionSettings({store}) {
                             const icon_url = product["product_image_url"];
                             const product_name = product["product_name"];
                             const product_text = product["description"]["short_text"];
+                            const product_uri = product["unique_identifier"];
                             return (
                                 <SubscriptionItem name={product_name}
                                                   text={product_text}
                                                   disabled={false} img={icon_url} subscribed={false}
                                                   key={index}
+                                                  uri={product_uri}
                                 />
                             )
                         })
