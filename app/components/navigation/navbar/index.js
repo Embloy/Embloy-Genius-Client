@@ -10,17 +10,16 @@ import {Notifications} from "@/app/components/navigation/navbar/Notifications";
 import {UserContext} from "@/app/components/misc/UserContext";
 import {UserBar} from "@/app/components/navigation/userbar";
 import {StoreContext} from "@/app/components/misc/StoreWrapper";
+import {AppContext} from "@/app/components/misc/AppProvider";
 
 const Navbar = () => {
     const pathname = usePathname()
-    const [isUserbarVisible, setUserbarVisible] = useState(false);
-    function toggleUserbar() {
-        setUserbarVisible(!isUserbarVisible);
-    }
 
-
+    let app = useContext(AppContext)
     let user = useContext(UserContext)
     let store = useContext(StoreContext)
+
+    const { isUserbarVisible, toggleUserbar } = app;
 
 
     return (

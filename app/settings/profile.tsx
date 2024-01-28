@@ -11,6 +11,7 @@ import {SystemNotificationSettings} from "@/app/settings/SystemNotificationSetti
 import {GeniusSettings} from "@/app/settings/GeniusSettings";
 import {ProfileInfo} from "@/app/settings/ProfileInfo";
 import {SubscriptionSettings} from "@/app/settings/SubscriptionSettings";
+import {AppearanceSettings} from "@/app/settings/Appearance";
 
 
 
@@ -62,9 +63,7 @@ export function ProfileSettings({store, user}) {
 
                 <div
                     className="text-sm text-gray-400 w-full flex flex-col items-start justify-start gap-4 border-b border-gray-700 p-4">
-                    <ChangePassword/>
-                    <div className="h-3"/>
-                    <TwoFactorAuthentication/>
+                    <AppearanceSettings/>
                 </div>
             </div>
         </div>
