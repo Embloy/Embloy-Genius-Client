@@ -5,7 +5,7 @@ import {useRouter} from "next/navigation";
 import {request_refresh, request_access} from "@/lib/authentication";
 import {getCookie, getCookies, setCookie} from "cookies-next";
 import ErrorScreen from "@/app/components/misc/ErrorScreen";
-
+import '../globals.css';
 const Signin = () => {
     const router = useRouter();
     const [loginError, setLoginError] = useState(false);
@@ -62,7 +62,7 @@ const Signin = () => {
 
 
     return (
-        <div className={`fixed inset-0 flex flex-col justify-center items-center z-50 bg-black overflow-hidden`}>
+        <div className={`fixed inset-0 flex flex-col justify-center items-center z-50 overflow-hidden bg0-r`}>
             <div
                 className=" border-[1px] border-gray-700 rounded-lg flex flex-col items-center justify-center px-10 py-8">
                 <Image
@@ -70,16 +70,23 @@ const Signin = () => {
                     alt="Logo"
                     height="50"
                     width="125"
-                    className="mb-8"
+                    className="mb-8 relative hidden dark:block"
                 />
-                <h1 className="mb-4 text-white text-2xl">Sign in</h1>
-                <p className="mb-8 text-white text-md">Use your Embloy Account</p>
+                <Image
+                    src="/img/logo_on_light.png"
+                    alt="Logo"
+                    height="50"
+                    width="125"
+                    className="mb-8 dark:hidden"
+                />
+                <h1 className="mb-4 c0 text-2xl">Sign in</h1>
+                <p className="mb-8 c0 text-md">Use your Embloy Account</p>
                 <div className="flex flex-col items-center justify-center">
                     <form onSubmit={handleLogin}>
                         {loginError ? (
                             <>
                                 <input
-                                    className="focus:bg-gray-700 mb-2 px-5 bg-black text-white border-[1px] border-red-500 rounded-full h-14 w-96 rounded-lg"
+                                    className="dark:focus:bg-gray-700 focus:bg-gray-200 mb-2 px-5 c0 border-[1px] border-red-500 rounded-full h-14 w-96 rounded-lg"
                                     minLength="3"
                                     name="username"
                                     id="username"
@@ -91,7 +98,7 @@ const Signin = () => {
                                 />
                                 <br />
                                 <input
-                                    className="focus:bg-gray-700 mb-2 px-5 bg-black text-white border-[1px] border-red-500 rounded-full h-14 w-96 rounded-lg"
+                                    className="dark:focus:bg-gray-700 focus:bg-gray-200 mb-2 px-5 c0 border-[1px] border-red-500 rounded-full h-14 w-96 rounded-lg"
                                     minLength="5"
                                     name="password"
                                     id="password"
@@ -107,7 +114,7 @@ const Signin = () => {
                         ) : (
                             <>
                                 <input
-                                    className="focus:bg-gray-700 mb-2 px-5 bg-black text-white border-[1px] border-gray-700 rounded-full h-14 w-96 rounded-lg"
+                                    className="dark:focus:bg-gray-700 focus:bg-gray-200 mb-2 px-5 c0 border-[1px] border-gray-700 rounded-full h-14 w-96 rounded-lg"
                                     minLength="3"
                                     name="username"
                                     id="username"
@@ -119,7 +126,7 @@ const Signin = () => {
                                 />
                                 <br />
                                 <input
-                                    className="focus:bg-gray-700 mb-2 px-5 bg-black text-white border-[1px] border-gray-700 rounded-full h-14 w-96 rounded-lg"
+                                    className="dark:focus:bg-gray-700 focus:bg-gray-200 mb-2 px-5 c0 border-[1px] border-gray-700 rounded-full h-14 w-96 rounded-lg"
                                     minLength="5"
                                     name="password"
                                     id="password"
@@ -136,13 +143,13 @@ const Signin = () => {
                         <div className="flex flex-row items-center justify-between">
                             <button
                                 type="button"
-                                className="mt-3 inline-flex mx-2 justify-center py-2 text-sm font-semibold text-gray-400 hover:text-white"
+                                className="mt-3 inline-flex mx-2 justify-center py-2 text-sm font-semibold c2 hover:text-green-950 dark:hover:text-white"
                             >
                                 Create account
                             </button>
                             <button
                                 type="submit"
-                                className="mt-3 inline-flex w-20 h-10 rounded-lg border-[2px] border-black items-center justify-center rounded-full text-sm font-semibold bg-gradient-to-r from-embloy-green to-embloy-blue text-green-950 hover:text-white hover:border-[2px] hover:border-white"
+                                className="mt-3 inline-flex w-20 h-10 rounded-lg border-[2px] border-white dark:border-black items-center justify-center rounded-full text-sm font-semibold bg-gradient-to-r from-embloy-green to-embloy-blue text-green-950 dark:hover:text-white hover:text-black hover:border-[2px] dark:hover:border-white hover:border-green-950"
                             >
                                 Next
                             </button>
@@ -154,13 +161,13 @@ const Signin = () => {
             <div className="flex flex-row text-xs items-center justify-center">
                 <button
                     type="button"
-                    className="mt-3 inline-flex mx-2 justify-center py-2 text-gray-700 hover:text-gray-400"
+                    className="mt-3 inline-flex mx-2 justify-center py-2 c3 hover:c2"
                 >
                     Help
                 </button>
                 <button
                     type="button"
-                    className="mt-3 inline-flex mx-2 justify-center py-2 text-gray-700 hover:text-gray-400"
+                    className="mt-3 inline-flex mx-2 justify-center py-2 c3 hover:c2"
                 >
                     Privacy & Terms
                 </button>

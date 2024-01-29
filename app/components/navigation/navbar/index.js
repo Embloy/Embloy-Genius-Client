@@ -32,21 +32,21 @@ const Navbar = () => {
                         <div className=" h-3/5 w-[1px] rounded-full" />
                         <ul className="hidden md:flex gap-x-6 font-normal">
                             <li className={cn(
-                                pathname === "/" ? "text-white" : "text-gray-400 hover:text-gray-200"
+                                pathname === "/" ? "c0" : "text-gray-400 dark:hover:text-gray-200 hover:text-gray-700"
                             )}>
                                 <Link href="/">
                                     <p>Home</p>
                                 </Link>
                             </li>
                             <li className={cn(
-                                pathname?.startsWith("/recruitment") ? "text-white" : "text-gray-400 hover:text-gray-200"
+                                pathname?.startsWith("/recruitment") ? "c0" : "text-gray-400 dark:hover:text-gray-200 hover:text-gray-700"
                             )}>
                                 <Link href="/recruitment">
                                     <p>Hire</p>
                                 </Link>
                             </li>
                             <li className={cn(
-                                pathname?.startsWith("/calendar") ? "text-white" : "text-gray-400 hover:text-gray-200"
+                                pathname?.startsWith("/calendar") ? "c0" : "text-gray-400 dark:hover:text-gray-200 hover:text-gray-700"
                             )}>
                                 <Link href="/calendar">
                                     <p>Calendar</p>

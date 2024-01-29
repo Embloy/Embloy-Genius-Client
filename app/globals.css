@@ -33,6 +33,10 @@
         @apply dark:bg-white bg-black
     }
 
+    .bg0-r {
+        @apply dark:bg-black bg-white
+    }
+
     .bg1 {
         @apply dark:bg-embloy-gray-lighter bg-embloy-gray-darker
     }

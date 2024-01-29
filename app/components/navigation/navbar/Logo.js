@@ -3,7 +3,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import Button from "./Button";
-
+import '../../../globals.css'
 const Logo = () => {
     //update the size of the logo when the size of the screen changes
     const [width, setWidth] = useState(0);
@@ -41,7 +41,14 @@ const Logo = () => {
                     alt="Logo"
                     height="20"
                     width="100"
-                    className="relative"
+                    className="relative hidden dark:block"
+                />
+                <Image
+                    src="/img/logo_on_light.png"
+                    alt="Logo"
+                    height="20"
+                    width="100"
+                    className="relative dark:hidden"
                 />
             </Link>
             <div

@@ -62,7 +62,7 @@ export function ProfileSettings({store, user}) {
                 </div>
 
                 <div
-                    className="text-sm w-full flex flex-col items-start justify-start gap-4 border-b border-gray-700 p-4">
+                    className="text-sm w-full flex flex-col items-start justify-start gap-4 border-b border-transparent p-4">
                     <AppearanceSettings/>
                 </div>
             </div>
