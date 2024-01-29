@@ -1,13 +1,8 @@
-import React, {useContext, useEffect, useState} from "react";
-
-import {UserContext} from "@/app/components/misc/UserContext";
+import React from "react";
 import Image from "next/image";
 import {Interval, Subscription} from "@/lib/utils/enums";
-import {StoreContext} from "@/app/components/misc/StoreWrapper";
-import LoadingScreen from "@/app/components/misc/LoadingScreen";
+import '../globals.css';
 
-
-type FunctionalitiesType = { [key: string]: string };
 
 function SubscriptionItem({name, text, disabled, img, subscribed, uri}) {
     let subscription_name = Subscription[name];
@@ -26,8 +21,8 @@ function SubscriptionItem({name, text, disabled, img, subscribed, uri}) {
                                     className="relative"
                                 />
                                 {disabled && (
-                                    <div className="ml-3 border border-gray-700 bg-black px-2 rounded-full">
-                                        <p className="text-gray-700 text-xs">Functionality disabled</p>
+                                    <div className="ml-3 border border-gray-700 px-2 rounded-full">
+                                        <p className="c3 text-xs">Functionality disabled</p>
                                     </div>
                                 )}
                             </div>
@@ -35,7 +30,7 @@ function SubscriptionItem({name, text, disabled, img, subscribed, uri}) {
                         </div>
                         <div className="w-full h-px bg-gray-700"/>
                         <div className="flex flex-col items-start justify-start px-4 py-2">
-                            <h1 className="text-white">{text}</h1>
+                            <h1 className="c0">{text}</h1>
                         </div>
                         <div className="w-full h-px bg-gray-700"/>
                         <div className="w-full h-px bg-gray-700"/>
@@ -72,14 +67,11 @@ export function SubscriptionSettings({store}) {
 
         <div className="w-full flex flex-col items-start justify-start gap-4">
             <div className="w-full flex flex-row items-center justify-start gap-3">
-                <h1 className="text-lg font-medium">Subscriptions</h1>
-                {/*<div className="border border-gray-700 bg-black px-2 rounded-full">
-                    <p className="text-gray-700 text-xs">Functionality disabled</p>
-                </div>*/}
+                <h1 className="c2 text-lg font-medium">Subscriptions</h1>
             </div>
 
             <div className="flex flex-row items-center justify-start">
-                <p className="text-gray-400">
+                <p className="c2">
                     Manage plans for personal and commercial use.
                     <a
                         className="px-1 italic text-embloy-purple-lighter hover:underline cursor-pointer"

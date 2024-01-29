@@ -1,6 +1,7 @@
 import React, {useContext, useState} from "react";
 import {UserContext} from "@/app/components/misc/UserContext";
 import Image from "next/image";
+import '../globals.css'
 
 export function ProfileInfo() {
     let user = useContext(UserContext)
@@ -88,8 +89,8 @@ export function ProfileInfo() {
 
         <div className="w-full flex flex-col items-start justify-start gap-4">
             <div className="w-full flex flex-row items-center justify-start gap-3">
-                <div className="border border-gray-700 bg-black px-2 rounded-full">
-                    <p className="text-gray-700 text-xs">Functionality disabled</p>
+                <div className="border border-gray-700 px-2 rounded-full">
+                    <p className="c3 text-xs">Functionality disabled</p>
                 </div>
             </div>
 
@@ -100,9 +101,9 @@ export function ProfileInfo() {
                         {nameIsClicked ? (
                             <div
                                 className="flex flex-row items-start justify-start py-4 rounded-lg">
-                                <p className="w-[150px] left font-medium text-white">Name</p>
+                                <p className="w-[150px] left font-medium c0">Name</p>
                                 <input
-                                    className={fNameIsHovered ? "bg-gray-900 text-white h-7 w-40 px-2 border-[2px] border-gray-700 outline-none rounded-lg" : "bg-black text-white h-7 w-40 px-2 border-[2px] border-gray-700 outline-none rounded-lg"}
+                                    className="c0 h-7 w-40 px-2 border-[2px] border-gray-700 outline-none rounded-lg"
                                     type="text"
                                     name="First Name"
                                     value={firstName}
@@ -114,7 +115,7 @@ export function ProfileInfo() {
                                 />
                                 <div className="w-2" />
                                 <input
-                                    className={lNameIsHovered ? "bg-gray-900 text-white h-7 w-40 px-2 border-[2px] border-gray-700 outline-none rounded-lg" : "bg-black text-white h-7 w-40 px-2 border-[2px] border-gray-700 outline-none rounded-lg"}
+                                    className="c0 h-7 w-40 px-2 border-[2px] border-gray-700 outline-none rounded-lg"
                                     type="text"
                                     name="Last Name"
                                     value={lastName}
@@ -128,11 +129,11 @@ export function ProfileInfo() {
                         ) : (
                             <div onMouseEnter={nameHover} onMouseLeave={nameNotHover}
                                  className="flex flex-row items-start justify-start py-4 rounded-lg">
-                                <p className="w-[150px] left font-medium text-white">Name</p>
-                                <p className="w-[200px] left px-4 text-white">{firstName == '' ? user.first_name : firstName} {lastName == '' ? user.last_name : lastName}</p>
+                                <p className="w-[150px] left font-medium c0">Name</p>
+                                <p className="w-[200px] left px-4 c0">{firstName == '' ? user.first_name : firstName} {lastName == '' ? user.last_name : lastName}</p>
                                 {nameIsHovered && (
                                     <button onClick={nameClick}
-                                            className="text-xs italic text-gray-700 hover:underline cursor-not-allowed"
+                                            className="text-xs italic c3 hover:underline cursor-not-allowed"
                                             disabled={true}
                                     >
                                         <p>Edit</p>
@@ -143,9 +144,9 @@ export function ProfileInfo() {
                         {emailIsClicked ? (
                             <div
                                 className="flex flex-row items-start justify-start py-4 rounded-lg">
-                                <p className="w-[150px] left font-medium text-white">Email</p>
+                                <p className="w-[150px] left font-medium c0">Email</p>
                                 <input
-                                    className={emailIsHovered ? "bg-gray-900 text-white h-7 w-40 px-2 border-[2px] border-gray-700 outline-none rounded-lg" : "bg-black text-white h-7 w-40 px-2 border-[2px] border-gray-700 outline-none rounded-lg"}
+                                    className="c0 h-7 w-40 px-2 border-[2px] border-gray-700 outline-none rounded-lg"
                                     type="email"
                                     name="Email"
                                     value={email}
@@ -159,11 +160,11 @@ export function ProfileInfo() {
                         ) : (
                             <div onMouseEnter={emailHover} onMouseLeave={emailNotHover}
                                  className="flex flex-row items-start justify-start py-4 rounded-lg">
-                                <p className="w-[150px] left font-medium text-white">Email</p>
-                                <p className="w-[200px] left px-4 text-white">{email == '' ? user.email : email}</p>
+                                <p className="w-[150px] left font-medium c0">Email</p>
+                                <p className="w-[200px] left px-4 c0">{email == '' ? user.email : email}</p>
                                 {emailIsHovered && (
                                     <button onClick={emailClick}
-                                            className="text-xs italic text-gray-700 hover:underline cursor-not-allowed "
+                                            className="text-xs italic c3 hover:underline cursor-not-allowed "
                                             disabled={true}
                                     >
                                         <p>Edit</p>
@@ -174,14 +175,14 @@ export function ProfileInfo() {
 
                         {user.user_type == "company" && (
                             <div className="flex flex-row items-start justify-between py-4 rounded-lg">
-                                <p className="w-[150px] left font-medium text-white">Company</p>
-                                <p className="w-[300px] left px-4 text-white">@MUSS NOCH WEG</p>
+                                <p className="w-[150px] left font-medium c0">Company</p>
+                                <p className="w-[300px] left px-4 c0">@MUSS NOCH WEG</p>
                             </div>
                         )}
 
                         {changesMade && (
                             <button
-                                className="my-4 px-4 py-1 bg-black border-[2px] border-embloy-purple-light hover:border-embloy-purple-lighter text-embloy-purple-light hover:text-embloy-purple-lighter rounded-full cursor-pointer"
+                                className="my-4 px-4 py-1 border-[2px] border-embloy-purple-light hover:border-embloy-purple-lighter text-embloy-purple-light hover:text-embloy-purple-lighter rounded-full cursor-pointer"
                             >
                                 Update
                             </button>
@@ -197,7 +198,7 @@ export function ProfileInfo() {
                             className="rounded-full w-40 h-40 border border-gray-700"
                         />
                         <button
-                            className="absolute bottom-4 left-4 px-4 py-1 bg-black border-[2px] rounded-full cursor-not-allowed border-gray-700 text-gray-700"
+                            className="absolute bottom-4 left-4 px-4 py-1 border-[2px] rounded-full cursor-not-allowed border-gray-700 c3"
                             disabled={true}
                             id="border-embloy-purple-light hover:border-embloy-purple-lighter text-embloy-purple-light hover:text-embloy-purple-lighter"
                         >

@@ -11,7 +11,7 @@ export function SearchBar(props) {
     return (
 
         <input
-            className="bg-black hover:bg-gray-800 text-gray-400 border-[1px] border-gray-700 rounded-full h-10 w-52 px-4"
+            className="text-gray-400 border-[1px] border-gray-700 rounded-full h-10 w-52 px-4"
             type="text"
             name="name"
             placeholder="Search"

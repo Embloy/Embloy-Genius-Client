@@ -1,18 +1,11 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
-
-import {UserContext} from "@/app/components/misc/UserContext";
-import {login, logout, request_access, request_client, request_refresh, update_password} from "@/lib/authentication";
-import {getCookie, setCookie} from "cookies-next";
-import {useRouter} from "next/navigation";
-import Image from "next/image";
 import {
     DropdownMenu,
     DropdownMenuCheckboxItem,
     DropdownMenuContent,
     DropdownMenuTrigger
 } from "@/app/components/ui/dropdown-menu";
-import {ChevronDown} from "lucide-react";
-import {cast_date, date_seconds_from_now} from "@/lib/utils/formats";
+import '../globals.css'
 
 interface Expiration {
     [key: string]: number;
@@ -64,14 +57,14 @@ export function SystemNotificationSettings() {
     return (
         <div className="w-full flex flex-col items-start justify-start gap-4">
             <div className="w-full flex flex-row items-center justify-start gap-3">
-                <h1 className="text-lg font-medium">System Notifications</h1>
-                <div className="border border-gray-700 bg-black px-2 rounded-full">
-                    <p className="text-gray-700 text-xs">Functionality disabled</p>
+                <h1 className="text-lg font-medium c2">System Notifications</h1>
+                <div className="border border-gray-700 px-2 rounded-full">
+                    <p className="c3 text-xs">Functionality disabled</p>
                 </div>
             </div>
 
             <div className="flex flex-row items-center justify-start">
-                <p className="text-gray-400">
+                <p className="c2">
                     Toggle receiving notifications about certain system properties.
                 </p>
             </div>
@@ -79,22 +72,21 @@ export function SystemNotificationSettings() {
                 <div className="w-full flex flex-row items-center justify-between">
                     <div className="w-full flex flex-row items-start justify-start gap-6">
                         <div className="flex flex-col items-start justify-start gap-1">
-                            <p className="font-medium text-gray-200">Weekly sum-up email</p>
+                            <p className="font-medium c1">Weekly sum-up email</p>
                             <DropdownMenu >
                                 <DropdownMenuTrigger asChild className="outline-none" onMouseEnter={handleWeeklyReportHover}
                                                      onMouseLeave={handleWeeklyReportNotHover}
                                                      disabled={true}
 
                                 >
-                                    <button
-                                        className={weeklyReportIsHovered ? "bg-gray-900 text-white h-7 w-40 px-2 border-[2px] border-gray-700 outline-none select-all rounded-lg text-left cursor-not-allowed" : "bg-black text-white h-7 w-40 px-2 border-[2px] border-gray-700 outline-none select-all rounded-lg text-left cursor-not-allowed"}>
-                                        <p className="text-gray-700">{weeklyReport ? "Enabled" : "Disabled"}</p>
+                                    <button className="c0 h-7 w-40 px-2 border-[2px] border-gray-700 outline-none select-all rounded-lg text-left cursor-not-allowed">
+                                        <p className="c3">{weeklyReport ? "Enabled" : "Disabled"}</p>
                                     </button>
                                 </DropdownMenuTrigger>
                                 <DropdownMenuContent align="end">
                                     <DropdownMenuCheckboxItem
                                         key={"Enabled"}
-                                        className="capitalize text-gray-400 hover:text-white cursor-pointer"
+                                        className="capitalize c2 hover:c0 cursor-pointer"
                                         checked={weeklyReport == true}
                                         onCheckedChange={(check) => {
                                             if (check) {
@@ -106,7 +98,7 @@ export function SystemNotificationSettings() {
                                     </DropdownMenuCheckboxItem>
                                     <DropdownMenuCheckboxItem
                                         key={"Disabled"}
-                                        className="capitalize text-gray-400 hover:text-white cursor-pointer"
+                                        className="capitalize c2 hover:c0 cursor-pointer"
                                         checked={weeklyReport == false}
                                         onCheckedChange={(check) => {
                                             if (check) {
@@ -118,20 +110,19 @@ export function SystemNotificationSettings() {
                                     </DropdownMenuCheckboxItem>
                                 </DropdownMenuContent>
                             </DropdownMenu>
-                            <p className="text-xs text-gray-700">Weekly user traffic survey reception.</p>
+                            <p className="text-xs c3">Weekly user traffic survey reception.</p>
                         </div>
 
 
                         <div className="flex flex-col items-start justify-start gap-1">
-                            <p className="font-medium text-gray-200">Client token expiration reminder</p>
+                            <p className="font-medium c1">Client token expiration reminder</p>
                             <DropdownMenu>
                                 <DropdownMenuTrigger asChild className="outline-none" onMouseEnter={handleCtExpirationAlertHover}
                                                      onMouseLeave={handleCtExpirationAlertNotHover}
                                                      disabled={true}
                                 >
-                                    <button
-                                        className={ctExpirationAlertIsHovered ? "bg-gray-900 text-white h-7 w-40 px-2 border-[2px] border-gray-700 outline-none select-all rounded-lg text-left cursor-not-allowed" : "bg-black text-white h-7 w-40 px-2 border-[2px] border-gray-700 outline-none select-all rounded-lg text-left cursor-not-allowed"}>
-                                        <p className="text-gray-700">{prior} days</p>
+                                    <button className="c0 h-7 w-40 px-2 border-[2px] border-gray-700 outline-none select-all rounded-lg text-left cursor-not-allowed">
+                                        <p className="c3">{prior} days</p>
                                     </button>
                                 </DropdownMenuTrigger>
                                 <DropdownMenuContent align="end">
@@ -142,7 +133,7 @@ export function SystemNotificationSettings() {
                                             return (
                                                 <DropdownMenuCheckboxItem
                                                     key={index}
-                                                    className="capitalize text-gray-400 hover:text-white cursor-pointer"
+                                                    className="capitalize c2 hover:c0 cursor-pointer"
                                                     checked={value == prior}
                                                     onCheckedChange={(check) => {
                                                         if (check) {
@@ -156,27 +147,26 @@ export function SystemNotificationSettings() {
                                         })}
                                 </DropdownMenuContent>
                             </DropdownMenu>
-                            <p className="text-xs text-gray-700">Timely client token expiration notifications.</p>
+                            <p className="text-xs c3">Timely client token expiration notifications.</p>
                         </div>
 
 
 
                         <div className="flex flex-col items-start justify-start gap-1">
-                            <p className="font-medium text-gray-200">DM push alert</p>
+                            <p className="font-medium c1">DM push alert</p>
                             <DropdownMenu>
                                 <DropdownMenuTrigger asChild className="outline-none" onMouseEnter={handleDmPushAlertHover}
                                                      onMouseLeave={handleDmPushAlertNotHover}
                                                      disabled={true}
                                 >
-                                    <button
-                                        className={dmPushAlertIsHovered ? "bg-gray-900 text-white h-7 w-40 px-2 border-[2px] border-gray-700 outline-none select-all rounded-lg text-left cursor-not-allowed" : "bg-black text-white h-7 w-40 px-2 border-[2px] border-gray-700 outline-none select-all rounded-lg text-left cursor-not-allowed"}>
-                                        <p className="text-gray-700">{dmPushAlert ? "Enabled" : "Disabled"}</p>
+                                    <button className="c0 h-7 w-40 px-2 border-[2px] border-gray-700 outline-none select-all rounded-lg text-left cursor-not-allowed">
+                                        <p className="c3">{dmPushAlert ? "Enabled" : "Disabled"}</p>
                                     </button>
                                 </DropdownMenuTrigger>
                                 <DropdownMenuContent align="end">
                                     <DropdownMenuCheckboxItem
                                         key={"Enabled"}
-                                        className="capitalize text-gray-400 hover:text-white cursor-pointer"
+                                        className="capitalize c2 hover:c0 cursor-pointer"
                                         checked={dmPushAlert == true}
                                         onCheckedChange={(check) => {
                                             if (check) {
@@ -188,7 +178,7 @@ export function SystemNotificationSettings() {
                                     </DropdownMenuCheckboxItem>
                                     <DropdownMenuCheckboxItem
                                         key={"Disabled"}
-                                        className="capitalize text-gray-400 hover:text-white cursor-pointer"
+                                        className="capitalize c2 hover:c0 cursor-pointer"
                                         checked={dmPushAlert == false}
                                         onCheckedChange={(check) => {
                                             if (check) {
@@ -200,11 +190,11 @@ export function SystemNotificationSettings() {
                                     </DropdownMenuCheckboxItem>
                                 </DropdownMenuContent>
                             </DropdownMenu>
-                            <p className="text-xs text-gray-700">Direct message reception alerts.</p>
+                            <p className="text-xs c3">Direct message reception alerts.</p>
                         </div>
 
                         <div className="flex flex-col items-start justify-start gap-1">
-                            <p className="font-medium text-gray-200">System status push alert</p>
+                            <p className="font-medium c1">System status push alert</p>
                             <DropdownMenu>
                                 <DropdownMenuTrigger asChild className="outline-none" onMouseEnter={handleSysPushAlertHover}
                                                      onMouseLeave={handleSysPushAlertNotHover}
@@ -212,14 +202,14 @@ export function SystemNotificationSettings() {
 
                                 >
                                     <button
-                                        className={sysPushAlertIsHovered ? "bg-gray-900 text-white h-7 w-40 px-2 border-[2px] border-gray-700 outline-none select-all rounded-lg text-left cursor-not-allowed" : "bg-black text-white h-7 w-40 px-2 border-[2px] border-gray-700 outline-none select-all rounded-lg text-left cursor-not-allowed"}>
-                                        <p className="text-gray-700">{sysPushAlert ? "Enabled" : "Disabled"}</p>
+                                        className="c0 h-7 w-40 px-2 border-[2px] border-gray-700 outline-none select-all rounded-lg text-left cursor-not-allowed">
+                                        <p className="c3">{sysPushAlert ? "Enabled" : "Disabled"}</p>
                                     </button>
                                 </DropdownMenuTrigger>
                                 <DropdownMenuContent align="end">
                                     <DropdownMenuCheckboxItem
                                         key={"Enabled"}
-                                        className="capitalize text-gray-400 hover:text-white cursor-pointer"
+                                        className="capitalize c2 hover:c0 cursor-pointer"
                                         checked={sysPushAlert == true}
                                         onCheckedChange={(check) => {
                                             if (check) {
@@ -231,7 +221,7 @@ export function SystemNotificationSettings() {
                                     </DropdownMenuCheckboxItem>
                                     <DropdownMenuCheckboxItem
                                         key={"Disabled"}
-                                        className="capitalize text-gray-400 hover:text-white cursor-pointer"
+                                        className="capitalize c2 hover:c0 cursor-pointer"
                                         checked={sysPushAlert == false}
                                         onCheckedChange={(check) => {
                                             if (check) {
@@ -243,7 +233,7 @@ export function SystemNotificationSettings() {
                                     </DropdownMenuCheckboxItem>
                                 </DropdownMenuContent>
                             </DropdownMenu>
-                            <p className="text-xs text-gray-700">Real-time system functionality notifications.</p>
+                            <p className="text-xs c3">Real-time system functionality notifications.</p>
                         </div>
 
                     </div>

@@ -20,7 +20,7 @@ export const UserBar = ({ isVisible, onClose, userData, storeData }) => {
     }
 
 
-    const sidebarClass = `z-50 fixed top-0 right-0 h-full w-96 bg-black border-l-[1px] border-gray-700 transition-transform transform ${isVisible ? 'translate-x-0' : 'translate-x-full'}`;
+    const sidebarClass = `z-50 fixed top-0 right-0 h-full w-96 border-l-[1px] border-gray-700 transition-transform transform ${isVisible ? 'translate-x-0' : 'translate-x-full'}`;
     const sidebarfieldClass = `w-full flex flex-row justify-start items-start text-white gap-2.5 hover:bg-gray-700 p-2.5 cursor-pointer`;
     const sidebarfieldleftClass = `w-1/7 flex flex-col justify-start items-start text-white gap-2.5`;
     const sidebarfieldrightClass = `w-6/7 flex flex-col justify-start items-start text-white gap-1.5`;

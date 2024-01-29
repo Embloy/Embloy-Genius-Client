@@ -1,4 +1,5 @@
 "use client";
+import '../../../globals.css'
 import React, {useContext, useEffect, useState} from "react";
 import Link from "next/link";
 import Logo from "./Logo";
@@ -24,7 +25,7 @@ const Navbar = () => {
 
     return (
         <>
-            <div className="z-20 bg-black w-full h-14 sticky top-0 border-b-[1px] border-gray-700 flex flex-row items-center justify-center"  >
+            <div className="bgs z-20 w-full h-14 sticky top-0 border-b-[1px] border-gray-700 flex flex-row items-center justify-center"  >
                 <div className="container h-full max-w-7/12 flex flex-row items-center justify-between">
                     <div className="flex horizontal start-0 items-center h-full gap-x-6">
                         <Logo />

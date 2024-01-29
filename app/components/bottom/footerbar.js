@@ -27,7 +27,7 @@ const Footerbar = () => {
     return (
         <>
             <div
-                className="bg-black w-full h-14 border-t-[1px] border-gray-700 flex flex-row items-center justify-center">
+                className="w-full h-14 border-t-[1px] border-gray-700 flex flex-row items-center justify-center">
                 <div className="container h-full max-w-7/12 flex flex-row items-center justify-center gap-12">
 
                     <div className="flex flex-row items-center justify-start gap-2">
