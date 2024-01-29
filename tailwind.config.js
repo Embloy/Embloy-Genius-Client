@@ -27,6 +27,7 @@ module.exports = {
         'embloy-gray': '#9ca3ae',
         'embloy-gray-light': '#c0c4cb',
         'embloy-gray-lighter': '#e4e6eb',
+        'embloy-gray-lightest': '#f1f5f9',
       }
     },
   },

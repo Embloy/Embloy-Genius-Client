@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from "react";
-
+import '../globals.css'
 import {UserContext} from "@/app/components/misc/UserContext";
 import {login, logout, request_access, request_client, request_refresh, update_password} from "@/lib/authentication";
 import {getCookie, setCookie} from "cookies-next";
@@ -179,9 +179,9 @@ export function ChangePassword() {
                         <div className=" flex flex-col items-start justify-start gap-1">
                             <div className="flex flex-row items-start justify-start gap-6">
                                 <div className="flex flex-col items-start justify-start gap-1">
-                                    <p className="font-medium text-gray-200">Old password*</p>
+                                    <p className="font-medium c1">Old password*</p>
                                     <input
-                                        className={oldPasswordIsHovered ? "bg-gray-900 text-white h-7 w-40 px-2 border-[2px] border-gray-700 outline-none rounded-lg" : "bg-black text-white h-7 w-40 px-2 border-[2px] border-gray-700 outline-none rounded-lg"}
+                                        className="c0 h-7 w-40 px-2 border-[2px] border-gray-700 outline-none rounded-lg"
                                         type="password"
                                         name="note"
                                         value={oldPassword}
@@ -193,9 +193,9 @@ export function ChangePassword() {
 
                                 </div>
                                 <div className="flex flex-col items-start justify-start gap-1">
-                                    <p className="font-medium text-gray-200">New password*</p>
+                                    <p className="font-medium c1">New password*</p>
                                     <input
-                                        className={newPasswordIsHovered ? "bg-gray-900 text-white h-7 w-40 px-2 border-[2px] border-gray-700 outline-none rounded-lg" : "bg-black text-white h-7 w-40 px-2 border-[2px] border-gray-700 outline-none rounded-lg"}
+                                        className="c0h-7 w-40 px-2 border-[2px] border-gray-700 outline-none rounded-lg"
                                         type="password"
                                         name="note"
                                         value={newPassword}
@@ -206,9 +206,9 @@ export function ChangePassword() {
                                     />
                                 </div>
                                 <div className="flex flex-col items-start justify-start gap-1">
-                                    <p className="font-medium text-gray-200">Confirm new password*</p>
+                                    <p className="font-medium c1">Confirm new password*</p>
                                     <input
-                                        className={newnewPasswordIsHovered ? "bg-gray-900 text-white h-7 w-40 px-2 border-[2px] border-gray-700 outline-none rounded-lg" : "bg-black text-white h-7 w-40 px-2 border-[2px] border-gray-700 outline-none rounded-lg"}
+                                        className="c0h-7 w-40 px-2 border-[2px] border-gray-700 outline-none rounded-lg"
                                         type="password"
                                         name="note"
                                         value={newnewPassword}
@@ -222,12 +222,12 @@ export function ChangePassword() {
 
                             </ div>
                             <div className="flex flex-row items-center justify-start">
-                                <p className="text-xs text-gray-700">Make sure the new password is at least 8
+                                <p className="text-xs c3">Make sure the new password is at least 8
                                     characters
                                     including a number
                                     and a lowercase letter.</p>
                                 <div className="w-1"/>
-                                <a className=" text-xs italic text-gray-600 hover:underline cursor-pointer"
+                                <a className=" text-xs italic c2-5 hover:underline cursor-pointer"
                                    href="https://documenter.getpostman.com/view/24977803/2s9YRB2rkE"><p>Learn
                                     more</p></a>
                             </div>
@@ -239,13 +239,13 @@ export function ChangePassword() {
                                 isLoading ? (
                                     <button
                                         disabled={true}
-                                        className="bg-black text-embloy-purple-lighter h-7 px-4 border-[2px] border-embloy-purple-lighter outline-none rounded-full cursor-wait">
+                                        className="text-embloy-purple-lighter h-7 px-4 border-[2px] border-embloy-purple-lighter outline-none rounded-full cursor-wait">
                                         <p className="select-none">Loading</p>
                                     </button>
                                 ) : (success ? (
                                     <button
                                         disabled={true}
-                                        className="bg-black text-embloy-purple-light h-7 px-4 border-[2px] border-transparent hover:border-transparent outline-none rounded-full">
+                                        className="text-embloy-purple-light h-7 px-4 border-[2px] border-transparent hover:border-transparent outline-none rounded-full">
                                         <p className="select-none">Password updated!</p>
                                     </button>
                                 ) : (
@@ -255,7 +255,7 @@ export function ChangePassword() {
                                                 match confirmation password.</p>
                                             <button
                                                 disabled={true}
-                                                className="bg-black text-gray-700 h-7 px-4 border-[2px] border-gray-700 outline-none rounded-full cursor-not-allowed">
+                                                className="c3 h-7 px-4 border-[2px] border-gray-700 outline-none rounded-full cursor-not-allowed">
                                                 <p className="select-none">Wait...</p>
                                             </button>
                                         </div>
@@ -265,7 +265,7 @@ export function ChangePassword() {
                                                     wrong.</p>
                                                 <button
                                                     disabled={true}
-                                                    className="bg-black text-gray-700 h-7 px-4 border-[2px] border-gray-700 outline-none rounded-full cursor-not-allowed">
+                                                    className="c3 h-7 px-4 border-[2px] border-gray-700 outline-none rounded-full cursor-not-allowed">
                                                     <p className="select-none">Wait...</p>
                                                 </button>
                                             </div>
@@ -282,7 +282,7 @@ export function ChangePassword() {
                                             <p className="select-none text-xs text-red-500">New Password doesn't
                                                 match confirmation password.</p>
                                             <button onClick={handleUpdate}
-                                                    className="bg-black text-embloy-purple-light hover:text-embloy-purple-lighter h-7 px-4 border-[2px] border-embloy-purple-light hover:border-embloy-purple-lighter outline-none rounded-full">
+                                                    className="text-embloy-purple-light hover:text-embloy-purple-lighter h-7 px-4 border-[2px] border-embloy-purple-light hover:border-embloy-purple-lighter outline-none rounded-full">
                                                 <p className="select-none">Try again</p>
                                             </button>
                                         </div>
@@ -291,7 +291,7 @@ export function ChangePassword() {
                                             <p className="select-none text-xs text-red-500">Something went
                                                 wrong.</p>
                                             <button onClick={handleUpdate}
-                                                    className="bg-black text-embloy-purple-light hover:text-embloy-purple-lighter h-7 px-4 border-[2px] border-embloy-purple-light hover:border-embloy-purple-lighter outline-none rounded-full">
+                                                    className="text-embloy-purple-light hover:text-embloy-purple-lighter h-7 px-4 border-[2px] border-embloy-purple-light hover:border-embloy-purple-lighter outline-none rounded-full">
                                                 <p className="select-none">Try again</p>
                                             </button>
                                         </div>
@@ -300,7 +300,7 @@ export function ChangePassword() {
 
                                 ) : (
                                     <button onClick={handleUpdate}
-                                            className="bg-black text-embloy-purple-light hover:text-embloy-purple-lighter h-7 px-4 border-[2px] border-embloy-purple-light hover:border-embloy-purple-lighter outline-none rounded-full">
+                                            className="text-embloy-purple-light hover:text-embloy-purple-lighter h-7 px-4 border-[2px] border-embloy-purple-light hover:border-embloy-purple-lighter outline-none rounded-full">
                                         <p className="select-none">Update</p>
                                     </button>
                                 )
@@ -308,7 +308,7 @@ export function ChangePassword() {
                             )}
                             {!disableRequest && (
                                 (success === null || success === false) && (
-                                    <a className=" text-xs italic text-gray-600 hover:underline cursor-pointer"
+                                    <a className=" text-xs italic c2-5 hover:underline cursor-pointer"
                                        href="https://about.embloy.com"><p>I forgot my password</p></a>
                                 )
                             )}

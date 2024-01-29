@@ -45,9 +45,9 @@ export function OpenCloseScaffold({title, pre_text, link_url, link_text, post_te
                         <p>Close</p>
                     </button>) : (
                     <button onClick={handleRequest}
-                            className={cn(timeout && disableRequest ? "px-4 py-1 rounded-full flex items-center justify-center border-[2px] border-transparent bg3 cursor-not-allowed" : "px-4 py-1 rounded-full flex items-center justify center border-[2px] border-transparent dark:bg-embloy-purple-light bg-embloy-purple-light hover:bg-embloy-purple-lighter dark:hover:bg-embloy-purple-lighter ")}>
+                            className={cn(timeout && disableRequest ? "px-4 py-1 rounded-full flex items-center justify-center border-[2px] border-transparent bg3 cursor-not-allowed bgneg" : "px-4 py-1 rounded-full flex items-center justify center border-[2px] border-transparent dark:bg-embloy-purple-light bg-embloy-purple-light hover:bg-embloy-purple-lighter dark:hover:bg-embloy-purple-lighter ")}>
                         {timeout && disableRequest ? (
-                            <p className="text-gray-400">Disabled</p>
+                            <p className="text-gray-400 ">Disabled</p>
                         ) : (
                             <p className="font-medium text-white">{button_text}</p>
                         )}

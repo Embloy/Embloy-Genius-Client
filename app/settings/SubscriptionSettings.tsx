@@ -36,7 +36,7 @@ function SubscriptionItem({name, text, disabled, img, subscribed, uri}) {
                         <div className="w-full h-px bg-gray-700"/>
                         <div className="w-full flex flex-col items-start justify-start px-4 py-2 gap-4">
                             <div className="w-full flex flex-row items-center justify-between">
-                                <button className="rounded-full text-embloy-purple-lighter hover:underline text-sm">
+                                <button className="rounded-full text-embloy-purple-lighter hover:underline text-sm bgneg">
                                     <p>Learn more</p>
                                 </button>
                                 <a

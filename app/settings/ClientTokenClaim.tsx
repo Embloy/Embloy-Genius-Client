@@ -2,12 +2,7 @@ import {useRouter} from "next/navigation";
 import React, {useRef, useState} from "react";
 import {login, logout, request_access, request_client} from "@/lib/authentication";
 import {getCookie} from "cookies-next";
-import {
-    DropdownMenu,
-    DropdownMenuCheckboxItem,
-    DropdownMenuContent,
-    DropdownMenuTrigger
-} from "@/app/components/ui/dropdown-menu";
+import '../globals.css';
 import {cast_date, date_seconds_from_now} from "@/lib/utils/formats";
 
 
@@ -85,19 +80,19 @@ export function ClientTokenClaim() {
     return (
         <div className="text-sm w-full flex flex-col items-center justify-start border border-gray-700 rounded-lg mt-2 mb-6">
             <div
-                className="w-full flex flex-row items-center justify-start text-gray-200 border-b border-gray-700 px-4 py-2">
+                className="w-full flex flex-row items-center justify-start c1 border-b border-gray-700 px-4 py-2">
                 <h1 className="font-semibold">Client Token Request</h1>
             </div>
             <div className="w-full flex flex-row items-center justify-start px-4 py-2">
-                <p className="text-gray-200">Client Tokens serve as a verification for Embloy Customers. Each client token is valid until the end of the subscription cycle.</p>
+                <p className="c1">Client Tokens serve as a verification for Embloy Customers. Each client token is valid until the end of the subscription cycle.</p>
             </div>
             <div className="h-4"/>
             <div className="w-full flex flex-row items-center justify-between px-4 py-2">
                 <div className="w-full flex flex-row items-start justify-start gap-6">
                     <div className="flex flex-col items-start justify-start gap-1">
-                        <p className="font-medium text-gray-200">Note</p>
+                        <p className="font-medium c1">Note</p>
                         <input
-                            className={noteIsHovered ? "bg-gray-900 text-white h-7 w-40 px-2 border-[2px] border-gray-700 outline-none select-all rounded-lg" : "bg-black text-white h-7 w-40 px-2 border-[2px] border-gray-700 outline-none select-all rounded-lg"}
+                            className="c0 h-7 w-40 px-2 border-[2px] border-gray-700 outline-none select-all rounded-lg"
                             type="text"
                             name="note"
                             value={note}
@@ -105,12 +100,12 @@ export function ClientTokenClaim() {
                             onMouseEnter={handleNoteHover}
                             onMouseLeave={handleNoteNotHover}
                         />
-                        <p className="text-xs text-gray-700">What's this token for?</p>
+                        <p className="text-xs c3">What's this token for?</p>
                     </div>
 
                     <div className="flex flex-col items-start justify-start gap-1">
-                        <p className="font-medium text-gray-200">Expiration*</p>
-                        <p className="text-xs text-gray-700">This token will expire
+                        <p className="font-medium c1">Expiration*</p>
+                        <p className="text-xs c3">This token will expire
                             on {cast_date(date_seconds_from_now(expires), "us")} {cast_date(date_seconds_from_now(expires), "time-us")}</p>
                     </div>
 
@@ -118,7 +113,7 @@ export function ClientTokenClaim() {
                 {isLoading ? (
                     <div className="w-full flex flex-row items-center justify-end gap-6">
                         <div
-                            className="bg-black text-embloy-purple-lighter h-7 px-4 border-[2px] border-embloy-purple-lighter outline-none select-all rounded-full cursor-wait">
+                            className="text-embloy-purple-lighter h-7 px-4 border-[2px] border-embloy-purple-lighter outline-none select-all rounded-full cursor-wait">
                             <p className="select-none">Loading</p>
                         </div>
                     </div>
@@ -128,14 +123,14 @@ export function ClientTokenClaim() {
                         {success != null ? (
                             success ? (
                                 <div
-                                    className="bg-black text-embloy-purple-light h-7 px-4 border-[2px] border-transparent hover:border-transparent outline-none select-all rounded-full">
+                                    className="text-embloy-purple-light h-7 px-4 border-[2px] border-transparent hover:border-transparent outline-none select-all rounded-full">
                                     <p className="select-none">Copied to clipboard!</p>
                                 </div>
                             ) : (
                                 <div className="flex flex-row items-center justify-end gap-2">
                                     <p className="select-none text-red-500">Something went wrong. Try again!</p>
                                     <button onClick={handleGenerate}
-                                            className="bg-black text-embloy-purple-light hover:text-embloy-purple-lighter h-7 px-4 border-[2px] border-embloy-purple-light hover:border-embloy-purple-lighter outline-none select-all rounded-full">
+                                            className="text-embloy-purple-light hover:text-embloy-purple-lighter h-7 px-4 border-[2px] border-embloy-purple-light hover:border-embloy-purple-lighter outline-none select-all rounded-full">
                                         <p className="select-none">Generate</p>
                                     </button>
                                 </div>
@@ -144,7 +139,7 @@ export function ClientTokenClaim() {
 
                         ) : (
                             <button onClick={handleGenerate}
-                                    className="bg-black text-embloy-purple-light hover:text-embloy-purple-lighter h-7 px-4 border-[2px] border-embloy-purple-light hover:border-embloy-purple-lighter outline-none select-all rounded-full">
+                                    className="text-embloy-purple-light hover:text-embloy-purple-lighter h-7 px-4 border-[2px] border-embloy-purple-light hover:border-embloy-purple-lighter outline-none select-all rounded-full">
                                 <p className="select-none">Generate</p>
                             </button>
                         )}

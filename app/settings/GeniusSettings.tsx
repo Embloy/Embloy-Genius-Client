@@ -35,7 +35,7 @@ export function GeniusSettings() {
                 headerChild={
                     <div className="flex flex-row items-center justify-start gap-3">
                         <div className="border border-transparent bg-red-500 px-2 rounded-full">
-                            <p className="c0 text-xs">Inactive</p>
+                            <p className="text-white text-xs">Inactive</p>
                         </div>
                         <div className="border border-gray-700 px-2 rounded-full">
                             <p className="c3 text-xs">Functionality disabled</p>

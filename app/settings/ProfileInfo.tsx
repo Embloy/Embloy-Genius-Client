@@ -2,6 +2,7 @@ import React, {useContext, useState} from "react";
 import {UserContext} from "@/app/components/misc/UserContext";
 import Image from "next/image";
 import '../globals.css'
+import {cn} from "@/lib/utils";
 
 export function ProfileInfo() {
     let user = useContext(UserContext)
@@ -87,7 +88,7 @@ export function ProfileInfo() {
 
     return (
 
-        <div className="w-full flex flex-col items-start justify-start gap-4">
+        <div className="w-full flex flex-col items-start justify-start gap-4 ">
             <div className="w-full flex flex-row items-center justify-start gap-3">
                 <div className="border border-gray-700 px-2 rounded-full">
                     <p className="c3 text-xs">Functionality disabled</p>
@@ -95,7 +96,7 @@ export function ProfileInfo() {
             </div>
 
             {user ? (
-                <div className="flex flex-row items-start justify-start border border-gray-700 rounded-lg mb-6 px-4 py-2 gap-10">
+                <div className="flex flex-row items-start justify-start border border-gray-700 rounded-lg mb-6 px-4 py-2 gap-10 dark:bg-transparent">
                     <div className="flex flex-col items-start justify-start ">
 
                         {nameIsClicked ? (
@@ -131,14 +132,13 @@ export function ProfileInfo() {
                                  className="flex flex-row items-start justify-start py-4 rounded-lg">
                                 <p className="w-[150px] left font-medium c0">Name</p>
                                 <p className="w-[200px] left px-4 c0">{firstName == '' ? user.first_name : firstName} {lastName == '' ? user.last_name : lastName}</p>
-                                {nameIsHovered && (
-                                    <button onClick={nameClick}
-                                            className="text-xs italic c3 hover:underline cursor-not-allowed"
-                                            disabled={true}
-                                    >
-                                        <p>Edit</p>
-                                    </button>
-                                )}
+                                <button onClick={nameClick}
+                                        className={cn(nameIsHovered ? "text-xs italic c3 hover:underline cursor-not-allowed bgneg" : "text-xs italic text-transparent select-none pointer-events-none bgneg")}
+                                        disabled={true}
+                                >
+                                    <p>Edit</p>
+                                </button>
+
                             </div>
                         )}
                         {emailIsClicked ? (
@@ -162,14 +162,12 @@ export function ProfileInfo() {
                                  className="flex flex-row items-start justify-start py-4 rounded-lg">
                                 <p className="w-[150px] left font-medium c0">Email</p>
                                 <p className="w-[200px] left px-4 c0">{email == '' ? user.email : email}</p>
-                                {emailIsHovered && (
-                                    <button onClick={emailClick}
-                                            className="text-xs italic c3 hover:underline cursor-not-allowed "
-                                            disabled={true}
-                                    >
-                                        <p>Edit</p>
-                                    </button>
-                                )}
+                                <button onClick={emailClick}
+                                        className={cn(emailIsHovered ? "text-xs italic c3 hover:underline cursor-not-allowed bgneg" : "text-xs italic text-transparent select-none pointer-events-none bgneg")}
+                                        disabled={true}
+                                >
+                                    <p>Edit</p>
+                                </button>
                             </div>
                         )}
 

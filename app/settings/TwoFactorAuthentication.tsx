@@ -5,7 +5,7 @@ import {login, logout, request_access, request_client, request_refresh, update_p
 import {getCookie, setCookie} from "cookies-next";
 import {useRouter} from "next/navigation";
 import Image from "next/image";
-
+import '../globals.css';
 async function fetch_refresh_and_access(username, password, router) {
 
     if (username === "" || password === "") {
@@ -176,13 +176,13 @@ export function TwoFactorAuthentication() {
                 <div className="border border-transparent bg-red-500 px-2 rounded-full" >
                     <p className="text-white text-xs">Inactive</p>
                 </div>
-                <div className="border border-gray-700 bg-black px-2 rounded-full" >
-                    <p className="text-gray-700 text-xs">Functionality disabled</p>
+                <div className="border border-gray-700 px-2 rounded-full" >
+                    <p className="c3 text-xs">Functionality disabled</p>
                 </div>
             </div>
 
             <div className="flex flex-row items-center justify-start">
-                <p className="text-gray-400">
+                <p className="c2">
                     Two-factor authentication minimizes the chances of unauthorized access. In the event of a compromised password, the supplementary authentication step acts as an effective barrier against potential breaches.
                     <a
                         className="px-1 italic text-embloy-purple-lighter hover:underline cursor-pointer"
@@ -212,16 +212,23 @@ export function TwoFactorAuthentication() {
                                         alt="Logo"
                                         height="25"
                                         width="25"
-                                        className="relative"
+                                        className="relative hidden dark:block"
+                                    />
+                                    <Image
+                                        src="/icons/logo_white_black.svg"
+                                        alt="Logo"
+                                        height="25"
+                                        width="25"
+                                        className="relative dark:hidden"
                                     />
                                     <div className="flex flex-col items-start justify-start gap-1">
                                         <div className="flex flex-row items-center justify-start gap-2">
-                                            <p className="text-gray-200 font-medium text-sm">Embloy Mobile</p>
+                                            <p className="c1 font-medium text-sm">Embloy Mobile</p>
                                         </div>
-                                        <p className="text-gray-700 text-xs">Embloy Mobile can be used for two-factor authentication by installing the app on your iOS device and signing into your account.</p>
+                                        <p className="c3 text-xs">Embloy Mobile can be used for two-factor authentication by installing the app on your iOS device and signing into your account.</p>
                                     </div>
                                 </div>
-                                <button disabled={true} className="border-[2px] border-gray-700 rounded-full px-2 text-gray-700 text-sm cursor-not-allowed">
+                                <button disabled={true} className="border-[2px] border-gray-700 rounded-full px-2 c3 text-sm cursor-not-allowed">
                                     <p>Add</p>
                                 </button>
                             </div>
@@ -236,16 +243,23 @@ export function TwoFactorAuthentication() {
                                         alt="Logo"
                                         height="25"
                                         width="25"
-                                        className="relative"
+                                        className="relative hidden dark:block"
+                                    />
+                                    <Image
+                                        src="/icons/mobile-black.svg"
+                                        alt="Logo"
+                                        height="25"
+                                        width="25"
+                                        className="relative dark:hidden"
                                     />
                                     <div className="flex flex-col items-start justify-start gap-1">
                                         <div className="flex flex-row items-center justify-start gap-2">
-                                            <p className="text-gray-200 font-medium text-sm">SMS/Text message</p>
+                                            <p className="c1 font-medium text-sm">SMS/Text message</p>
                                         </div>
-                                        <p className="text-gray-700 text-xs">Get one-time suthentication codes sent to your phone via SMS. (Android users's choice)</p>
+                                        <p className="c3 text-xs">Get one-time suthentication codes sent to your phone via SMS. (Android users's choice)</p>
                                     </div>
                                 </div>
-                                <button disabled={true} className="border-[2px] border-gray-700 rounded-full px-2 text-gray-700 text-sm cursor-not-allowed">
+                                <button disabled={true} className="border-[2px] border-gray-700 rounded-full px-2 c3 text-sm cursor-not-allowed">
                                     <p>Add</p>
                                 </button>
                             </div>
