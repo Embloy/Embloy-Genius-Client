@@ -41,7 +41,7 @@ export function OpenCloseScaffold({title, pre_text, link_url, link_text, post_te
 
                 {clicked ? (
                     <button onClick={handleClose}
-                            className="px-4 py-1 rounded-full flex items-center justify-center border-[2px] dark:border-white border-black hover:border-embloy-gray-dark dark:hover:border-embloy-gray c0 hover:text-embloy-gray-dark hover:dark:text-embloy-gray">
+                            className="px-4 py-1 btn_sm">
                         <p>Close</p>
                     </button>) : (
                     <button onClick={handleRequest}

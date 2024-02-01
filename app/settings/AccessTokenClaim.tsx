@@ -149,7 +149,7 @@ export function AccessTokenClaim() {
                                         return (
                                             <DropdownMenuCheckboxItem
                                                 key={index}
-                                                className="capitalize c2 hover:text-white cursor-pointer"
+                                                className="capitalize dark:hover:text-embloy-gray hover:text-embloy-gray-dark cursor-pointer"
                                                 checked={value == expires}
                                                 onCheckedChange={(check) => {
                                                     if (check) {

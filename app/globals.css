@@ -69,5 +69,12 @@
         @apply dark:bg-gray-900 bg-white
     }
 
+    .btn_sm{
+        @apply rounded-full flex items-center justify-center border-[2px] dark:border-white border-black c0
+    }
+    .btn_sm:hover {
+        @apply hover:border-embloy-gray-dark dark:hover:border-embloy-gray hover:text-embloy-gray-dark hover:dark:text-embloy-gray
+    }
+
 
 }

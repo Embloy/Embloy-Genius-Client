@@ -4,6 +4,7 @@ import Image from "next/image";
 import {useRouter} from "next/navigation";
 import {logout} from "@/lib/authentication";
 import Link from "next/link";
+import '../../../globals.css';
 
 export const UserBar = ({ isVisible, onClose, userData, storeData }) => {
     const router = useRouter();
@@ -20,10 +21,10 @@ export const UserBar = ({ isVisible, onClose, userData, storeData }) => {
     }
 
 
-    const sidebarClass = `z-50 fixed top-0 right-0 h-full w-96 border-l-[1px] border-gray-700 transition-transform transform ${isVisible ? 'translate-x-0' : 'translate-x-full'}`;
-    const sidebarfieldClass = `w-full flex flex-row justify-start items-start text-white gap-2.5 hover:bg-gray-700 p-2.5 cursor-pointer`;
-    const sidebarfieldleftClass = `w-1/7 flex flex-col justify-start items-start text-white gap-2.5`;
-    const sidebarfieldrightClass = `w-6/7 flex flex-col justify-start items-start text-white gap-1.5`;
+    const sidebarClass = `bgs z-50 fixed top-0 right-0 h-full w-96 border-l-[1px] border-gray-700 transition-transform transform ${isVisible ? 'translate-x-0' : 'translate-x-full'}`;
+    const sidebarfieldClass = `w-full flex flex-row justify-start items-start c0 gap-2.5 dark:hover:bg-gray-700 hover:bg-gray-200 p-2.5 cursor-pointer`;
+    const sidebarfieldleftClass = `w-1/7 flex flex-col justify-start items-start c0 gap-2.5`;
+    const sidebarfieldrightClass = `w-6/7 flex flex-col justify-start items-start c0 gap-1.5`;
 
 
 
@@ -34,13 +35,13 @@ export const UserBar = ({ isVisible, onClose, userData, storeData }) => {
                     {userData && storeData ? (
                         <div className="h-full w-full flex flex-col justify-start items-center">
                             <div className="w-full h-4" />
-                            <div className="w-full flex flex-col justify-start items-start text-white px-2.5">
+                            <div className="w-full flex flex-col justify-start items-start c0 px-2.5">
                                 <div className="w-full h-2.5" />
-                                <div className="w-full flex flex-row justify-start items-center text-white gap-2.5">
-                                    <div className="w-1/6 flex flex-col justify-start items-start text-white gap-2.5">
+                                <div className="w-full flex flex-row justify-start items-center c0 gap-2.5">
+                                    <div className="w-1/6 flex flex-col justify-start items-start c0 gap-2.5">
                                         <button className={`w-10 h-10 rounded-full bg-red-400`}></button>
                                     </div>
-                                    <div className="w-5/6 flex flex-col justify-start items-start text-white gap-1.5">
+                                    <div className="w-5/6 flex flex-col justify-start items-start c0 gap-1.5">
                                         <p className="font-bold">{userData.first_name} {userData.last_name}</p>
                                         <p className="text-sm">{userData.email}</p>
                                     </div>
@@ -59,7 +60,14 @@ export const UserBar = ({ isVisible, onClose, userData, storeData }) => {
                                         alt="Logo"
                                         height="25"
                                         width="25"
-                                        className="relative"
+                                        className="relative hidden dark:block"
+                                    />
+                                    <Image
+                                        src="/icons/logo_white_black.svg"
+                                        alt="Logo"
+                                        height="25"
+                                        width="25"
+                                        className="relative dark:hidden"
                                     />
                                 </div>
                                 <div className={sidebarfieldrightClass}>
@@ -74,7 +82,14 @@ export const UserBar = ({ isVisible, onClose, userData, storeData }) => {
                                         alt="Logo"
                                         height="25"
                                         width="25"
-                                        className="relative"
+                                        className="relative hidden dark:block"
+                                    />
+                                    <Image
+                                        src="/icons/logout_on_light.svg"
+                                        alt="Logo"
+                                        height="25"
+                                        width="25"
+                                        className="relative dark:hidden"
                                     />
                                 </div>
                                 <div className={sidebarfieldrightClass}>
@@ -94,7 +109,14 @@ export const UserBar = ({ isVisible, onClose, userData, storeData }) => {
                                         alt="Logo"
                                         height="25"
                                         width="25"
-                                        className="relative"
+                                        className="relative hidden dark:block"
+                                    />
+                                    <Image
+                                        src="/icons/api_on_light.svg"
+                                        alt="Logo"
+                                        height="25"
+                                        width="25"
+                                        className="relative dark:hidden"
                                     />
                                 </div>
                                 <div className={sidebarfieldrightClass}>
@@ -110,7 +132,14 @@ export const UserBar = ({ isVisible, onClose, userData, storeData }) => {
                                         alt="Logo"
                                         height="25"
                                         width="25"
-                                        className="relative"
+                                        className="relative hidden dark:block"
+                                    />
+                                    <Image
+                                        src="/icons/languages_on_light.svg"
+                                        alt="Logo"
+                                        height="25"
+                                        width="25"
+                                        className="relative dark:hidden"
                                     />
                                 </div>
                                 <div className={sidebarfieldrightClass}>
@@ -126,7 +155,14 @@ export const UserBar = ({ isVisible, onClose, userData, storeData }) => {
                                         alt="Logo"
                                         height="25"
                                         width="25"
-                                        className="relative"
+                                        className="relative hidden dark:block"
+                                    />
+                                    <Image
+                                        src="/icons/settings_on_light.svg"
+                                        alt="Logo"
+                                        height="25"
+                                        width="25"
+                                        className="relative dark:hidden"
                                     />
                                 </div>
                                 <div className={sidebarfieldrightClass}>
@@ -147,7 +183,14 @@ export const UserBar = ({ isVisible, onClose, userData, storeData }) => {
                                         alt="Logo"
                                         height="25"
                                         width="25"
-                                        className="relative"
+                                        className="relative hidden dark:block"
+                                    />
+                                    <Image
+                                        src="/icons/help_on_light.svg"
+                                        alt="Logo"
+                                        height="25"
+                                        width="25"
+                                        className="relative dark:hidden"
                                     />
                                 </div>
                                 <div className={sidebarfieldrightClass}>
@@ -163,7 +206,14 @@ export const UserBar = ({ isVisible, onClose, userData, storeData }) => {
                                         alt="Logo"
                                         height="25"
                                         width="25"
-                                        className="relative"
+                                        className="relative hidden dark:block"
+                                    />
+                                    <Image
+                                        src="/icons/feedback_on_light.svg"
+                                        alt="Logo"
+                                        height="25"
+                                        width="25"
+                                        className="relative dark:hidden"
                                     />
                                 </div>
                                 <div className={sidebarfieldrightClass}>
@@ -177,13 +227,13 @@ export const UserBar = ({ isVisible, onClose, userData, storeData }) => {
                             <div className="w-full bg-gray-700 h-[1px]" />
                             <div className="w-full h-4" />
 
-                            <div className="w-full flex flex-row justify-start items-start text-white gap-2.5 p-2.5">
-                                <div className="w-full flex flex-row justify-start items-center text-white gap-2.5">
+                            <div className="w-full flex flex-row justify-start items-start c0 gap-2.5 p-2.5">
+                                <div className="w-full flex flex-row justify-start items-center c0 gap-2.5">
                                     <p className="text-sm text-gray-700 italic">On Embloy for {calculateMinutesFromNow(userData["created_at"])} minutes!</p>
                                 </div>
                             </div>
                             <div className="w-full h-4" />
-                            <button className="text-gray-700 hover:bg-gray-400 px-4 py-2 rounded-full border-solid border-[2px] border-gray-700" onClick={onClose}>Close</button>
+                            <button className="px-4 py-1 btn_sm" onClick={onClose}>Close</button>
                         </div>
                     ): (
                         <button>Sign in</button>
