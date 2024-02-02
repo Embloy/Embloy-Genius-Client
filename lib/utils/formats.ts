@@ -40,3 +40,7 @@ export const date_seconds_from_now = (seconds: number) => {
     return futureDate.toISOString();
 
 }
+export function isCharInAlphabet(char: string, alphabet: string): string {
+    return alphabet.includes(char) ? char : 'Slug';
+}
+export const alpha_24 = 'abcdefghijklmnopqrstuvwxyz';
