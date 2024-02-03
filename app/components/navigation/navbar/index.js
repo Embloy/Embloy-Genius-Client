@@ -15,6 +15,7 @@ import {AppContext} from "@/app/components/misc/AppProvider";
 import Image from "next/image";
 import LoadingScreen from "@/app/components/misc/LoadingScreen";
 import {alpha_24} from "@/lib/utils/formats";
+import {AvatarButton} from "@/app/components/ui/avatar";
 
 const Navbar = () => {
     const pathname = usePathname()
@@ -65,16 +66,8 @@ const Navbar = () => {
                             <div className="flex horizontal end-0 items-center h-full gap-x-6">
                                 <SearchBar/>
                                 <Notifications/>
-                                <div onClick={toggleUserbar} className="flex items-center justify-center">
-                                    <button onClick={toggleUserbar} className="w-10 h-10 rounded-full bg-transparent hover:bg-transparent flex items-center justify-center">
-                                        <Image
-                                            src={user.image_url ? user.image_url : `/icons/${alpha_24.includes(user.first_name.charAt(0).toLowerCase()) ? user.first_name.charAt(0).toUpperCase() : 'Slug'}.svg`
-                                            }
-                                            alt="Profile"
-                                            height="40"
-                                            width="40"
-                                            className="rounded-full"/>
-                                    </button>
+                                <div onClick={toggleUserbar}  className="flex items-center justify-center">
+                                    <AvatarButton updated_image={null} loading={false} user={user} w={40} h={40} styles="w-10 h-10 rounded-full bg-transparent hover:bg-transparent"/>
                                 </div>
                             </div>
                         </div>

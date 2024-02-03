@@ -6,6 +6,14 @@ const nextConfig =  {
                     protocol: 'https',
                     hostname: 'about.embloy.com',
                 },
+                {
+                    protocol: 'https',
+                    hostname: 'f005.backblazeb2.com',
+                },
+                {
+                    protocol: 'https',
+                    hostname: 'avatars.githubusercontent.com',
+                },
             ],
         },
     }

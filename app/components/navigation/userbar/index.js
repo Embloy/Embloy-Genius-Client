@@ -6,6 +6,7 @@ import {logout} from "@/lib/authentication";
 import Link from "next/link";
 import '../../../globals.css';
 import {alpha_24} from "@/lib/utils/formats";
+import {AvatarButton} from "@/app/components/ui/avatar";
 
 export const UserBar = ({ isVisible, onClose, userData, storeData }) => {
     const router = useRouter();
@@ -18,6 +19,7 @@ export const UserBar = ({ isVisible, onClose, userData, storeData }) => {
         return minutes;
     }
     function out (){
+        onClose();
         logout(router);
     }
 
@@ -40,15 +42,7 @@ export const UserBar = ({ isVisible, onClose, userData, storeData }) => {
                                 <div className="w-full h-2.5" />
                                 <div className="w-full flex flex-row justify-start items-center c0 gap-2.5">
                                     <div className="w-1/6 flex flex-col justify-start items-start c0 gap-2.5">
-                                        <button className={`w-10 h-10 rounded-full bg-transparent hover:bg-transparent`}>
-                                            <Image
-                                                src={userData.image_url ? userData.image_url : `/icons/${alpha_24.includes(userData.first_name.charAt(0).toLowerCase()) ? userData.first_name.charAt(0).toUpperCase() : 'Slug'}.svg`
-                                                }
-                                                alt="Profile"
-                                                height="40"
-                                                width="40"
-                                                className="rounded-full"/>
-                                        </button>
+                                        <AvatarButton loading={false} updated_image={null} user={userData} w={40} h={40} styles="w-10 h-10 rounded-full bg-transparent hover:bg-transparent"/>
                                     </div>
                                     <div className="w-5/6 flex flex-col justify-start items-start c0 gap-1.5">
                                         <p className="font-bold">{userData.first_name} {userData.last_name}</p>
