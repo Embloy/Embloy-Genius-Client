@@ -97,7 +97,7 @@ export function ProfileInfo({router}) {
         const file = e.target.files[0];
         if (file) {
             setUploading(true);
-            const result = await upload_profile_image(file)
+            const result = await upload_profile_image(file, router)
             if (result.image_url) {
                 setNewImageUrl(result.image_url);
             }
@@ -157,6 +157,7 @@ export function ProfileInfo({router}) {
         if (email !== '' && email !== user.email) {
             user.email = body.email
         }
+        setShowReload(true);
         resetChanges();
 
     }
@@ -190,7 +191,7 @@ export function ProfileInfo({router}) {
                                     className="flex flex-row items-start justify-start py-4 rounded-lg">
                                     <p className="w-[150px] left font-medium c0">Name</p>
                                     <input
-                                        className="c0 h-7 w-40 px-2 border-[2px] border-gray-600 outline-none rounded-lg"
+                                        className="c0 h-7 w-40 px-2 border-[2px] dark:border-gray-600 border-gray-700 outline-none rounded-lg"
                                         type="text"
                                         name="First Name"
                                         value={firstName}
@@ -202,7 +203,7 @@ export function ProfileInfo({router}) {
                                     />
                                     <div className="w-2"/>
                                     <input
-                                        className="c0 h-7 w-40 px-2 border-[2px] border-gray-600 outline-none rounded-lg"
+                                        className="c0 h-7 w-40 px-2 border-[2px] dark:border-gray-600 border-gray-700  outline-none rounded-lg"
                                         type="text"
                                         name="Last Name"
                                         value={lastName}
@@ -218,7 +219,7 @@ export function ProfileInfo({router}) {
                                      className="flex flex-row items-start justify-start py-4 rounded-lg">
                                     <p className="w-[150px] left font-medium c0">Name</p>
                                     <input
-                                        className="c2-5 h-7 w-40 px-2 border-[2px] border-gray-900 outline-none rounded-lg pointer-events-none"
+                                        className="c2-5 h-7 w-40 px-2 border-[2px] dark:border-gray-900 border-gray-200 outline-none rounded-lg pointer-events-none"
                                         type="text"
                                         name="First Name"
                                         value={firstName == '' ? user.first_name : firstName}
@@ -226,7 +227,7 @@ export function ProfileInfo({router}) {
                                     />
                                     <div className="w-2"/>
                                     <input
-                                        className="c2-5 h-7 w-40 px-2 border-[2px] border-gray-900 outline-none rounded-lg pointer-events-none"
+                                        className="c2-5 h-7 w-40 px-2 border-[2px] dark:border-gray-900 border-gray-200 outline-none rounded-lg pointer-events-none"
                                         type="text"
                                         name="Last Name"
                                         value={lastName == '' ? user.last_name : lastName}
@@ -239,7 +240,7 @@ export function ProfileInfo({router}) {
                                     className="flex flex-row items-start justify-start py-4 rounded-lg">
                                     <p className="w-[150px] left font-medium c0">Email</p>
                                     <input
-                                        className="c0 h-7 w-40 px-2 border-[2px] border-gray-700 outline-none rounded-lg"
+                                        className="c0 h-7 w-40 px-2 border-[2px] dark:border-gray-600 border-gray-700 outline-none rounded-lg"
                                         type="email"
                                         name="Email"
                                         value={email}
@@ -255,7 +256,7 @@ export function ProfileInfo({router}) {
                                      className="flex flex-row items-start justify-start py-4 rounded-lg">
                                     <p className="w-[150px] left font-medium c0">Email</p>
                                     <input
-                                        className="c2-5 h-7 w-40 px-2 border-[2px] border-gray-900 outline-none rounded-lg pointer-events-none"
+                                        className="c2-5 h-7 w-40 px-2 border-[2px] dark:border-gray-900 border-gray-200 outline-none rounded-lg pointer-events-none"
                                         type="text"
                                         name="Last Name"
                                         value={email == '' ? user.email : email}
