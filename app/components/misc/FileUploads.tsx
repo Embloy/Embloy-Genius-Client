@@ -4,7 +4,7 @@ import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDis
 import {cn} from "@/lib/utils";
 import Image from "next/image";
 
-export function UploadFile({formats = ['*'], img, style}) {
+export function UploadFileButton({formats = ['*'], img, head, style}) {
     const fileInputRef = useRef(null);
     const {isOpen, onOpen, onOpenChange} = useDisclosure();
     const [fileContent, setFileContent] = useState<string>('');
@@ -67,7 +67,7 @@ export function UploadFile({formats = ['*'], img, style}) {
                 <ModalContent>
                     {(onClose) => (
                         <>
-                            <ModalHeader className="flex flex-col gap-1">Modal Title</ModalHeader>
+                            <ModalHeader className="flex flex-col gap-1">{head}</ModalHeader>
                             <ModalBody>
                                 <pre className="c0">{fileContent}</pre>
                             </ModalBody>
