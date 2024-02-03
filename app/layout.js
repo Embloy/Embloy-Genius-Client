@@ -23,21 +23,21 @@ export default function RootLayout({children}) {
     return (
         <html lang="en">
             <body className={lexend.className}>
-                <AppProvider >
-                    <AuthWrapper>
-                        <UserWrapper>
-                            <StoreWrapper>
-                                <AppWrapper>
-                                    <Navigation/>
-                                    <div className="flex flex-col items-center justify-center " >
-                                        {children}
-                                    </div>
-                                    <Bottom/>
-                                </AppWrapper>
-                            </StoreWrapper>
-                        </UserWrapper>
-                    </AuthWrapper>
-                </AppProvider>
+                    <AppProvider >
+                        <AuthWrapper>
+                            <UserWrapper>
+                                <StoreWrapper>
+                                    <AppWrapper>
+                                        <Navigation/>
+                                        <div className="flex flex-col items-center justify-center " >
+                                            {children}
+                                        </div>
+                                        <Bottom/>
+                                    </AppWrapper>
+                                </StoreWrapper>
+                            </UserWrapper>
+                        </AuthWrapper>
+                    </AppProvider>
             </body>
         </html>
     )

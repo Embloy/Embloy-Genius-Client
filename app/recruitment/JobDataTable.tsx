@@ -31,10 +31,11 @@ import {
 import {Button} from "@/app/components/ui/button"
 import {cn} from "@/lib/utils";
 import Image from "next/image";
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {DataTablePagination} from "@/app/components/datatable/DataTablePagination";
 import {extractContent} from "@/lib/utils/helpers";
 import {list} from "postcss";
+import {UploadFile} from "@/app/components/misc/FileUploads";
 
 
 interface DataTableProps<TData, TValue> {
@@ -93,6 +94,7 @@ export function JobDataTable<TData, TValue>({columns, data}: DataTableProps<TDat
         default_hides()
     }, [])
 
+
     const [openRows, setOpenRows] = useState<list<number>>(null)
     const [openRow, setOpenRow] = useState<number>(null)
     const toggle_row = (row) => {
@@ -120,6 +122,17 @@ export function JobDataTable<TData, TValue>({columns, data}: DataTableProps<TDat
         setOpenRows(new_rows.length === 0 ? null : new_rows);
 
          */
+    }
+    const fileInputRef = useRef(null);
+    const handleDivClick = () => {
+        fileInputRef.current.click();
+    };
+    const [uploadsIsHovered, setUploadsIsHovered] = useState(false)
+    const handleUploadsHover = () => {
+        setUploadsIsHovered(true)
+    }
+    const handleUploadsNotHover = () => {
+        setUploadsIsHovered(false)
     }
 
 
@@ -156,10 +169,11 @@ export function JobDataTable<TData, TValue>({columns, data}: DataTableProps<TDat
 
                     />
                 </div>
-                <div className="px-4 flex flex-row items-center justify-end gap-4">
+                <div className="px-4 flex flex-row items-center justify-end">
+                    <UploadFile key="Import" formats={['.json']} img="sm-upload" style="relative px-0.5 bg0-r-full"/>
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild className="outline-none">
-                            <button className="px-1">
+                            <button className="px-0.5 bg0-r-full">
                                 <Image
                                     src={cn(columnsIsHovered ? "/icons/columns-light.svg" : "/icons/columns-dark.svg")}
                                     alt="columns"
@@ -234,11 +248,11 @@ export function JobDataTable<TData, TValue>({columns, data}: DataTableProps<TDat
                         {table.getRowModel().rows?.length ? (
                             table.getRowModel().rows.map((row) => (
                                 <JobTableRowExtendable className="border-gray-700 hover:bg-gray-900 cursor-pointer"
-                                          key={row.id}
-                                          extended={!!(openRow !== null && openRow === Number(row.id)) }
-                                          job={data.find(job => job.job_id === Number(row.id))}
-                                          data-state={row.getIsSelected() && "selected"}
-                                          onClick={() => toggle_row(row.id)}
+                                                       key={row.id}
+                                                       extended={!!(openRow !== null && openRow === Number(row.id))}
+                                                       job={data.find(job => job.job_id === Number(row.id))}
+                                                       data-state={row.getIsSelected() && "selected"}
+                                                       onClick={() => toggle_row(row.id)}
                                 >
                                     {row.getVisibleCells().map((cell) => (
                                         <TableCell key={cell.id}>

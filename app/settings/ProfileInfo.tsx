@@ -94,6 +94,7 @@ export function ProfileInfo({router}) {
     const [showReload, setShowReload] = useState(false);
     const [error, setError] = useState(null);
     const handleImageChange = async (e) => {
+        console.log("Handling image change")
         const file = e.target.files[0];
         if (file) {
             setUploading(true);

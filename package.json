@@ -31,11 +31,15 @@
     "next": "latest",
     "react": "latest",
     "react-dom": "latest",
+    "react-modal": "^3.16.1",
+    "@types/react-modal": "^3.16.3",
     "swr": "latest",
     "tailwind-merge": "^2.0.0",
     "tailwindcss": "latest",
     "tailwindcss-animate": "^1.0.7",
-    "next-themes": "^0.2.1"
+    "next-themes": "^0.2.1",
+    "@nextui-org/react": "^2.2.9",
+    "framer-motion": "^11.0.3"
   },
   "devDependencies": {
     "@types/react": "18.2.38",

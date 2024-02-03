@@ -36,6 +36,9 @@
     .bg0-r {
         @apply dark:bg-black bg-white
     }
+    .bg0-r-full {
+        @apply dark:bg-black bg-white hover:bg-white hover:dark:bg-black
+    }
 
     .bg1 {
         @apply dark:bg-embloy-gray-lighter bg-embloy-gray-darker
@@ -68,6 +71,7 @@
     button:hover {
         @apply dark:bg-gray-900 bg-white
     }
+
 
     .btn_sm{
         @apply rounded-full flex items-center justify-center border-[2px] dark:border-white border-black c0
