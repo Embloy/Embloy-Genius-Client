@@ -35,7 +35,7 @@ import React, {useEffect, useRef, useState} from "react";
 import {DataTablePagination} from "@/app/components/datatable/DataTablePagination";
 import {extractContent} from "@/lib/utils/helpers";
 import {list} from "postcss";
-import {UploadFileButton} from "@/app/components/misc/FileUploads";
+import {UploadJobFileButton} from "@/app/components/misc/FileUploads";
 
 
 interface DataTableProps<TData, TValue> {
@@ -123,17 +123,7 @@ export function JobDataTable<TData, TValue>({columns, data}: DataTableProps<TDat
 
          */
     }
-    const fileInputRef = useRef(null);
-    const handleDivClick = () => {
-        fileInputRef.current.click();
-    };
-    const [uploadsIsHovered, setUploadsIsHovered] = useState(false)
-    const handleUploadsHover = () => {
-        setUploadsIsHovered(true)
-    }
-    const handleUploadsNotHover = () => {
-        setUploadsIsHovered(false)
-    }
+
 
 
     return (
@@ -170,7 +160,7 @@ export function JobDataTable<TData, TValue>({columns, data}: DataTableProps<TDat
                     />
                 </div>
                 <div className="px-4 flex flex-row items-center justify-end">
-                    <UploadFileButton key="Import" formats={['.json']} head="Upload jobs" img="sm-upload" style="relative px-0.5 bg0-r-full"/>
+                    <UploadJobFileButton key="Import" serializerUrl={"http://localhost:8080/resource/serializer"}  formats={['.json']} head="Upload jobs" img="sm-upload" style="relative px-0.5 bg0-r-full"/>
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild className="outline-none">
                             <button className="px-0.5 bg0-r-full">
