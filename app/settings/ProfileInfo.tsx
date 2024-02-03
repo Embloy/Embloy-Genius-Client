@@ -92,6 +92,7 @@ export function ProfileInfo({router}) {
     const fileInputRef = useRef(null);
     const [uploading, setUploading] = useState(false);
     const [showReload, setShowReload] = useState(false);
+    const [error, setError] = useState(null);
     const handleImageChange = async (e) => {
         const file = e.target.files[0];
         if (file) {
@@ -116,12 +117,15 @@ export function ProfileInfo({router}) {
         setEmail('');
         setEmailIsClicked(false);
         setChangesMade(false);
+
     }
+
     interface UserBody {
         first_name?: string;
         last_name?: string;
         email?: string;
     }
+
     const body: UserBody = {};
     const submitChanges = async () => {
         const body: UserBody = {};
@@ -134,9 +138,18 @@ export function ProfileInfo({router}) {
         if (email !== '' && email !== user.email) {
             body.email = email;
         }
-        const result = await patch_core("user", router, {"user": body})
+        try {
+            const result = await patch_core("user", router, {"user": body})
+        } catch (error) {
+            console.error(error);
+            setError(error);
+        }
+        if (error) {
+            resetChanges();
+            return setError(null);
+        }
         if (firstName !== '' && firstName) {
-             user.first_name = body.first_name
+            user.first_name = body.first_name
         }
         if (lastName !== '' && lastName !== user.last_name) {
             user.last_name = body.last_name
@@ -155,9 +168,16 @@ export function ProfileInfo({router}) {
             </div>
 
             {user ? (
-                <div className=" w-[800px] flex flex-col items-start justify-start border border-gray-700 rounded-lg mb-6">
+                <div
+                    className={cn(error === null ? " w-[800px] flex flex-col items-start justify-start border border-gray-700 rounded-lg mb-6" : " w-[800px] flex flex-col items-start justify-start border border-red-500 rounded-lg mb-6")}>
                     <div className="flex flex-row items-start justify-start px-4 py-2 gap-4">
-                        {nameIsClicked || emailIsClicked? (<p className="c3 text-xs bgneg italic">Hit return to stage changes</p>) : (<p className="c3 text-xs bgneg italic">Double click to edit</p>)}
+                        {error === null ? (
+                                nameIsClicked || emailIsClicked ? (
+                                    <p className="c3 text-xs bgneg italic">Hit return to stage changes</p>) : (
+                                    <p className="c3 text-xs bgneg italic">Double click to edit</p>)
+                            ) :
+                            <p className="text-red-500 text-xs bgneg italic">An Error has occured. Try again</p>
+                        }
 
                     </div>
                     <div className="h-4"/>
@@ -170,7 +190,7 @@ export function ProfileInfo({router}) {
                                     className="flex flex-row items-start justify-start py-4 rounded-lg">
                                     <p className="w-[150px] left font-medium c0">Name</p>
                                     <input
-                                        className="c0 h-7 w-40 px-2 border-[2px] border-gray-700 outline-none rounded-lg"
+                                        className="c0 h-7 w-40 px-2 border-[2px] border-gray-600 outline-none rounded-lg"
                                         type="text"
                                         name="First Name"
                                         value={firstName}
@@ -182,7 +202,7 @@ export function ProfileInfo({router}) {
                                     />
                                     <div className="w-2"/>
                                     <input
-                                        className="c0 h-7 w-40 px-2 border-[2px] border-gray-700 outline-none rounded-lg"
+                                        className="c0 h-7 w-40 px-2 border-[2px] border-gray-600 outline-none rounded-lg"
                                         type="text"
                                         name="Last Name"
                                         value={lastName}
@@ -197,8 +217,21 @@ export function ProfileInfo({router}) {
                                 <div onMouseEnter={nameHover} onMouseLeave={nameNotHover} onDoubleClick={nameClick}
                                      className="flex flex-row items-start justify-start py-4 rounded-lg">
                                     <p className="w-[150px] left font-medium c0">Name</p>
-                                    <p className="w-[400px] left px-4 c0">{firstName == '' ? user.first_name : firstName} {lastName == '' ? user.last_name : lastName}</p>
-
+                                    <input
+                                        className="c2-5 h-7 w-40 px-2 border-[2px] border-gray-900 outline-none rounded-lg pointer-events-none"
+                                        type="text"
+                                        name="First Name"
+                                        value={firstName == '' ? user.first_name : firstName}
+                                        disabled={true}
+                                    />
+                                    <div className="w-2"/>
+                                    <input
+                                        className="c2-5 h-7 w-40 px-2 border-[2px] border-gray-900 outline-none rounded-lg pointer-events-none"
+                                        type="text"
+                                        name="Last Name"
+                                        value={lastName == '' ? user.last_name : lastName}
+                                        disabled={true}
+                                    />
                                 </div>
                             )}
                             {emailIsClicked ? (
@@ -221,8 +254,13 @@ export function ProfileInfo({router}) {
                                 <div onMouseEnter={emailHover} onMouseLeave={emailNotHover} onDoubleClick={emailClick}
                                      className="flex flex-row items-start justify-start py-4 rounded-lg">
                                     <p className="w-[150px] left font-medium c0">Email</p>
-                                    <p className="w-[400px] left px-4 c0">{email == '' ? user.email : email}</p>
-
+                                    <input
+                                        className="c2-5 h-7 w-40 px-2 border-[2px] border-gray-900 outline-none rounded-lg pointer-events-none"
+                                        type="text"
+                                        name="Last Name"
+                                        value={email == '' ? user.email : email}
+                                        disabled={true}
+                                    />
                                 </div>
                             )}
 
