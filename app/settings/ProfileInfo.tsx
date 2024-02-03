@@ -4,11 +4,11 @@ import Image from "next/image";
 import '../globals.css'
 import {cn} from "@/lib/utils";
 import {AvatarButton} from "@/app/components/ui/avatar";
-import {upload_profile_image} from "@/lib/misc_requests";
+import {patch_core, upload_profile_image} from "@/lib/misc_requests";
 import {request_client} from "@/lib/authentication";
 import {getCookie} from "cookies-next";
 
-export function ProfileInfo() {
+export function ProfileInfo({router}) {
     let user = useContext(UserContext)
     const [changesMade, setChangesMade] = useState(false);
     const [nameIsHovered, setNameIsHovered] = useState(false);
@@ -107,23 +107,62 @@ export function ProfileInfo() {
     };
 
     const handleDivClick = () => {
-        // Trigger the click event of the hidden file input
         fileInputRef.current.click();
     };
+    const resetChanges = () => {
+        setFirstName('');
+        setNameIsClicked(false);
+        setLastName('');
+        setEmail('');
+        setEmailIsClicked(false);
+        setChangesMade(false);
+    }
+    interface UserBody {
+        first_name?: string;
+        last_name?: string;
+        email?: string;
+    }
+    const body: UserBody = {};
+    const submitChanges = async () => {
+        const body: UserBody = {};
+        if (firstName !== '' && firstName !== user.first_name) {
+            body.first_name = firstName;
+        }
+        if (lastName !== '' && lastName !== user.last_name) {
+            body.last_name = lastName;
+        }
+        if (email !== '' && email !== user.email) {
+            body.email = email;
+        }
+        const result = await patch_core("user", router, {"user": body})
+        if (firstName !== '' && firstName) {
+             user.first_name = body.first_name
+        }
+        if (lastName !== '' && lastName !== user.last_name) {
+            user.last_name = body.last_name
+        }
+        if (email !== '' && email !== user.email) {
+            user.email = body.email
+        }
+        resetChanges();
+
+    }
 
     return (
 
         <div className="w-full flex flex-col items-start justify-start gap-4 ">
             <div className="w-full flex flex-row items-center justify-start gap-3">
-                <div className="border border-gray-700 px-2 rounded-full">
-                    <p className="c3 text-xs">Functionality disabled</p>
-                </div>
             </div>
 
             {user ? (
-                <div className="flex flex-col items-start justify-start border border-gray-700 rounded-lg mb-6 gap-10">
+                <div className=" w-[800px] flex flex-col items-start justify-start border border-gray-700 rounded-lg mb-6">
+                    <div className="flex flex-row items-start justify-start px-4 py-2 gap-4">
+                        {nameIsClicked || emailIsClicked? (<p className="c3 text-xs bgneg italic">Hit return to stage changes</p>) : (<p className="c3 text-xs bgneg italic">Double click to edit</p>)}
+
+                    </div>
+                    <div className="h-4"/>
                     <div
-                        className="flex flex-row items-start justify-start px-4 py-2 gap-10">
+                        className=" w-[800px] flex flex-row items-start justify-between px-4 py-2 gap-10">
                         <div className="flex flex-col items-start justify-start ">
 
                             {nameIsClicked ? (
@@ -155,16 +194,10 @@ export function ProfileInfo() {
                                     />
                                 </div>
                             ) : (
-                                <div onMouseEnter={nameHover} onMouseLeave={nameNotHover}
+                                <div onMouseEnter={nameHover} onMouseLeave={nameNotHover} onDoubleClick={nameClick}
                                      className="flex flex-row items-start justify-start py-4 rounded-lg">
                                     <p className="w-[150px] left font-medium c0">Name</p>
-                                    <p className="w-[200px] left px-4 c0">{firstName == '' ? user.first_name : firstName} {lastName == '' ? user.last_name : lastName}</p>
-                                    <button onClick={nameClick}
-                                            className={cn(nameIsHovered ? "text-xs italic c3 hover:underline cursor-not-allowed bgneg" : "text-xs italic text-transparent select-none pointer-events-none bgneg")}
-                                            disabled={true}
-                                    >
-                                        <p>Edit</p>
-                                    </button>
+                                    <p className="w-[400px] left px-4 c0">{firstName == '' ? user.first_name : firstName} {lastName == '' ? user.last_name : lastName}</p>
 
                                 </div>
                             )}
@@ -185,16 +218,11 @@ export function ProfileInfo() {
                                     />
                                 </div>
                             ) : (
-                                <div onMouseEnter={emailHover} onMouseLeave={emailNotHover}
+                                <div onMouseEnter={emailHover} onMouseLeave={emailNotHover} onDoubleClick={emailClick}
                                      className="flex flex-row items-start justify-start py-4 rounded-lg">
                                     <p className="w-[150px] left font-medium c0">Email</p>
-                                    <p className="w-[200px] left px-4 c0">{email == '' ? user.email : email}</p>
-                                    <button onClick={emailClick}
-                                            className={cn(emailIsHovered ? "text-xs italic c3 hover:underline cursor-not-allowed bgneg" : "text-xs italic text-transparent select-none pointer-events-none bgneg")}
-                                            disabled={true}
-                                    >
-                                        <p>Edit</p>
-                                    </button>
+                                    <p className="w-[400px] left px-4 c0">{email == '' ? user.email : email}</p>
+
                                 </div>
                             )}
 
@@ -203,14 +231,6 @@ export function ProfileInfo() {
                                     <p className="w-[150px] left font-medium c0">Company</p>
                                     <p className="w-[300px] left px-4 c0">@MUSS NOCH WEG</p>
                                 </div>
-                            )}
-
-                            {changesMade && (
-                                <button
-                                    className="my-4 px-4 py-1 border-[2px] border-embloy-purple-light hover:border-embloy-purple-lighter text-embloy-purple-light hover:text-embloy-purple-lighter rounded-full cursor-pointer"
-                                >
-                                    Update
-                                </button>
                             )}
                         </div>
 
@@ -228,10 +248,24 @@ export function ProfileInfo() {
 
 
                     </div>
+                    <div className="h-4"/>
                     <div className="flex flex-row items-start justify-start px-4 py-2 gap-4">
-                        <a href={"https://about.embloy.com/"} className="rounded-full c2-5 hover:underline text-xs bgneg">
+                        <a href={"https://about.embloy.com/"}
+                           className="rounded-full c2-5 hover:underline text-xs bgneg">
                             <p>Learn more</p>
                         </a>
+                        {changesMade && (
+                            <button onClick={submitChanges}
+                                    className="rounded-full c2-5 hover:underline text-xs bgneg">
+                                <p>Save</p>
+                            </button>
+                        )}
+                        {changesMade && (
+                            <button onClick={resetChanges}
+                                    className="rounded-full c2-5 hover:underline text-xs bgneg">
+                                <p>Undo changes</p>
+                            </button>
+                        )}
                         {showReload && (
                             <a href={window.location.href}
                                className="rounded-full c2-5 hover:underline text-xs bgneg">
@@ -239,6 +273,7 @@ export function ProfileInfo() {
                             </a>)}
 
                     </div>
+
                 </div>
             ) : (
                 <button>Sign in</button>

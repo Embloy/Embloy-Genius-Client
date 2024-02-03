@@ -12,10 +12,12 @@ import {GeniusSettings} from "@/app/settings/GeniusSettings";
 import {ProfileInfo} from "@/app/settings/ProfileInfo";
 import {SubscriptionSettings} from "@/app/settings/SubscriptionSettings";
 import {AppearanceSettings} from "@/app/settings/Appearance";
+import {useRouter} from "next/navigation";
 
 
 
 export function ProfileSettings({store, user}) {
+    const router = useRouter();
     return (
         <div>
             <div className="w-full flex flex-col items-center justify-between ">
@@ -34,7 +36,7 @@ export function ProfileSettings({store, user}) {
 
                 <div
                     className="text-sm w-full flex flex-col items-start justify-start gap-4 border-b border-gray-700 p-4">
-                    <ProfileInfo/>
+                    <ProfileInfo router={router}/>
                     <div className="h-3"/>
                     <NotificationSettings/>
                     <div className="h-3"/>
