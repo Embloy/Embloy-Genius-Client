@@ -1,19 +1,20 @@
-import React, {useContext, useRef, useState} from "react";
+import React, { useRef, useState } from "react";
 import '../../globals.css';
-import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure} from "@nextui-org/react";
-import {cn} from "@/lib/utils";
+import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure } from "@nextui-org/react";
+import { cn } from "@/lib/utils";
 import Image from "next/image";
 
-export function UploadJobFileButton({formats = ['*'], serializerUrl, img, head, style}) {
+export function UploadJobFileButton({ formats = ['*'], serializerUrl, img, head, style }) {
     const fileInputRef = useRef(null);
-    const {isOpen, onOpen, onOpenChange} = useDisclosure();
+    const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
     const [fileContent, setFileContent] = useState<string>('');
-    const [serializedData, setSerializedData] = useState<string>('');
+
     const handleDivClick = () => {
-        if (!isOpen){
+        if (!isOpen) {
             fileInputRef.current.click();
         }
     };
+
     const handleFileChange = async (e) => {
         const file = e.target.files[0];
         if (file && file.type === 'application/json') {
@@ -23,9 +24,7 @@ export function UploadJobFileButton({formats = ['*'], serializerUrl, img, head, 
                 const content = e.target.result as string;
                 setFileContent(content);
                 const jsonData = JSON.parse(content);
-                setSerializedData(encodeURIComponent(JSON.stringify(jsonData)));
                 onOpen();
-
             };
 
             reader.readAsText(file);
@@ -33,20 +32,23 @@ export function UploadJobFileButton({formats = ['*'], serializerUrl, img, head, 
             console.error('Please select a valid JSON file.');
         }
     };
-    const [uploadsIsHovered, setUploadsIsHovered] = useState(false)
-    const handleUploadsHover = () => {
-        setUploadsIsHovered(true)
-    }
-    const handleUploadsNotHover = () => {
-        setUploadsIsHovered(false)
-    }
-    return (
 
+    const [uploadsIsHovered, setUploadsIsHovered] = useState(false);
+
+    const handleUploadsHover = () => {
+        setUploadsIsHovered(true);
+    };
+
+    const handleUploadsNotHover = () => {
+        setUploadsIsHovered(false);
+    };
+
+    return (
         <div onClick={handleDivClick} className="relative inline-block">
             <input
                 type="file"
                 ref={fileInputRef}
-                style={{display: 'none'}}
+                style={{ display: 'none' }}
                 onChange={handleFileChange}
                 accept={formats.join(',')}
             />
@@ -60,7 +62,6 @@ export function UploadJobFileButton({formats = ['*'], serializerUrl, img, head, 
                 onMouseLeave={handleUploadsNotHover}
             />
 
-
             <Modal
                 isOpen={isOpen}
                 scrollBehavior="inside"
@@ -69,22 +70,29 @@ export function UploadJobFileButton({formats = ['*'], serializerUrl, img, head, 
                 onOpenChange={onOpenChange}
             >
                 <ModalContent>
-                    {(onClose) => (
+
                         <>
                             <ModalHeader className="flex flex-col gap-1">{head}</ModalHeader>
                             <ModalBody>
                                 <pre className="c0">{fileContent}</pre>
                             </ModalBody>
                             <ModalFooter>
-                                <a href={`${serializerUrl}?data=${serializedData}&oldFormat=json&newFormat=formdata&redirect=jobs&mode=post`} onClick={onClose} className="rounded-full c2-5 hover:underline text-xs bgneg">
+                                <button onClick={() => {
+                                    setFileContent('');
+                                    onClose();
+                                }} className="rounded-full c2-5 hover:underline text-xs bgneg">
                                     <p>Save</p>
-                                </a>
-                                <button onClick={onClose} className="rounded-full c2-5 hover:underline text-xs bgneg">
+                                </button>
+                                <button onClick={() => {
+                                    setFileContent('');
+                                    console.error("Undo");
+                                    onClose();
+                                }} className="rounded-full c2-5 hover:underline text-xs bgneg">
                                     <p>Undo</p>
                                 </button>
                             </ModalFooter>
                         </>
-                    )}
+
                 </ModalContent>
             </Modal>
         </div>
