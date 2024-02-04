@@ -23,11 +23,11 @@ export const columns: ColumnDef<Job>[] = [
         id: "select",
         header: ({table}) => (
             <Checkbox
-                checked={
-                    table.getIsAllPageRowsSelected() ||
-                    (table.getIsSomePageRowsSelected() && "indeterminate")
-                }
-                onCheckedChange={(value) => table.toggleAllRowsSelected(!!value)}
+            checked={
+                table.getIsAllPageRowsSelected() ||
+                (table.getIsSomePageRowsSelected() ? "indeterminate" : false)
+            }
+            onCheckedChange={(value) => table.toggleAllRowsSelected(!!value)}
                 aria-label="Select all"
             />
         ),

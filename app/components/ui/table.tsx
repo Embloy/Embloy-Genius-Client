@@ -2,6 +2,7 @@ import * as React from "react"
 
 import {cn} from "@/lib/utils"
 import {JobDetails} from "@/app/recruitment/job_details";
+import { Job } from "@/app/recruitment/job_type";
 
 const Table = React.forwardRef<
     HTMLTableElement,
@@ -73,6 +74,8 @@ const JobTableRowExtendable = React.forwardRef<
         className?: string;
         extended?: boolean;
         onClick?: () => void;
+        job?: Job;
+        children?: React.ReactNode; // Add this line
     }
 >(({className, extended, job, ...props}, ref) => {
     const rowClasses = cn(
@@ -114,7 +117,7 @@ const JobTableRowExtendable = React.forwardRef<
 
     );
 })
-TableRow.displayName = "TableRowExtendable"
+JobTableRowExtendable.displayName = "JobTableRowExtendable"
 
 const TableHead = React.forwardRef<
     HTMLTableCellElement,

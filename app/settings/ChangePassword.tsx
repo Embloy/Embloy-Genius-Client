@@ -251,7 +251,7 @@ export function ChangePassword() {
                                 ) : (
                                     passwordMissmatch ? (
                                         <div className="flex flex-row items-center justify-end gap-2">
-                                            <p className="select-none text-xs text-red-500">New Password doesn't
+                                            <p className="select-none text-xs text-red-500">New Password doesn&apos;t
                                                 match confirmation password.</p>
                                             <button
                                                 disabled={true}
@@ -279,7 +279,7 @@ export function ChangePassword() {
 
                                     passwordMissmatch ? (
                                         <div className="flex flex-row items-center justify-end gap-2">
-                                            <p className="select-none text-xs text-red-500">New Password doesn't
+                                            <p className="select-none text-xs text-red-500">New Password doesn&apos;t
                                                 match confirmation password.</p>
                                             <button onClick={handleUpdate}
                                                     className="text-embloy-purple-light hover:text-embloy-purple-lighter h-7 px-4 border-[2px] border-embloy-purple-light hover:border-embloy-purple-lighter outline-none rounded-full">

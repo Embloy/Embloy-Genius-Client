@@ -36,6 +36,7 @@ import {DataTablePagination} from "@/app/components/datatable/DataTablePaginatio
 import {extractContent} from "@/lib/utils/helpers";
 import {list} from "postcss";
 import {UploadJobFileButton} from "@/app/components/misc/FileUploads";
+import { Job } from "./job_type"
 
 
 interface DataTableProps<TData, TValue> {
@@ -43,7 +44,7 @@ interface DataTableProps<TData, TValue> {
     data: TData[]
 }
 
-export function JobDataTable<TData, TValue>({columns, data}: DataTableProps<TData, TValue>) {
+export function JobDataTable<TData extends Job, TValue>({columns, data}: DataTableProps<TData, TValue>) {
     const [filterIsHovered, setFilterIsHovered] = useState(false);
     const [columnsIsHovered, setColumnsIsHovered] = useState(false)
 
@@ -95,7 +96,7 @@ export function JobDataTable<TData, TValue>({columns, data}: DataTableProps<TDat
     }, [])
 
 
-    const [openRows, setOpenRows] = useState<list<number>>(null)
+    const [openRows, setOpenRows] = useState<number[]>(null)
     const [openRow, setOpenRow] = useState<number>(null)
     const toggle_row = (row) => {
         let new_row = null

@@ -256,7 +256,7 @@ export function TwoFactorAuthentication() {
                                         <div className="flex flex-row items-center justify-start gap-2">
                                             <p className="c1 font-medium text-sm">SMS/Text message</p>
                                         </div>
-                                        <p className="c3 text-xs">Get one-time suthentication codes sent to your phone via SMS. (Android users's choice)</p>
+                                        <p className="c3 text-xs">Get one-time suthentication codes sent to your phone via SMS. (Android users&apos; choice)</p>
                                     </div>
                                 </div>
                                 <button disabled={true} className="border-[2px] border-gray-700 rounded-full px-2 c3 text-sm cursor-not-allowed">
