@@ -209,7 +209,7 @@ export default function Calendar() {
 
 
 
-    const {data, error} = useSWR(`${siteConfig.core_api_url}/assignment/?user_id=77`, fetcher)
+    const {data, error} = useSWR(`${siteConfig.api_url}/assignment/?user_id=77`, fetcher)
 
     const bin = (data) => {
         let assignments = [];
@@ -254,7 +254,7 @@ export default function Calendar() {
 
         delete updated_event.id
         delete updated_event.title
-        fetch(`${siteConfig.core_api_url}/assignment/`, {
+        fetch(`${siteConfig.api_url}/assignment/`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
@@ -307,7 +307,7 @@ export default function Calendar() {
 
     function fetchUpdatedEventData() {
         // Make a GET request to fetch the updated event data
-        fetch(`${siteConfig.core_api_url}/assignment/?user_id=77`, fetcher)
+        fetch(`${siteConfig.api_url}/assignment/?user_id=77`, fetcher)
             .then((response) => response.json())
             .then((data) => {
                 // Update 'allEvents' with the updated data
