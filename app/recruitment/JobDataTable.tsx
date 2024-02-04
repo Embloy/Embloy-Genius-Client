@@ -37,6 +37,7 @@ import {extractContent} from "@/lib/utils/helpers";
 import {list} from "postcss";
 import {UploadJobFileButton} from "@/app/components/misc/FileUploads";
 import { Job } from "./job_type"
+import {useRouter} from "next/navigation";
 
 
 interface DataTableProps<TData, TValue> {
@@ -45,6 +46,7 @@ interface DataTableProps<TData, TValue> {
 }
 
 export function JobDataTable<TData extends Job, TValue>({columns, data}: DataTableProps<TData, TValue>) {
+    const router = useRouter();
     const [filterIsHovered, setFilterIsHovered] = useState(false);
     const [columnsIsHovered, setColumnsIsHovered] = useState(false)
 
@@ -161,7 +163,7 @@ export function JobDataTable<TData extends Job, TValue>({columns, data}: DataTab
                     />
                 </div>
                 <div className="px-4 flex flex-row items-center justify-end">
-                    <UploadJobFileButton key="Import" serializerUrl={"http://localhost:8080/resource/serializer"}  formats={['.json']} head="Upload jobs" img="sm-upload" style="relative px-0.5 bg0-r-full"/>
+                    <UploadJobFileButton key="Import" router={router}  formats={['.json']} head="Upload jobs" img="sm-upload" style="relative px-0.5 bg0-r-full"/>
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild className="outline-none">
                             <button className="px-0.5 bg0-r-full">

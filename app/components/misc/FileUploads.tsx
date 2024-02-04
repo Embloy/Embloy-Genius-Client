@@ -3,8 +3,10 @@ import '../../globals.css';
 import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure } from "@nextui-org/react";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
+import {post_core} from "@/lib/misc_requests";
+import {router} from "next/client";
 
-export function UploadJobFileButton({ formats = ['*'], serializerUrl, img, head, style }) {
+export function UploadJobFileButton({ formats = ['*'], router, img, head, style }) {
     const fileInputRef = useRef(null);
     const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
     const [fileContent, setFileContent] = useState<string>('');
@@ -32,6 +34,20 @@ export function UploadJobFileButton({ formats = ['*'], serializerUrl, img, head,
             console.error('Please select a valid JSON file.');
         }
     };
+
+    const handleUpload = async () => {
+        const jsonData = JSON.parse(fileContent);
+        if (jsonData) {
+            try {
+                const res = await post_core('jobs', router, jsonData);
+                console.log("HALLO")
+                console.log(res);
+            } catch (e) {
+                console.error(e);
+            }
+
+        }
+    }
 
     const [uploadsIsHovered, setUploadsIsHovered] = useState(false);
 
@@ -78,14 +94,12 @@ export function UploadJobFileButton({ formats = ['*'], serializerUrl, img, head,
                             </ModalBody>
                             <ModalFooter>
                                 <button onClick={() => {
-                                    setFileContent('');
-                                    onClose();
+                                    handleUpload();
                                 }} className="rounded-full c2-5 hover:underline text-xs bgneg">
                                     <p>Save</p>
                                 </button>
                                 <button onClick={() => {
                                     setFileContent('');
-                                    console.error("Undo");
                                     onClose();
                                 }} className="rounded-full c2-5 hover:underline text-xs bgneg">
                                     <p>Undo</p>

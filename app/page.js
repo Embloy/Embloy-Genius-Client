@@ -93,7 +93,7 @@ export default function Hme() {
     <main className=" text-white flex min-h-screen h-full flex-col items-center ">
       <div className="z-10 max-w-6xl w-full min-h-screen h-full border-l-[1px] border-r-[1px] border-gray-700 justify-between p-4">
         <div className="w-full flex flex-row items-center justify-between my-4">
-          <h1 className="font-medium text-2xl ">BlaBlaJob Dashboard</h1>
+          <h1 className="font-medium text-2xl ">Genius Dashboard</h1>
           <div className="flex flex-row items-center justify-end gap-4">
             <a href="https://www.about.embloy.com" onMouseEnter={handlePlusMouseEnter} onMouseLeave={handlePlusMouseLeave}>
               <Image
