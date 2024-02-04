@@ -89,7 +89,7 @@ server.
 2. Verify correct IP addresses & i.a. updated CORS plicies of Core and Genius 
 3. Run ``npm install`` to install all required packages.
 3. Run ``npm run dev`` to start the web applciation.
-4. Go to http://localhost:8080
+4. Go to http://localhost:8081
 </details>
 
 © Carlo Bortolan, Jan Hummel
