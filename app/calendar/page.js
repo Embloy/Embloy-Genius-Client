@@ -13,6 +13,7 @@ import Logo from "@/app/components/navigation/navbar/Logo";
 import LoadingScreen from "@/app/components/misc/LoadingScreen";
 import ErrorScreen from "@/app/components/misc/ErrorScreen";
 import AuthWrapper from "@/app/components/misc/AuthWrapper";
+import { siteConfig } from '@/config/site';
 
 const fetcher = (args) => fetch(args).then((res) => res.json())
 export default function Calendar() {
@@ -208,8 +209,7 @@ export default function Calendar() {
 
 
 
-    //const {data, error} = useSWR('http://192.168.56.1:8080/api/v0/assignment/?user_id=77', fetcher)
-    const {data, error} = useSWR('http://192.168.178.126:8000/api/v0/assignment/?user_id=77', fetcher)
+    const {data, error} = useSWR(`${siteConfig.core_api_url}/assignment/?user_id=77`, fetcher)
 
     const bin = (data) => {
         let assignments = [];
@@ -254,8 +254,7 @@ export default function Calendar() {
 
         delete updated_event.id
         delete updated_event.title
-        //fetch('http://192.168.56.1:8080/api/v0/assignment/', {
-        fetch('http://192.168.178.126:8000/api/v0/assignment/', {
+        fetch(`${siteConfig.core_api_url}/assignment/`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
@@ -308,8 +307,7 @@ export default function Calendar() {
 
     function fetchUpdatedEventData() {
         // Make a GET request to fetch the updated event data
-        //fetch('http://192.168.56.1:8080/api/v0/assignment/?user_id=77', fetcher)
-        fetch('http://192.168.178.126:8000/api/v0/assignment/?user_id=77', fetcher)
+        fetch(`${siteConfig.core_api_url}/assignment/?user_id=77`, fetcher)
             .then((response) => response.json())
             .then((data) => {
                 // Update 'allEvents' with the updated data
