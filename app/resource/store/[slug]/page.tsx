@@ -24,7 +24,7 @@ export default function Page({params}) {
         return true;
     }
     useEffect(() => {
-        get_ops('store/' + params.slug + '/', router).then(data => {
+        get_ops('/store/' + params.slug + '/', router).then(data => {
             console.log(data[0])
             setContent(data[0])
 

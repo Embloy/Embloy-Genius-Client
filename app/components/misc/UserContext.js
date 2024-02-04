@@ -13,7 +13,7 @@ const UserWrapper = ({children}) => {
 
     useEffect(() => {
         if(pathname!=="/signin" && getCookie("refresh", {path: "/"})) {
-            get_core("user", router).then(data => {
+            get_core("/user", router).then(data => {
                 setUser(data.user)
             }).catch(e => {
                 console.log(e)

@@ -39,7 +39,7 @@ export function UploadJobFileButton({ formats = ['*'], router, img, head, style 
         const jsonData = JSON.parse(fileContent);
         if (jsonData) {
             try {
-                const res = await post_core('jobs', router, jsonData);
+                const res = await post_core('/jobs', router, jsonData);
                 console.log("HALLO")
                 console.log(res);
             } catch (e) {
