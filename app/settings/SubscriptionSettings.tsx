@@ -2,6 +2,7 @@ import React from "react";
 import Image from "next/image";
 import {Interval, Subscription} from "@/lib/utils/enums";
 import '../globals.css';
+import { siteConfig } from "@/config/site";
 
 
 function SubscriptionItem({name, text, disabled, img, subscribed, uri}) {
@@ -40,7 +41,7 @@ function SubscriptionItem({name, text, disabled, img, subscribed, uri}) {
                                     <p>Learn more</p>
                                 </button>
                                 <a
-                                    href={"http://localhost:8080/resource/store/" + uri}
+                                    href={`${siteConfig.api_url}/resource/store/` + uri}
                                     className="border-[2px] border-embloy-purple-light hover:border-embloy-purple-lighter rounded-full px-2 text-embloy-purple-light hover:text-embloy-purple-lighter text-sm">
                                     <p>Buy</p>
                                 </a>

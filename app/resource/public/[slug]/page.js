@@ -11,7 +11,7 @@ export default function Page({params}) {
 
 
     useEffect(() => {
-        get_genius_query("resource/" + params.slug).then(data => {
+        get_genius_query("/resource/" + params.slug).then(data => {
             setContent(data)
         })
     }, [])

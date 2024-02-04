@@ -140,7 +140,7 @@ export function ProfileInfo({router}) {
             body.email = email;
         }
         try {
-            const result = await patch_core("user", router, {"user": body})
+            const result = await patch_core("/user", router, {"user": body})
         } catch (error) {
             console.error(error);
             setError(error);
