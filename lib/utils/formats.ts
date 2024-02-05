@@ -1,3 +1,27 @@
+export const cast_datetime = (args: string, format_code: string) => {
+    const datetime = new Date(args);
+    let formattedDatetime = '';
+
+    switch (format_code.toLowerCase()) {
+        case 'us':
+            formattedDatetime = datetime.toLocaleString('en-US');
+            break;
+        case 'uk':
+            formattedDatetime = datetime.toLocaleString('en-GB');
+            break;
+        case 'iso':
+            formattedDatetime = datetime.toISOString();
+            break;
+        case 'de':
+            formattedDatetime = datetime.toLocaleString('de-DE');
+            break;
+        default:
+            formattedDatetime = args;
+            break;
+    }
+
+    return formattedDatetime;
+}
 export const cast_date = (args: string, format_code:string) => {
     const date = new Date(args);
     let formattedDate = '';
