@@ -1,7 +1,8 @@
 export const siteConfig = {
-    url: "https://genius.embloy.com", // <-- Genius Client
-    // api_url: "http://localhost:8080/api/v0", // <-- Genius Server (local)
-    api_url: "https://api2.embloy.com/api/v0", // <-- Genius Server (remote)
+    url: "http://localhost:3000", // <-- Genius Client
+    //url: "https://genius.embloy.com", // <-- Genius Client
+    //api_url: "http://localhost:8080", // <-- Genius Server (local)
+    api_url: "https://api2.embloy.com", // <-- Genius Server (remote)
     core_api_url: "https://api.embloy.com/api/v0", // <-- Core Server 
     core_api_root_url: "https://api.embloy.com",
     links: {

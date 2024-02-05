@@ -35,7 +35,7 @@ export const UserBar = ({ isVisible, onClose, userData, storeData }) => {
     return (
         <div className={sidebarClass}>
             <div className="flex h-full w-full">
-                    {userData && storeData ? (
+                    {userData ? (
                         <div className="h-full w-full flex flex-col justify-start items-center">
                             <div className="w-full h-4" />
                             <div className="w-full flex flex-col justify-start items-start c0 px-2.5">

@@ -9,7 +9,7 @@ interface UploadError {
     job: any; // Adjust the type based on your job structure
     error: any; // Adjust the type based on the error structure
 }
-export function UploadJobFileButton({ formats = ['*'], router, img, head, style }) {
+export function UploadJobFileButton({ formats = ['*'], router, img, head, style, onUploadSuccess}) {
     const fileInputRef = useRef(null);
     const uploadModal = useDisclosure()
     const errorModal = useDisclosure()
@@ -25,14 +25,11 @@ export function UploadJobFileButton({ formats = ['*'], router, img, head, style 
         const file = e.target.files[0];
         if (file && file.type === 'application/json') {
             const reader = new FileReader();
-
             reader.onload = (e) => {
                 const content = e.target.result as string;
                 setFileContent(content);
-                const jsonData = JSON.parse(content);
                 uploadModal.onOpen();
             };
-
             reader.readAsText(file);
         } else {
             console.error('Please select a valid JSON file.');
@@ -49,7 +46,7 @@ export function UploadJobFileButton({ formats = ['*'], router, img, head, style 
             for (const job of jsonData) {
                 try {
                     console.log("Trying to post job");
-                    const res = await post_core('jobs', router, job);
+                    const res = await post_core('/jobs', router, job);
                 } catch (e) {
                     console.log("Error occurred during posting job: ", e);
                     accumulatedErrors.push({ job, error: e });
@@ -62,6 +59,8 @@ export function UploadJobFileButton({ formats = ['*'], router, img, head, style 
             console.log("Finally Upload errors: ", uploadErrors);
             if (uploadErrors.length > 0) {
                 errorModal.onOpen();
+            } else {
+                onUploadSuccess();;
             }
 
         }

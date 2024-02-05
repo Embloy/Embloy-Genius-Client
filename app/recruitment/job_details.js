@@ -61,7 +61,6 @@ export function JobDetails({job}) {
                                 placeholder="Position"
                                 value={position}
                                 disabled={true}
-                                onChange={console.log("change")}
 
                             />
                         </div>
@@ -79,7 +78,6 @@ export function JobDetails({job}) {
                                 placeholder="Position"
                                 value={position}
                                 disabled={true}
-                                onChange={console.log("change")}
 
                             />
                         </div>

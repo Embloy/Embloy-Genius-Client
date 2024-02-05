@@ -1,11 +1,15 @@
 "use client";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {cn} from "@/lib/utils";
 import { columns} from "@/app/recruitment/jobs_columns";
 import { JobDataTable} from "@/app/recruitment/JobDataTable";
 import './locals.css'
 import Image from "next/image";
 import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure} from "@nextui-org/react";
+import {get_core} from "@/lib/misc_requests";
+import {getCookie} from "cookies-next";
+import {logout} from "@/lib/authentication";
+import {useRouter} from "next/navigation";
 
 const tet_jobs = [
     {id:0, position: "CEO", salary:500, currency: 0},
@@ -43,6 +47,7 @@ const test_jobs = [
 export default function Jobs() {
     // subpages
     const [currentSubPageID, setcurrentSubPageID] = useState(0);
+    const [reloadData, setReloadData] = useState(false);
     const switchSubPage = (id) => {
         if (currentSubPageID != id){
             setcurrentSubPageID(id);
@@ -61,13 +66,17 @@ export default function Jobs() {
         switchSubPage(promosSubPageID);
     };
 
-    const {isOpen, onOpen, onOpenChange} = useDisclosure();
+    const router = useRouter();
+    const [data, setData] = useState(null);
+    useEffect(() => {
+        get_core("/user/jobs", router).then(data => {
+            setData(data.jobs)
+            setReloadData(false)
+        }).catch(e => {
+            console.log(e)
+        });
+    },[reloadData])
 
-
-    // fetch data
-    // todo: remove dummy and fetch actual jobs
-
-    const data = test_jobs
 
 
     return (
@@ -108,7 +117,7 @@ export default function Jobs() {
                 <div className="w-full flex flex-col items-center justify-start">
                     {currentSubPageID === jobsSubPageID && (
                         <div className="container mx-auto">
-                            <JobDataTable columns={columns} data={data}  />
+                            <JobDataTable columns={columns} data={data} handleDataReload={() => setReloadData(true)}  />
                         </div>
                     )}
 

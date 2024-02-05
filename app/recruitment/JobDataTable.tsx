@@ -38,14 +38,16 @@ import {list} from "postcss";
 import {UploadJobFileButton} from "@/app/components/misc/FileUploads";
 import { Job } from "./job_type"
 import {useRouter} from "next/navigation";
+import LoadingScreen from "@/app/components/misc/LoadingScreen";
 
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
     data: TData[]
+    handleDataReload: () => void
 }
 
-export function JobDataTable<TData extends Job, TValue>({columns, data}: DataTableProps<TData, TValue>) {
+export function JobDataTable<TData extends Job, TValue>({columns, data, handleDataReload}: DataTableProps<TData, TValue>) {
     const router = useRouter();
     const [filterIsHovered, setFilterIsHovered] = useState(false);
     const [columnsIsHovered, setColumnsIsHovered] = useState(false)
@@ -126,6 +128,19 @@ export function JobDataTable<TData extends Job, TValue>({columns, data}: DataTab
 
          */
     }
+    const invalidateRowModel = () => {
+        handleDataReload()
+    }
+    const handleUploadSuccess = () => {
+        // Update page contents or perform any other action upon successful upload
+        console.log("Upload successful. Updating page contents or any other action.");
+        // Example: Refresh the data or trigger a re-render
+        invalidateRowModel();
+    }
+
+    if (!data) {
+        return <LoadingScreen />
+    }
 
 
 
@@ -163,7 +178,7 @@ export function JobDataTable<TData extends Job, TValue>({columns, data}: DataTab
                     />
                 </div>
                 <div className="px-4 flex flex-row items-center justify-end">
-                    <UploadJobFileButton key="Import" router={router}  formats={['.json']} head="Upload jobs" img="sm-upload" style="relative px-0.5 bg0-r-full"/>
+                    <UploadJobFileButton key="Import" router={router}  formats={['.json']} head="Upload jobs" img="sm-upload" style="relative px-0.5 bg0-r-full" onUploadSuccess={() => handleUploadSuccess()}/>
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild className="outline-none">
                             <button className="px-0.5 bg0-r-full">
@@ -243,7 +258,7 @@ export function JobDataTable<TData extends Job, TValue>({columns, data}: DataTab
                                 <JobTableRowExtendable className="border-gray-700 hover:bg-gray-900 cursor-pointer"
                                                        key={row.id}
                                                        extended={!!(openRow !== null && openRow === Number(row.id))}
-                                                       job={data.find(job => job.job_id === Number(row.id))}
+                                                       job={data.at(Number(row.id))}
                                                        data-state={row.getIsSelected() && "selected"}
                                                        onClick={() => toggle_row(row.id)}
                                 >

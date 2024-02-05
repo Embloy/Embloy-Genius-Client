@@ -73,7 +73,7 @@ export default function Settings() {
     }
     let user = useContext(UserContext);
     let store = useContext(StoreContext);
-    if(!user || !store) return (<LoadingScreen />);
+    if(!user) return (<LoadingScreen />);
     return (
         <main className="c0 flex min-h-screen h-full flex-col items-center justify-start">
             <div className="z-10 max-w-6xl w-full min-h-screen h-full border-l-[1px] border-r-[1px] border-gray-700 flex flex-col items-center justify-start">

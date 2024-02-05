@@ -41,7 +41,7 @@ export function ProfileSettings({store, user}) {
                     <NotificationSettings/>
                     <div className="h-3"/>
                     <SystemNotificationSettings/>
-                    {store.length > 0 && (
+                    {store && store.length > 0 && (
                         <>
                             <div className="h-3"/>
                             <SubscriptionSettings store={store}/>
