@@ -106,7 +106,7 @@ export default function Jobs() {
                                 <p>Promotions</p>
                             </div>
                         </li>
-                        <li className="cursor-default text-transparent select-none w-screen flex flex-row items-center justify-start border-b-[1px] border-gray-700 p-2" >
+                        <li className="cursor-default text-transparent select-none w-screen flex flex-row items-center justify-start border-b-[1px] border-gray-700 p-2 pointer-events-none" >
                             <button className="cursor-default">
                                 <p>Promotions</p>
                             </button>
