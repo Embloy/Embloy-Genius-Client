@@ -52,12 +52,12 @@ export function UploadJobFileButton({ formats = ['*'], router, img, head, style,
                     accumulatedErrors.push({ job, error: e });
                 }
             }
-            setUploadErrors(accumulatedErrors);
+
             setUploading(false);
             setFileContent('');
             uploadModal.onClose();
-            console.log("Finally Upload errors: ", uploadErrors);
-            if (uploadErrors.length > 0) {
+            if (accumulatedErrors.length > 0) {
+                setUploadErrors(accumulatedErrors);
                 errorModal.onOpen();
             } else {
                 onUploadSuccess();;
