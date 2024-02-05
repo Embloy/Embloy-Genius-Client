@@ -90,7 +90,7 @@ export function JobDetails({job}) {
             </div>
 
             <div className={headerClass}>
-                <p className={cn(textClass, "font-normal text-sm text-gray-700")}>Last update on {cast_date(job['updated_at'], 'us')}</p>
+                <p className={cn(textClass, "font-normal text-sm text-gray-700")}>Last update on {cast_date(job['description']['updated_at'], 'us')}</p>
             </div>
         </div>
     )
