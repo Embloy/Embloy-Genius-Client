@@ -1,4 +1,5 @@
 "use client";
+import { siteConfig } from '@/config/site';
 import Image from 'next/image'
 import React, {useEffect, useState} from "react";
 
@@ -20,6 +21,24 @@ const newsItems = [
     link: 'https://www.about.embloy.com',
   },
 ];
+
+const jobItems = [
+  {
+    id: 1,
+    imageUrl: '/img/openpositions.jpg',
+    title: 'Secretary',
+    description: 'Should have good taste in coffee, cocktails and music.',
+    job_slug: '123456789',
+  },
+  {
+    id: 2,
+    imageUrl: '/img/openpositions.jpg',
+    title: 'Chauffeur',
+    description: 'Only 7-series allowed.',
+    job_slug: '123456789',
+  },
+];
+
 
 
 export default function Hme() {
@@ -86,7 +105,27 @@ export default function Hme() {
 
   const currentNews = newsItems[currentNewsIndex]; // Get the currently displayed news item
 
+  //jobs box
+  const [currentJobIndex, setCurrentJobIndex] = useState(0);
+  const handleNextJob = () => {
+    setCurrentJobIndex((prevIndex) => (prevIndex + 1) % jobItems.length);
+  };
+  
+  const handlePrevJob = () => {
+    setCurrentJobIndex((prevIndex) => (prevIndex - 1 + jobItems.length) % jobItems.length);
+  };
+  const currentJob = jobItems[currentJobIndex]; // Get the currently displayed job item
 
+  const handleApply = async () => {
+    const requestOptions = {
+      method: 'POST',
+      redirect: 'follow'
+    };
+  
+    const response = await fetch(`${siteConfig.api_url}/api/v0/handler?job_slug=${currentJob.job_slug}`, requestOptions);
+    const data = await response.json();
+    window.location.href = data.url;
+  };
 
   return (
 
@@ -251,7 +290,52 @@ export default function Hme() {
             </div>
           </div>
 
+          <div className="max-w-6/10 py-4 px-8 flex flex-col items-start justify-start gap-2 bg-embloy-purple text-white rounded-lg border-[1px] border-transparent transition duration-200 ease-in-out hover:border-white ">
+            <div className="w-full flex flex-row items-start justify-between">
+              <div className="px-4 py-2 rounded-full border-[2px] border-white">
+                <h1 className="font-medium text-xl">Open Positions</h1>
+              </div>
 
+              <div className="py-2 flex flex-row items-center justify-between gap-2">
+                <p className="font-normal text-sm text-embloy-purple-light">{currentJobIndex + 1}</p>
+                <p className="font-normal text-sm text-embloy-purple-light"> | </p>
+                <p className="font-normal text-sm text-embloy-purple-light">{jobItems.length}</p>
+              </div>
+
+              <div className="py-2 flex flex-row items-center justify-between gap-2">
+                <button className="font-medium text-sm text-embloy-purple-light hover:text-embloy-purple-lighter" onClick={handlePrevJob}>Previous</button>
+                <button className="font-medium text-sm text-embloy-purple-light hover:text-embloy-purple-lighter" onClick={handleNextJob}>Next</button>
+              </div>
+            </div>
+
+            <div className="w-full flex flex-row items-center justify-center">
+              <div className="my-2 h-[1px] w-10/12 rounded-full " />
+            </div>
+
+            <div className="flex flex-col gap-0.5 w-full">
+              <Image
+                  src="/img/openpositions.jpg"
+                  alt="Secretary"
+                  height="200"
+                  width="300"
+                  className="relative"
+              />
+              <div className="h-1" />
+              <div className="h-[1px] w-full rounded-full bg-embloy-purple-lighter" />
+              <p className="font-medium text-sm text-embloy-purple-lighter" >{currentJob.title}</p>
+              <div className="h-1" />
+              <p className="font-normal text-sm" >{currentJob.description}</p>
+            </div>
+            <div className="h-4" />
+            <div className="w-full flex flex-row items-center justify-between">
+            <a 
+              className="font-medium text-sm text-embloy-purple-light hover:text-embloy-purple-lighter" 
+              onClick={handleApply}
+            >
+              APPLY WITH EMBLOY
+            </a>          
+            </div>
+          </div>
         </div>
 
 
