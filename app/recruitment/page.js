@@ -4,45 +4,8 @@ import {cn} from "@/lib/utils";
 import { columns} from "@/app/recruitment/jobs_columns";
 import { JobDataTable} from "@/app/recruitment/JobDataTable";
 import './locals.css'
-import Image from "next/image";
-import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure} from "@nextui-org/react";
 import {get_core} from "@/lib/misc_requests";
-import {getCookie} from "cookies-next";
-import {logout} from "@/lib/authentication";
 import {useRouter} from "next/navigation";
-
-const tet_jobs = [
-    {id:0, position: "CEO", salary:500, currency: 0},
-    {id:1, position: "CTO", salary:400, currency: 0},
-    {id:2, position: "COO", salary:400, currency: 0},
-    {id:3, position: "CScrumO (prsudo c level Lakei als joke)", salary:400, currency: 0},
-    {id:4, position: "CBarO", salary:400, currency: 0},
-    {id:5, position: "CIO", salary:400, currency: 0},
-    {id:6, position: "CHrO", salary:400, currency: 0},
-    {id:7, position: "CPO", salary:400, currency: 0},
-    {id:8, position: "CLO", salary:400, currency: 0},
-    {id:9, position: "Depp", salary:400, currency: 0},
-    {id:10, position: "Lakei", salary:400, currency: 0},
-    {id:11, position: "Lakei", salary:400, currency: 0},
-    {id:12, position: "Lakei", salary:400, currency: 0},
-    {id:13, position: "Lakei", salary:400, currency: 0},
-    {id:14, position: "Lakei", salary:400, currency: 0},
-    {id:15, position: "Lakei", salary:400, currency: 0},
-    {id:16, position: "Lakei", salary:400, currency: 0},
-    {id:17, position: "Lakei", salary:400, currency: 0},
-    {id:18, position: "Lakei", salary:400, currency: 0},
-
-]
-
-
-const test_jobs = [
-    {job_id:0, job_type:"Scrum", status:1, start_slot:"2029-06-08T08:12:00.000Z", position:"CEO", view_count:1289, application_count:23, created_at: "2023-11-21T09:52:58.547Z", updated_at: "2023-11-21T09:52:58.547Z"},
-    {job_id:1, job_type:"Scrum", status:0, start_slot:"2029-06-08T08:12:00.000Z", position:"COO", view_count:9289, application_count:13, created_at: "2023-11-21T09:52:58.547Z", updated_at: "2023-11-21T09:52:58.547Z"},
-
-
-]
-
-
 
 export default function Jobs() {
     // subpages

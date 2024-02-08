@@ -1,9 +1,9 @@
 "use client";
 import React, {useEffect, useState} from "react";
 import Image from "next/image";
-import LoadingScreen from "@/app/components/misc/LoadingScreen";
+import LoadingScreen from "@/app/components/dom/main/screens/LoadingScreen";
 import {get_genius_query, get_ops} from "@/lib/misc_requests";
-import ErrorScreen from "@/app/components/misc/ErrorScreen";
+import ErrorScreen from "@/app/components/dom/main/screens/ErrorScreen";
 import {isNotNumeric} from "@/lib/utils/helpers";
 import {useRouter} from "next/navigation";
 import {Interval, Subscription} from "@/lib/utils/enums";

@@ -1,11 +1,10 @@
 "use client";
-import React, {useContext} from "react";
+import React from "react";
 import Image from "next/image";
 import {useRouter} from "next/navigation";
 import {logout} from "@/lib/authentication";
 import Link from "next/link";
-import '../../../globals.css';
-import {alpha_24} from "@/lib/utils/formats";
+import '@/app/globals.css'
 import {AvatarButton} from "@/app/components/ui/avatar";
 
 export const UserBar = ({ isVisible, onClose, userData, storeData }) => {

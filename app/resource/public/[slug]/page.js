@@ -1,7 +1,7 @@
 "use client";
 import React, {useEffect, useState} from "react";
-import LoadingScreen from "@/app/components/misc/LoadingScreen";
-import ErrorScreen from "@/app/components/misc/ErrorScreen";
+import LoadingScreen from "@/app/components/dom/main/screens/LoadingScreen";
+import ErrorScreen from "@/app/components/dom/main/screens/ErrorScreen";
 import {get_genius_query} from "@/lib/misc_requests";
 import {isNotNumeric} from "@/lib/utils/helpers";
 

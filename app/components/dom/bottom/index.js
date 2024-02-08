@@ -1,6 +1,6 @@
 "use client";
 
-import Footerbar from "@/app/components/bottom/footerbar";
+import Footerbar from "@/app/components/dom/bottom/footerbar";
 
 
 const Bottom = () => {

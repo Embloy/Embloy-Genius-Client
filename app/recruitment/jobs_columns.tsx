@@ -1,19 +1,7 @@
 "use client"
 import {ColumnDef} from "@tanstack/react-table"
-import * as inspector from "inspector";
-import {ArrowUpDown, MoreHorizontal} from "lucide-react"
-
-import {Button} from "@/app/components/ui/button"
 import {Checkbox} from "@/app/components/ui/checkbox"
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuLabel,
-    DropdownMenuSeparator,
-    DropdownMenuTrigger,
-} from "@/app/components/ui/dropdown-menu"
-import {DataTableColumnHeader} from "@/app/components/datatable/DataTableColumnHeader";
+import {DataTableColumnHeader} from "@/app/components/dom/main/datatable/DataTableColumnHeader";
 import {Job} from "@/app/recruitment/job_type";
 import {cast_date} from "@/lib/utils/formats";
 

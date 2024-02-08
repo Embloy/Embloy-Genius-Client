@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useState} from "react";
 
-import {UserContext} from "@/app/components/misc/UserContext";
+import {UserContext} from "@/app/components/dom/main/wrappers/UserContext";
 import {login, logout, request_access, request_client, request_refresh, update_password} from "@/lib/authentication";
 import {getCookie, setCookie} from "cookies-next";
 import {useRouter} from "next/navigation";

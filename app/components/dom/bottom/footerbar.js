@@ -1,14 +1,10 @@
 "use client";
-import React, {useContext, useEffect, useState} from "react";
+import React, {useContext, useState} from "react";
 import Link from "next/link";
-import {cn} from "@/lib/utils";
-import {usePathname, useRouter} from "next/navigation";
-import {SearchBar} from "@/app/components/navigation/navbar/SearchBar";
-import {Notifications} from "@/app/components/navigation/navbar/Notifications";
-import {UserContext} from "@/app/components/misc/UserContext";
-import {UserBar} from "@/app/components/navigation/userbar";
-import {StoreContext} from "@/app/components/misc/StoreWrapper";
-import Logo from "@/app/components/navigation/navbar/Logo";
+import {usePathname} from "next/navigation";
+import {UserContext} from "@/app/components/dom/main/wrappers/UserContext";
+import {UserBar} from "@/app/components/dom/navigation/userbar";
+import {StoreContext} from "@/app/components/dom/main/wrappers/StoreWrapper";
 import Image from "next/image";
 
 const Footerbar = () => {

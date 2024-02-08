@@ -1,8 +1,8 @@
 "use client";
 import React, {useEffect} from "react";
 import {getCookie} from "cookies-next";
-import {login, logout} from "@/lib/authentication";
-import { createContext, useContext, useState } from 'react';
+import {logout} from "@/lib/authentication";
+import { createContext, useState } from 'react';
 import { get_ops} from "@/lib/misc_requests";
 import {usePathname, useRouter} from "next/navigation";
 export const StoreContext = createContext();

@@ -1,7 +1,7 @@
 "use client"
 import React, {useEffect, useState} from "react";
 import {cn} from "@/lib/utils";
-import '../../globals.css'
+import '@/app/globals.css'
 export function OpenCloseScaffold({title, pre_text, link_url, link_text, post_text, button_text, headerChild, child, timeout}) {
     const [clicked, setClicked] = useState(false);
     const [disableRequest, setDisableRequest] = useState(false);

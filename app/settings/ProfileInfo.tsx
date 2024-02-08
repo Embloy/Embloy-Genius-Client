@@ -1,5 +1,5 @@
 import React, {useContext, useRef, useState} from "react";
-import {UserContext} from "@/app/components/misc/UserContext";
+import {UserContext} from "@/app/components/dom/main/wrappers/UserContext";
 import Image from "next/image";
 import '../globals.css'
 import {cn} from "@/lib/utils";

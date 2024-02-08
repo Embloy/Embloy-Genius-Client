@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from "react";
-import {UserContext} from "@/app/components/misc/UserContext";
+import {UserContext} from "@/app/components/dom/main/wrappers/UserContext";
 import {
     DropdownMenu,
     DropdownMenuCheckboxItem,

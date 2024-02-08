@@ -7,7 +7,7 @@ import {AccessTokenClaim} from "@/app/settings/AccessTokenClaim";
 import {ClientTokenClaim} from "@/app/settings/ClientTokenClaim";
 import {ChangePassword} from "@/app/settings/ChangePassword";
 import {TwoFactorAuthentication} from "@/app/settings/TwoFactorAuthentication";
-import {OpenCloseScaffold} from "@/app/components/misc/Scaffolds";
+import {OpenCloseScaffold} from "@/app/components/dom/main/misc/Scaffolds";
 
 export function AccessSettings() {
     return (

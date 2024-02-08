@@ -9,10 +9,10 @@ import {CheckIcon, ExclamationTriangleIcon} from '@heroicons/react/20/solid'
 import {EventSourceInput} from '@fullcalendar/core/index.js';
 import useSWR from 'swr';
 import Image from "next/image";
-import Logo from "@/app/components/navigation/navbar/Logo";
-import LoadingScreen from "@/app/components/misc/LoadingScreen";
-import ErrorScreen from "@/app/components/misc/ErrorScreen";
-import AuthWrapper from "@/app/components/misc/AuthWrapper";
+import Logo from "@/app/components/dom/navigation/navbar/Logo";
+import LoadingScreen from "@/app/components/dom/main/screens/LoadingScreen";
+import ErrorScreen from "@/app/components/dom/main/screens/ErrorScreen";
+import AuthWrapper from "@/app/components/dom/main/wrappers/AuthWrapper";
 import { siteConfig } from '@/config/site';
 
 const fetcher = (args) => fetch(args).then((res) => res.json())

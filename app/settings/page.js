@@ -4,9 +4,9 @@ import {cn} from "@/lib/utils";
 import Image from "next/image";
 import {AccessSettings} from "@/app/settings/access";
 import {ProfileSettings} from "@/app/settings/profile";
-import {UserContext} from "@/app/components/misc/UserContext";
-import {StoreContext} from "@/app/components/misc/StoreWrapper";
-import LoadingScreen from "@/app/components/misc/LoadingScreen";
+import {UserContext} from "@/app/components/dom/main/wrappers/UserContext";
+import {StoreContext} from "@/app/components/dom/main/wrappers/StoreWrapper";
+import LoadingScreen from "@/app/components/dom/main/screens/LoadingScreen";
 import '../globals.css'
 
 export default function Settings() {

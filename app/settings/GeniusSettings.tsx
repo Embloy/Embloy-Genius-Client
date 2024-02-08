@@ -5,7 +5,7 @@ import {
     DropdownMenuContent,
     DropdownMenuTrigger
 } from "@/app/components/ui/dropdown-menu";
-import {OpenCloseScaffold} from "@/app/components/misc/Scaffolds";
+import {OpenCloseScaffold} from "@/app/components/dom/main/misc/Scaffolds";
 import '../globals.css'
 
 

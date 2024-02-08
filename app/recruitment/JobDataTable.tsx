@@ -25,20 +25,19 @@ import {
 import {
     DropdownMenu,
     DropdownMenuCheckboxItem,
-    DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel,
+    DropdownMenuContent, DropdownMenuLabel,
     DropdownMenuTrigger,
 } from "@/app/components/ui/dropdown-menu"
-import {Button} from "@/app/components/ui/button"
 import {cn} from "@/lib/utils";
 import Image from "next/image";
-import React, {useEffect, useRef, useState} from "react";
-import {DataTablePagination} from "@/app/components/datatable/DataTablePagination";
+import React, {useEffect, useState} from "react";
+import {DataTablePagination} from "@/app/components/dom/main/datatable/DataTablePagination";
 import {extractContent} from "@/lib/utils/helpers";
-import {list} from "postcss";
-import {UploadJobFileButton} from "@/app/components/misc/FileUploads";
+import {UploadJobFileButton} from "@/app/components/dom/main/misc/FileUploads";
 import { Job } from "./job_type"
 import {useRouter} from "next/navigation";
-import LoadingScreen from "@/app/components/misc/LoadingScreen";
+import LoadingScreen from "@/app/components/dom/main/screens/LoadingScreen";
+import {RemoveJobButton} from "@/app/components/dom/main/misc/buttons";
 
 
 interface DataTableProps<TData, TValue> {
@@ -179,6 +178,7 @@ export function JobDataTable<TData extends Job, TValue>({columns, data, handleDa
                 </div>
                 <div className="px-4 flex flex-row items-center justify-end">
                     <UploadJobFileButton key="Import" router={router}  formats={['.json']} head="Upload jobs" img="sm-upload" style="relative px-0.5 bg0-r-full" onUploadSuccess={() => handleUploadSuccess()}/>
+                    <RemoveJobButton key="Import" router={router}  formats={['.json']} head="Delete jobs" img="sm-delete" style="relative px-0.5 bg0-r-full" onUploadSuccess={() => handleUploadSuccess()}/>
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild className="outline-none">
                             <button className="px-0.5 bg0-r-full">

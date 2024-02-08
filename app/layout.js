@@ -1,13 +1,13 @@
 import React from 'react';
 import './globals.css'
 import {Lexend} from 'next/font/google'
-import Navigation from "@/app/components/navigation";
-import AppProvider from "@/app/components/misc/AppProvider";
-import AuthWrapper from "@/app/components/misc/AuthWrapper";
-import UserWrapper from "@/app/components/misc/UserContext";
-import StoreWrapper from "@/app/components/misc/StoreWrapper";
-import Bottom from "@/app/components/bottom";
-import AppWrapper from "@/app/components/misc/AppWrapper";
+import Navigation from "@/app/components/dom/navigation";
+import AppProvider from "@/app/components/dom/main/wrappers/AppProvider";
+import AuthWrapper from "@/app/components/dom/main/wrappers/AuthWrapper";
+import UserWrapper from "@/app/components/dom/main/wrappers/UserContext";
+import StoreWrapper from "@/app/components/dom/main/wrappers/StoreWrapper";
+import Bottom from "@/app/components/dom/bottom";
+import AppWrapper from "@/app/components/dom/main/wrappers/AppWrapper";
 
 
 

@@ -1,7 +1,6 @@
 "use client";
 import React, {useContext} from "react";
-import {AppContext} from "@/app/components/misc/AppProvider";
-import {cn} from "@/lib/utils";
+import {AppContext} from "@/app/components/dom/main/wrappers/AppProvider";
 import { ThemeProvider } from "next-themes"
 const AppWrapper = ({children}) => {
     let app = useContext(AppContext)

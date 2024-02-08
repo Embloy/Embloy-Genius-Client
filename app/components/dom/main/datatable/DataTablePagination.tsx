@@ -1,13 +1,6 @@
 "use client";
-import {
-    ChevronLeftIcon,
-    ChevronRightIcon,
-    DoubleArrowLeftIcon,
-    DoubleArrowRightIcon,
-} from "@radix-ui/react-icons"
-import { Table } from "@tanstack/react-table"
 
-import { Button } from "@/app/components/ui/button"
+import { Table } from "@tanstack/react-table"
 import {
     Select,
     SelectContent,
