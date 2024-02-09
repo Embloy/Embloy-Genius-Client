@@ -34,7 +34,7 @@ import React, {useEffect, useState} from "react";
 import {DataTablePagination} from "@/app/components/dom/main/datatable/DataTablePagination";
 import {extractContent} from "@/lib/utils/helpers";
 import {UploadJobFileButton} from "@/app/components/dom/main/misc/FileUploads";
-import { Job } from "./job_type"
+import { Job } from "./job_type";
 import {useRouter} from "next/navigation";
 import LoadingScreen from "@/app/components/dom/main/screens/LoadingScreen";
 import {RemoveJobButton} from "@/app/components/dom/main/misc/buttons";
@@ -106,34 +106,12 @@ export function JobDataTable<TData extends Job, TValue>({columns, data, handleDa
         if (openRow !== Number(row)) {
             new_row = Number(row)
         }
-        console.log(new_row)
         setOpenRow(new_row)
-        /*
-        let new_rows: list<number> = []
-        if (openRows !== null) {
-            new_rows = openRows
-        }
-
-        if (new_rows.includes(Number(row))) { // removal case
-            const i = new_rows.indexOf(Number(row))
-            if (i !== -1) {
-                new_rows.splice(i, 1)
-            }
-        } else { // addition case
-            new_rows.push(Number(row))
-        }
-        console.log(new_rows)
-        setOpenRows(new_rows.length === 0 ? null : new_rows);
-
-         */
     }
     const invalidateRowModel = () => {
         handleDataReload()
     }
     const handleUploadSuccess = () => {
-        // Update page contents or perform any other action upon successful upload
-        console.log("Upload successful. Updating page contents or any other action.");
-        // Example: Refresh the data or trigger a re-render
         invalidateRowModel();
     }
 
@@ -177,8 +155,8 @@ export function JobDataTable<TData extends Job, TValue>({columns, data, handleDa
                     />
                 </div>
                 <div className="px-4 flex flex-row items-center justify-end">
-                    <UploadJobFileButton key="Import" router={router}  formats={['.json']} head="Upload jobs" img="sm-upload" style="relative px-0.5 bg0-r-full" onUploadSuccess={() => handleUploadSuccess()}/>
-                    <RemoveJobButton key="Import" router={router}  formats={['.json']} head="Delete jobs" img="sm-delete" style="relative px-0.5 bg0-r-full" onUploadSuccess={() => handleUploadSuccess()}/>
+                    <UploadJobFileButton key="Upload" router={router}  formats={['.json']} head="Upload jobs" img="sm-upload" style="relative px-0.5 bg0-r-full" onUploadSuccess={() => handleUploadSuccess()}/>
+                    <RemoveJobButton key="Remove" router={router}  formats={['.json']} head="Delete jobs" img="sm-delete" style="relative px-0.5 bg0-r-full" onUploadSuccess={() => handleUploadSuccess()}/>
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild className="outline-none">
                             <button className="px-0.5 bg0-r-full">
@@ -261,6 +239,7 @@ export function JobDataTable<TData extends Job, TValue>({columns, data, handleDa
                                                        job={data.at(Number(row.id))}
                                                        data-state={row.getIsSelected() && "selected"}
                                                        onClick={() => toggle_row(row.id)}
+                                                       onUploadSuccess={() => handleUploadSuccess()}
                                 >
                                     {row.getVisibleCells().map((cell) => (
                                         <TableCell key={cell.id}>

@@ -60,7 +60,7 @@ export function UploadJobFileButton({ formats = ['*'], router, img, head, style,
                 setUploadErrors(accumulatedErrors);
                 errorModal.onOpen();
             } else {
-                onUploadSuccess();;
+                onUploadSuccess();
             }
 
         }
