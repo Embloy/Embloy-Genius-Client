@@ -129,15 +129,15 @@ export function UploadJobFileButton({ formats = ['*'], router, img, head, style,
 
                                 )}
                                 <button onClick={() => {
-                                    handleUpload();
-                                }} className={cn(uploading ? "rounded-full c3 cursor-not-allowed text-xs bgneg" : "rounded-full c2-5 hover:underline text-xs bgneg")} disabled={uploading}>
-                                    <p>Save</p>
-                                </button>
-                                <button onClick={() => {
                                     setFileContent('');
                                     uploadModal.onClose();
                                 }} className={cn(uploading ? "rounded-full c3 cursor-not-allowed text-xs bgneg" : "rounded-full c2-5 hover:underline text-xs bgneg")} disabled={uploading}>
                                     <p>Undo</p>
+                                </button>
+                                <button onClick={() => {
+                                    handleUpload();
+                                }} className={cn(uploading ? "rounded-full c3 cursor-not-allowed text-xs bgneg" : "rounded-full c2-5 hover:underline text-xs bgneg")} disabled={uploading}>
+                                    <p>Save</p>
                                 </button>
                             </ModalFooter>
                         </>

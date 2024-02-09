@@ -110,13 +110,16 @@ export function JobDataTable<TData extends Job, TValue>({columns, data, handleDa
         handleDataReload()
     }
     const handleUploadSuccess = () => {
+        setRowSelection({});
         invalidateRowModel();
     }
 
     const getSelectedRows = () => {
         return rowSelection;
     }
-
+    const getJob = (row_id) => {
+        return data.at(Number(row_id))
+    }
 
     if (!data) {
         return <LoadingScreen />
@@ -159,7 +162,7 @@ export function JobDataTable<TData extends Job, TValue>({columns, data, handleDa
                 </div>
                 <div className="px-4 flex flex-row items-center justify-end">
                     <UploadJobFileButton key="Upload" router={router}  formats={['.json']} head="Upload jobs" img="sm-upload" style="relative px-0.5 bg0-r-full cursor-pointer" onUploadSuccess={() => handleUploadSuccess()}/>
-                    <RemoveJobButton key="Remove" router={router}  formats={['.json']} head="Delete jobs" img="sm-delete" style="relative px-0.5 bg0-r-full cursor-pointer" getSelectedRows={() => getSelectedRows()} onUploadSuccess={() => handleUploadSuccess()}/>
+                    <RemoveJobButton key="Remove" router={router} getJob={(row_id) => getJob(row_id)} formats={['.json']} img="sm-delete" style="relative px-0.5 bg0-r-full cursor-pointer" getSelectedRows={() => getSelectedRows()} onUploadSuccess={() => handleUploadSuccess()}/>
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild className="outline-none">
                             <button className="px-0.5 bg0-r-full">

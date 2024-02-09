@@ -59,16 +59,17 @@ export function JobDetails({job, onUploadSuccess, onClose}) {
 
     const [uploading, setUploading] = useState(false)
     const updateStatus = async (e, job_id, status) => {
-        console.log("Handling image change")
         if (job_id && status) {
             setUploading(true);
-            const result = await patch_core(`/jobs?id=${job_id}`, router, {status: status})
-            onUploadSuccess();
-            if (status === 'archived') {
-                onClose()
+            try {
+                const result = await patch_core(`/jobs?id=${job_id}`, router, {status: status})
+                onUploadSuccess();
+                if (status === 'archived') {
+                    onClose()
+                }
+            } catch (e) {
+                console.log(e)
             }
-
-
         }
         setUploading(false);
     };
