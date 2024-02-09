@@ -77,8 +77,9 @@ const JobTableRowExtendable = React.forwardRef<
         job?: Job;
         children?: React.ReactNode; // Add this line
         onUploadSuccess: () => void;
+        onClose: () => void;
     }
->(({className,onUploadSuccess, extended, job, ...props}, ref) => {
+>(({className,onUploadSuccess, onClose, extended, job, ...props}, ref) => {
     const rowClasses = cn(
         "border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted",
         className
@@ -101,7 +102,7 @@ const JobTableRowExtendable = React.forwardRef<
                 </tr>
                 <tr  className={cn(rowClasses, "relative, w-screen, bg-transparent, hover:bg-transparent")}>
                     <div className="h-[500px]">
-                        <JobDetails job={job} onUploadSuccess={() => onUploadSuccess()} />
+                        <JobDetails job={job} onUploadSuccess={() => onUploadSuccess()} onClose={() => onClose()}/>
                     </div>
                 </tr>
             </>

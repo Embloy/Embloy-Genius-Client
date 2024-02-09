@@ -232,7 +232,8 @@ export function JobDataTable<TData extends Job, TValue>({columns, data, handleDa
                     </TableHeader>
                     <TableBody className="text-gray-200">
                         {table.getRowModel().rows?.length ? (
-                            table.getRowModel().rows.map((row) => (
+                            table.getRowModel().rows
+                                .map((row) => (
                                 <JobTableRowExtendable className="border-gray-700 hover:bg-gray-900 cursor-pointer"
                                                        key={row.id}
                                                        extended={!!(openRow !== null && openRow === Number(row.id))}
@@ -240,6 +241,7 @@ export function JobDataTable<TData extends Job, TValue>({columns, data, handleDa
                                                        data-state={row.getIsSelected() && "selected"}
                                                        onClick={() => toggle_row(row.id)}
                                                        onUploadSuccess={() => handleUploadSuccess()}
+                                                       onClose={() => setOpenRow(null)}
                                 >
                                     {row.getVisibleCells().map((cell) => (
                                         <TableCell key={cell.id}>

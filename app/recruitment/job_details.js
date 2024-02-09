@@ -6,19 +6,15 @@ import {cast_date, cast_datetime} from "@/lib/utils/formats";
 import '@/app/globals.css'
 import {
     DropdownMenu,
-    DropdownMenuCheckboxItem,
     DropdownMenuContent,
-    DropdownMenuLabel,
     DropdownMenuTrigger
 } from "@/app/components/ui/dropdown-menu";
-import {extractContent} from "@/lib/utils/helpers";
 import {DropdownMenuItem} from "@radix-ui/react-dropdown-menu";
-import {patch_core, upload_profile_image} from "@/lib/misc_requests";
+import {patch_core} from "@/lib/misc_requests";
 import {useRouter} from "next/navigation";
-import LoadingScreen from "@/app/components/dom/main/screens/LoadingScreen";
 
 
-export function JobDetails({job, onUploadSuccess}) {
+export function JobDetails({job, onUploadSuccess, onClose}) {
     const router = useRouter();
     const [settingsIsHovered, setSettingsIsHovered] = useState(false)
     const handleSettingsHover = () => {
@@ -34,10 +30,31 @@ export function JobDetails({job, onUploadSuccess}) {
     const detailsClass = "w-full absolute flex flex-col items-center justify-between p-4 cursor-default"
     const headerClass = "w-full flex flex-row items-center justify-between"
     const textClass = "cursor-text"
-    const circleButtonClass = "rounded-full px-2 py-1 border-[2px] border-gray-700 hover:border-gray-400 text-gray-700 hover:text-gray-400"
     const set_data = () => {
         setPosition(job['position'])
     }
+
+    const [listIsHovered, setListIsHovered] = useState(false);
+    const handleListHover = () => {
+        setListIsHovered(true);
+    };
+    const handleListNotHover = () => {
+        setListIsHovered(false);
+    };
+    const [unlistIsHovered, setUnlistIsHovered] = useState(false);
+    const handleUnlistHover = () => {
+        setUnlistIsHovered(true);
+    };
+    const handleUnlistNotHover = () => {
+        setUnlistIsHovered(false);
+    };
+    const [removeIsHovered, setRemoveIsHovered] = useState(false);
+    const handleRemoveHover = () => {
+        setRemoveIsHovered(true);
+    };
+    const handleRemoveNotHover = () => {
+        setRemoveIsHovered(false);
+    };
 
 
     const [uploading, setUploading] = useState(false)
@@ -46,8 +63,12 @@ export function JobDetails({job, onUploadSuccess}) {
         if (job_id && status) {
             setUploading(true);
             const result = await patch_core(`/jobs?id=${job_id}`, router, {status: status})
-            console.log("Result", result)
             onUploadSuccess();
+            if (status === 'archived') {
+                onClose()
+            }
+
+
         }
         setUploading(false);
     };
@@ -106,29 +127,47 @@ export function JobDetails({job, onUploadSuccess}) {
                                 {job.status && job.status === 'private' && (
                                     <DropdownMenuItem
                                         key="0"
-                                        className="capitalize c2 hover:c0 cursor-pointer py-1.5 pl-4 pr-2 text-xs outline-none "
+                                        className="capitalize c2 hover:c0 cursor-pointer py-1.5 pl-4 pr-8 text-xs outline-none flex flex-row items-center "
                                         onSelect={(e) => {
                                             updateStatus(e, job.job_id, 'public')
                                         }}
+                                        onMouseEnter={handleListHover}
+                                        onMouseLeave={handleListNotHover}
                                     >
                                         {"Publish"}
+                                        <Image
+                                            src={cn(listIsHovered ? "/icons/sm-list-white.svg" : "/icons/sm-list-light.svg")}
+                                            alt="columns"
+                                            height="20"
+                                            width="20"
+                                            className="relative ml-px"
+                                        />
                                     </DropdownMenuItem>
                                 )}
                                 {job.status && job.status === 'public' && (
                                     <DropdownMenuItem
                                         key="1"
-                                        className="capitalize c2 hover:c0 cursor-pointer py-1.5 pl-4 pr-2 text-xs outline-none"
+                                        className="capitalize c2 hover:c0 cursor-pointer py-1.5 pl-4 pr-8 text-xs outline-none flex flex-row items-center"
                                         onSelect={(e) => {
                                             updateStatus(e, job.job_id, 'private')
                                         }}
+                                        onMouseEnter={handleUnlistHover}
+                                        onMouseLeave={handleUnlistNotHover}
                                     >
                                         {"Unlist"}
+                                        <Image
+                                            src={cn(unlistIsHovered ? "/icons/sm-unlist-white.svg" : "/icons/sm-unlist-light.svg")}
+                                            alt="columns"
+                                            height="20"
+                                            width="20"
+                                            className="relative ml-px"
+                                        />
                                     </DropdownMenuItem>
                                 )}
                                 {job.status && job.status === 'archived' ? (
                                     <DropdownMenuItem
                                         key="3"
-                                        className="capitalize c2 hover:c0 cursor-pointer py-1.5 pl-4 pr-2 text-xs outline-none"
+                                        className="capitalize c2 hover:c0 cursor-pointer py-1.5 pl-4 pr-8 text-xs outline-none flex flex-row items-center"
                                         onSelect={(e) => {
                                             updateStatus(e, job.job_id, 'private')
                                         }}
@@ -138,12 +177,21 @@ export function JobDetails({job, onUploadSuccess}) {
                                 ) : (
                                     <DropdownMenuItem
                                         key="2"
-                                        className="capitalize c2 hover:c0 cursor-pointer py-1.5 pl-4 pr-8 text-xs outline-none"
+                                        className="capitalize c2 hover:c0 cursor-pointer py-1.5 pl-4 pr-8 text-xs outline-none flex flex-row items-center"
                                         onSelect={(e) => {
                                             updateStatus(e, job.job_id, 'archived')
                                         }}
+                                        onMouseEnter={handleRemoveHover}
+                                        onMouseLeave={handleRemoveNotHover}
                                     >
                                         {"Remove/Archive"}
+                                        <Image
+                                            src={cn(removeIsHovered ? "/icons/sm-delete-white.svg" : "/icons/sm-delete-light.svg")}
+                                            alt="columns"
+                                            height="17"
+                                            width="17"
+                                            className="relative ml-px"
+                                        />
                                     </DropdownMenuItem>
                                 )}
                             </DropdownMenuContent>
