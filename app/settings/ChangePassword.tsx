@@ -1,8 +1,7 @@
 import React, {useContext, useEffect, useState} from "react";
-import '../globals.css'
+import '@/app/globals.css'
 import {UserContext} from "@/app/components/dom/main/wrappers/UserContext";
-import {login, logout, request_access, request_client, request_refresh, update_password} from "@/lib/authentication";
-import {getCookie, setCookie} from "cookies-next";
+import {logout, request_access, request_refresh, update_password} from "@/lib/authentication";
 import {useRouter} from "next/navigation";
 
 async function fetch_refresh_and_access(username, password, router) {

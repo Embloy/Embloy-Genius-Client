@@ -1,8 +1,8 @@
 import {useRouter} from "next/navigation";
 import React, {useRef, useState} from "react";
-import {login, logout, request_access, request_client} from "@/lib/authentication";
+import {login, request_client} from "@/lib/authentication";
 import {getCookie} from "cookies-next";
-import '../globals.css';
+import '@/app/globals.css'
 import {cast_date, date_seconds_from_now} from "@/lib/utils/formats";
 
 

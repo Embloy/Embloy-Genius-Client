@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
-import {Interval, Subscription} from "@/lib/utils/enums";
-import '../globals.css';
+import {Subscription} from "@/lib/utils/enums";
+import '@/app/globals.css'
 import { siteConfig } from "@/config/site";
 
 

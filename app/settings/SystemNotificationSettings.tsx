@@ -1,11 +1,11 @@
-import React, {useContext, useEffect, useRef, useState} from "react";
+import React, {useState} from "react";
 import {
     DropdownMenu,
     DropdownMenuCheckboxItem,
     DropdownMenuContent,
     DropdownMenuTrigger
 } from "@/app/components/ui/dropdown-menu";
-import '../globals.css'
+import '@/app/globals.css'
 
 interface Expiration {
     [key: string]: number;

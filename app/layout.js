@@ -1,5 +1,5 @@
 import React from 'react';
-import './globals.css'
+import '@/app/globals.css'
 import {Lexend} from 'next/font/google'
 import Navigation from "@/app/components/dom/navigation";
 import AppProvider from "@/app/components/dom/main/wrappers/AppProvider";

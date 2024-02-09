@@ -1,12 +1,9 @@
 import React, {useContext, useRef, useState} from "react";
 import {UserContext} from "@/app/components/dom/main/wrappers/UserContext";
-import Image from "next/image";
-import '../globals.css'
+import '@/app/globals.css'
 import {cn} from "@/lib/utils";
 import {AvatarButton} from "@/app/components/ui/avatar";
 import {patch_core, upload_profile_image} from "@/lib/misc_requests";
-import {request_client} from "@/lib/authentication";
-import {getCookie} from "cookies-next";
 
 export function ProfileInfo({router}) {
     let user = useContext(UserContext)

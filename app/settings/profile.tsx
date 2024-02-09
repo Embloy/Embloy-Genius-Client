@@ -1,11 +1,7 @@
 "use client"
 import './locals.css'
 
-import React, {useContext, useEffect, useRef, useState} from "react";
-import {ChangePassword} from "@/app/settings/ChangePassword";
-import {TwoFactorAuthentication} from "@/app/settings/TwoFactorAuthentication";
-import {UserContext} from "@/app/components/dom/main/wrappers/UserContext";
-import Image from "next/image";
+import React from "react";
 import {NotificationSettings} from "@/app/settings/NotificationSettings";
 import {SystemNotificationSettings} from "@/app/settings/SystemNotificationSettings";
 import {GeniusSettings} from "@/app/settings/GeniusSettings";

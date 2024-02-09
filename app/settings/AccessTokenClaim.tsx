@@ -9,7 +9,7 @@ import {
     DropdownMenuTrigger
 } from "@/app/components/ui/dropdown-menu";
 import {cast_date, date_seconds_from_now} from "@/lib/utils/formats";
-import '../globals.css'
+import '@/app/globals.css'
 interface Expiration {
     [key: string]: number;
 }

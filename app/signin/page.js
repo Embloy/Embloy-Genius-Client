@@ -3,9 +3,8 @@ import React, {useState} from "react";
 import Image from "next/image";
 import {useRouter} from "next/navigation";
 import {request_refresh, request_access} from "@/lib/authentication";
-import {getCookie, getCookies, setCookie} from "cookies-next";
-import ErrorScreen from "@/app/components/dom/main/screens/ErrorScreen";
-import '../globals.css';
+import {getCookie, setCookie} from "cookies-next";
+import '@/app/globals.css'
 const Signin = () => {
     const router = useRouter();
     const [loginError, setLoginError] = useState(false);

@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useRef, useState} from "react";
+import React, {useState} from "react";
 import {
     DropdownMenu,
     DropdownMenuCheckboxItem,
@@ -6,7 +6,7 @@ import {
     DropdownMenuTrigger
 } from "@/app/components/ui/dropdown-menu";
 import {OpenCloseScaffold} from "@/app/components/dom/main/misc/Scaffolds";
-import '../globals.css'
+import '@/app/globals.css'
 
 
 export function GeniusSettings() {

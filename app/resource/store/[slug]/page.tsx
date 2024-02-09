@@ -2,13 +2,12 @@
 import React, {useEffect, useState} from "react";
 import Image from "next/image";
 import LoadingScreen from "@/app/components/dom/main/screens/LoadingScreen";
-import {get_genius_query, get_ops} from "@/lib/misc_requests";
+import {get_ops} from "@/lib/misc_requests";
 import ErrorScreen from "@/app/components/dom/main/screens/ErrorScreen";
 import {isNotNumeric} from "@/lib/utils/helpers";
 import {useRouter} from "next/navigation";
-import {Interval, Subscription} from "@/lib/utils/enums";
+import {Subscription} from "@/lib/utils/enums";
 import {cn} from "@/lib/utils";
-import Head from 'next/head'
 
 export default function Page({params}) {
     //TODO: make fucking string json parsable

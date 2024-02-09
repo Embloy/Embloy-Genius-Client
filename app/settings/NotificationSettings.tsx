@@ -6,7 +6,7 @@ import {
     DropdownMenuContent,
     DropdownMenuTrigger
 } from "@/app/components/ui/dropdown-menu";
-import '../globals.css'
+import '@/app/globals.css'
 export function NotificationSettings() {
 
     let user = useContext(UserContext);

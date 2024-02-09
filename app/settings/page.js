@@ -7,7 +7,7 @@ import {ProfileSettings} from "@/app/settings/profile";
 import {UserContext} from "@/app/components/dom/main/wrappers/UserContext";
 import {StoreContext} from "@/app/components/dom/main/wrappers/StoreWrapper";
 import LoadingScreen from "@/app/components/dom/main/screens/LoadingScreen";
-import '../globals.css'
+import '@/app/globals.css'
 
 export default function Settings() {
     const [currentSubPageID, setcurrentSubPageID] = useState(0);

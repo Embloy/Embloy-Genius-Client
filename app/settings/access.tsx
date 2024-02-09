@@ -1,8 +1,7 @@
 "use client"
 import './locals.css'
-import '../globals.css'
-import React, {useEffect, useRef, useState} from "react";
-import {cn} from "@/lib/utils";
+import '@/app/globals.css'
+import React from "react";
 import {AccessTokenClaim} from "@/app/settings/AccessTokenClaim";
 import {ClientTokenClaim} from "@/app/settings/ClientTokenClaim";
 import {ChangePassword} from "@/app/settings/ChangePassword";

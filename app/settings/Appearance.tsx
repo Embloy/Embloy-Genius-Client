@@ -1,8 +1,7 @@
 "use client";
-import React, {useContext, useEffect, useRef, useState} from "react";
+import React from "react";
 import { useTheme } from "next-themes";
-import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/app/components/ui/select";
-import '../globals.css'
+import '@/app/globals.css'
 
 export function AppearanceSettings() {
     const { systemTheme, theme, setTheme } = useTheme();

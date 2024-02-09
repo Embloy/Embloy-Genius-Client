@@ -1,11 +1,9 @@
 import React, {useContext, useEffect, useState} from "react";
-
 import {UserContext} from "@/app/components/dom/main/wrappers/UserContext";
-import {login, logout, request_access, request_client, request_refresh, update_password} from "@/lib/authentication";
-import {getCookie, setCookie} from "cookies-next";
+import {logout, request_access, request_refresh, update_password} from "@/lib/authentication";
 import {useRouter} from "next/navigation";
 import Image from "next/image";
-import '../globals.css';
+import '@/app/globals.css'
 async function fetch_refresh_and_access(username, password, router) {
 
     if (username === "" || password === "") {
