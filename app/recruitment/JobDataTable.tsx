@@ -167,7 +167,7 @@ export function JobDataTable<TData extends Job, TValue>({columns, data, handleDa
                         <DropdownMenuTrigger asChild className="outline-none">
                             <button className="px-0.5 bg0-r-full">
                                 <Image
-                                    src={cn(columnsIsHovered ? "/icons/columns-light.svg" : "/icons/columns-dark.svg")}
+                                    src={cn(columnsIsHovered ? "/icons/sm-cols-light.svg" : "/icons/sm-cols-dark.svg")}
                                     alt="columns"
                                     height="25"
                                     width="25"
