@@ -37,7 +37,7 @@ import {UploadJobFileButton} from "@/app/components/dom/main/misc/FileUploads";
 import { Job } from "./job_type";
 import {useRouter} from "next/navigation";
 import LoadingScreen from "@/app/components/dom/main/screens/LoadingScreen";
-import {RemoveJobButton} from "@/app/components/dom/main/misc/buttons";
+import {RemoveJobButton} from "@/app/components/dom/main/datatable/job_remove_button";
 
 
 interface DataTableProps<TData, TValue> {
@@ -113,6 +113,11 @@ export function JobDataTable<TData extends Job, TValue>({columns, data, handleDa
         invalidateRowModel();
     }
 
+    const getSelectedRows = () => {
+        return rowSelection;
+    }
+
+
     if (!data) {
         return <LoadingScreen />
     }
@@ -153,8 +158,8 @@ export function JobDataTable<TData extends Job, TValue>({columns, data, handleDa
                     />
                 </div>
                 <div className="px-4 flex flex-row items-center justify-end">
-                    <UploadJobFileButton key="Upload" router={router}  formats={['.json']} head="Upload jobs" img="sm-upload" style="relative px-0.5 bg0-r-full" onUploadSuccess={() => handleUploadSuccess()}/>
-                    <RemoveJobButton key="Remove" router={router}  formats={['.json']} head="Delete jobs" img="sm-delete" style="relative px-0.5 bg0-r-full" onUploadSuccess={() => handleUploadSuccess()}/>
+                    <UploadJobFileButton key="Upload" router={router}  formats={['.json']} head="Upload jobs" img="sm-upload" style="relative px-0.5 bg0-r-full cursor-pointer" onUploadSuccess={() => handleUploadSuccess()}/>
+                    <RemoveJobButton key="Remove" router={router}  formats={['.json']} head="Delete jobs" img="sm-delete" style="relative px-0.5 bg0-r-full cursor-pointer" getSelectedRows={() => getSelectedRows()} onUploadSuccess={() => handleUploadSuccess()}/>
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild className="outline-none">
                             <button className="px-0.5 bg0-r-full">
