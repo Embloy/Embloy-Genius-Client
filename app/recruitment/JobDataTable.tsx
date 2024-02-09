@@ -239,9 +239,12 @@ export function JobDataTable<TData extends Job, TValue>({columns, data, handleDa
                                                        data-state={row.getIsSelected() && "selected"}
                                                        onClick={(event) => {
                                                            const target = event.target as HTMLElement;
-                                                           if (target.classList.contains('Checkbox')) {
+                                                           if (target.getAttribute('role') === 'checkbox') {
+                                                               return;
+                                                           } else {
                                                                toggle_row(row.id);
                                                            }
+
                                                        }}
                                                        onUploadSuccess={() => handleUploadSuccess()}
                                                        onClose={() => setOpenRow(null)}
