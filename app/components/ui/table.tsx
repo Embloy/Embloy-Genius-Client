@@ -73,7 +73,7 @@ const JobTableRowExtendable = React.forwardRef<
     {
         className?: string;
         extended?: boolean;
-        onClick?: () => void;
+        onClick?: (event: React.MouseEvent<HTMLDivElement>) => void;
         job?: Job;
         children?: React.ReactNode; // Add this line
         onUploadSuccess: () => void;
