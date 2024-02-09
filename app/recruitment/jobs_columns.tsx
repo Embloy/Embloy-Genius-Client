@@ -5,7 +5,6 @@ import {DataTableColumnHeader} from "@/app/components/dom/main/datatable/DataTab
 import {Job} from "@/app/recruitment/job_type";
 import {cast_date} from "@/lib/utils/formats";
 
-
 export const columns: ColumnDef<Job>[] = [
     {
         id: "select",

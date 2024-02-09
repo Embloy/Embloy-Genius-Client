@@ -98,8 +98,6 @@ export function JobDataTable<TData extends Job, TValue>({columns, data, handleDa
         default_hides()
     }, [])
 
-
-    const [openRows, setOpenRows] = useState<number[]>(null)
     const [openRow, setOpenRow] = useState<number>(null)
     const toggle_row = (row) => {
         let new_row = null
