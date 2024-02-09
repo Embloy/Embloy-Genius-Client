@@ -140,11 +140,11 @@ export function JobDataTable<TData extends Job, TValue>({columns, data, handleDa
                         className="relative"
                     />
                     <input
-                        className={filterIsHovered ? "bg-gray-900 text-white h-10 w-96 px-2 placeholder-gray-900 border-none outline-none select-all" : "bg-black text-white h-10 w-96 px-2 placeholder-gray-900 border-none outline-none select-all"}
+                        className={filterIsHovered ? "bg-transparent dark:bg-transparent text-white h-10 w-96 px-2 placeholder-gray-900 border-none outline-none select-all" : "bg-transparent dark:bg-transparent text-white h-10 w-96 px-2 placeholder-gray-900 border-none outline-none select-all"}
                         type="text"
                         name="name"
                         placeholder="Filter"
-                        value={(table.getColumn("job_type")?.getFilterValue() as string) ?? ""}
+                        value={(table.getColumn("position")?.getFilterValue() as string) ?? ""}
                         onChange=
                             {
                                 (event) => {
@@ -154,7 +154,7 @@ export function JobDataTable<TData extends Job, TValue>({columns, data, handleDa
                                             behavior: "smooth"
                                         });
                                     }
-                                    table.getColumn("job_type")?.setFilterValue(event.target.value)
+                                    table.getColumn("position")?.setFilterValue(event.target.value)
                                 }
                             }
 
