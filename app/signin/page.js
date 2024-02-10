@@ -65,17 +65,17 @@ const Signin = () => {
             <div
                 className=" border-[1px] border-gray-700 rounded-lg flex flex-col items-center justify-center px-10 py-8">
                 <Image
-                    src="/img/logo_on_dark.png"
+                    src="/img/logo_on_dark.svg"
                     alt="Logo"
                     height="50"
-                    width="125"
+                    width="185"
                     className="mb-8 relative hidden dark:block"
                 />
                 <Image
-                    src="/img/logo_on_light.png"
+                    src="/img/logo_on_light.svg"
                     alt="Logo"
                     height="50"
-                    width="125"
+                    width="185"
                     className="mb-8 dark:hidden"
                 />
                 <h1 className="mb-4 c0 text-2xl">Sign in</h1>

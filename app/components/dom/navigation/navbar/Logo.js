@@ -37,17 +37,17 @@ const Logo = () => {
         <>
             <Link href="/" style={{ display: showButton ? "none" : "block" }}>
                 <Image
-                    src="/img/logo_on_dark.png"
+                    src="/img/logo_on_dark.svg"
                     alt="Logo"
                     height="20"
-                    width="100"
+                    width="180"
                     className="relative hidden dark:block"
                 />
                 <Image
-                    src="/img/logo_on_light.png"
+                    src="/img/logo_on_light.svg"
                     alt="Logo"
                     height="20"
-                    width="100"
+                    width="180"
                     className="relative dark:hidden"
                 />
             </Link>

@@ -5,7 +5,7 @@ const LoadingScreen = () => {
     return (
         <div className="fixed inset-0 flex justify-center items-center z-50 bg-black overflow-hidden">
             <Image
-                src="/img/logo_on_dark.png"
+                src="/img/logo_on_dark.svg"
                 alt="Logo"
                 height="65"
                 width="200"
