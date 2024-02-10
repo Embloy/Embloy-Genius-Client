@@ -1,5 +1,4 @@
 import * as React from "react"
-
 import {cn} from "@/lib/utils"
 import {JobDetails} from "@/app/recruitment/job_details";
 import { Job } from "@/app/recruitment/job_type";
@@ -100,13 +99,14 @@ const JobTableRowExtendable = React.forwardRef<
                     {children}
 
                 </tr>
-                <tr  className={cn(rowClasses, "relative, w-screen, bg-transparent, hover:bg-transparent")}>
-                    <div className="h-[500px]">
-                        <JobDetails job={job} onUploadSuccess={() => onUploadSuccess()} onClose={() => onClose()}/>
-                    </div>
+                <tr className={cn(rowClasses, "relative, w-screen, bg-transparent, hover:bg-transparent")}>
+                    <td colSpan={7} >
+                        <div className="h-full">
+                            <JobDetails job={job} onUploadSuccess={() => onUploadSuccess()} onClose={() => onClose()}/>
+                        </div>
+                    </td>
                 </tr>
             </>
-
         ) : (
             <tr
                 ref={ref}

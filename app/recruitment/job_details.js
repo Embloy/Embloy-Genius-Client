@@ -27,13 +27,12 @@ export function JobDetails({job, onUploadSuccess, onClose}) {
     const [position, setPosition] = useState(null) // todo: make it like in calendar
 
 
-    const detailsClass = "w-full absolute flex flex-col items-center justify-between p-4 cursor-default"
+    const detailsClass = "w-full flex flex-col items-center justify-between p-4 cursor-default"
     const headerClass = "w-full flex flex-row items-center justify-between"
     const textClass = "cursor-text"
     const set_data = () => {
         setPosition(job['position'])
     }
-
     const [listIsHovered, setListIsHovered] = useState(false);
     const handleListHover = () => {
         setListIsHovered(true);
@@ -56,7 +55,6 @@ export function JobDetails({job, onUploadSuccess, onClose}) {
         setRemoveIsHovered(false);
     };
 
-
     const [uploading, setUploading] = useState(false)
     const updateStatus = async (e, job_id, status) => {
         if (job_id && status) {
@@ -77,7 +75,6 @@ export function JobDetails({job, onUploadSuccess, onClose}) {
     useEffect(() => {
         set_data()
     }, [])
-
 
     return (
         <div className={detailsClass}>
@@ -197,7 +194,6 @@ export function JobDetails({job, onUploadSuccess, onClose}) {
                                 )}
                             </DropdownMenuContent>
                         </DropdownMenu>
-
                     </div>
                 </div>
                 <div className={cn(headerClass, 'justify-start gap-2')}>
@@ -236,26 +232,18 @@ export function JobDetails({job, onUploadSuccess, onClose}) {
                             className="py-1 px-4 bg-emerald-950 dark:bg-emerald-950 hover:bg-emerald-950 dark:hover:bg-emerald-950 rounded-full border border-embloy-green font-normal text-embloy-green text-xs cursor-pointer hover:border-black dark:hover:border-white hover:text-black dark:hover:text-white text-embloy-green dark:text-embloy-green ml-2">
                             <p className={cn(textClass, " font-normal cursor-pointer text-xs bgneg")}>+ Add Salary</p>
                         </button>
-
                     )}
-
                 </div>
                 <div className={headerClass}>
                     <div className="max-w-3/10 flex flex-col items-center justify-start">
-
-
                         {Object.keys(job).map((key, index) => (
                             <p key={index} className="text-xs font-light text-gray-400">
                                 {`${key}: ${job[key]}`}
                             </p>
                         ))}
-
-
                     </div>
-
                 </div>
             </div>
-
             <div className={headerClass}>
                 <div className="mt-4">
                     <h2 className="text-lg font-semibold">Application Options</h2>
