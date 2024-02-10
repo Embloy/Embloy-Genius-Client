@@ -80,7 +80,7 @@ export function JobDetails({job, onUploadSuccess, onClose}) {
         <div className={detailsClass}>
             <div className="w-full flex flex-col items-center justify-start gap-2">
                 <div className={headerClass}>
-                    <p className={cn(textClass, "font-normal text-lg c2")}>{job.position}</p>
+                    <p className={cn(textClass, "font-normal text-lg c0")}>{job.position}</p>
                     <div className="flex flex-row items-center justify-end-rev gap-4">
                         <p className={cn(textClass, "font-normal text-xs c3")}>Created
                             on: {cast_date(job.description.created_at, 'us')}</p>
@@ -196,7 +196,7 @@ export function JobDetails({job, onUploadSuccess, onClose}) {
                         </DropdownMenu>
                     </div>
                 </div>
-                <div className={cn(headerClass, 'justify-start gap-2')}>
+                <div className={cn(headerClass, 'justify-start gap-2 mt-6')}>
                     {job.status && (
                         <p className={cn(textClass, "px-4 py-1 bg-red-950 rounded-full border border-red-500 font-normal text-red-500 text-xs")}>{(() => {
                             if (job.status === 'private') {

@@ -89,7 +89,6 @@ export function JobDataTable<TData extends Job, TValue>({columns, data, handleDa
             rowSelection,
         },
     })
-
     const default_hides = () => {
         table.getColumn("job_id").toggleVisibility(false)
         table.getColumn("job_type").toggleVisibility(false)
@@ -256,6 +255,7 @@ export function JobDataTable<TData extends Job, TValue>({columns, data, handleDa
                                                        }}
                                                        onUploadSuccess={() => handleUploadSuccess()}
                                                        onClose={() => setOpenRow(null)}
+                                                       onExtending={() => table.getAllColumns().filter((column) => column.getIsVisible()).length}
                                 >
                                     {row.getVisibleCells().map((cell) => (
                                         <TableCell key={cell.id}>

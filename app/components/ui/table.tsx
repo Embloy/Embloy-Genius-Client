@@ -2,6 +2,7 @@ import * as React from "react"
 import {cn} from "@/lib/utils"
 import {JobDetails} from "@/app/recruitment/job_details";
 import { Job } from "@/app/recruitment/job_type";
+import {Column} from "@tanstack/react-table";
 
 const Table = React.forwardRef<
     HTMLTableElement,
@@ -77,8 +78,9 @@ const JobTableRowExtendable = React.forwardRef<
         children?: React.ReactNode; // Add this line
         onUploadSuccess: () => void;
         onClose: () => void;
+        onExtending: () => number;
     }
->(({className,onUploadSuccess, onClose, extended, job, ...props}, ref) => {
+>(({className,onUploadSuccess, onExtending, onClose, extended, job, ...props}, ref) => {
     const rowClasses = cn(
         "border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted",
         className
@@ -100,7 +102,7 @@ const JobTableRowExtendable = React.forwardRef<
 
                 </tr>
                 <tr className={cn(rowClasses, "relative, w-screen, bg-transparent, hover:bg-transparent")}>
-                    <td colSpan={7} >
+                    <td colSpan={onExtending()} >
                         <div className="h-full">
                             <JobDetails job={job} onUploadSuccess={() => onUploadSuccess()} onClose={() => onClose()}/>
                         </div>
@@ -108,13 +110,16 @@ const JobTableRowExtendable = React.forwardRef<
                 </tr>
             </>
         ) : (
-            <tr
-                ref={ref}
-                className={rowClasses}
-                {...otherProps}
-            >
-                {children}
-            </tr>)
+            <>
+                <tr
+                    ref={ref}
+                    className={rowClasses}
+                    {...otherProps}
+                >
+                    {children}
+                </tr>
+            </>
+        )
 
 
     );
