@@ -4,7 +4,7 @@ import {
     DropdownMenuCheckboxItem,
     DropdownMenuContent,
     DropdownMenuTrigger
-} from "@/app/components/ui/dropdown-menu";
+} from "@/app/components/ui/misc/dropdown-menu";
 import {OpenCloseScaffold} from "@/app/components/dom/main/misc/Scaffolds";
 import '@/app/globals.css'
 

@@ -2,7 +2,7 @@ import React, {useContext, useRef, useState} from "react";
 import {UserContext} from "@/app/components/dom/main/wrappers/UserContext";
 import '@/app/globals.css'
 import {cn} from "@/lib/utils";
-import {AvatarButton} from "@/app/components/ui/avatar";
+import {AvatarButton} from "@/app/components/ui/misc/avatar";
 import {patch_core, upload_profile_image} from "@/lib/misc_requests";
 
 export function ProfileInfo({router}) {

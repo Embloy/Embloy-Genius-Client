@@ -5,7 +5,7 @@ import {useRouter} from "next/navigation";
 import {logout} from "@/lib/authentication";
 import Link from "next/link";
 import '@/app/globals.css'
-import {AvatarButton} from "@/app/components/ui/avatar";
+import {AvatarButton} from "@/app/components/ui/misc/avatar";
 
 export const UserBar = ({ isVisible, onClose, userData, storeData }) => {
     const router = useRouter();

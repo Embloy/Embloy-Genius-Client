@@ -21,13 +21,13 @@ import {
     TableHeader,
     TableRow,
     JobTableRowExtendable,
-} from "@/app/components/ui/table"
+} from "@/app/components/ui/misc/table"
 import {
     DropdownMenu,
     DropdownMenuCheckboxItem,
     DropdownMenuContent, DropdownMenuLabel,
     DropdownMenuTrigger,
-} from "@/app/components/ui/dropdown-menu"
+} from "@/app/components/ui/misc/dropdown-menu"
 import {cn} from "@/lib/utils";
 import Image from "next/image";
 import React, {useEffect, useState} from "react";

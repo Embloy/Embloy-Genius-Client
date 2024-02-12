@@ -1,6 +1,6 @@
 "use client";
 import React, {useEffect, useState} from "react";
-import '../../globals.css';
+import '@/app/globals.css';
 import Image from "next/image";
 import {alpha_24} from "@/lib/utils/formats";
 import {cn} from "@/lib/utils";

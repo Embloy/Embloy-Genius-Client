@@ -8,10 +8,11 @@ import {
     DropdownMenu,
     DropdownMenuContent,
     DropdownMenuTrigger
-} from "@/app/components/ui/dropdown-menu";
+} from "@/app/components/ui/misc/dropdown-menu";
 import {DropdownMenuItem} from "@radix-ui/react-dropdown-menu";
 import {patch_core} from "@/lib/misc_requests";
 import {useRouter} from "next/navigation";
+import {ApplicationPreview} from "@/app/components/dom/main/misc/application_form_preview";
 
 
 export function JobDetails({job, onUploadSuccess, onClose}) {
@@ -196,7 +197,7 @@ export function JobDetails({job, onUploadSuccess, onClose}) {
                         </DropdownMenu>
                     </div>
                 </div>
-                <div className={cn(headerClass, 'justify-start gap-2 mt-6')}>
+                <div className={cn(headerClass, 'justify-start gap-2')}>
                     {job.status && (
                         <p className={cn(textClass, "px-4 py-1 bg-red-950 rounded-full border border-red-500 font-normal text-red-500 text-xs")}>{(() => {
                             if (job.status === 'private') {
@@ -233,33 +234,21 @@ export function JobDetails({job, onUploadSuccess, onClose}) {
                             <p className={cn(textClass, " font-normal cursor-pointer text-xs bgneg")}>+ Add Salary</p>
                         </button>
                     )}
+                    {!job.application_options || job.application_options.length === 0 && (
+                        <button
+                            className="py-1 px-4 bg-emerald-950 dark:bg-emerald-950 hover:bg-emerald-950 dark:hover:bg-emerald-950 rounded-full border border-embloy-green font-normal text-embloy-green text-xs cursor-pointer hover:border-black dark:hover:border-white hover:text-black dark:hover:text-white text-embloy-green dark:text-embloy-green ml-2">
+                            <p className={cn(textClass, " font-normal cursor-pointer text-xs bgneg")}>+ Add Application Form</p>
+                        </button>
+                    )}
                 </div>
-                <div className={headerClass}>
-                    <div className="max-w-3/10 flex flex-col items-center justify-start">
-                        {Object.keys(job).map((key, index) => (
-                            <p key={index} className="text-xs font-light text-gray-400">
-                                {`${key}: ${job[key]}`}
-                            </p>
-                        ))}
-                    </div>
-                </div>
-            </div>
-            <div className={headerClass}>
-                <div className="mt-4">
-                    <h2 className="text-lg font-semibold">Application Options</h2>
-                    {job.application_options.map((option, index) => {
-                        return (
-                            <div key={index} className="mt-2">
-                                <p className="text-sm font-semibold">{option.question}</p>
-                                {option.options.map((opt, optIndex) => (
-                                    <p key={optIndex} className="text-xs font-light text-gray-400">
-                                        {opt}
-                                    </p>
-                                ))}
-                            </div>
-                        );
-                    })}
-                </div>
+                {
+                    job.application_options && job.application_options.length > 0 && (
+                        <div className={headerClass}>
+                            <ApplicationPreview data={job} handleDataReload={() => {console.log("TEST")}} />
+                        </div>
+                    )
+                }
+
             </div>
         </div>
     )

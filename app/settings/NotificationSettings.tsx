@@ -5,7 +5,7 @@ import {
     DropdownMenuCheckboxItem,
     DropdownMenuContent,
     DropdownMenuTrigger
-} from "@/app/components/ui/dropdown-menu";
+} from "@/app/components/ui/misc/dropdown-menu";
 import '@/app/globals.css'
 export function NotificationSettings() {
 

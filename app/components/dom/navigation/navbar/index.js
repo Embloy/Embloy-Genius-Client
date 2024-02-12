@@ -12,7 +12,7 @@ import {UserBar} from "@/app/components/dom/navigation/userbar";
 import {StoreContext} from "@/app/components/dom/main/wrappers/StoreWrapper";
 import {AppContext} from "@/app/components/dom/main/wrappers/AppProvider";
 import LoadingScreen from "@/app/components/dom/main/screens/LoadingScreen";
-import {AvatarButton} from "@/app/components/ui/avatar";
+import {AvatarButton} from "@/app/components/ui/misc/avatar";
 
 const Navbar = () => {
     const pathname = usePathname()

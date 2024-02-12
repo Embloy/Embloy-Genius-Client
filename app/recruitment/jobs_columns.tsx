@@ -1,6 +1,6 @@
 "use client"
 import {ColumnDef} from "@tanstack/react-table"
-import {Checkbox} from "@/app/components/ui/checkbox"
+import {Checkbox} from "@/app/components/ui/misc/checkbox"
 import {DataTableColumnHeader} from "@/app/components/dom/main/datatable/DataTableColumnHeader";
 import {Job} from "@/app/recruitment/job_type";
 import {cast_date} from "@/lib/utils/formats";

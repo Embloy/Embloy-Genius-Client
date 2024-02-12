@@ -9,11 +9,15 @@ type Description = {
 type Format = {
     allowed: ".pdf" | ".docx" | ".txt" | ".xml"
 }
+type ApplicationOptions = {
+    options: any[];
+}
 
 export type Job = {
     job_id: number
     job_type: string
     job_type_value: number
+    job_slug: string
     job_value:string
     job_status: number // 0 or 1 <=> inactive or active
     status: string //public or private
@@ -26,6 +30,7 @@ export type Job = {
     description: Description
     key_skills: string
     salary: number
+    euro_salary: number
     currency: string
     start_slot: string
     latitude: number
@@ -44,4 +49,9 @@ export type Job = {
     boost: number
     cv_required: boolean
     allowed_cv_format:Format
+    refferer_url: string
+    deleted_at: string
+    application_options:ApplicationOptions
+
+
 }

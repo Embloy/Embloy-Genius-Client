@@ -7,7 +7,7 @@ import {
     SelectItem,
     SelectTrigger,
     SelectValue,
-} from "@/app/components/ui/select"
+} from "@/app/components/ui/misc/select"
 import {cn} from "@/lib/utils";
 import Image from "next/image";
 import React, {useState} from "react";
