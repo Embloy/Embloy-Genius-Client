@@ -3,6 +3,6 @@
 <rect x="110" y="46" width="30" height="35" rx="8" fill="#384051"/>
 <rect x="166" y="165" width="83" height="26" rx="8" transform="rotate(-180 166 165)" fill="#384051"/>
 <rect x="139" y="178" width="30" height="28" rx="8" transform="rotate(-180 139 178)" fill="#384051"/>
-<rect x="143" y="147" width="10" height="28" rx="5" transform="rotate(-180 143 147)" fill="#384051"/>
-<rect x="115" y="147" width="10" height="28" rx="5" transform="rotate(-180 115 147)" fill="#384051"/>
+<rect x="146" y="147" width="15" height="28" rx="7.5" transform="rotate(-180 146 147)" fill="#384051"/>
+<rect x="118" y="147" width="15" height="28" rx="7.5" transform="rotate(-180 118 147)" fill="#384051"/>
 </svg>

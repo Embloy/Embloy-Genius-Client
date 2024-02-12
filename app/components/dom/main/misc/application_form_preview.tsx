@@ -143,35 +143,38 @@ export function ApplicationPreview({data, handleDataReload}) {
         <div className={cn(previewClass, containerStyle)}>
             <div className="w-full flex flex-row items-center justify-between">
                 <p className={cn(textClass, "font-normal text-xs c2-5")}>Preview</p>
-                {testMode ? (
-                    <div className="flex flex-row items-center justify-start">
-                        <button
-                            onClick={() => setTestMode(false)}
-                            className={cn("dark:hover:bg-transparent hover:bg-transparent")}
-                        >
 
-                        </button>
-                        <p className={cn("font-normal text-xs c2-5")}>Test mode</p>
-                    </div>
-                ) : (
-                    <div className="flex flex-row items-center justify-start">
-                        <button
-                            onClick={() => setTestMode(true)}
-                            className={"dark:hover:bg-transparent hover:bg-transparent"}
-                        >
-                            <Image
-                                src={`/icons/sm-plugged-${testMode ? "in-" : "out-"}${plugIsHovered ? "light" : "dark"}.svg`}
-                                alt="columns"
-                                height="25"
-                                width="25"
-                                className={"relative px-0.5 bg0-r-full cursor-pointer"}
-                                onMouseEnter={handlePlugHover}
-                                onMouseLeave={handlePlugNotHover}
-                            />
-                        </button>
-                        <p className={cn("font-normal text-xs c2-5")}>Spectator mode</p>
-                    </div>
-                )}
+                <div className="flex flex-row items-center justify-start">
+                    <p className={cn(testMode?"font-normal text-xs text-embloy-green":"font-normal text-xs c2-5")}>{`${testMode ? "Test" : "Spectator"} mode`}</p>
+                    <button
+                        onClick={() => setTestMode(!testMode)}
+                        className={"dark:hover:bg-transparent hover:bg-transparent"}
+                        onMouseEnter={handlePlugHover}
+                        onMouseLeave={handlePlugNotHover}
+                    >
+
+                        {
+                            testMode ?
+                                <Image
+                                    src={`/icons/sm-plugged-in-green${plugIsHovered && "-light" }.svg`}
+                                    alt="columns"
+                                    height="25"
+                                    width="25"
+                                    className={"relative px-0.5 bg0-r-full cursor-pointer"}
+                                />
+                                :
+                                <Image
+                                    src={`/icons/sm-plugged-out-${plugIsHovered ? "light" : "dark"}.svg`}
+                                    alt="columns"
+                                    height="25"
+                                    width="25"
+                                    className={"relative px-0.5 bg0-r-full cursor-pointer"}
+                                />
+                        }
+
+                    </button>
+
+                </div>
 
 
             </div>
