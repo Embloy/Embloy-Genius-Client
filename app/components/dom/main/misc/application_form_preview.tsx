@@ -1,5 +1,5 @@
 "use client";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {cn} from "@/lib/utils";
 import {z} from 'zod';
 import {Checkbox} from "@/app/components/ui/application_preview/checkbox";
@@ -7,8 +7,11 @@ import {Select, SelectContent, SelectItem, SelectTrigger} from "@/app/components
 import Image from "next/image";
 import './locals.css';
 import dynamic from "next/dynamic";
-import PreviewRenderer from "@/app/components/dom/main/misc/preview_renderer";
-
+import {OutputData} from "@editorjs/editorjs";
+import EditorBlock from "@/app/components/dom/main/misc/application_editor";
+const Editor = dynamic(() => import("@/app/components/dom/main/misc/application_editor"), {
+    ssr: false,
+});
 export function ApplicationPreview({data, handleDataReload}) {
     const [errorMessages, setErrorMessages] = useState({});
     const textSchema = z.string().nonempty({message: 'Input cannot be empty'});
@@ -139,10 +142,11 @@ export function ApplicationPreview({data, handleDataReload}) {
     const handlePlugNotHover = () => {
         setPlugIsHovered(false);
     };
-    const Editor = dynamic(() => import("@/app/components/dom/main/misc/application_editor"), {
-        ssr: false,
-    });
-    const [opt, setOpt] = useState();
+
+    const [opt, setOpt] = useState<OutputData>();
+    useEffect(() => {
+        console.log(opt);
+    } , [opt]);
     return (
         <div
             className={cn(previewClass, containerStyle, cn(testMode ? "border-embloy-green" : "border-gray-700"))}>
@@ -349,18 +353,10 @@ export function ApplicationPreview({data, handleDataReload}) {
 
                 <div className="min-h-[200px] w-full flex flex-col items-center justify-start gap-2 px-4 py-2">
 
-                    <div className="grid grid-cols-2 gap-2 m-2">
-                        <div className="col-span-1">
-                            <h1>Editor</h1>
-                            <div className="border rounded-md">
-                                <Editor
-                                    data={opt}
-                                    onChange={setOpt}
-                                    holder="editorjs"
-                                />
-                            </div>
-                        </div>
+                    <div className="container max-w-4xl">
+                        <EditorBlock data={opt} onChange={setOpt} holder="editorjs-container" />
                     </div>
+
                 </div>
             )}
         </div>

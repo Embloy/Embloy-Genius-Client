@@ -1,10 +1,19 @@
-"use client";
-import React, { useEffect, useRef } from "react";
+// @ts-ignore
+import React from "react";
+import { memo, useEffect, useRef } from "react";
 import EditorJS, { OutputData } from "@editorjs/editorjs";
-import {EDITOR_TOOLS} from "@/app/components/dom/main/misc/EditorTools";
-export default function Editor({ data, onChange, holder }) {
+import { EDITOR_TOOLS } from "./EditorTools";
+
+//props
+type Props = {
+    data?: OutputData;
+    onChange(val: OutputData): void;
+    holder: string;
+};
+
+const EditorBlock = ({ data, onChange, holder }: Props) => {
     //add a reference to editor
-    const ref = useRef();
+    const ref = useRef<EditorJS>();
 
     //initialize editorjs
     useEffect(() => {
@@ -33,3 +42,5 @@ export default function Editor({ data, onChange, holder }) {
 
     return <div id={holder} className="prose max-w-full" />;
 };
+
+export default memo(EditorBlock);
