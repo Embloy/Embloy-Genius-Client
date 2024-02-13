@@ -158,10 +158,7 @@ export function ApplicationPreview({data, handleDataReload}) {
         setPlugIsHovered(false);
     };
 
-    const [opt, setOpt] = useState<OutputData>(json as OutputData);
-    useEffect(() => {
-        console.log(editor_to_json(json_to_editor(data.application_options)))
-    } , [data]);
+    const [localOpt, setLocalOpt] = useState<OutputData>(json_to_editor(data.application_options) as OutputData);
     return (
         <div
             className={cn(previewClass, containerStyle, cn(testMode ? "border-embloy-green" : "border-gray-700"))}>
@@ -369,7 +366,7 @@ export function ApplicationPreview({data, handleDataReload}) {
                 <div className="min-h-[200px] w-full flex flex-col items-center justify-start gap-2 px-4 py-2">
 
                     <div className="container max-w- full">
-                        <EditorBlock data={opt} onChange={setOpt} holder="editorjs-container" />
+                        <EditorBlock data={localOpt} onChange={setLocalOpt} holder="editorjs-container" />
                     </div>
 
                 </div>
