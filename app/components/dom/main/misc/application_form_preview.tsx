@@ -12,6 +12,20 @@ import EditorBlock from "@/app/components/dom/main/misc/application_editor";
 const Editor = dynamic(() => import("@/app/components/dom/main/misc/application_editor"), {
     ssr: false,
 });
+const json = {
+    "time" : 1550476186479,
+    "blocks" : [
+        {
+            "type" : "header",
+            "data" : {
+                "text" : "Ausbildungseinrichtung",
+                "level" : 2
+            }
+        },
+    ],
+    "version" : "2.8.1"
+}
+
 export function ApplicationPreview({data, handleDataReload}) {
     const [errorMessages, setErrorMessages] = useState({});
     const textSchema = z.string().nonempty({message: 'Input cannot be empty'});
@@ -143,7 +157,7 @@ export function ApplicationPreview({data, handleDataReload}) {
         setPlugIsHovered(false);
     };
 
-    const [opt, setOpt] = useState<OutputData>();
+    const [opt, setOpt] = useState<OutputData>(json as OutputData);
     useEffect(() => {
         console.log(opt);
     } , [opt]);
@@ -353,7 +367,7 @@ export function ApplicationPreview({data, handleDataReload}) {
 
                 <div className="min-h-[200px] w-full flex flex-col items-center justify-start gap-2 px-4 py-2">
 
-                    <div className="container max-w-4xl">
+                    <div className="container max-w- full">
                         <EditorBlock data={opt} onChange={setOpt} holder="editorjs-container" />
                     </div>
 
