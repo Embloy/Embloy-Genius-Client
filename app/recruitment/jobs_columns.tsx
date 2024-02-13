@@ -53,7 +53,7 @@ export const columns: ColumnDef<Job>[] = [
         enableHiding: true,
     },
     {
-        accessorKey: "status",
+        accessorKey: "job_status",
         header: ({column}) => (
             <DataTableColumnHeader column={column} title="Visibility"/>
         ),
@@ -61,11 +61,11 @@ export const columns: ColumnDef<Job>[] = [
         enableHiding: true,
         cell: ({row}) => {
             let visibility = ""
-            if (row.getValue('status') === 'unlisted') {
+            if (row.getValue('job_status') === 'unlisted') {
                 visibility = "Unlisted"
-            } else if (row.getValue('status') === 'listed') {
+            } else if (row.getValue('job_status') === 'listed') {
                 visibility = "Public"
-            } else if (row.getValue('status') === 'archived') {
+            } else if (row.getValue('job_status') === 'archived') {
                 visibility = "Archived"
             } else {
                 visibility = undefined

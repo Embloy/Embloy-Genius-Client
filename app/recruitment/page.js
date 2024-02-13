@@ -34,7 +34,7 @@ export default function Jobs() {
     useEffect(() => {
         get_core("/user/jobs", router).then(data => {
             if (data.jobs){
-                setData(data.jobs.filter(job => job.status !== 'archived'))
+                setData(data.jobs.filter(job => job.job_status !== 'archived'))
             } else {
                 setData([])
             }

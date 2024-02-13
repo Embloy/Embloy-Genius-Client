@@ -61,7 +61,7 @@ export function JobDetails({job, onUploadSuccess, onClose}) {
         if (job_id && status) {
             setUploading(true);
             try {
-                const result = await patch_core(`/jobs?id=${job_id}`, router, {status: status})
+                const result = await patch_core(`/jobs?id=${job_id}`, router, {job_status: status})
                 onUploadSuccess();
                 if (status === 'archived') {
                     onClose()
@@ -123,12 +123,12 @@ export function JobDetails({job, onUploadSuccess, onClose}) {
                                 </button>
                             </DropdownMenuTrigger>
                             <DropdownMenuContent align="end">
-                                {job.status && job.status === 'private' && (
+                                {job.job_status && job.job_status === 'unlisted' && (
                                     <DropdownMenuItem
                                         key="0"
                                         className="capitalize c2 hover:c0 cursor-pointer py-1.5 pl-4 pr-8 text-xs outline-none flex flex-row items-center "
                                         onSelect={(e) => {
-                                            updateStatus(e, job.job_id, 'public')
+                                            updateStatus(e, job.job_id, 'listed')
                                         }}
                                         onMouseEnter={handleListHover}
                                         onMouseLeave={handleListNotHover}
@@ -143,12 +143,12 @@ export function JobDetails({job, onUploadSuccess, onClose}) {
                                         />
                                     </DropdownMenuItem>
                                 )}
-                                {job.status && job.status === 'public' && (
+                                {job.job_status && job.job_status === 'listed' && (
                                     <DropdownMenuItem
                                         key="1"
                                         className="capitalize c2 hover:c0 cursor-pointer py-1.5 pl-4 pr-8 text-xs outline-none flex flex-row items-center"
                                         onSelect={(e) => {
-                                            updateStatus(e, job.job_id, 'private')
+                                            updateStatus(e, job.job_id, 'unlisted')
                                         }}
                                         onMouseEnter={handleUnlistHover}
                                         onMouseLeave={handleUnlistNotHover}
@@ -163,12 +163,12 @@ export function JobDetails({job, onUploadSuccess, onClose}) {
                                         />
                                     </DropdownMenuItem>
                                 )}
-                                {job.status && job.status === 'archived' ? (
+                                {job.job_status && job.job_status === 'archived' ? (
                                     <DropdownMenuItem
                                         key="3"
                                         className="capitalize c2 hover:c0 cursor-pointer py-1.5 pl-4 pr-8 text-xs outline-none flex flex-row items-center"
                                         onSelect={(e) => {
-                                            updateStatus(e, job.job_id, 'private')
+                                            updateStatus(e, job.job_id, 'unlisted')
                                         }}
                                     >
                                         {"Retrieve"}
@@ -198,13 +198,13 @@ export function JobDetails({job, onUploadSuccess, onClose}) {
                     </div>
                 </div>
                 <div className={cn(headerClass, 'justify-start gap-2')}>
-                    {job.status && (
+                    {job.job_status && (
                         <p className={cn(textClass, "px-4 py-1 bg-red-950 rounded-full border border-red-500 font-normal text-red-500 text-xs")}>{(() => {
-                            if (job.status === 'private') {
+                            if (job.job_status === 'unlisted') {
                                 return "Unlisted";
-                            } else if (job.status === 'public') {
+                            } else if (job.job_status === 'listed') {
                                 return "Public";
-                            } else if (job.status === 'archived') {
+                            } else if (job.job_status === 'archived') {
                                 return "Archived";
                             } else {
                                 return "Unknown";
