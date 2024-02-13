@@ -156,7 +156,7 @@ export function ApplicationPreview({data, handleDataReload}) {
                         {
                             testMode ?
                                 <Image
-                                    src={`/icons/sm-plugged-in-green${plugIsHovered && "-light" }.svg`}
+                                    src={`/icons/sm-plugged-in-green${plugIsHovered ? "-light" : ""}.svg`}
                                     alt="columns"
                                     height="25"
                                     width="25"
