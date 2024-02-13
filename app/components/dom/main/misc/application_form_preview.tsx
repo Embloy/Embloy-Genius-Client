@@ -1,5 +1,4 @@
-"use client";
-import React, {useEffect, useState} from "react";
+import React, { useState} from "react";
 import {cn} from "@/lib/utils";
 import {z} from 'zod';
 import {Checkbox} from "@/app/components/ui/application_preview/checkbox";
@@ -8,11 +7,8 @@ import Image from "next/image";
 import './locals.css';
 import dynamic from "next/dynamic";
 import {OutputData} from "@editorjs/editorjs";
-import EditorBlock from "@/app/components/dom/main/misc/application_editor";
-import {editor_to_json, json_to_editor} from "@/lib/utils/formats";
-const Editor = dynamic(() => import("@/app/components/dom/main/misc/application_editor"), {
-    ssr: false,
-});
+import {json_to_editor} from "@/lib/utils/formats";
+const EditorBlock = dynamic(() => import("@/app/components/dom/main/misc/application_editor"), {ssr: false});
 
 export function ApplicationPreview({data, handleDataReload}) {
     const [errorMessages, setErrorMessages] = useState({});
@@ -37,7 +33,6 @@ export function ApplicationPreview({data, handleDataReload}) {
     };
 
 
-    // Update function for text and link question types
     const handleTextChange = (id: number, value: string, required: boolean) => {
         try {
             setErrorMessages((prevMessages) => {
