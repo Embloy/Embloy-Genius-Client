@@ -140,14 +140,14 @@ export function ApplicationPreview({data, handleDataReload}) {
     };
     return (
         <div className={cn(previewClass, containerStyle, cn(testMode ? "border-embloy-green overflow-hidden" : "border-gray-700"))}>
-            <div className={cn("w-full flex flex-row items-center justify-between sticky top-0 bg0-r px-4 py-2 border-b", cn(testMode ? "border-embloy-green" : "border-gray-700"))}>
+            <div className={cn("w-full flex flex-row items-center justify-between sticky top-0 bg0-r px-4 py-2 border-b z-10", cn(testMode ? "border-embloy-green" : "border-gray-700"))}>
                 <p className={cn(textClass, "font-normal text-xs ", cn(testMode ? "text-embloy-green" : "c2-5"))}>Preview</p>
 
                 <div className="flex flex-row items-center justify-start">
                     <p className={cn(testMode ? "font-normal text-xs text-embloy-green" : "font-normal text-xs c2-5")}>{`${testMode ? "Test" : "Spectator"} mode`}</p>
                     <button
                         onClick={() => setTestMode(!testMode)}
-                        className={"dark:hover:bg-transparent hover:bg-transparent"}
+                        className="hover:bg0-r"
                         onMouseEnter={handlePlugHover}
                         onMouseLeave={handlePlugNotHover}
                     >
@@ -181,7 +181,7 @@ export function ApplicationPreview({data, handleDataReload}) {
                 <div className="min-h-[200px] w-full flex flex-col items-center justify-start gap-2 px-4 py-2">
                 </div>
             ) : (
-                <div className="min-h-[250px] w-full flex flex-col items-center justify-start gap-2 px-4 py-2">
+                <div className="min-h-[250px] w-9/10 flex flex-col items-center justify-start gap-4 px-4 py-2">
                     <div className="flex flex-col text-center">
                         <h1 className="text-lg font-semibold tracking-tight">
                             Apply for {title ?? "this job"}
@@ -190,15 +190,18 @@ export function ApplicationPreview({data, handleDataReload}) {
                             Enter your details below to apply
                         </p>
                     </div>
-                    <textarea
-                        maxLength={500}
-                        onChange={handleInputChange}
-                        value={applicationText}
-                        className="h-32 w-full resize-none rounded-md border bg-secondary p-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
-                        placeholder="* Enter your application text here... (max. 500 characters)"
-                    />
+                    <div className="w-full">
+                        <textarea
+                            maxLength={500}
+                            onChange={handleInputChange}
+                            value={applicationText}
+                            style={{resize: 'none', overflow: 'auto'}}
+                            className="h-32 w-full resize-none rounded-md border bg-secondary p-2 text-sm focus:outline-none focus:ring-2 focus:ring-white bg0-r border-gray-700"
+                            placeholder="* Enter your application text here... (max. 500 characters)"
+                        />
+                    </div>
                     {cv_required && (
-                        <div>
+                        <div className="w-full">
                             <legend className="text-lg font-semibold">
                                 Upload your CV *
                             </legend>
@@ -225,14 +228,14 @@ export function ApplicationPreview({data, handleDataReload}) {
                         switch (option.question_type) {
                             case "link":
                                 return (
-                                    <div>
+                                    <div className="w-full">
                                         <legend className="text-lg font-semibold">{label}</legend>
                                         <input
                                             key={index}
                                             type="text"
                                             required={option.required}
                                             placeholder="https://example.com"
-                                            className="text-blue-500 underline"
+                                            className="c0 px-2 border border-gray-700 outline-none rounded-sm focus:ring-2 focus:ring-white"
                                             onChange={(event) =>
                                                 handleTextChange(option.id, event.target.value, option.required)
                                             }
@@ -243,7 +246,7 @@ export function ApplicationPreview({data, handleDataReload}) {
                                 );
                             case "text":
                                 return (
-                                    <div>
+                                    <div className="w-full">
                                         <legend className="text-lg font-semibold">{label}</legend>
                                         <textarea
                                             key={index}
@@ -253,7 +256,7 @@ export function ApplicationPreview({data, handleDataReload}) {
                                             }
                                             maxLength={200}
                                             style={{resize: 'none', overflow: 'auto'}}
-                                            className="h-20 w-full rounded-md border bg-secondary p-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+                                            className="h-20 w-full rounded-md border bg-secondary p-2 text-sm focus:outline-none focus:ring-2 focus:ring-white bg0-r border-gray-700"
                                             placeholder="Enter your response (max. 200 characters)"
                                         />
                                         {errorMessages[option.id] &&
@@ -262,7 +265,7 @@ export function ApplicationPreview({data, handleDataReload}) {
                                 );
                             case "yes_no":
                                 return (
-                                    <div>
+                                    <div className="w-full">
                                         <Select
                                             key={index}
                                             required={option.required}
@@ -286,7 +289,7 @@ export function ApplicationPreview({data, handleDataReload}) {
                                 );
                             case "single_choice":
                                 return (
-                                    <div>
+                                    <div className="w-full">
                                         <Select
                                             key={index}
                                             required={option.required}
@@ -309,7 +312,7 @@ export function ApplicationPreview({data, handleDataReload}) {
                                 );
                             case "multiple_choice":
                                 return (
-                                    <fieldset key={index} className="flex flex-col space-y-2">
+                                    <fieldset key={index} className="flex flex-col space-y-2 w-full">
                                         <legend className="text-lg font-semibold">{label}</legend>
                                         {option.options.map((opt, optIndex) => (
                                             <label
