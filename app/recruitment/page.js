@@ -1,7 +1,7 @@
 "use client";
 import React, {useEffect, useState} from "react";
 import {cn} from "@/lib/utils";
-import { columns} from "@/app/recruitment/jobs_columns";
+import {columns} from "@/app/recruitment/jobs_columns";
 import { JobDataTable} from "@/app/recruitment/JobDataTable";
 import './locals.css'
 import {get_core} from "@/lib/misc_requests";
