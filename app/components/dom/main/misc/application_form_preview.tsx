@@ -6,9 +6,10 @@ import {Checkbox} from "@/app/components/ui/application_preview/checkbox";
 import {Select, SelectContent, SelectItem, SelectTrigger} from "@/app/components/ui/application_preview/select";
 import Image from "next/image";
 import './locals.css';
+import dynamic from "next/dynamic";
+import PreviewRenderer from "@/app/components/dom/main/misc/preview_renderer";
 
 export function ApplicationPreview({data, handleDataReload}) {
-
     const [errorMessages, setErrorMessages] = useState({});
     const textSchema = z.string().nonempty({message: 'Input cannot be empty'});
     const idSchema = z.number().int().positive({message: 'ID must be a positive integer'});
@@ -138,13 +139,19 @@ export function ApplicationPreview({data, handleDataReload}) {
     const handlePlugNotHover = () => {
         setPlugIsHovered(false);
     };
+    const Editor = dynamic(() => import("@/app/components/dom/main/misc/application_editor"), {
+        ssr: false,
+    });
+    const [opt, setOpt] = useState();
     return (
-        <div className={cn(previewClass, containerStyle, cn(testMode ? "border-embloy-green overflow-hidden" : "border-gray-700"))}>
-            <div className={cn("w-full flex flex-row items-center justify-between sticky top-0 bg0-r px-4 py-2 border-b z-10", cn(testMode ? "border-embloy-green" : "border-gray-700"))}>
+        <div
+            className={cn(previewClass, containerStyle, cn(testMode ? "border-embloy-green" : "border-gray-700"))}>
+            <div
+                className={cn("w-full flex flex-row items-center justify-between sticky top-0 bg0-r px-4 py-2 border-b z-10", cn(testMode ? "border-embloy-green" : "border-gray-700"))}>
                 <p className={cn(textClass, "font-normal text-xs ", cn(testMode ? "text-embloy-green" : "c2-5"))}>Preview</p>
 
                 <div className="flex flex-row items-center justify-start">
-                    <p className={cn(testMode ? "font-normal text-xs text-embloy-green" : "font-normal text-xs c2-5")}>{`${testMode ? "Test" : "Spectator"} mode`}</p>
+                    <p className={cn(testMode ? "font-normal text-xs text-embloy-green" : "font-normal text-xs c2-5")}>{`${testMode ? "Test" : "Editor"} mode`}</p>
                     <button
                         onClick={() => setTestMode(!testMode)}
                         className="hover:bg0-r"
@@ -178,9 +185,6 @@ export function ApplicationPreview({data, handleDataReload}) {
 
             </div>
             {testMode ? (
-                <div className="min-h-[200px] w-full flex flex-col items-center justify-start gap-2 px-4 py-2">
-                </div>
-            ) : (
                 <div className="min-h-[250px] w-9/10 flex flex-col items-center justify-start gap-4 px-4 py-2">
                     <div className="flex flex-col text-center">
                         <h1 className="text-lg font-semibold tracking-tight">
@@ -340,6 +344,23 @@ export function ApplicationPreview({data, handleDataReload}) {
                                 return null;
                         }
                     })}
+                </div>
+            ) : (
+
+                <div className="min-h-[200px] w-full flex flex-col items-center justify-start gap-2 px-4 py-2">
+
+                    <div className="grid grid-cols-2 gap-2 m-2">
+                        <div className="col-span-1">
+                            <h1>Editor</h1>
+                            <div className="border rounded-md">
+                                <Editor
+                                    data={opt}
+                                    onChange={setOpt}
+                                    holder="editorjs"
+                                />
+                            </div>
+                        </div>
+                    </div>
                 </div>
             )}
         </div>
