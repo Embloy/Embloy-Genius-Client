@@ -19,8 +19,8 @@ export type Job = {
     job_type_value: number
     job_slug: string
     job_value:string
-    job_status: number // 0 or 1 <=> inactive or active
-    status: string //public or private
+    activity_status: number // 0 or 1 <=> inactive or active
+    job_status: string //public or private
     user_id: number
     duration: number
     code_lang: string
