@@ -34,7 +34,7 @@ import React, {useEffect, useState} from "react";
 import {DataTablePagination} from "@/app/components/dom/main/datatable/DataTablePagination";
 import {extractContent} from "@/lib/utils/helpers";
 import {UploadJobFileButton} from "@/app/components/dom/main/misc/FileUploads";
-import { Job } from "./job_type";
+import { Job } from "../../lib/types/job";
 import {useRouter} from "next/navigation";
 import LoadingScreen from "@/app/components/dom/main/screens/LoadingScreen";
 import {RemoveJobButton} from "@/app/components/dom/main/datatable/job_remove_button";

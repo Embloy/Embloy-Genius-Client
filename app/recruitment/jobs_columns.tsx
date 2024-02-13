@@ -2,7 +2,7 @@
 import {ColumnDef} from "@tanstack/react-table"
 import {Checkbox} from "@/app/components/ui/misc/checkbox"
 import {DataTableColumnHeader} from "@/app/components/dom/main/datatable/DataTableColumnHeader";
-import {Job} from "@/app/recruitment/job_type";
+import {Job} from "@/lib/types/job";
 import {cast_date} from "@/lib/utils/formats";
 
 export const columns: ColumnDef<Job>[] = [

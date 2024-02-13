@@ -9,6 +9,7 @@ import './locals.css';
 import dynamic from "next/dynamic";
 import {OutputData} from "@editorjs/editorjs";
 import EditorBlock from "@/app/components/dom/main/misc/application_editor";
+import {editor_to_json, json_to_editor} from "@/lib/utils/formats";
 const Editor = dynamic(() => import("@/app/components/dom/main/misc/application_editor"), {
     ssr: false,
 });
@@ -159,8 +160,8 @@ export function ApplicationPreview({data, handleDataReload}) {
 
     const [opt, setOpt] = useState<OutputData>(json as OutputData);
     useEffect(() => {
-        console.log(opt);
-    } , [opt]);
+        console.log(editor_to_json(json_to_editor(data.application_options)))
+    } , [data]);
     return (
         <div
             className={cn(previewClass, containerStyle, cn(testMode ? "border-embloy-green" : "border-gray-700"))}>

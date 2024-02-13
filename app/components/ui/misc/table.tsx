@@ -1,7 +1,7 @@
 import * as React from "react"
 import {cn} from "@/lib/utils"
 import {JobDetails} from "@/app/recruitment/job_details";
-import { Job } from "@/app/recruitment/job_type";
+import { Job } from "@/lib/types/job";
 import {Column} from "@tanstack/react-table";
 
 const Table = React.forwardRef<
