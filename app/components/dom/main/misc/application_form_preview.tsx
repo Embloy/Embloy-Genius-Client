@@ -128,7 +128,7 @@ export function ApplicationPreview({data, handleDataReload}) {
     const cv_required = data.cv_required;
     const allowed_cv_formats = data.allowed_cv_formats;
     const title = data.title;
-    const previewClass = "w-full rounded-lg border-[1px] flex flex-col items-center justify-start gap-2 cursor-default px-4 py-2 scrll";
+    const previewClass = "w-full rounded-lg border-[1px] flex flex-col items-center justify-start gap-2 cursor-default scrll";
     const containerStyle = "max-h-[245px] overflow-y-auto";
     const textClass = "cursor-text"
     const [plugIsHovered, setPlugIsHovered] = useState(false);
@@ -140,8 +140,8 @@ export function ApplicationPreview({data, handleDataReload}) {
     };
     return (
         <div className={cn(previewClass, containerStyle, cn(testMode ? "border-embloy-green overflow-hidden" : "border-gray-700"))}>
-            <div className="w-full flex flex-row items-center justify-between">
-                <p className={cn(textClass, "font-normal text-xs c2-5")}>Preview</p>
+            <div className={cn("w-full flex flex-row items-center justify-between sticky top-0 bg0-r px-4 py-2 border-b", cn(testMode ? "border-embloy-green" : "border-gray-700"))}>
+                <p className={cn(textClass, "font-normal text-xs ", cn(testMode ? "text-embloy-green" : "c2-5"))}>Preview</p>
 
                 <div className="flex flex-row items-center justify-start">
                     <p className={cn(testMode ? "font-normal text-xs text-embloy-green" : "font-normal text-xs c2-5")}>{`${testMode ? "Test" : "Spectator"} mode`}</p>
@@ -178,10 +178,10 @@ export function ApplicationPreview({data, handleDataReload}) {
 
             </div>
             {testMode ? (
-                <div className="min-h-[200px] w-full flex flex-col items-center justify-start gap-2 ">
+                <div className="min-h-[200px] w-full flex flex-col items-center justify-start gap-2 px-4 py-2">
                 </div>
             ) : (
-                <div className="min-h-[250px] w-full flex flex-col items-center justify-start gap-2">
+                <div className="min-h-[250px] w-full flex flex-col items-center justify-start gap-2 px-4 py-2">
                     <div className="flex flex-col text-center">
                         <h1 className="text-lg font-semibold tracking-tight">
                             Apply for {title ?? "this job"}
