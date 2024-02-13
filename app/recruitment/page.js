@@ -33,7 +33,11 @@ export default function Jobs() {
     const [data, setData] = useState(null);
     useEffect(() => {
         get_core("/user/jobs", router).then(data => {
-            setData(data.jobs.filter(job => job.status !== 'archived'))
+            if (data.jobs){
+                setData(data.jobs.filter(job => job.status !== 'archived'))
+            } else {
+                setData([])
+            }
             setReloadData(false)
         }).catch(e => {
             console.log(e)

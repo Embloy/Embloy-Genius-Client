@@ -61,9 +61,9 @@ export const columns: ColumnDef<Job>[] = [
         enableHiding: true,
         cell: ({row}) => {
             let visibility = ""
-            if (row.getValue('status') === 'private') {
+            if (row.getValue('status') === 'unlisted') {
                 visibility = "Unlisted"
-            } else if (row.getValue('status') === 'public') {
+            } else if (row.getValue('status') === 'listed') {
                 visibility = "Public"
             } else if (row.getValue('status') === 'archived') {
                 visibility = "Archived"
