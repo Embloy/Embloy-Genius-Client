@@ -13,19 +13,6 @@ import {editor_to_json, json_to_editor} from "@/lib/utils/formats";
 const Editor = dynamic(() => import("@/app/components/dom/main/misc/application_editor"), {
     ssr: false,
 });
-const json = {
-    "time" : 1550476186479,
-    "blocks" : [
-        {
-            "type" : "header",
-            "data" : {
-                "text" : "Ausbildungseinrichtung",
-                "level" : 2
-            }
-        },
-    ],
-    "version" : "2.8.1"
-}
 
 export function ApplicationPreview({data, handleDataReload}) {
     const [errorMessages, setErrorMessages] = useState({});
