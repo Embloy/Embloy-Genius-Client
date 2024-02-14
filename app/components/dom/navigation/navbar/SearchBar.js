@@ -1,22 +1,17 @@
-"use client";
-import React from "react";
+import React, { useEffect } from "react";
+import docsearch from '@docsearch/js';
+import '@docsearch/css';
 
-export function SearchBar(props) {
-    const handleKeyPress = (event) => {
-        if(event.key === 'Enter'){
-            console.log('enter press here! ')
-        }
-    }
-
+export function SearchBar() {
+    useEffect(() => {
+        docsearch({
+            container: '#docsearch',
+            appId: 'PZJFX96675',
+            indexName: 'developers-embloy',
+            apiKey: '7be5a71c147a2f07dfe9f5f06d2470bf',
+        });
+    }, []);
     return (
-
-        <input
-            className="text-gray-400 border-[1px] border-gray-700 rounded-full h-10 w-52 px-4"
-            type="text"
-            name="name"
-            placeholder="Search"
-            onKeyDown={handleKeyPress}
-        />
-
-    )
+        <div id="docsearch" />
+    );
 }
