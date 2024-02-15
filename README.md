@@ -90,6 +90,27 @@ server.
 4. Go to http://localhost:3000
 </details>
 
+## Running on Kubernetes
+
+1. Build docker container:
+
+```sh
+docker build -t embloy-genius-front . && docker tag genius-front:latest <your-username>/embloy-genius-front
+```
+
+2. Push to container registry:
+
+```sh
+docker push <your-username>/embloy-genius-front
+```
+
+3. Run image in K8s:
+
+```sh
+kubectl apply -f AKS_genius_front.yml
+```
+
+
 © Carlo Bortolan, Jan Hummel
 
 > Carlo Bortolan &nbsp;&middot;&nbsp;
