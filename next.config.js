@@ -14,8 +14,13 @@ const nextConfig =  {
                     protocol: 'https',
                     hostname: 'avatars.githubusercontent.com',
                 },
+                {
+                    protocol: 'https',
+                    hostname: 'embloy.blob.core.windows.net',
+                },
             ],
         },
+        output: "standalone",
     }
 
 module.exports = nextConfig
