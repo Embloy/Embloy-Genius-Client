@@ -48,7 +48,9 @@
     "tailwindcss": "latest",
     "tailwindcss-animate": "^1.0.7",
     "zod": "^3.22.4",
-    "@editorjs/checklist": "^1.6.0"
+    "@editorjs/checklist": "^1.6.0",
+    "editorjs-drag-drop": "^1.1.13",
+    "editorjs-text-color-plugin": "^2.0.4"
   },
   "devDependencies": {
     "@types/react": "18.2.38",

@@ -1,4 +1,4 @@
-import React, { useState} from "react";
+import React, {useEffect, useState} from "react";
 import {cn} from "@/lib/utils";
 import {z} from 'zod';
 import {Checkbox} from "@/app/components/ui/application_preview/checkbox";
@@ -7,7 +7,7 @@ import Image from "next/image";
 import './locals.css';
 import dynamic from "next/dynamic";
 import {OutputData} from "@editorjs/editorjs";
-import {json_to_editor} from "@/lib/utils/formats";
+import {editor_to_json, json_to_editor} from "@/lib/utils/formats";
 const EditorBlock = dynamic(() => import("@/app/components/dom/main/misc/application_editor"), {ssr: false});
 
 export function ApplicationPreview({data, handleDataReload}) {
@@ -130,7 +130,7 @@ export function ApplicationPreview({data, handleDataReload}) {
     const allowed_cv_formats = data.allowed_cv_formats;
     const title = data.title;
     const previewClass = "w-full rounded-lg border-[1px] flex flex-col items-center justify-start gap-2 cursor-default scrll";
-    const containerStyle = "max-h-[245px] overflow-y-auto";
+    const containerStyle = "max-h-[500px] overflow-y-auto";
     const textClass = "cursor-text"
     const [plugIsHovered, setPlugIsHovered] = useState(false);
     const handlePlugHover = () => {
@@ -141,6 +141,15 @@ export function ApplicationPreview({data, handleDataReload}) {
     };
 
     const [localOpt, setLocalOpt] = useState<OutputData>(json_to_editor(data.application_options) as OutputData);
+    useEffect(() => {
+        console.log("original")
+        console.log(data.application_options)
+        console.log("localOpt changed")
+        console.log(editor_to_json(localOpt));
+        console.log("\n");
+
+    }, [localOpt]);
+
     return (
         <div
             className={cn(previewClass, containerStyle, cn(testMode ? "border-embloy-green" : "border-gray-700"))}>

@@ -3,7 +3,7 @@ import React from "react";
 import { memo, useEffect, useRef } from "react";
 import EditorJS, { OutputData } from "@editorjs/editorjs";
 import { EDITOR_TOOLS } from "@/app/components/dom/main/misc/EditorTools";
-
+import DragDrop from 'editorjs-drag-drop';
 //props
 type Props = {
     data?: OutputData;
@@ -26,6 +26,9 @@ const EditorBlock = ({ data, onChange, holder }: Props) => {
                 async onChange(api, event) {
                     const data = await api.saver.save();
                     onChange(data);
+                },
+                onReady: () => {
+                    new DragDrop(editor);
                 },
             });
             ref.current = editor;

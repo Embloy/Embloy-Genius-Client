@@ -1,5 +1,6 @@
 import {InputData, Question, QuestionType} from "@/lib/types/question";
 import {EditorBlock, EditorData} from "@/lib/types/editor";
+import {OutputData} from "@editorjs/editorjs";
 
 export const cast_datetime = (args: string, format_code: string) => {
     const datetime = new Date(args);
@@ -81,7 +82,7 @@ export function json_to_editor(inputData: InputData): EditorData {
             id: `question_${index}`,
             type: "header",
             data: {
-                text: question.question,
+                text: `<font color="#9ca3ae">${question.question}</font>`,
                 level: 3,
                 original_type: question.question_type
             }
@@ -129,6 +130,15 @@ export function json_to_editor(inputData: InputData): EditorData {
             };
             blocks.push(textBlock);
         }
+        else if (question.question_type === "link") {
+                // Handle text input differently if needed
+                const textBlock: EditorBlock = {
+                    id: `paragraph_${index}`,
+                    type: "header",
+                    data: {text: "Enter a link here",  "level": 4}
+                };
+                blocks.push(textBlock);
+        }
     });
     return {
         time: Date.now(),
@@ -137,7 +147,7 @@ export function json_to_editor(inputData: InputData): EditorData {
     };
 }
 
-export function editor_to_json(editorData: EditorData): InputData {
+export function editor_to_json(editorData: OutputData): InputData {
     const inputData: InputData = [];
     let currentQuestion: Question | null = null;
 

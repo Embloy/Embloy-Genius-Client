@@ -16,7 +16,7 @@ const nextConfig =  {
                 },
                 {
                     protocol: 'https',
-                    hostname: 'embloy.blob.core.windows.net',
+                    hostname: 'embloy2.blob.core.windows.net',
                 },
             ],
         },
