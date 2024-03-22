@@ -1,5 +1,5 @@
 "use client";
-import React, {useContext, useState} from "react";
+import React, {useContext, useState, Suspense} from "react";
 import {cn} from "@/lib/utils";
 import Image from "next/image";
 import {AccessSettings} from "@/app/settings/access";
@@ -8,10 +8,10 @@ import {UserContext} from "@/app/components/dom/main/wrappers/UserContext";
 import {StoreContext} from "@/app/components/dom/main/wrappers/StoreWrapper";
 import LoadingScreen from "@/app/components/dom/main/screens/LoadingScreen";
 import { useEffect } from 'react';
-import { useSearchParams } from "next/navigation";
+import { useSearchParams } from 'next/navigation'
 import '@/app/globals.css'
-
-export default function Settings() {
+ 
+function SettingsPanel() {
     const [currentSubPageID, setcurrentSubPageID] = useState(0);
     const [profileIsHovered, setProfileIsHovered] = useState(false);
     const [accessIsHovered, setAccessIsHovered] = useState(false);
@@ -98,6 +98,7 @@ export default function Settings() {
     let user = useContext(UserContext);
     let store = useContext(StoreContext);
     if(!user) return (<LoadingScreen />);
+    
     return (
         <main className="c0 flex min-h-screen h-full flex-col items-center justify-start">
             <div className="z-10 max-w-6xl w-full min-h-screen h-full border-l-[1px] border-r-[1px] border-gray-700 flex flex-col items-center justify-start">
@@ -227,4 +228,13 @@ export default function Settings() {
             </div>
         </main>
     );
+}
+
+export default function Settings() {
+    return (
+      // You could have a loading skeleton as the `fallback` too
+      <Suspense>
+        <SettingsPanel />
+      </Suspense>
+    )
 }
