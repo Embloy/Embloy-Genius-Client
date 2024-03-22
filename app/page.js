@@ -176,7 +176,7 @@ export default function Home() {
               </p>
             </div>
             <div className="flex flex-row gap-5 text-md">
-                <p>2. Copy the job's jobslug</p>
+                <p>2. Copy the job&apos;s jobslug</p>
             </div>
             <div className="flex flex-row gap-5 text-md">
               <p>3.&nbsp;
