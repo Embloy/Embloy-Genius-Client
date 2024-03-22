@@ -76,7 +76,7 @@ export function SubscriptionSettings({store}) {
                     Manage plans for personal and commercial use.
                     <a
                         className="px-1 italic text-embloy-purple-lighter hover:underline cursor-pointer"
-                        href="https://about.embloy.com"
+                        href="https://developers.embloy.com/docs/core/subscriptions/subscription_features"
                         target="_blank"
                         rel="noopener noreferrer"
                     >

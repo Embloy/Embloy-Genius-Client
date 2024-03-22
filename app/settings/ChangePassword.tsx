@@ -194,7 +194,7 @@ export function ChangePassword() {
                                 <div className="flex flex-col items-start justify-start gap-1">
                                     <p className="font-medium c1">New password*</p>
                                     <input
-                                        className="c0h-7 w-40 px-2 border-[2px] border-gray-700 outline-none rounded-lg"
+                                        className="c0 h-7 w-40 px-2 border-[2px] border-gray-700 outline-none rounded-lg"
                                         type="password"
                                         name="note"
                                         value={newPassword}
@@ -207,7 +207,7 @@ export function ChangePassword() {
                                 <div className="flex flex-col items-start justify-start gap-1">
                                     <p className="font-medium c1">Confirm new password*</p>
                                     <input
-                                        className="c0h-7 w-40 px-2 border-[2px] border-gray-700 outline-none rounded-lg"
+                                        className="c0 h-7 w-40 px-2 border-[2px] border-gray-700 outline-none rounded-lg"
                                         type="password"
                                         name="note"
                                         value={newnewPassword}
@@ -222,13 +222,10 @@ export function ChangePassword() {
                             </ div>
                             <div className="flex flex-row items-center justify-start">
                                 <p className="text-xs c3">Make sure the new password is at least 8
-                                    characters
-                                    including a number
-                                    and a lowercase letter.</p>
+                                    and at most 72 characters.</p>
                                 <div className="w-1"/>
                                 <a className=" text-xs italic c2-5 hover:underline cursor-pointer"
-                                   href="https://documenter.getpostman.com/view/24977803/2s9YRB2rkE"><p>Learn
-                                    more</p></a>
+                                   href="https://developers.embloy.com/docs/core/account/account_security" target="_blank" rel="noopener noreferrer"><p>Learn more</p></a>
                             </div>
 
                         </div>
@@ -308,7 +305,7 @@ export function ChangePassword() {
                             {!disableRequest && (
                                 (success === null || success === false) && (
                                     <a className=" text-xs italic c2-5 hover:underline cursor-pointer"
-                                       href="https://about.embloy.com"><p>I forgot my password</p></a>
+                                       href="https://embloy.com/password-reset" target="_blank" rel="noopener noreferrer"><p>I forgot my password</p></a>
                                 )
                             )}
 

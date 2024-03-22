@@ -28,12 +28,12 @@ export function GeniusSettings() {
                 title="Embloy Genius"
                 pre_text="Receive candidate suggestions aligning with your individual requirements."
                 link_text="Learn more"
-                link_url="https://about.embloy.com"
+                link_url="https://developers.embloy.com/docs/category/genius"
                 post_text=""
                 button_text="Open controls"
                 timeout={false}
                 headerChild={
-                    <div className="flex flex-row items-center justify-start gap-3">
+                    <div className="flex flex-col sm:flex-row items-center justify-start gap-3">
                         <div className="border border-transparent bg-red-500 px-2 rounded-full">
                             <p className="text-white text-xs">Inactive</p>
                         </div>
@@ -49,7 +49,7 @@ export function GeniusSettings() {
                                              disabled={true}
 
                         >
-                            <button className="c0 h-7 w-40 px-2 border-[2px] border-gray-700 outline-none select-all rounded-lg text-left cursor-not-allowed">
+                            <button className="c0 h-7 w-full sm:w-40 px-2 border-[2px] border-gray-700 outline-none select-all rounded-lg text-left cursor-not-allowed">
                                 <p className="c3">{genius ? "Enabled" : "Disabled"}</p>
                             </button>
                         </DropdownMenuTrigger>

@@ -37,6 +37,14 @@ export const columns: ColumnDef<Job>[] = [
         enableHiding: true,
     },
     {
+        accessorKey: "job_slug",
+        header: ({column}) => (
+            <DataTableColumnHeader column={column} title="Jobslug"/>
+        ),
+        enableSorting: true,
+        enableHiding: true,
+    },
+    {
         accessorKey: "job_type",
         header: ({column}) => (
             <DataTableColumnHeader column={column} title="Category"/>

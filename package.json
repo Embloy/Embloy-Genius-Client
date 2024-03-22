@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@docsearch/js": "^3.5.2",
+    "@editorjs/checklist": "^1.6.0",
     "@editorjs/code": "^2.9.0",
     "@editorjs/editorjs": "^2.29.0",
     "@editorjs/header": "^2.8.1",
@@ -35,6 +36,8 @@
     "clsx": "^2.0.0",
     "cookies-next": "latest",
     "daisyui": "latest",
+    "editorjs-drag-drop": "^1.1.13",
+    "editorjs-text-color-plugin": "^2.0.4",
     "embloy": "latest",
     "framer-motion": "^11.0.3",
     "lucide-react": "^0.293.0",
@@ -43,14 +46,13 @@
     "react": "latest",
     "react-dom": "latest",
     "react-modal": "^3.16.1",
+    "react-spinner-component": "^0.2.2",
+    "react-syntax-highlighter": "^15.5.0",
     "swr": "latest",
     "tailwind-merge": "^2.0.0",
     "tailwindcss": "latest",
     "tailwindcss-animate": "^1.0.7",
-    "zod": "^3.22.4",
-    "@editorjs/checklist": "^1.6.0",
-    "editorjs-drag-drop": "^1.1.13",
-    "editorjs-text-color-plugin": "^2.0.4"
+    "zod": "^3.22.4"
   },
   "devDependencies": {
     "@types/react": "18.2.38",

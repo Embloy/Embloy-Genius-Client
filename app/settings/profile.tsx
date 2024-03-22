@@ -26,7 +26,7 @@ export function ProfileSettings({store, user}) {
                         <p>Some information may be visible to other people using Embloy services.</p>
                         <div className="w-1"/>
                         <a className="italic c3 hover:underline cursor-pointer"
-                           href="https://about.embloy.com"><p className="c2-5">Learn more</p></a>
+                           href="https://developers.embloy.com/docs/category/account" target="_blank" rel="noopener noreferrer"><p className="c2-5">Learn more</p></a>
                     </div>
                 </div>
 

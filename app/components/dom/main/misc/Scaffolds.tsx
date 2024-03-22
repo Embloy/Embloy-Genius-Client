@@ -58,7 +58,7 @@ export function OpenCloseScaffold({title, pre_text, link_url, link_text, post_te
                 <p className="c2">{pre_text}</p>
                 <div className="w-1"/>
                 <a className="italic text-embloy-purple-lighter hover:underline cursor-pointer"
-                   href={link_url}><p>{link_text}</p></a>
+                   href={link_url} target="_blank" rel="noopener noreferrer"><p>{link_text}</p></a>
                 <div className="w-1"/>
                 <p>{post_text}</p>
             </div>

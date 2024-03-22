@@ -7,6 +7,8 @@ import {ProfileSettings} from "@/app/settings/profile";
 import {UserContext} from "@/app/components/dom/main/wrappers/UserContext";
 import {StoreContext} from "@/app/components/dom/main/wrappers/StoreWrapper";
 import LoadingScreen from "@/app/components/dom/main/screens/LoadingScreen";
+import { useEffect } from 'react';
+import { useSearchParams } from "next/navigation";
 import '@/app/globals.css'
 
 export default function Settings() {
@@ -16,6 +18,28 @@ export default function Settings() {
     const [securityIsHovered, setSecurityIsHovered] = useState(false);
     const [integrationsIsHovered, setIntegrationsIsHovered] = useState(false);
     const [archiveIsHovered, setArchiveIsHovered] = useState(false);
+    const searchParams = useSearchParams();
+
+    useEffect(() => {
+        // Check if the tab query parameter exists
+        if (searchParams && searchParams.has("tab")) {
+            // Convert the tab name to a subpage ID
+            const tabToSubPageID = {
+                profile: 0,
+                access: 1,
+                security: 2,
+                integrations: 3,
+                archive: 4
+            };
+            const subPageID = tabToSubPageID[searchParams.get("tab")];
+
+            // If the subpage ID is valid, switch to it
+            if (subPageID !== undefined) {
+                setcurrentSubPageID(subPageID);
+            }
+        }
+    }, [searchParams]);
+
     const switchSubPage = (id) => {
         if (currentSubPageID != id){
             setcurrentSubPageID(id);

@@ -2,25 +2,34 @@
 import { siteConfig } from '@/config/site';
 import Image from 'next/image'
 import React, {useState} from "react";
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { nightOwl } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
 
+  const newsItems = [
+    {
+      id: 1,
+      imageUrl: '/img/developers.png',
+      title: 'Developer Documentation Published',
+      description: 'We are excited to announce the publication of our comprehensive developer documentation. Check it out to learn more about how to use our API.',
+      link: 'https://developers.embloy.com',
+      },
+    {
+      id: 2,
+      imageUrl: '/img/github.png',
+      title: 'Open Source GitHub Page Launched',
+      description: 'We have launched our open source GitHub page. Feel free to contribute and help us improve our software.',
+      link: 'https://github.com/embloy',
+      },
+    {
+      id: 3,
+      imageUrl: '/img/closed_beta.png',
+      title: 'Closed Beta Started',
+      description: 'Our closed beta has officially started. We are excited to get feedback from our early users to help us improve.',
+      link: 'https://embloy-platforms.involve.me/beta',
+      },
 
-const newsItems = [
-  {
-    id: 1,
-    imageUrl: '/img/news1.png',
-    title: 'News 1',
-    description: 'Description for News 1...',
-    link: 'https://www.about.embloy.com',
-  },
-  {
-    id: 2,
-    imageUrl: '/img/news2.png',
-    title: 'News 2',
-    description: 'Description for News 2...',
-    link: 'https://www.about.embloy.com',
-  },
-];
+  ];
 
 const jobItems = [
   {
@@ -41,19 +50,21 @@ const jobItems = [
 
 
 
-export default function Hme() {
-  //todo: make analytics api endpoints
-  //todo: make news endpoints
+export default function Home() {
+  const [topJSXIsHovered, setTopJSXIsHovered] = useState(false);
+  const [embedTopJSXIsHovered, setEmbedTopJSXIsHovered] = useState(false);
+  const [topPythonIsHovered, setTopPythonIsHovered] = useState(false);
+  const [embedTopPythonIsHovered, setEmbedTopPythonIsHovered] = useState(false);
+  const [topRubyIsHovered, setTopRubyIsHovered] = useState(false);
+  const [embedTopRubyIsHovered, setEmbedTopRubyIsHovered] = useState(false);
+  const [topTypeScriptIsHovered, setTopTypeScriptIsHovered] = useState(false);
+  const [embedTopTypeScriptIsHovered, setEmbedTopTypeScriptIsHovered] = useState(false);
+  const [topGoIsHovered, setTopGoIsHovered] = useState(false);
+  const [embedTopGoIsHovered, setEmbedTopGoIsHovered] = useState(false);
 
-
-  // real time insights box
-
-
-
-  const [topJobIsHovered, setTopJobIsHovered] = useState(false);
-  const [embedTopJobIsHovered, setEmbedTopJobIsHovered] = useState(false);
   const [plusIsHovered, setPlusIsHovered] = useState(false);
   const [uploadIsHovered, setUploadIsHovered] = useState(false);
+  const [isCopied, setIsCopied] = useState(false);
 
 
   const handleUploadMouseEnter = () => {
@@ -70,24 +81,6 @@ export default function Hme() {
 
   const handlePlusMouseLeave = () => {
     setPlusIsHovered(false);
-  };
-
-
-  const handleEmbedTopJobMouseEnter = () => {
-    setEmbedTopJobIsHovered(true);
-  };
-
-  const handleEmbedTopJobMouseLeave = () => {
-    setEmbedTopJobIsHovered(false);
-  };
-
-
-  const handleTopJobMouseEnter = () => {
-    setTopJobIsHovered(true);
-  };
-
-  const handleTopJobMouseLeave = () => {
-    setTopJobIsHovered(false);
   };
 
   //news box
@@ -129,310 +122,617 @@ export default function Hme() {
 
   return (
 
-    <main className=" text-white flex min-h-screen h-full flex-col items-center ">
-      <div className="z-10 max-w-6xl w-full min-h-screen h-full border-l-[1px] border-r-[1px] border-gray-700 justify-between p-4">
-        <div className="w-full flex flex-row items-center justify-between my-4">
-          <h1 className="font-medium text-2xl ">Genius Dashboard</h1>
-          <div className="flex flex-row items-center justify-end gap-4">
-            <a href="https://www.about.embloy.com" onMouseEnter={handlePlusMouseEnter} onMouseLeave={handlePlusMouseLeave}>
-              <Image
-                  src={plusIsHovered ? "/icons/plus-light.svg" : "/icons/plus-dark.svg"}
-                  alt="Logo"
-                  height="35"
-                  width="35"
-                  className="relative"
-              />
-            </a>
-            <a href="https://www.about.embloy.com" onMouseEnter={handleUploadMouseEnter} onMouseLeave={handleUploadMouseLeave}>
-              <Image
-                  src={uploadIsHovered ? "/icons/upload-light.svg" : "/icons/upload-dark.svg"}
-                  alt="Logo"
-                  height="35"
-                  width="35"
-                  className="relative"
-              />
-            </a>
-          </div>
-
-
-        </div>
-        <div className="w-screen h-6" />
-
-        <div className="w-full flex flex-row items-start justify-first my-6 gap-6">
-
-          <div className="max-w-3/10 py-4 px-8 flex flex-col items-start justify-start gap-2 bg-embloy-purple text-white rounded-lg border-[1px] border-transparent transition duration-200 ease-in-out hover:border-white ">
-            <div className="px-4 py-2 rounded-full border-[2px] border-white">
-              <h1 className="font-medium text-xl">Real-time insights</h1>
-            </div>
-
-            <div className="w-full flex flex-row items-center justify-center">
-              <div className="my-2 h-[1px] w-10/12 rounded-full " />
-            </div>
-
-            <div className="flex flex-col gap-0.5 w-full" >
-              <div className="h-[1px] w-full rounded-full bg-embloy-purple-lighter" />
-              <h1 className="font-medium text-sm text-embloy-purple-lighter">Summary:</h1>
-            </div>
-
-            <div className="flex flex-row gap-5" >
-              <p className="font-normal text-sm">You have <strong>8 jobs</strong> running publicly</p>
-            </div>
-
-            <div className="flex flex-row gap-5" >
-              <p className="font-normal text-sm">Your jobs currently average <strong>750 clicks/hour</strong></p>
-            </div>
-
-            <div className="h-4" />
-
-            <div className="flex flex-col gap-0.5 w-full" >
-              <div className="h-[1px] w-full rounded-full bg-embloy-purple-lighter" />
-              <h1 className="font-medium text-sm text-embloy-purple-lighter">Top job:</h1>
-            </div>
-
-            <button className="w-full flex flex-col items-center justify-start border-white border-[1px] rounded-lg p-2"  onMouseEnter={handleTopJobMouseEnter} onMouseLeave={handleTopJobMouseLeave}>
-              <div className="w-full flex flex-row items-center justify-between">
-                {!topJobIsHovered && (
-                    <div className="flex flex-row items-center justify-start gap-2">
-                      <Image
-                          src="/icons/rev-v-purple-lighter.svg"
-                          alt="Logo"
-                          height="10"
-                          width="10"
-                          className="relative"
-                      />
-                      <p className="font-semibold text-sm text-embloy-purple-lighter">1430/hr</p>
-                      <p className="font-bold text-sm">Barista</p>
-                    </div>
-                  )}
-                {topJobIsHovered && (
-                    <div className="flex flex-row items-center justify-start gap-2">
-                      <Image
-                          src="/icons/rev-v-green.svg"
-                          alt="Logo"
-                          height="10"
-                          width="10"
-                          className="relative"
-                      />
-                      <p className="font-semibold text-sm text-embloy-green">1430/hr</p>
-                      <p className="font-bold text-sm">Barista</p>
-                    </div>
-                )}
-
-                <a href="https://www.about.embloy.com" onMouseEnter={handleEmbedTopJobMouseEnter} onMouseLeave={handleEmbedTopJobMouseLeave}>
-                  <Image
-                      src={embedTopJobIsHovered ? "/icons/embed-purple-lighter.svg" : "/icons/embed-white.svg"}
-                      alt="Logo"
-                      height="25"
-                      width="25"
-                      className="relative"
-                  />
-                </a>
-              </div>
-              {topJobIsHovered && (
-                  <>
-                    <div className="h-2" />
-                    <div className="w-full flex flex-row items-center justify-start g-2">
-                      <p className="font-light text-xs text-embloy-purple-lighter opacity-50">00:42 2023/11/23</p>
-                    </div>
-                  </>
-              )}
-
-            </button>
-
-            <div className="h-12" />
-
-            <div className="w-full flex flex-row items-center justify-between">
-              <a className="font-medium text-sm text-embloy-purple-light hover:text-embloy-purple-lighter" href="https://www.about.embloy.com">GO TO ANALYTICS</a>
-            </div>
-          </div>
-
-
-          <div className="max-w-6/10 py-4 px-8 flex flex-col items-start justify-start gap-2 bg-embloy-purple text-white rounded-lg border-[1px] border-transparent transition duration-200 ease-in-out hover:border-white ">
-            <div className="w-full flex flex-row items-start justify-between">
-              <div className="px-4 py-2 rounded-full border-[2px] border-white">
-                <h1 className="font-medium text-xl">News</h1>
-              </div>
-
-              <div className="py-2 flex flex-row items-center justify-between gap-2">
-                <p className="font-normal text-sm text-embloy-purple-light">{currentNewsIndex + 1}</p>
-                <p className="font-normal text-sm text-embloy-purple-light"> | </p>
-                <p className="font-normal text-sm text-embloy-purple-light">{newsItems.length}</p>
-              </div>
-
-              <div className="py-2 flex flex-row items-center justify-between gap-2">
-                <button className="font-medium text-sm text-embloy-purple-light hover:text-embloy-purple-lighter" onClick={handlePrevNews}>Previous</button>
-                <button className="font-medium text-sm text-embloy-purple-light hover:text-embloy-purple-lighter" onClick={handleNextNews}>Next</button>
-              </div>
-
-            </div>
-
-            <div className="w-full flex flex-row items-center justify-center">
-              <div className="my-2 h-[1px] w-10/12 rounded-full " />
-            </div>
-
-            <div className="flex flex-col gap-0.5 w-full">
-              <Image
-                  src={currentNews.imageUrl}
-                  alt={currentNews.title}
-                  height="200"
-                  width="300"
-                  className="relative"
-              />
-              <div className="h-1" />
-              <div className="h-[1px] w-full rounded-full bg-embloy-purple-lighter" />
-              <p className="font-medium text-sm text-embloy-purple-lighter" >{currentNews.title}</p>
-              <div className="h-1" />
-              <p className="font-normal text-sm" >{currentNews.description}</p>
-            </div>
-            <div className="h-4" />
-            <div className="w-full flex flex-row items-center justify-between">
-              <a className="font-medium text-sm text-embloy-purple-light hover:text-embloy-purple-lighter" href={currentNews.description}>DETAILS</a>
-            </div>
-          </div>
-
-          <div className="max-w-6/10 py-4 px-8 flex flex-col items-start justify-start gap-2 bg-embloy-purple text-white rounded-lg border-[1px] border-transparent transition duration-200 ease-in-out hover:border-white ">
-            <div className="w-full flex flex-row items-start justify-between">
-              <div className="px-4 py-2 rounded-full border-[2px] border-white">
-                <h1 className="font-medium text-xl">Open Positions</h1>
-              </div>
-
-              <div className="py-2 flex flex-row items-center justify-between gap-2">
-                <p className="font-normal text-sm text-embloy-purple-light">{currentJobIndex + 1}</p>
-                <p className="font-normal text-sm text-embloy-purple-light"> | </p>
-                <p className="font-normal text-sm text-embloy-purple-light">{jobItems.length}</p>
-              </div>
-
-              <div className="py-2 flex flex-row items-center justify-between gap-2">
-                <button className="font-medium text-sm text-embloy-purple-light hover:text-embloy-purple-lighter" onClick={handlePrevJob}>Previous</button>
-                <button className="font-medium text-sm text-embloy-purple-light hover:text-embloy-purple-lighter" onClick={handleNextJob}>Next</button>
-              </div>
-            </div>
-
-            <div className="w-full flex flex-row items-center justify-center">
-              <div className="my-2 h-[1px] w-10/12 rounded-full " />
-            </div>
-
-            <div className="flex flex-col gap-0.5 w-full">
-              <Image
-                  src="/img/openpositions.jpg"
-                  alt="Secretary"
-                  height="200"
-                  width="300"
-                  className="relative"
-              />
-              <div className="h-1" />
-              <div className="h-[1px] w-full rounded-full bg-embloy-purple-lighter" />
-              <p className="font-medium text-sm text-embloy-purple-lighter" >{currentJob.title}</p>
-              <div className="h-1" />
-              <p className="font-normal text-sm" >{currentJob.description}</p>
-            </div>
-            <div className="h-4" />
-            <div className="w-full flex flex-row items-center justify-between">
-            <a 
-              className="font-medium text-sm text-embloy-purple-light hover:text-embloy-purple-lighter" 
-              onClick={handleApply}
-            >
-              APPLY WITH EMBLOY
-            </a>          
-            </div>
-          </div>
-        </div>
-
-
-
-        <div className="w-full h-96" />
-
-
-        <div className="w-full items-center justify-between font-mono text-sm lg:flex ">
-          <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-            Get started by editing&nbsp;
-            <code className="font-mono font-bold">app/route.js</code>
-          </p>
-          <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
-            <a
-              className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-              href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              By{' '}
-              <Image
-                src="/vercel.svg"
-                alt="Vercel Logo"
-                className="dark:invert"
-                width={100}
-                height={24}
-                priority
-              />
-            </a>
-          </div>
-        </div>
-
-        <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 before:lg:h-[360px] z-[-1]">
+<main className="text-white flex min-h-screen h-full flex-col items-center ">
+  <div className="overflow-hidden z-10 max-w-6xl w-full min-h-screen h-full border-l-[1px] border-r-[1px] border-gray-700 justify-between p-4">
+    <div className="w-full flex sm:flex-col md:flex-row items-center justify-between my-4">
+      <h1 className="font-medium text-2xl ">Genius Dashboard</h1>
+      <div className="flex flex-row items-center justify-end gap-4 mt-4 md:mt-0">
+        <a href="/recruitment" onMouseEnter={handlePlusMouseEnter} onMouseLeave={handlePlusMouseLeave}>
           <Image
-            className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-            src="/next.svg"
-            alt="Next.js Logo"
-            width={180}
-            height={37}
-            priority
+              src={plusIsHovered ? "/icons/plus-light.svg" : "/icons/plus-dark.svg"}
+              alt="Logo"
+              height="35"
+              width="35"
+              className="relative"
           />
+        </a>
+        <a href="/recruitment" onMouseEnter={handleUploadMouseEnter} onMouseLeave={handleUploadMouseLeave}>
+          <Image
+              src={uploadIsHovered ? "/icons/upload-light.svg" : "/icons/upload-dark.svg"}
+              alt="Logo"
+              height="35"
+              width="35"
+              className="relative"
+          />
+        </a>
+      </div>
+    </div>
+
+    <div className="w-full flex flex-col sm:flex-row items-start justify-start my-6 gap-6">
+
+<div className="w-full sm:w-2/3 py-4 px-8 flex flex-col items-start justify-between gap-2 bg-embloy-purple text-white rounded-lg border-[1px] border-transparent transition duration-200 ease-in-out hover:border-white overflow-auto h-[750px]">
+  <div className="px-4 py-2 rounded-full border-[2px] border-white">
+  <h1 className="font-medium text-xl">Quicklink Integration</h1>
         </div>
+        <div className="flex flex-col justify-start gap-0.5 w-full">
+          <div className="h-[1px] w-full rounded-full bg-embloy-purple-lighter" />          <h1 className="font-medium text-sm text-embloy-purple-lighter">Note:</h1>
+          <p>You need to be subscribed at least to&nbsp; 
+                  <a className="font-medium hover:text-embloy-purple-lighter" href="https://embloy.com/dashboard/billing" target="_blank" rel="noopener noreferrer">
+                      <strong>Embloy Free</strong>
+                  </a>
+                  .
+              </p>
+            </div>
 
-        <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
-          <a
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2 className={`mb-3 text-2xl font-semibold`}>
-              Docs{' '}
-              <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-                -&gt;
-              </span>
-            </h2>
-            <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-              Find in-depth information about jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjNext.js features and API.
-            </p>
-          </a>
+            <div className="flex flex-col w-full">
+                <div className="h-[1px] w-full rounded-full bg-embloy-purple-lighter" />
+            </div>
 
-          <a
-            href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800 hover:dark:bg-opacity-30"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2 className={`mb-3 text-2xl font-semibold`}>
-              Learn{' '}
-              <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-                -&gt;
-              </span>
-            </h2>
-            <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-              Learn about Next.js in an interactive course with&nbsp;quizzes!
-            </p>
-          </a>
+            <div className="flex flex-row gap-5 text-md">
+              <p>1.&nbsp;
+                <a className="font-medium hover:text-embloy-purple-lighter" href="https://developers.embloy.com/docs/core/jobs/create_jobs" target="_blank" rel="noopener noreferrer">
+                    <strong>Create or import</strong>
+                </a> a job
+              </p>
+            </div>
+            <div className="flex flex-row gap-5 text-md">
+                <p>2. Copy the job's jobslug</p>
+            </div>
+            <div className="flex flex-row gap-5 text-md">
+              <p>3.&nbsp;
+                <a className="font-medium hover:text-embloy-purple-lighter" href="/settings?tab=access" target="_blank" rel="noopener noreferrer">
+                    <strong>Generate a client token</strong>
+                </a>
+              </p>
+            </div>
+            <div className="flex flex-row gap-5 text-md">
+                <p>4. Copy-Paste the following code in your client:</p>
+            </div>
 
+          <button 
+        className={`w-full flex flex-col items-center justify-start border-white border-[1px] rounded-lg p-2 ${topJSXIsHovered ? 'h-[520px]' : 'h-[45px]'}`} 
+        onMouseEnter={() => setTopJSXIsHovered(true)} 
+        onMouseLeave={() => setTopJSXIsHovered(false)}
+        onClick={(e) => {
+          e.preventDefault();
+          navigator.clipboard.writeText(`<button onClick={handleApplyClick}>
+  <img src="https://embloy.com/images/button-black_large.svg" style={{ width: "300px", height: "auto" }} />
+</button>`);
+          setIsCopied(true);
+          setTimeout(() => setIsCopied(false), 3000);
+        }}
 
+      >        <div className="w-full flex flex-row items-center justify-between">
+                  {!topJSXIsHovered && (
+                        <><div className="flex flex-row items-center justify-start gap-2">
+                          <Image
+                            src="/icons/rev-v-purple-lighter.svg"
+                            alt="Logo"
+                            height="10"
+                            width="10"
+                            className="relative rotate-180" />
+                          <p className="font-semibold text-sm text-embloy-purple-lighter">CLIENT-SIDE</p>
+                          <p className="font-bold text-sm">JSX</p>
+                        </div>
+                        </>
+                  )}
+                  
+                  {topJSXIsHovered && (
+                      <div className="flex flex-row items-center justify-start gap-2">
+                          <Image
+                              src="/icons/rev-v-green.svg"
+                              alt="Logo"
+                              height="10"
+                              width="10"
+                              className="relative"
+                              />
+                          <p className="font-semibold text-sm text-embloy-green">CLIENT-SIDE</p>
+                          <p className="font-bold text-sm">JSX</p>
+                      </div>
+                  )}
+              <a
+                href="#"
+                onMouseEnter={() => setEmbedTopJSXIsHovered(true)}
+                onMouseLeave={() => setEmbedTopJSXIsHovered(false)}
+                      >
+                <Image
+                  src={embedTopJSXIsHovered ? "/icons/embed-purple-lighter.svg" : "/icons/embed-white.svg"}
+                  alt="Logo"
+                  height="25"
+                  width="25"
+                  className="relative"
+                />
+              </a>
+            </div>
+            {topJSXIsHovered && (
+            <>
+              <div className="w-full flex flex-row items-center justify-start g-2">
+              {!isCopied && <p className="font-light text-xs text-embloy-purple-lighter opacity-60">Click to copy this code</p>}
+              {isCopied && <p className='font-medium text-xs text-embloy-purple-lighter opacity-60'>Code copied to clipboard!</p>}
+              </div>
+              <SyntaxHighlighter 
+                language="jsx" 
+                style={nightOwl} 
+                customStyle={{maxWidth: '100%', overflowX: 'auto'}}
+              >
+                {`<button onClick={handleApplyClick}>
+  <img src="https://embloy.com/images/button-black_large.svg" style={{ width: "300px", height: "auto" }} />
+</button>`}
+              </SyntaxHighlighter>
+            </>
+          )}
+          </button>
 
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2 className={`mb-3 text-2xl font-semibold`}>
-              Deploy{' '}
-              <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-                -&gt;
-              </span>
-            </h2>
-            <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-              Instantly deploy your Next.js site to a shareable URL with Vercel.
-            </p>
-          </a>
+          <div>
+              <p>5. Copy-Paste the following code in your server:</p>
+          </div>
+
+          <button 
+        className={`w-full flex flex-col items-center justify-start border-white border-[1px] rounded-lg p-2 ${topGoIsHovered ? 'h-[520px]' : 'h-[45px]'}`} 
+        onMouseEnter={() => setTopGoIsHovered(true)} 
+        onMouseLeave={() => setTopGoIsHovered(false)}
+        onClick={(e) => {
+          e.preventDefault();
+          navigator.clipboard.writeText(`func yourExampleEndpoint(c *gin.Context) {
+// Call Embloy-Go SDK to get a request_token
+client := embloy.NewEmbloyClient("your-client-token", map[string]string{
+    "mode":        "job",
+    "job_slug":    "your-job-slug",
+    "success_url": "your-success-url",
+    "cancel_url":  "your-cancel-url",
+})
+
+redirectURL, err := client.MakeRequest()
+if err != nil {
+    fmt.Println("Error:", err)
+    return
+}
+
+// Redirect to the Embloy application portal
+c.Redirect(http.StatusFound, redirectURL)`);
+          setIsCopied(true);
+          setTimeout(() => setIsCopied(false), 3000);
+        }}
+
+      >        <div className="w-full flex flex-row items-center justify-between">
+                  {!topGoIsHovered && (
+                        <><div className="flex flex-row items-center justify-start gap-2">
+                          <Image
+                            src="/icons/rev-v-purple-lighter.svg"
+                            alt="Logo"
+                            height="10"
+                            width="10"
+                            className="relative rotate-180" />
+                          <p className="font-semibold text-sm text-embloy-purple-lighter">SERVER-SIDE</p>
+                          <p className="font-bold text-sm">Go</p>
+                        </div>
+                        </>
+                  )}
+                  
+                  {topGoIsHovered && (
+                      <div className="flex flex-row items-center justify-start gap-2">
+                          <Image
+                              src="/icons/rev-v-green.svg"
+                              alt="Logo"
+                              height="10"
+                              width="10"
+                              className="relative"
+                              />
+                          <p className="font-semibold text-sm text-embloy-green">SERVER-SIDE</p>
+                          <p className="font-bold text-sm">Go</p>
+                      </div>
+                  )}
+              <a
+                href="#"
+                onMouseEnter={() => setEmbedTopGoIsHovered(true)}
+                onMouseLeave={() => setEmbedTopGoIsHovered(false)}
+                      >
+                <Image
+                  src={embedTopGoIsHovered ? "/icons/embed-purple-lighter.svg" : "/icons/embed-white.svg"}
+                  alt="Logo"
+                  height="25"
+                  width="25"
+                  className="relative"
+                />
+              </a>
+            </div>
+            {topGoIsHovered && (
+            <>
+      <div className="w-full flex flex-row items-left justify-start g-2" style={{ display: 'flex', justifyContent: 'flex-start' }}>
+        {!isCopied && <p className="font-light text-xs text-embloy-purple-lighter opacity-60">Click to copy this code</p>}
+        {isCopied && <p className='font-medium text-xs text-embloy-purple-lighter opacity-60'>Code copied to clipboard!</p>}
+
+      </div>
+      <SyntaxHighlighter 
+        language="go" 
+        style={nightOwl} 
+        customStyle={{maxWidth: '100%', overflowX: 'auto', textAlign: 'left'}}
+      >
+        {`func yourExampleEndpoint(c *gin.Context) {
+// Call Embloy-Go SDK to get a request_token
+client := embloy.NewEmbloyClient("your-client-token", map[string]string{
+    "mode":        "job",
+    "job_slug":    "your-job-slug",
+    "success_url": "your-success-url",
+    "cancel_url":  "your-cancel-url",
+})
+
+redirectURL, err := client.MakeRequest()
+if err != nil {
+    fmt.Println("Error:", err)
+    return
+}
+
+// Redirect to the Embloy application portal
+c.Redirect(http.StatusFound, redirectURL)`}
+      </SyntaxHighlighter>
+            </>
+          )}
+          </button>
+
+          <button 
+        className={`w-full flex flex-col items-center justify-start border-white border-[1px] rounded-lg p-2 ${topTypeScriptIsHovered ? 'h-[520px]' : 'h-[45px]'}`} 
+        onMouseEnter={() => setTopTypeScriptIsHovered(true)} 
+        onMouseLeave={() => setTopTypeScriptIsHovered(false)}
+        onClick={(e) => {
+          e.preventDefault();
+          navigator.clipboard.writeText(`const session = new EmbloySession({
+  mode: "job",
+  job_slug: "your-job-slug",
+  success_url: "your-success-url",
+  cancel_url: "your-cancel-url",
+});
+const embloy = new EmbloyClient("your-client-token", session);
+
+embloy.makeRequest()
+  .then(result => window.location.href = result)
+  .catch(error => console.error(error.message));`);
+          setIsCopied(true);
+          setTimeout(() => setIsCopied(false), 3000);
+        }}
+
+      >        <div className="w-full flex flex-row items-center justify-between">
+                  {!topTypeScriptIsHovered && (
+                        <><div className="flex flex-row items-center justify-start gap-2">
+                          <Image
+                            src="/icons/rev-v-purple-lighter.svg"
+                            alt="Logo"
+                            height="10"
+                            width="10"
+                            className="relative rotate-180" />
+                          <p className="font-semibold text-sm text-embloy-purple-lighter">SERVER-SIDE</p>
+                          <p className="font-bold text-sm">TypeScript</p>
+                        </div>
+                        </>
+                  )}
+                  
+                  {topTypeScriptIsHovered && (
+                      <div className="flex flex-row items-center justify-start gap-2">
+                          <Image
+                              src="/icons/rev-v-green.svg"
+                              alt="Logo"
+                              height="10"
+                              width="10"
+                              className="relative"
+                              />
+                          <p className="font-semibold text-sm text-embloy-green">SERVER-SIDE</p>
+                          <p className="font-bold text-sm">TypeScript</p>
+                      </div>
+                  )}
+              <a
+                href="#"
+                onMouseEnter={() => setEmbedTopTypeScriptIsHovered(true)}
+                onMouseLeave={() => setEmbedTopTypeScriptIsHovered(false)}
+                      >
+                <Image
+                  src={embedTopTypeScriptIsHovered ? "/icons/embed-purple-lighter.svg" : "/icons/embed-white.svg"}
+                  alt="Logo"
+                  height="25"
+                  width="25"
+                  className="relative"
+                />
+              </a>
+            </div>
+            {topTypeScriptIsHovered && (
+            <>
+      <div className="w-full flex flex-row items-left justify-start g-2" style={{ display: 'flex', justifyContent: 'flex-start' }}>
+        {!isCopied && <p className="font-light text-xs text-embloy-purple-lighter opacity-60">Click to copy this code</p>}
+        {isCopied && <p className='font-medium text-xs text-embloy-purple-lighter opacity-60'>Code copied to clipboard!</p>}
+
+      </div>
+      <SyntaxHighlighter 
+        language="ts" 
+        style={nightOwl} 
+        customStyle={{maxWidth: '100%', overflowX: 'auto', textAlign: 'left'}}
+      >
+        {`// Replace with your actual values
+const session = new EmbloySession({
+  mode: "job",
+  job_slug: "your-job-slug",
+  success_url: "your-success-url",
+  cancel_url: "your-cancel-url",
+});
+const embloy = new EmbloyClient("your-client-token", session);
+
+embloy.makeRequest()
+  .then(result => window.location.href = result)
+  .catch(error => console.error(error.message));`}
+      </SyntaxHighlighter>
+            </>
+          )}
+          </button>
+
+          <button 
+        className={`w-full flex flex-col items-center justify-start border-white border-[1px] rounded-lg p-2 ${topRubyIsHovered ? 'h-[520px]' : 'h-[45px]'}`} 
+        onMouseEnter={() => setTopRubyIsHovered(true)} 
+        onMouseLeave={() => setTopRubyIsHovered(false)}
+        onClick={(e) => {
+          e.preventDefault();
+          navigator.clipboard.writeText(`# Replace 'YOUR_CLIENT_TOKEN' with your actual client token
+      session = {
+          mode: "job",
+          job_slug: "your_job_slug",
+          success_url: "your_success_url",
+          cancel_url: "your_cancel_url"
+      }
+      client = Embloy::Client.new('YOUR_CLIENT_TOKEN', session)
+      redirect_url = client.make_request
+      redirect_to redirect_url`);
+          setIsCopied(true);
+          setTimeout(() => setIsCopied(false), 3000);
+        }}
+
+      >        <div className="w-full flex flex-row items-center justify-between">
+                  {!topRubyIsHovered && (
+                        <><div className="flex flex-row items-center justify-start gap-2">
+                          <Image
+                            src="/icons/rev-v-purple-lighter.svg"
+                            alt="Logo"
+                            height="10"
+                            width="10"
+                            className="relative rotate-180" />
+                          <p className="font-semibold text-sm text-embloy-purple-lighter">SERVER-SIDE</p>
+                          <p className="font-bold text-sm">Ruby</p>
+                        </div>
+                        </>
+                  )}
+                  
+                  {topRubyIsHovered && (
+                      <div className="flex flex-row items-center justify-start gap-2">
+                          <Image
+                              src="/icons/rev-v-green.svg"
+                              alt="Logo"
+                              height="10"
+                              width="10"
+                              className="relative"
+                              />
+                          <p className="font-semibold text-sm text-embloy-green">SERVER-SIDE</p>
+                          <p className="font-bold text-sm">Ruby</p>
+                      </div>
+                  )}
+              <a
+                href="#"
+                onMouseEnter={() => setEmbedTopRubyIsHovered(true)}
+                onMouseLeave={() => setEmbedTopRubyIsHovered(false)}
+                      >
+                <Image
+                  src={embedTopRubyIsHovered ? "/icons/embed-purple-lighter.svg" : "/icons/embed-white.svg"}
+                  alt="Logo"
+                  height="25"
+                  width="25"
+                  className="relative"
+                />
+              </a>
+            </div>
+            {topRubyIsHovered && (
+            <>
+      <div className="w-full flex flex-row items-left justify-start g-2" style={{ display: 'flex', justifyContent: 'flex-start' }}>
+        {!isCopied && <p className="font-light text-xs text-embloy-purple-lighter opacity-60">Click to copy this code</p>}
+        {isCopied && <p className='font-medium text-xs text-embloy-purple-lighter opacity-60'>Code copied to clipboard!</p>}
+
+      </div>
+      <SyntaxHighlighter 
+        language="rb" 
+        style={nightOwl} 
+        customStyle={{maxWidth: '100%', overflowX: 'auto', textAlign: 'left'}}
+      >
+        {`# Replace 'YOUR_CLIENT_TOKEN' with your actual client token
+      session = {
+          mode: "job",
+          job_slug: "your_job_slug",
+          success_url: "your_success_url",
+          cancel_url: "your_cancel_url"
+      }
+      client = Embloy::Client.new('YOUR_CLIENT_TOKEN', session)
+      redirect_url = client.make_request
+      redirect_to redirect_url`}
+      </SyntaxHighlighter>
+            </>
+          )}
+          </button>
+
+          <button 
+        className={`w-full flex flex-col items-center justify-start border-white border-[1px] rounded-lg p-2 ${topPythonIsHovered ? 'h-[520px]' : 'h-[45px]'}`} 
+        onMouseEnter={() => setTopPythonIsHovered(true)} 
+        onMouseLeave={() => setTopPythonIsHovered(false)}
+        onClick={(e) => {
+          e.preventDefault();
+          navigator.clipboard.writeText(`# Replace with your actual values
+client_token = 'your_client_token'
+session = {
+    'mode': 'job',
+    'job_slug': 'your_job_slug',
+    'success_url': 'your_success_url',
+    'cancel_url': 'your_cancel_url'
+}
+
+# Create an instance of the EmbloyClient
+embloy_client = EmbloyClient(client_token, session)
+
+# Make a request to the Embloy API
+redirect_url = embloy_client.make_reques`);
+          setIsCopied(true);
+          setTimeout(() => setIsCopied(false), 3000);
+        }}
+
+      >        <div className="w-full flex flex-row items-center justify-between">
+                  {!topPythonIsHovered && (
+                        <><div className="flex flex-row items-center justify-start gap-2">
+                          <Image
+                            src="/icons/rev-v-purple-lighter.svg"
+                            alt="Logo"
+                            height="10"
+                            width="10"
+                            className="relative rotate-180" />
+                          <p className="font-semibold text-sm text-embloy-purple-lighter">SERVER-SIDE</p>
+                          <p className="font-bold text-sm">Python</p>
+                        </div>
+                        </>
+                  )}
+                  
+                  {topPythonIsHovered && (
+                      <div className="flex flex-row items-center justify-start gap-2">
+                          <Image
+                              src="/icons/rev-v-green.svg"
+                              alt="Logo"
+                              height="10"
+                              width="10"
+                              className="relative"
+                              />
+                          <p className="font-semibold text-sm text-embloy-green">SERVER-SIDE</p>
+                          <p className="font-bold text-sm">Python</p>
+                      </div>
+                  )}
+              <a
+                href="#"
+                onMouseEnter={() => setEmbedTopPythonIsHovered(true)}
+                onMouseLeave={() => setEmbedTopPythonIsHovered(false)}
+                      >
+                <Image
+                  src={embedTopPythonIsHovered ? "/icons/embed-purple-lighter.svg" : "/icons/embed-white.svg"}
+                  alt="Logo"
+                  height="25"
+                  width="25"
+                  className="relative"
+                />
+              </a>
+            </div>
+            {topPythonIsHovered && (
+            <>
+      <div className="w-full flex flex-row items-left justify-start g-2" style={{ display: 'flex', justifyContent: 'flex-start' }}>
+        {!isCopied && <p className="font-light text-xs text-embloy-purple-lighter opacity-60">Click to copy this code</p>}
+        {isCopied && <p className='font-medium text-xs text-embloy-purple-lighter opacity-60'>Code copied to clipboard!</p>}
+
+      </div>
+      <SyntaxHighlighter 
+        language="python" 
+        style={nightOwl} 
+        customStyle={{maxWidth: '100%', overflowX: 'auto', textAlign: 'left'}}
+      >
+        {`# Replace with your actual values
+client = 'your_client_token'
+session = {
+    'mode': 'job',
+    'job_slug': 'your_job_slug',
+    'success_url': 'your_success_url',
+    'cancel_url': 'your_cancel_url'
+}
+
+# Create an instance of the EmbloyClient
+embloy_client = EmbloyClient(client_token, session)
+
+# Make a request to the Embloy API
+redirect_url = embloy_client.make_reques`}
+      </SyntaxHighlighter>
+            </>
+          )}
+          </button>
+
+          <div className='h-[475px]' />
+          <div className="w-full flex flex-row items-center justify-between">
+            <a className="font-medium text-sm text-embloy-purple-light hover:text-embloy-purple-lighter" href="https://developers.embloy.com/docs/sdks/overview" target="_blank" rel="noopener noreferrer">GO TO DOCUMENTATION</a>
+          </div>
         </div>
+  
+        <div className="md:w-1/3">
+          <div className=" py-4 items-start justify-start px-8 flex flex-col gap-2 bg-embloy-purple text-white rounded-lg border-[1px] border-transparent transition duration-200 ease-in-out hover:border-white overflow-auto h-[450px]">
+          <div className="w-full flex flex-row items-start justify-between">
+            <div className="px-4 py-2 rounded-full border-[2px] border-white">
+              <h1 className="font-medium text-xl">News</h1>
+            </div>
+
+            <div className="py-2 flex flex-row items-center justify-between gap-2">
+              <p className="font-normal text-sm text-embloy-purple-light">{currentNewsIndex + 1}</p>
+              <p className="font-normal text-sm text-embloy-purple-light"> | </p>
+              <p className="font-normal text-sm text-embloy-purple-light">{newsItems.length}</p>
+            </div>
+
+            <div className="py-2 flex flex-row items-center justify-between gap-2">
+            <button className="p-1 font-medium text-sm text-embloy-purple-light hover:text-embloy-purple-lighter rounded-full" onClick={handlePrevNews}>Previous</button>
+            <button className="p-1 font-medium text-sm text-embloy-purple-light hover:text-embloy-purple-lighter rounded-full" onClick={handleNextNews}>Next</button>
+          </div>
+
+          </div>
+
+          <div className="w-full flex flex-row items-center justify-center">
+            <div className="my-2 h-[1px] w-10/12 rounded-full " />
+          </div>
+
+          <div className="flex flex-col gap-0.5 w-full">
+            <Image
+                src={currentNews.imageUrl}
+                alt={currentNews.title}
+                height="200"
+                width="300"
+                className="relative"
+            />
+            <div className="h-1" />
+            <div className="h-[1px] w-full rounded-full bg-embloy-purple-lighter" />
+            <p className="font-medium text-sm text-embloy-purple-lighter" >{currentNews.title}</p>
+            <div className="h-1" />
+            <p className="font-normal text-sm" >{currentNews.description}</p>
+          </div>
+          <div className="h-4" />
+          <div className="w-full flex flex-row items-center justify-between">
+            <a className="font-medium text-sm text-embloy-purple-light hover:text-embloy-purple-lighter" href={currentNews.link} target="_blank" rel="noopener noreferrer">DETAILS</a>
+          </div>
+          </div>
+
+          <div className="my-5 py-4 px-8 flex flex-col gap-2 bg-embloy-purple text-white rounded-lg border-[1px] border-transparent transition duration-200 ease-in-out hover:border-white overflow-auto h-[280px]">
+            <div className="w-full flex flex-row items-start justify-between">
+              <div className="px-4 py-2 rounded-full border-[2px] border-white">
+                <h1 className="font-medium text-xl">Useful links</h1>
+              </div>
+            </div>
+
+            <div className="w-full flex flex-row items-center justify-center">
+            </div>
+
+            <div className="w-full flex flex-col gap-2">
+              <a href="/settings?tab=access" className="text-md hover:text-embloy-purple-lighter flex items-center gap-2">
+                <img src="/icons/access-light.svg" alt="access icon" style={{width: '20px', height: '20px'}} />
+                Generate client token
+              </a>
+              <a href="/recruitment" className="text-md hover:text-embloy-purple-lighter flex items-center gap-2">
+                <img src="/icons/integrations-light.svg" alt="job icon" style={{width: '20px', height: '20px'}} />
+                Your jobs
+              </a>
+              <a href="/settings?tab=profile" className="text-md hover:text-embloy-purple-lighter flex items-center gap-2">
+                <img src="/icons/profile-light.svg" alt="profile icon" style={{width: '20px', height: '20px'}} />
+                Account settings
+              </a>
+              <a href="https://developers.embloy.com" target="_blank" rel="noopener noreferrer" className="text-md hover:text-embloy-purple-lighter flex items-center gap-2">
+                <img src="/icons/sm-plugged-in-light.svg" alt="api icon" style={{width: '20px', height: '20px'}} />
+                Developer documentation
+              </a>
+              <a href="https://embloy.com/dashboard/billing" target="_blank" rel="noopener noreferrer" className="text-md hover:text-embloy-purple-lighter flex items-center gap-2">
+                <img src="/icons/columns-light.svg" alt="billing icon" style={{width: '20px', height: '20px'}} />
+                Billing
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
       </div>
     </main>
   )

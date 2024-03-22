@@ -28,32 +28,32 @@ const Footerbar = () => {
 
                     <div className="flex flex-row items-center justify-start gap-2">
                         <Image
-                            src="/icons/logo_dark_white.svg"
+                            src="/icons/logo_black_white.svg"
                             alt="Logo"
                             height="25"
                             width="25"
                             className="relative"
                         />
-                        <p className="text-gray-700 text-xs font-normal">© 2024 Embloy Platforms GbR</p>
+                        <p className="text-gray-300 text-xs font-normal">© 2024 Embloy Platforms GbR</p>
                     </div>
-                    <ul className="hidden md:flex gap-x-6 text-gray-700 text-xs font-normal">
+                    <ul className="hidden md:flex gap-x-6 text-gray-300 text-xs font-normal">
                         <li>
-                            <a href="https://about.embloy.com">
+                        <a href="https://about.embloy.com" target="_blank" rel="noopener noreferrer">
                                 <p className="hover:underline">About</p>
                             </a>
                         </li>
                         <li>
-                            <a href="https://docs.embloy.com/en/policy/terms-of-service">
+                            <a href="https://embloy.com/en-US/resources/terms" target="_blank" rel="noopener noreferrer">
                                 <p className="hover:underline">Terms</p>
                             </a>
                         </li>
                         <li>
-                            <a href="https://docs.embloy.com/en/policy/privacy">
+                        <a href="https://embloy.com/en-US/resources/privacy" target="_blank" rel="noopener noreferrer">
                                 <p className="hover:underline">Privacy</p>
                             </a>
                         </li>
                         <li>
-                            <a href="https://docs.embloy.com/en/security">
+                            <a href="mailto:feedback@embloy.com" target="_blank" rel="noopener noreferrer">
                                 <p className="hover:underline">Security</p>
                             </a>
                         </li>
@@ -63,12 +63,12 @@ const Footerbar = () => {
                             </Link>
                         </li>
                         <li>
-                            <a href="https://about.embloy.com/en/contact">
+                            <a href="https://about.embloy.com/en/contact" target="_blank" rel="noopener noreferrer">
                                 <p className="hover:underline">Help & Contact</p>
                             </a>
                         </li>
                         <li>
-                            <a href="https://about.embloy.com/en/contribution/">
+                            <a href="https://about.embloy.com/en/contact/" target="_blank" rel="noopener noreferrer">
                                 <p className="hover:underline">Partners & Investor Relations</p>
                             </a>
                         </li>

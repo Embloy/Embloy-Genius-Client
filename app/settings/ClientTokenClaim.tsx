@@ -100,7 +100,11 @@ export function ClientTokenClaim() {
                             onMouseEnter={handleNoteHover}
                             onMouseLeave={handleNoteNotHover}
                         />
-                        <p className="text-xs c3">What&apos;s this token for?</p>
+                        <p className="mx-1 font-medium text-xs text-embloy-purple-light hover:text-embloy-purple-lighter">
+                            <a href="https://developers.embloy.com/docs/core/tokens/token_info#client-token" target="_blank" rel="noopener noreferrer">
+                                What&apos;s this token for? 
+                            </a>
+                        </p>
                     </div>
 
                     <div className="flex flex-col items-start justify-start gap-1">
