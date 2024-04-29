@@ -8,6 +8,7 @@ import {
   ModalFooter,
   useDisclosure,
   Button,
+  Tooltip,
 } from "@nextui-org/react";
 import { cn } from "@/lib/utils";
 import QRCode from "qrcode.react";
@@ -22,28 +23,51 @@ export function GenerateQRButton({ head }) {
   const [qrValue, setQrValue] = useState<string>(null);
   const qrRef = useRef(null);
   const router = useRouter();
-  const handleGenerate = async () => {
-    console.log("Started Generating");
-    setGenerating(true);
-    await new Promise((resolve) => setTimeout(resolve, 5000));
-    get_core("/pi/v0/resource/qr", router)
-      .then((data) => {
-        if (data.link) {
-          setQrValue(data.link);
-        } else {
-          setQrValue(null);
-        }
-      })
-      .catch((e) => {
-        console.log(e);
-      });
 
-    setGenerating(false);
+  const handleGenerate = async () => {
+    setGenerating(true);
+    const date = new Date();
+    date.setFullYear(date.getFullYear() + 1);
+
+    try {
+      const data = await get_core(
+        `/resource?qr=1&exp=${date.getTime()}`,
+        router,
+        false,
+        "POST"
+      );
+      if (data.query_token) {
+        setQrValue(`https://embloy.com/sdk/apply?gq=${data.query_token}`);
+      } else {
+        setQrValue(null);
+      }
+    } catch (e) {
+      console.log(e);
+    } finally {
+      setGenerating(false);
+    }
   };
 
   const handleDownloadQR = () => {
     const canvas = qrRef.current.querySelector("canvas");
-    const pngUrl = canvas
+    const context = canvas.getContext("2d");
+    const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+    const borderSize = 100; // Adjust this value to change the border thickness
+
+    // Create a new canvas with space for the border
+    const newCanvas = document.createElement("canvas");
+    newCanvas.width = canvas.width + borderSize * 2;
+    newCanvas.height = canvas.height + borderSize * 2;
+    const newContext = newCanvas.getContext("2d");
+
+    // Draw a white rectangle for the border
+    newContext.fillStyle = "#ffffff";
+    newContext.fillRect(0, 0, newCanvas.width, newCanvas.height);
+
+    // Draw the original QR code on top of the white rectangle
+    newContext.putImageData(imageData, borderSize, borderSize);
+
+    const pngUrl = newCanvas
       .toDataURL("image/png")
       .replace("image/png", "image/octet-stream");
     let downloadLink = document.createElement("a");
@@ -54,17 +78,94 @@ export function GenerateQRButton({ head }) {
     document.body.removeChild(downloadLink);
   };
 
+  const handleDownloadQREmbed = () => {
+    const canvas = qrRef.current.querySelector("canvas");
+    const context = canvas.getContext("2d");
+    const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+    const borderSize = 1200;
+    const padding = 400;
+    const moveDown = 1000; // Adjust this value to move the QR code and text down
+    const icon = new Image();
+    const text = new Image();
+    icon.src = "http://localhost:3002/icons/qrcode-button.png";
+    text.src = "http://localhost:3002/icons/qrcode-text.png";
+
+    // Calculate new width and height with a 3:2 aspect ratio
+    const newWidth = canvas.width + borderSize * 2 + padding * 2;
+    const newHeight = (newWidth * 3) / 2 + moveDown;
+
+    const newCanvas = document.createElement("canvas");
+    newCanvas.width = newWidth;
+    newCanvas.height = newHeight;
+    const newContext = newCanvas.getContext("2d");
+    newContext.fillStyle = "#211B2E";
+    newContext.fillRect(0, 0, newCanvas.width, newCanvas.height);
+
+    // Draw a white border around the QR code
+    newContext.fillStyle = "#ffffff";
+    newContext.fillRect(
+      borderSize,
+      borderSize + moveDown,
+      canvas.width + padding * 2,
+      canvas.height + padding * 2
+    );
+
+    newContext.putImageData(
+      imageData,
+      borderSize + padding,
+      borderSize + padding + moveDown
+    );
+
+    // Draw the text above the QR code with additional padding
+    newContext.drawImage(
+      text,
+      newCanvas.width / 2 - text.width / 2,
+      borderSize - text.height - padding + moveDown
+    );
+
+    // Draw the icon at the bottom of the page
+    newContext.drawImage(
+      icon,
+      newCanvas.width / 2 - icon.width / 2,
+      newCanvas.height - icon.height - padding
+    );
+
+    const pngUrl = newCanvas
+      .toDataURL("image/png")
+      .replace("image/png", "image/octet-stream");
+    let downloadLink = document.createElement("a");
+    downloadLink.href = pngUrl;
+    downloadLink.download = "embloy-qr-code-embedded.png";
+    document.body.appendChild(downloadLink);
+    downloadLink.click();
+    document.body.removeChild(downloadLink);
+  };
+
   return (
     <div className="w-full flex flex-col items-center justify-center gap-6 bg-embloy-green text-black rounded-lg border-[1px] border-transparent">
-      <Button
-        className="w-full text-white bg-embloy-green hover:bg-embloy-green font-bold py-2 px-4 rounded border-[1px] border-embloy-green"
-        onClick={() => {
-          handleGenerate();
-          generateModal.onOpen();
-        }}
+      <Tooltip
+        title="Note: Every generated QR code automatically creates a new job that you can find in the 'Hire' section.\nThere you can also generate QR codes for existing jobs."
+        placement="top"
+        content={
+          <div className="text-red-500 text-center">
+            Note: Every generated QR code automatically creates a new job that
+            you can find in the 'Hire' section.
+            <br/>
+            There you can also generate QR
+            codes for existing jobs.
+          </div>
+        }
       >
-        Generate QR Code
-      </Button>
+        <Button
+          className="w-full text-white bg-embloy-green hover:bg-embloy-green font-bold py-2 px-4 rounded border-[1px] border-embloy-green"
+          onClick={() => {
+            handleGenerate();
+            generateModal.onOpen();
+          }}
+        >
+          Generate QR Code
+        </Button>
+      </Tooltip>
 
       <Modal
         isOpen={generateModal.isOpen}
@@ -83,14 +184,38 @@ export function GenerateQRButton({ head }) {
                 "flex items-center justify-center"
               )}
             >
-              <div ref={qrRef}>
+              <div>
                 {generating ? (
                   <div className="text-center text-gray-500">
                     <h2 className="font-bold text-lg">Generating QR Code...</h2>
                     <p>Please wait a moment.</p>
                   </div>
                 ) : qrValue ? (
-                  <QRCode value={qrValue} />
+                  <div style={{ padding: "10px", background: "#ffffff" }}>
+                    <QRCode
+                      value={qrValue}
+                      size={280}
+                      imageSettings={{
+                        src: "/icons/logo.png",
+                        height: 50,
+                        width: 50,
+                        excavate: true,
+                      }}
+                    />
+                    <div ref={qrRef}>
+                      <QRCode
+                        className="hidden"
+                        value={qrValue}
+                        size={8192}
+                        imageSettings={{
+                          src: "/icons/logo.png",
+                          height: 1600,
+                          width: 1600,
+                          excavate: true,
+                        }}
+                      />
+                    </div>
+                  </div>
                 ) : (
                   <div className="text-center text-gray-500">
                     <h2 className="font-bold text-lg">QR Code Unavailable</h2>
@@ -133,12 +258,23 @@ export function GenerateQRButton({ head }) {
                 onClick={handleDownloadQR}
                 className={cn(
                   generating || !qrValue
-                    ? "rounded-full button p-2 hover:underline text-xs border-2 border-embloy-gray-darker text-embloy-gray-darker cursor-not-allowed"
-                    : "rounded-full button p-2 hover:underline text-xs border-2 border-embloy-green text-embloy-green hover:text-embloy-gray"
+                    ? "mr-2 rounded-full button p-2 hover:underline text-xs border-2 border-embloy-gray-darker text-embloy-gray-darker cursor-not-allowed"
+                    : "mr-2 rounded-full button p-2 hover:underline text-xs border-2 border-embloy-green text-embloy-green hover:text-embloy-gray"
                 )}
                 disabled={generating || !qrValue}
               >
-                Download QR Code
+                Download as PNG
+              </button>{" "}
+              <button
+                onClick={handleDownloadQREmbed}
+                className={cn(
+                  generating || !qrValue
+                    ? "ml-2 rounded-full button p-2 hover:underline text-xs border-2 border-embloy-gray-darker text-embloy-gray-darker cursor-not-allowed"
+                    : "ml-2 rounded-full button p-2 hover:underline text-xs border-2 border-embloy-green text-embloy-green hover:text-embloy-gray"
+                )}
+                disabled={generating || !qrValue}
+              >
+                Download embedded QR
               </button>{" "}
             </ModalFooter>
           </>
