@@ -144,12 +144,12 @@ export function GenerateQRButton({ head }) {
   return (
     <div className="w-full flex flex-col items-center justify-center gap-6 bg-embloy-green text-black rounded-lg border-[1px] border-transparent">
       <Tooltip
-        title="Note: Every generated QR code automatically creates a new job that you can find in the 'Hire' section.\nThere you can also generate QR codes for existing jobs."
+        title="Note: Every generated QR code automatically creates a new job that you can find in the &apos;Hire&apos; section.\nThere you can also generate QR codes for existing jobs."
         placement="top"
         content={
           <div className="text-red-500 text-center">
             Note: Every generated QR code automatically creates a new job that
-            you can find in the 'Hire' section.
+            you can find in the &apos;Hire&apos; section.
             <br/>
             There you can also generate QR
             codes for existing jobs.
@@ -220,7 +220,7 @@ export function GenerateQRButton({ head }) {
                   <div className="text-center text-gray-500">
                     <h2 className="font-bold text-lg">QR Code Unavailable</h2>
                     <p>
-                      Please ensure you have an active subscription and haven't
+                      Please ensure you have an active subscription and haven&apos;t
                       exceeded its usage limit.
                     </p>
                   </div>
