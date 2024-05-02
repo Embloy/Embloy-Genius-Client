@@ -15,7 +15,7 @@ import QRCode from "qrcode.react";
 import { get_core } from "@/lib/misc_requests";
 import { useRouter } from "next/navigation";
 
-export function GenerateQRButton({ head }) {
+export function GenerateQRButton({ head, jobId }) {
   const generateModal = useDisclosure();
   const errorModal = useDisclosure();
 
@@ -31,7 +31,7 @@ export function GenerateQRButton({ head }) {
 
     try {
       const data = await get_core(
-        `/resource?qr=1&exp=${date.getTime()}`,
+        `/resource?qr=1&exp=${date.getTime()}&job_id=${jobId}`,
         router,
         false,
         "POST"
@@ -143,19 +143,7 @@ export function GenerateQRButton({ head }) {
 
   return (
     <div className="w-full flex flex-col items-center justify-center gap-6 bg-embloy-green text-black rounded-lg border-[1px] border-transparent">
-      <Tooltip
-        title="Note: Every generated QR code automatically creates a new job that you can find in the &apos;Hire&apos; section.\nThere you can also generate QR codes for existing jobs."
-        placement="top"
-        content={
-          <div className="text-red-500 text-center">
-            Note: Every generated QR code automatically creates a new job that
-            you can find in the &apos;Hire&apos; section.
-            <br/>
-            There you can also generate QR
-            codes for existing jobs.
-          </div>
-        }
-      >
+      {jobId ? (
         <Button
           className="w-full text-white bg-embloy-green hover:bg-embloy-green font-bold py-2 px-4 rounded border-[1px] border-embloy-green"
           onClick={() => {
@@ -165,7 +153,30 @@ export function GenerateQRButton({ head }) {
         >
           Generate QR Code
         </Button>
-      </Tooltip>
+      ) : (
+        <Tooltip
+          title="Note: Every generated QR code automatically creates a new job that you can find in the 'Hire' section.\nThere you can also generate QR codes for existing jobs."
+          placement="top"
+          content={
+            <div className="text-red-500 text-center">
+              Note: Every generated QR code automatically creates a new job that
+              you can find in the &apos;Hire&apos; section.
+              <br />
+              There you can also generate QR codes for existing jobs.
+            </div>
+          }
+        >
+          <Button
+            className="w-full text-white bg-embloy-green hover:bg-embloy-green font-bold py-2 px-4 rounded border-[1px] border-embloy-green"
+            onClick={() => {
+              handleGenerate();
+              generateModal.onOpen();
+            }}
+          >
+            Generate QR Code
+          </Button>
+        </Tooltip>
+      )}
 
       <Modal
         isOpen={generateModal.isOpen}
@@ -220,8 +231,8 @@ export function GenerateQRButton({ head }) {
                   <div className="text-center text-gray-500">
                     <h2 className="font-bold text-lg">QR Code Unavailable</h2>
                     <p>
-                      Please ensure you have an active subscription and haven&apos;t
-                      exceeded its usage limit.
+                      Please ensure you have an active subscription and
+                      haven&apos;t exceeded its usage limit.
                     </p>
                   </div>
                 )}
