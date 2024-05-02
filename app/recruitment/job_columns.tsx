@@ -5,7 +5,7 @@ import {DataTableColumnHeader} from "@/app/components/dom/main/datatable/DataTab
 import {Job} from "@/lib/types/job";
 import {cast_date} from "@/lib/utils/formats";
 
-export const columns: ColumnDef<Job>[] = [
+export const jobColumns: ColumnDef<Job>[] = [
     {
         id: "select",
         header: ({table}) => (
@@ -99,7 +99,7 @@ export const columns: ColumnDef<Job>[] = [
         header: ({column}) => (
             <DataTableColumnHeader column={column} title="Views"/>
         ),
-        enableSorting: false,
+        enableSorting: true,
         enableHiding: true,
     },
     {
@@ -107,7 +107,7 @@ export const columns: ColumnDef<Job>[] = [
         header: ({column}) => (
             <DataTableColumnHeader column={column} title="Applications"/>
         ),
-        enableSorting: false,
+        enableSorting: true,
         enableHiding: true,
     },
     {
