@@ -87,8 +87,8 @@ export function GenerateQRButton({ head, jobId }) {
     const moveDown = 1000; // Adjust this value to move the QR code and text down
     const icon = new Image();
     const text = new Image();
-    icon.src = "http://localhost:3002/icons/qrcode-button.png";
-    text.src = "http://localhost:3002/icons/qrcode-text.png";
+    icon.src = "http://genius.embloy.com/icons/qrcode-button.png";
+    text.src = "http://genius.embloy.com/icons/qrcode-text.png";
 
     // Calculate new width and height with a 3:2 aspect ratio
     const newWidth = canvas.width + borderSize * 2 + padding * 2;
