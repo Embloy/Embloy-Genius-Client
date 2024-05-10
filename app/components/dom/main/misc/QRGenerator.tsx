@@ -72,12 +72,12 @@ export function GenerateQRButton({ head, jobId }) {
     const pngUrl = newCanvas
       .toDataURL("image/png")
       .replace("image/png", "image/octet-stream");
-    let downloadLink = document.createElement("a");
-    downloadLink.href = pngUrl;
-    downloadLink.download = "embloy-qr-code.png";
-    document.body.appendChild(downloadLink);
-    downloadLink.click();
-    document.body.removeChild(downloadLink);
+    let tempLink = document.createElement("a");
+    tempLink.href = pngUrl;
+    tempLink.setAttribute("download", "embloy-qr-code.png");
+    document.body.appendChild(tempLink);
+    tempLink.click();
+    document.body.removeChild(tempLink);
   };
 
   const handleDownloadQREmbed = () => {
