@@ -47,6 +47,7 @@
     "react": "latest",
     "react-dom": "latest",
     "react-modal": "^3.16.1",
+    "react-responsive": "^10.0.0",
     "react-spinner-component": "^0.0.1",
     "react-syntax-highlighter": "^15.5.0",
     "swr": "latest",

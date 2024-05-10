@@ -14,6 +14,7 @@ import { cn } from "@/lib/utils";
 import QRCode from "qrcode.react";
 import { get_core } from "@/lib/misc_requests";
 import { useRouter } from "next/navigation";
+import { useMediaQuery } from "react-responsive";
 
 export function GenerateQRButton({ head, jobId }) {
   const generateModal = useDisclosure();
@@ -23,6 +24,9 @@ export function GenerateQRButton({ head, jobId }) {
   const [qrValue, setQrValue] = useState<string>(null);
   const qrRef = useRef(null);
   const router = useRouter();
+  const isDesktopOrLaptop = useMediaQuery({
+    query: "(min-device-width: 1224px)",
+  });
 
   const handleGenerate = async () => {
     setGenerating(true);
@@ -89,8 +93,8 @@ export function GenerateQRButton({ head, jobId }) {
     const moveDown = 1000; // Adjust this value to move the QR code and text down
     const icon = new Image();
     const text = new Image();
-    icon.src = "http://genius.embloy.com/icons/qrcode-button.png";
-    text.src = "http://genius.embloy.com/icons/qrcode-text.png";
+    icon.src = "https://genius.embloy.com/icons/qrcode-button.png";
+    text.src = "https://genius.embloy.com/icons/qrcode-text.png";
 
     // Calculate new width and height with a 3:2 aspect ratio
     const newWidth = canvas.width + borderSize * 2 + padding * 2;
@@ -219,11 +223,11 @@ export function GenerateQRButton({ head, jobId }) {
                       <QRCode
                         className="hidden"
                         value={qrValue}
-                        size={8192}
+                        size={isDesktopOrLaptop ? 8192 : 1024}
                         imageSettings={{
                           src: "/icons/logo.png",
-                          height: 1600,
-                          width: 1600,
+                          height: isDesktopOrLaptop ? 1600 : 200,
+                          width: isDesktopOrLaptop ? 1600 : 200,
                           excavate: true,
                         }}
                       />
@@ -277,7 +281,8 @@ export function GenerateQRButton({ head, jobId }) {
                 disabled={generating || !qrValue}
               >
                 Download as PNG
-              </button>{" "}
+              </button>
+              {/*{" "}
               <button
                 onClick={handleDownloadQREmbed}
                 className={cn(
@@ -288,7 +293,7 @@ export function GenerateQRButton({ head, jobId }) {
                 disabled={generating || !qrValue}
               >
                 Download embedded QR
-              </button>{" "}
+              </button>*/}
             </ModalFooter>
           </>
         </ModalContent>
