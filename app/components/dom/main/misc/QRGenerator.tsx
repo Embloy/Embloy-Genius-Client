@@ -31,7 +31,9 @@ export function GenerateQRButton({ head, jobId }) {
 
     try {
       const data = await get_core(
-        `/resource?qr=1&exp=${date.getTime()}&job_id=${jobId}`,
+        `/resource?qr=1&exp=${date.getTime()}${
+          jobId ? `&job_id=${jobId}` : ""
+        }`,
         router,
         false,
         "POST"
