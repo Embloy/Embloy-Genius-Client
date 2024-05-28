@@ -63,7 +63,7 @@ export function NotificationSettings() {
                         disabled={true}
                     >
                         <button
-                            className="c0 h-7 w-40 px-2 border-[2px] border-gray-700 outline-none select-none rounded-lg text-left flex flex-row cursor-not-allowed" >
+                            className="c0 h-7 w-80 px-2 border-[2px] border-gray-700 outline-none select-none rounded-lg text-left flex flex-row cursor-not-allowed" >
                             <p className="c3">
                                 {Object.keys(notificationEmails).length > 0
                                     ? Object.keys(notificationEmails).find(

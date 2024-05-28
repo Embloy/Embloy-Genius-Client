@@ -11,12 +11,15 @@ import LoadingScreen from "@/app/components/dom/main/screens/LoadingScreen";
 import { useEffect } from 'react';
 import { useSearchParams } from 'next/navigation'
 import '@/app/globals.css'
+import { useRouter } from 'next/navigation';
+import { BillingSettings } from "./billing/billing";
 
 function SettingsPanel() {
+    const router = useRouter();
     const [currentSubPageID, setcurrentSubPageID] = useState(0);
     const [profileIsHovered, setProfileIsHovered] = useState(false);
     const [accessIsHovered, setAccessIsHovered] = useState(false);
-    const [securityIsHovered, setSecurityIsHovered] = useState(false);
+    const [billingIsHovered, setBillingIsHovered] = useState(false);
     const [integrationsIsHovered, setIntegrationsIsHovered] = useState(false);
     const [archiveIsHovered, setArchiveIsHovered] = useState(false);
     const [secretsIsHovered, setSecretsIsHovered] = useState(false);
@@ -30,8 +33,9 @@ function SettingsPanel() {
                 profile: 0,
                 access: 1,
                 secrets: 2,
-                integrations: 3,
-                archive: 4,
+                billing: 3,
+                integrations: 4,
+                archive: 5,
                 // security: 5,
             };
             const subPageID = tabToSubPageID[searchParams.get("tab")];
@@ -43,40 +47,43 @@ function SettingsPanel() {
         }
     }, [searchParams]);
 
-    const switchSubPage = (id) => {
+    const switchSubPage = (id, tabName) => {
         if (currentSubPageID != id) {
             setcurrentSubPageID(id);
+            router.push(`?tab=${tabName}`);
         }
     }
+
     const profileSubPageID = 0;
     const profileSubPage = () => {
-        switchSubPage(profileSubPageID);
+        switchSubPage(profileSubPageID, 'profile');
     };
 
     const accessSubPageID = 1;
     const accessSubPage = () => {
-        switchSubPage(accessSubPageID);
+        switchSubPage(accessSubPageID, 'access');
     };
 
     const secretsSubPageID = 2;
     const secretsSubPage = () => {
-        switchSubPage(secretsSubPageID);
+        switchSubPage(secretsSubPageID, 'secrets');
     };
 
-    const integrationsSubPageID = 3;
+    const billingSubPageID = 3;
+    const billingSubPage = () => {
+        switchSubPage(billingSubPageID, 'billing');
+    };
+
+    const integrationsSubPageID = 4;
     const integrationsSubPage = () => {
-        switchSubPage(integrationsSubPageID);
+        switchSubPage(integrationsSubPageID, 'integrations');
     };
 
-    const archiveSubPageID = 4;
+    const archiveSubPageID = 5;
     const archiveSubPage = () => {
-        switchSubPage(archiveSubPageID);
+        switchSubPage(archiveSubPageID, 'archive');
     };
 
-    const securitySubPageID = 5;
-    const securitySubPage = () => {
-        switchSubPage(securitySubPageID);
-    };
 
     let user = useContext(UserContext);
     let store = useContext(StoreContext);
@@ -130,6 +137,25 @@ function SettingsPanel() {
                                     className="relative dark:hidden"
                                 />
                                 <p>Access</p>
+                            </div>
+                        </li>
+                        <li onClick={billingSubPage} onMouseEnter={() => setBillingIsHovered(true)} onMouseLeave={() => setBillingIsHovered(false)} className={cn(currentSubPageID === billingSubPageID ? "flex flex-row items-center justify-start border-b-[1px] dark:bg-black bg-embloy-green border-embloy-green py-2 px-6 text-white cursor-pointer" : "flex flex-row items-center justify-start border-b-[1px] border-gray-700 dark:hover:border-gray-400 py-2 px-6 text-gray-400 dark:hover:text-white hover:text-embloy-green cursor-pointer")} >
+                            <div className="h-full w-full flex flex-row items-center justify-center gap-1" >
+                                <Image
+                                    src={cn(currentSubPageID === billingSubPageID ? "/icons/credit-card-white.svg" : cn(billingIsHovered ? "/icons/credit-card-white.svg" : "/icons/credit-card-light.svg"))}
+                                    alt="Logo"
+                                    height="20"
+                                    width="20"
+                                    className="relative hidden dark:block"
+                                />
+                                <Image
+                                    src={cn(currentSubPageID === billingSubPageID ? "/icons/credit-card-white.svg" : cn(billingIsHovered ? "/icons/credit-card-green.svg" : "/icons/credit-card-light.svg"))}
+                                    alt="Logo"
+                                    height="20"
+                                    width="20"
+                                    className="relative dark:hidden"
+                                />
+                                <p>Billing</p>
                             </div>
                         </li>
                         <li onClick={secretsSubPage} onMouseEnter={() => setSecretsIsHovered(true)} onMouseLeave={() => setSecretsIsHovered(false)} className={cn(currentSubPageID === secretsSubPageID ? "flex flex-row items-center justify-start border-b-[1px] dark:bg-black bg-embloy-green border-embloy-green py-2 px-6 text-white cursor-pointer" : "flex flex-row items-center justify-start border-b-[1px] border-gray-700 dark:hover:border-gray-400 py-2 px-6 text-gray-400 dark:hover:text-white hover:text-embloy-green cursor-pointer")} >
@@ -189,29 +215,10 @@ function SettingsPanel() {
                                 <p>Archive</p>
                             </div>
                         </li>
-                        {/*<li onClick={securitySubPage} onMouseEnter={() => setSecurityIsHovered(true)} onMouseLeave={() => setSecurityIsHovered(false)} className={cn(currentSubPageID === securitySubPageID ? "flex flex-row items-center justify-start border-b-[1px] dark:bg-black bg-embloy-green border-embloy-green py-2 px-6 text-white cursor-pointer" : "flex flex-row items-center justify-start border-b-[1px] border-gray-700 dark:hover:border-gray-400 py-2 px-6 text-gray-400 dark:hover:text-white hover:text-embloy-green cursor-pointer")} >
-                            <div className="h-full w-full flex flex-row items-center justify-center gap-1" >
-                                <Image
-                                    src={cn(currentSubPageID === securitySubPageID ? "/icons/security-white.svg" : cn(securityIsHovered ? "/icons/security-white.svg" : "/icons/security-light.svg"))}
-                                    alt="Logo"
-                                    height="20"
-                                    width="20"
-                                    className="relative hidden dark:block"
-                                />
-                                <Image
-                                    src={cn(currentSubPageID === securitySubPageID ? "/icons/security-white.svg" : cn(securityIsHovered ? "/icons/security-green.svg" : "/icons/security-light.svg"))}
-                                    alt="Logo"
-                                    height="20"
-                                    width="20"
-                                    className="relative dark:hidden"
-                                />
-                                <p>Security</p>
-                            </div>
-                        </li>*/}
                         <li className="cursor-default text-transparent select-none w-screen flex flex-row items-center justify-start border-b-[1px] border-gray-700 p-2" >
-                            <button className="cursor-default">
+                            <div className="cursor-default">
                                 <p>Promotions</p>
-                            </button>
+                            </div>
                         </li>
                     </ul>
                 </div>
@@ -231,7 +238,11 @@ function SettingsPanel() {
                             <SecretsSettings user={user} store={store} />
                         </div>
                     )}
-
+                    {currentSubPageID === billingSubPageID && (
+                        <div className="container mx-auto">
+                            <BillingSettings store={store} />
+                        </div>
+                    )}
                 </div>
             </div>
         </main>

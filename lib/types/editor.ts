@@ -1,11 +1,11 @@
 export type EditorBlock = {
-    id: string;
-    type: string;
-    data: any;
+  id: string;
+  type: string;
+  data: any;
 };
 
 export type EditorData = {
-    time: number;
-    blocks: EditorBlock[];
-    version: string;
+  time: number;
+  blocks: EditorBlock[];
+  version: string;
 };

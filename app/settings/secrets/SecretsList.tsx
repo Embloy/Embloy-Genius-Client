@@ -116,7 +116,7 @@ export function SecretsList({ tokens, setTokens, removeToken }) {
           This is a list of secret keys associated with your account. Remove any
           keys that you do not recognize.{" "}
           <a
-            className="italic text-embloy-purple-lighter hover:underline cursor-pointer"
+            className="italic text-embloy-purple dark:text-embloy-purple-lighter hover:underline cursor-pointer"
             href="https://developers.embloy.com/docs/core/tokens/secrets"
             target="_blank"
             rel="noopener noreferrer"
@@ -148,17 +148,29 @@ export function SecretsList({ tokens, setTokens, removeToken }) {
                     <React.Fragment key={token.id}>
                       <div
                         className={`w-full flex flex-col ${
-                          editingTokenId == token.id && "bg-embloy-gray-darkest"
+                          editingTokenId == token.id &&
+                          "dark:bg-embloy-gray-darkest bg-embloy-gray-lightest"
                         }`}
                       >
                         <div className="w-full px-2 py-2 flex flex-row items-start justify-between">
                           <div className="flex flex-row items-start justify-start gap-1">
                             <Image
-                              className="mt-3"
+                              className="mt-3 hidden dark:block"
                               src={
                                 token.issuer === "embloy"
                                   ? "/icons/security-green.svg"
                                   : "/icons/security-white.svg"
+                              }
+                              alt="Logo"
+                              height="50"
+                              width="50"
+                            />
+                            <Image
+                              className="mt-3 dark:hidden"
+                              src={
+                                token.issuer === "embloy"
+                                  ? "/icons/security-green.svg"
+                                  : "/icons/security-light.svg"
                               }
                               alt="Logo"
                               height="50"
@@ -269,7 +281,7 @@ export function SecretsList({ tokens, setTokens, removeToken }) {
                               className={`border-[1px] border-gray-700 rounded-xl px-2 text-sm ${
                                 isExpired(token)
                                   ? "text-gray-500 cursor-not-allowed"
-                                  : "text-white ed p-1"
+                                  : "dark:text-embloy-purple-lighter text-embloy-purple ed p-1"
                               }
                               ${isUpdating && "cursor-not-allowed"}
                               `}
@@ -280,7 +292,7 @@ export function SecretsList({ tokens, setTokens, removeToken }) {
                                     ? `${
                                         isUpdating
                                           ? "text-gray-500"
-                                          : "text-embloy-purple-lighter"
+                                          : "text-embloy-purple dark:text-embloy-purple-lighter"
                                       }`
                                     : ""
                                 }
@@ -389,10 +401,22 @@ export function SecretsList({ tokens, setTokens, removeToken }) {
                                     }}
                                   >
                                     <Image
+                                      className="hidden dark:block"
                                       src={
                                         inputType === "password"
                                           ? "/icons/sm-list-white.svg"
                                           : "/icons/sm-unlist-white.svg"
+                                      }
+                                      alt="Eye icon"
+                                      height="25"
+                                      width="25"
+                                    />
+                                    <Image
+                                      className="dark:hidden"
+                                      src={
+                                        inputType === "password"
+                                          ? "/icons/sm-list-dark.svg"
+                                          : "/icons/sm-unlist-dark.svg"
                                       }
                                       alt="Eye icon"
                                       height="25"
