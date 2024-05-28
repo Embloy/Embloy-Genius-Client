@@ -173,7 +173,7 @@ export function ProfileInfo({router}) {
                         {error === null ? (
                                 nameIsClicked || emailIsClicked ? (
                                     <p className="c3 text-xs bgneg italic">Hit return to stage changes</p>) : (
-                                    <p className="c3 text-xs bgneg italic">Double click to edit</p>)
+                                    <p className="c3 text-xs bgneg italic">Click to edit</p>)
                             ) :
                             <p className="text-red-500 text-xs bgneg italic">An Error has occured. Try again</p>
                         }
@@ -189,7 +189,7 @@ export function ProfileInfo({router}) {
                                     className="flex flex-row items-start justify-start py-4 rounded-lg">
                                     <p className="w-[150px] left font-medium c0">Name</p>
                                     <input
-                                        className="c0 h-7 w-40 px-2 border-[2px] dark:border-gray-600 border-gray-700 outline-none rounded-lg"
+                                        className="c0 h-9 w-40 px-2 border-[2px] dark:border-gray-600 border-gray-700 outline-none rounded-lg"
                                         type="text"
                                         name="First Name"
                                         value={firstName}
@@ -201,7 +201,7 @@ export function ProfileInfo({router}) {
                                     />
                                     <div className="w-2"/>
                                     <input
-                                        className="c0 h-7 w-40 px-2 border-[2px] dark:border-gray-600 border-gray-700  outline-none rounded-lg"
+                                        className="c0 h-9 w-40 px-2 border-[2px] dark:border-gray-600 border-gray-700  outline-none rounded-lg"
                                         type="text"
                                         name="Last Name"
                                         value={lastName}
@@ -213,11 +213,11 @@ export function ProfileInfo({router}) {
                                     />
                                 </div>
                             ) : (
-                                <div onMouseEnter={nameHover} onMouseLeave={nameNotHover} onDoubleClick={nameClick}
+                                <div onMouseEnter={nameHover} onMouseLeave={nameNotHover} onClick={nameClick}
                                      className="flex flex-row items-start justify-start py-4 rounded-lg">
                                     <p className="w-[150px] left font-medium c0">Name</p>
                                     <input
-                                        className="c2-5 h-7 w-40 px-2 border-[2px] dark:border-gray-900 border-gray-200 outline-none rounded-lg pointer-events-none"
+                                        className="c2-5 h-9 w-40 px-2 border-[2px] dark:border-gray-900 border-gray-200 outline-none rounded-lg pointer-events-none"
                                         type="text"
                                         name="First Name"
                                         value={firstName == '' ? user.first_name : firstName}
@@ -225,7 +225,7 @@ export function ProfileInfo({router}) {
                                     />
                                     <div className="w-2"/>
                                     <input
-                                        className="c2-5 h-7 w-40 px-2 border-[2px] dark:border-gray-900 border-gray-200 outline-none rounded-lg pointer-events-none"
+                                        className="c2-5 h-9 w-40 px-2 border-[2px] dark:border-gray-900 border-gray-200 outline-none rounded-lg pointer-events-none"
                                         type="text"
                                         name="Last Name"
                                         value={lastName == '' ? user.last_name : lastName}
@@ -238,7 +238,7 @@ export function ProfileInfo({router}) {
                                     className="flex flex-row items-start justify-start py-4 rounded-lg">
                                     <p className="w-[150px] left font-medium c0">Email</p>
                                     <input
-                                        className="c0 h-7 w-40 px-2 border-[2px] dark:border-gray-600 border-gray-700 outline-none rounded-lg"
+                                        className="c0 h-9 w-80 px-2 border-[2px] dark:border-gray-600 border-gray-700 outline-none rounded-lg"
                                         type="email"
                                         name="Email"
                                         value={email}
@@ -250,11 +250,11 @@ export function ProfileInfo({router}) {
                                     />
                                 </div>
                             ) : (
-                                <div onMouseEnter={emailHover} onMouseLeave={emailNotHover} onDoubleClick={emailClick}
+                                <div onMouseEnter={emailHover} onMouseLeave={emailNotHover} onClick={emailClick}
                                      className="flex flex-row items-start justify-start py-4 rounded-lg">
                                     <p className="w-[150px] left font-medium c0">Email</p>
                                     <input
-                                        className="c2-5 h-7 w-40 px-2 border-[2px] dark:border-gray-900 border-gray-200 outline-none rounded-lg pointer-events-none"
+                                        className="c2-5 h-9 w-80 px-2 border-[2px] dark:border-gray-900 border-gray-200 outline-none rounded-lg pointer-events-none"
                                         type="text"
                                         name="Last Name"
                                         value={email == '' ? user.email : email}
@@ -287,7 +287,7 @@ export function ProfileInfo({router}) {
                     </div>
                     <div className="h-4"/>
                     <div className="flex flex-row items-start justify-start px-4 py-2 gap-4">
-                        <a href={"https://about.embloy.com/"}
+                        <a href="https://developers.embloy.com/docs/category/account" target="_blank" rel="noreferrer"
                            className="rounded-full c2-5 hover:underline text-xs bgneg">
                             <p>Learn more</p>
                         </a>

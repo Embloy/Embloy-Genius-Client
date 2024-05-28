@@ -184,7 +184,7 @@ export default function Home() {
         <div className="w-full flex flex-col items-center justify-center gap-6 bg-embloy-green text-black rounded-lg border-[1px] border-transparent">
           <GenerateQRButton
             head="Generate QR code"
-            onGenerateSuccess={() => {}}
+            onGenerateSuccess={() => { }}
           />
         </div>
 
@@ -238,7 +238,7 @@ export default function Home() {
                 3.&nbsp;
                 <a
                   className="font-medium hover:text-embloy-purple-lighter"
-                  href="/settings?tab=access"
+                  href="/settings?tab=secrets"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -251,9 +251,8 @@ export default function Home() {
             </div>
 
             <button
-              className={`w-full flex flex-col items-center justify-start border-white border-[1px] rounded-lg p-2 ${
-                topJSXIsHovered ? "h-[520px]" : "h-[45px]"
-              }`}
+              className={`w-full flex flex-col items-center justify-start border-white border-[1px] rounded-lg p-2 ${topJSXIsHovered ? "h-[520px]" : "h-[45px]"
+                }`}
               onMouseEnter={() => setTopJSXIsHovered(true)}
               onMouseLeave={() => setTopJSXIsHovered(false)}
               onClick={(e) => {
@@ -351,9 +350,8 @@ export default function Home() {
             </div>
 
             <button
-              className={`w-full flex flex-col items-center justify-start border-white border-[1px] rounded-lg p-2 ${
-                topGoIsHovered ? "h-[520px]" : "h-[45px]"
-              }`}
+              className={`w-full flex flex-col items-center justify-start border-white border-[1px] rounded-lg p-2 ${topGoIsHovered ? "h-[520px]" : "h-[45px]"
+                }`}
               onMouseEnter={() => setTopGoIsHovered(true)}
               onMouseLeave={() => setTopGoIsHovered(false)}
               onClick={(e) => {
@@ -482,9 +480,8 @@ c.Redirect(http.StatusFound, redirectURL)`}
             </button>
 
             <button
-              className={`w-full flex flex-col items-center justify-start border-white border-[1px] rounded-lg p-2 ${
-                topTypeScriptIsHovered ? "h-[520px]" : "h-[45px]"
-              }`}
+              className={`w-full flex flex-col items-center justify-start border-white border-[1px] rounded-lg p-2 ${topTypeScriptIsHovered ? "h-[520px]" : "h-[45px]"
+                }`}
               onMouseEnter={() => setTopTypeScriptIsHovered(true)}
               onMouseLeave={() => setTopTypeScriptIsHovered(false)}
               onClick={(e) => {
@@ -602,9 +599,8 @@ embloy.makeRequest()
             </button>
 
             <button
-              className={`w-full flex flex-col items-center justify-start border-white border-[1px] rounded-lg p-2 ${
-                topRubyIsHovered ? "h-[520px]" : "h-[45px]"
-              }`}
+              className={`w-full flex flex-col items-center justify-start border-white border-[1px] rounded-lg p-2 ${topRubyIsHovered ? "h-[520px]" : "h-[45px]"
+                }`}
               onMouseEnter={() => setTopRubyIsHovered(true)}
               onMouseLeave={() => setTopRubyIsHovered(false)}
               onClick={(e) => {
@@ -719,9 +715,8 @@ embloy.makeRequest()
             </button>
 
             <button
-              className={`w-full flex flex-col items-center justify-start border-white border-[1px] rounded-lg p-2 ${
-                topPythonIsHovered ? "h-[520px]" : "h-[45px]"
-              }`}
+              className={`w-full flex flex-col items-center justify-start border-white border-[1px] rounded-lg p-2 ${topPythonIsHovered ? "h-[520px]" : "h-[45px]"
+                }`}
               onMouseEnter={() => setTopPythonIsHovered(true)}
               onMouseLeave={() => setTopPythonIsHovered(false)}
               onClick={(e) => {
@@ -935,7 +930,7 @@ redirect_url = embloy_client.make_reques`}
 
               <div className="w-full flex flex-col gap-2">
                 <a
-                  href="/settings?tab=access"
+                  href="/settings?tab=secrets"
                   className="text-md hover:text-embloy-purple-lighter flex items-center gap-2"
                 >
                   <img
@@ -946,6 +941,16 @@ redirect_url = embloy_client.make_reques`}
                   Generate client token
                 </a>
                 <a
+                  href="/settings?tab=secrets"
+                  className="text-md hover:text-embloy-purple-lighter flex items-center gap-2"
+                >
+                  <img
+                    src="/icons/security-light.svg"
+                    alt="access icon"
+                    style={{ width: "20px", height: "20px" }}
+                  />
+                  Manage 3rd party API keys
+                </a>                <a
                   href="/recruitment"
                   className="text-md hover:text-embloy-purple-lighter flex items-center gap-2"
                 >

@@ -57,7 +57,7 @@ export function SystemNotificationSettings() {
     return (
         <div className="w-full flex flex-col items-start justify-start gap-4">
             <div className="w-full flex flex-row items-center justify-start gap-3">
-                <h1 className="text-lg font-medium c2">System Notifications</h1>
+                <h1 className="text-lg font-medium c2">System notifications</h1>
                 <div className="border border-gray-700 px-2 rounded-full">
                     <p className="c3 text-xs">Functionality disabled</p>
                 </div>
