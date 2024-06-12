@@ -27,8 +27,8 @@ const Signin = () => {
                 .then((token) => {
                     setCookie("refresh", token, {path: "/"})
                     request_access(getCookie("refresh", {path: "/"}))
-                        .then((token) => {
-                            setCookie("access", token, {path: "/"})
+                        .then((data) => {
+                            setCookie("access", data.access_token, {path: "/"})
                             router.replace("/");
                             setIsLoading(false);
                         })
