@@ -52,26 +52,17 @@
     .bg3 {
         @apply dark:bg-embloy-gray-darker bg-embloy-gray
     }
+    .bg4 {
+        @apply dark:bg-embloy-gray-darkest bg-embloy-gray
+    }
     .bgneg{
         @apply bg-transparent dark:bg-transparent hover:bg-transparent hover:dark:bg-transparent
     }
 
     select {
-        @apply dark:bg-black bg-white cursor-pointer
+        @apply cursor-pointer
     }
-    select:hover {
-        @apply dark:bg-gray-900 bg-white
-    }
-    input {
-        @apply dark:bg-black bg-white
-    }
-    button {
-        @apply dark:bg-black bg-white
-    }
-    button:hover {
-        @apply dark:bg-gray-900 bg-white
-    }
-
+ 
 
     .btn_sm{
         @apply rounded-full flex items-center justify-center border-[2px] dark:border-white border-black c0
@@ -80,5 +71,14 @@
         @apply hover:border-embloy-gray-dark dark:hover:border-embloy-gray hover:text-embloy-gray-dark hover:dark:text-embloy-gray
     }
 
+    .btn{ 
+        @apply rounded-full flex items-center justify-center
+    }
+    .btn:hover {
+        @apply dark:bg-embloy-gray-darker bg-embloy-gray-lighter
+    }
+
+    
+    
 
 }

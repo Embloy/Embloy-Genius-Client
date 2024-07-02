@@ -50,18 +50,11 @@ const Navbar = () => {
                                             <p>Hire</p>
                                         </Link>
                                     </li>
-                                    <li className={cn(
-                                        pathname?.startsWith("/calendar") ? "c0" : "text-gray-400 dark:hover:text-gray-200 hover:text-gray-700"
-                                    )}>
-                                        <Link href="/calendar" style={{pointerEvents: "none", color: "#293645"}}>
-                                            <p>Calendar</p>
-                                        </Link>
-                                    </li>
                                 </ul>
 
                             </div>
                             <div className="flex horizontal end-0 items-center h-full gap-x-6">
-                                <SearchBar/>
+                                <SearchBar className="bg-black" />
                                 <Notifications/>
                                 <div onClick={toggleUserbar}  className="flex items-center justify-center m-1">
                                     <AvatarButton updated_image={null} loading={false} user={user} w={40} h={40} styles="w-10 h-10 rounded-full bg-transparent hover:bg-transparent"/>

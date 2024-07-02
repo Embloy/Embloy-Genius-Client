@@ -56,7 +56,8 @@
     "tailwind-merge": "^2.0.0",
     "tailwindcss": "latest",
     "tailwindcss-animate": "^1.0.7",
-    "zod": "^3.22.4"
+    "zod": "^3.22.4",
+    "sass": "latest"
   },
   "devDependencies": {
     "@types/react": "18.2.38",
