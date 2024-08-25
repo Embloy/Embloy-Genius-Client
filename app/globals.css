@@ -5,8 +5,25 @@
 
 @layer base{
     body {
-        @apply dark:bg-black bg-white
+        @apply dark:bg-ciliegiolo bg-white
     }
+    .stylish-header {
+        @apply rounded-lg p-5px landscape:dark:hover:bg-chianti 
+    }
+    .stylish-header-default {
+        @apply transition duration-300 ease-in-out rounded-lg p-5px 
+    }
+    .stylish-header-text {
+        @apply transition duration-300 ease-in-out dark:text-white text-black
+    }
+    .stylish-header-text-default {
+        @apply text-barbera dark:bg-chianti
+    }
+    
+    .bg-na {@apply bg-transparent}
+
+    .bg-body {@apply dark:bg-ciliegiolo bg-white}
+    
     .bgs {
         @apply dark:bg-black bg-white
     }
