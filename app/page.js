@@ -18,7 +18,8 @@ import { useRouter } from "next/navigation";
 import Note from "./components/ui/misc/note";
 import InfoField from "./components/ui/misc/info-field";
 import IntegrationStatus from "./components/ui/dashboard/integration-status";
-
+import { EmbloyPageMount, EmbloyPage, EmbloyPageBody, EmbloyPageBodySection } from "@/app/components/ui/misc/page";
+import { EmbloyBox, EmbloyBoxContent } from "@/app/components/ui/misc/box";
 const newsItems = [
   {
     id: 1,
@@ -150,8 +151,18 @@ export default function Home() {
   ]
 
   return (
+    <EmbloyPageMount >
+      <EmbloyPage>
+        <EmbloyPageBody >
+            <EmbloyPageBodySection >
+              <h1 className="font-medium text-2xl text-white">Genius Dashboard</h1>
+            </EmbloyPageBodySection>
+        </EmbloyPageBody>        
+      </EmbloyPage>
+
+    {/*
     <main className="text-white flex min-h-screen h-full flex-col items-center ">
-      <div className="overflow-hidden z-10 max-w-6xl w-full min-h-screen h-full border-l-[1px] border-r-[1px] border-gray-700 justify-between p-4">
+      <div className="overflow-hidden z-10 landscape:max-w-1250px portrait:w-full min-h-screen h-full border-l-[1px] border-r-[1px] border-gray-700 justify-between p-4">
         <div className="flex sm:flex-col md:flex-row items-center justify-between my-4">
           <h1 className="font-medium text-2xl ">Genius Dashboard</h1>
           <div className="flex flex-row items-center justify-end gap-4 mt-4 md:mt-0">
@@ -317,5 +328,7 @@ export default function Home() {
 
       </div>
     </main>
+    */}
+    </EmbloyPageMount>
   );
 }

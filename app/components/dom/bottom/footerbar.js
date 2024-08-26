@@ -34,7 +34,7 @@ const Footerbar = () => {
                             width="25"
                             className="relative"
                         />
-                        <p className="text-gray-300 text-xs font-normal">© 2024 Embloy Platforms GbR</p>
+                        <p className="text-gray-300 text-xs font-normal">© 2024 Embloy Platforms UG (haftungsbeschränkt)</p>
                     </div>
                     <ul className="hidden md:flex gap-x-6 text-gray-300 text-xs font-normal">
                         <li>

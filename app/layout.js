@@ -29,7 +29,7 @@ export default function RootLayout({ children }) {
                             <StoreWrapper>
                                 <AppWrapper>
                                     <Navigation />
-                                    <div className="flex flex-col items-center justify-center " >
+                                    <div className="flex flex-col items-center justify-center w-full" >
                                         {children}
                                     </div>
                                     <Bottom />
