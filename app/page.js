@@ -20,6 +20,8 @@ import InfoField from "./components/ui/misc/info-field";
 import IntegrationStatus from "./components/ui/dashboard/integration-status";
 import { EmbloyPageMount, EmbloyPage, EmbloyPageBody, EmbloyPageBodySection } from "@/app/components/ui/misc/page";
 import { EmbloyBox, EmbloyBoxContent } from "@/app/components/ui/misc/box";
+import { EmbloyLHPV, EmbloyV, EmbloyH} from "./components/ui/misc/stuff";
+import { EmbloyToolbox} from "./components/ui/misc/toolbox";
 const newsItems = [
   {
     id: 1,
@@ -155,7 +157,44 @@ export default function Home() {
       <EmbloyPage>
         <EmbloyPageBody >
             <EmbloyPageBodySection>
-              <h1 className="font-medium text-2xl text-white">Genius Dashboard</h1>
+              <EmbloyV>
+                <EmbloyH className="justify-between">
+                  <h1 className="font-medium text-2xl text-white">Genius Dashboard</h1>
+                  <EmbloyToolbox className="portrait:hidden">
+                    <a
+                      href="/recruitment"
+                      onMouseEnter={handlePlusMouseEnter}
+                      onMouseLeave={handlePlusMouseLeave}
+                    
+                    >
+                      <Image
+                        src={
+                          plusIsHovered
+                            ? "/icons/svg/barbera/plus.svg"
+                            : "/icons/svg/amarone/plus.svg"
+                        }
+                        alt="Logo"
+                        height="12"
+                        width="12"
+                        className="relative"
+                      />
+                    </a>
+                    <a
+                      href="https://developers.embloy.com/docs/category/genius"
+                      target="_blank"
+                      className="text-normal text-sm text-amarone hover:text-barbera p-0"
+                    >
+                      <p>
+                        Help
+                      </p>
+                    </a>
+                  </EmbloyToolbox>
+                </EmbloyH>
+                
+                <EmbloyLHPV>
+                  
+                </EmbloyLHPV>
+              </EmbloyV>
             </EmbloyPageBodySection>
         </EmbloyPageBody>        
       </EmbloyPage>
@@ -163,45 +202,7 @@ export default function Home() {
     {/*
     <main className="text-white flex min-h-screen h-full flex-col items-center ">
       <div className="overflow-hidden z-10 landscape:max-w-1250px portrait:w-full min-h-screen h-full border-l-[1px] border-r-[1px] border-gray-700 justify-between p-4">
-        <div className="flex sm:flex-col md:flex-row items-center justify-between my-4">
-          <h1 className="font-medium text-2xl ">Genius Dashboard</h1>
-          <div className="flex flex-row items-center justify-end gap-4 mt-4 md:mt-0">
-            <a
-              href="/recruitment"
-              onMouseEnter={handlePlusMouseEnter}
-              onMouseLeave={handlePlusMouseLeave}
-            >
-              <Image
-                src={
-                  plusIsHovered
-                    ? "/icons/plus-light.svg"
-                    : "/icons/plus-dark.svg"
-                }
-                alt="Logo"
-                height="35"
-                width="35"
-                className="relative"
-              />
-            </a>
-            <a
-              href="/recruitment"
-              onMouseEnter={handleUploadMouseEnter}
-              onMouseLeave={handleUploadMouseLeave}
-            >
-              <Image
-                src={
-                  uploadIsHovered
-                    ? "/icons/upload-light.svg"
-                    : "/icons/upload-dark.svg"
-                }
-                alt="Logo"
-                height="35"
-                width="35"
-                className="relative"
-              />
-            </a>
-          </div>
-        </div>
+        
         <div className="w-full flex flex-col items-start justify-start my-6 gap-6">
           <div className="w-[2000px] flex flex-row items-start justify-start gap-6">
           <InfoField title="Traffic report" notes={ana_notes} >
