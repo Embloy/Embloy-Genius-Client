@@ -160,7 +160,7 @@ export default function Home() {
               <EmbloyV>
                 <EmbloyH className="justify-between">
                   <h1 className="font-medium text-2xl text-white">Genius Dashboard</h1>
-                  <EmbloyToolbox className="portrait:hidden">
+                  <EmbloyToolbox superClassName="portrait:hidden">
                     <a
                       href="/recruitment"
                       onMouseEnter={handlePlusMouseEnter}
