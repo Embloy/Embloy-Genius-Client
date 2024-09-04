@@ -32,7 +32,7 @@ const PageItem = ({name, link, default_path, close}) => {
 
 export const MobileBar = ({ isVisible, onClose, pageSection, pathname, userData, storeData }) => {
     return (
-        <EmbloyBox className={`portrait:py-3 portrait:px-0 landscape:px-0 bg-ciliegiolo z-50 absolute top-0 right-0 h-full transition-transform transform ${isVisible ? 'translate-x-0' : 'translate-x-full'}`}>
+        <EmbloyBox className={`portrait:py-3 portrait:px-0 landscape:px-0 bg-ciliegiolo z-50 absolute top-0 right-0 h-full transition-transform transform ${isVisible ? ' translate-x-0' : ' translate-x-full'}`}>
             <EmbloyBoxContent className={`items-center gap-5px`}>
                 <EmbloyH className={`justify-between`}>
                     <div className='w-8 h-8 flex items-center justify-center' onClick={onClose}>

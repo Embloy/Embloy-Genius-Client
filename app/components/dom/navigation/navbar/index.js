@@ -51,7 +51,7 @@ const Navbar = () => {
 
                 <>
                     <div
-                        className="o bg-body z-20 w-full h-14 sticky top-0 border-b-[1px] border-gray-700 flex flex-row items-center justify-center">
+                        className="bg-body z-20 w-full h-14 sticky top-0 border-b-[1px] border-gray-700 flex flex-row items-center justify-center">
                         <div className="container h-full min-w-98% flex flex-row items-center justify-between">
                             <div className="flex horizontal start-0 items-center h-full gap-x-6">
                                 <Logo/>
@@ -85,9 +85,13 @@ const Navbar = () => {
                         <UserBar isVisible={isUserbarVisible} onClose={toggleUserbar} userData={user}
                                 storeData={store} />
                     </div>
-                    <div className='landscape:hidden '>
+                   {/* TODO: MAKE ANIMATON INSTEAD OF NOT SHOWN BUT BE AWaRE OF OVERFLOY
+                    */}
+                    {isUserbarVisible && (<div className='landscape:hidden'>
                         <MobileBar isVisible={isUserbarVisible} onClose={toggleUserbar} pageSection={headerPages} pathname={pathname}/>
-                    </div>                    
+                    </div>)}
+                     
+                                        
                     
                 </>
             ) : (

@@ -151,10 +151,10 @@ export default function Home() {
   ]
 
   return (
-    <EmbloyPageMount >
+    <EmbloyPageMount className="overflow-hidden">
       <EmbloyPage>
         <EmbloyPageBody >
-            <EmbloyPageBodySection >
+            <EmbloyPageBodySection>
               <h1 className="font-medium text-2xl text-white">Genius Dashboard</h1>
             </EmbloyPageBodySection>
         </EmbloyPageBody>        
