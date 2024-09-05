@@ -12,7 +12,7 @@ const IntegrationStatus = ({ message }) => {
     // make table 
     return(
         <div className="flex flex-col items-start justify-start">
-            <div className="flex flex-row items-center justify-start text-xs font-sm text-amarone hover:text-barbera ">
+            <div className="flex flex-row items-center justify-start text-xs font-sm text-lagunaveneta dark:text-amarone hover:text-golfonapoli dark:hover:text-barbera ">
                 <button onClick={handleToggle} className=" flex items-center gap-2">
                     {showAll ? "Hide inactivated" : "Show all"}
                 </button>
