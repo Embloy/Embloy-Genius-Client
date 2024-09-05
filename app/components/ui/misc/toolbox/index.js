@@ -6,7 +6,7 @@ import Image from "next/image";
 
 export const EmbloyToolbox = ({name, children, className, superClassName}) => {
     return (
-        <EmbloyBox className={`max-w-fit landscape:py-2 landscape:px-2.5 portrait:py-0.5 portrait:px-2  ${superClassName}`}>
+        <EmbloyBox className={`max-w-fit landscape:py-[8px] landscape:px-[10px] portrait:py-0.5 portrait:px-2  ${superClassName}`}>
             <EmbloyBoxContent>
                 <EmbloyH className={`gap-3 items-center ${className}`}>
                     {name && <p className="font-normal text-sm text-amarone mr-2">{name}</p>}

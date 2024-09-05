@@ -1,7 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 const {nextui} = require("@nextui-org/react");
 module.exports = {
-  darkMode: 'class',
+  darkMode: ["class"],
   content: [
     './pages/**/*.{js,ts,jsx,tsx,mdx}',
     './components/**/*.{js,ts,jsx,tsx,mdx}',
@@ -45,6 +45,7 @@ module.exports = {
         'biferno': '#312844',
         'chianti': '#211B2E',
         'ciliegiolo': '#110E1B',
+
       },
       spacing : {
         '70%': '70%',

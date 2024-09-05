@@ -202,25 +202,25 @@ export default function Home() {
                               <div className=" flex justify-center items-center">
                               <div className="flex flex-row items-center justify-between gap-2">
                                 <button
-                                  className=" font-sm text-xs text-gray-700 hover:text-embloy-gray-light rounded-full select-none"
+                                  className=" font-sm text-xs text-amarone hover:text-barbera rounded-full select-none"
                                   onClick={handlePrevNews}
                                 >
                                   {"< Back"}
                                 </button>
                                 <div className="flex flex-row items-center justify-between gap-2">
-                                  <p className="font-sm text-xs text-gray-700">
+                                  <p className="font-sm text-xs text-amarone">
                                     {currentNewsIndex + 1}
                                   </p>
-                                  <p className="font-sm text-xs text-gray-700">
+                                  <p className="font-sm text-xs text-amarone">
                                     {" "}
                                     |{" "}
                                   </p>
-                                  <p className="font-sm text-xs text-gray-700">
+                                  <p className="font-sm text-xs text-amarone">
                                     {newsItems.length}
                                   </p>
                                 </div>
                                 <button
-                                  className=" font-sm text-xs text-gray-700 hover:text-embloy-gray-light rounded-full select-none"
+                                  className=" font-sm text-xs text-amarone hover:text-barbera rounded-full select-none"
                                   onClick={handleNextNews}
                                 >
                                   {"Next >"}
