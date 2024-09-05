@@ -20,8 +20,8 @@ import InfoField from "./components/ui/misc/info-field";
 import IntegrationStatus from "./components/ui/dashboard/integration-status";
 import { EmbloyPageMount, EmbloyPage, EmbloyPageBody, EmbloyPageBodySection } from "@/app/components/ui/misc/page";
 import { EmbloyBox, EmbloyBoxContent } from "@/app/components/ui/misc/box";
-import { EmbloyLHPV, EmbloyV, EmbloyH} from "./components/ui/misc/stuff";
-import { EmbloyToolbox} from "./components/ui/misc/toolbox";
+import { EmbloyLHPV, EmbloyV, EmbloyH, EmbloySpacer} from "./components/ui/misc/stuff";
+import { EmbloyToolbox, EmbloyToolboxImgA} from "./components/ui/misc/toolbox";
 const newsItems = [
   {
     id: 1,
@@ -161,175 +161,145 @@ export default function Home() {
                 <EmbloyH className="justify-between">
                   <h1 className="font-medium text-2xl text-white">Genius Dashboard</h1>
                   <EmbloyToolbox superClassName="portrait:hidden">
-                    <a
-                      href="/recruitment"
-                      onMouseEnter={handlePlusMouseEnter}
-                      onMouseLeave={handlePlusMouseLeave}
-                    
-                    >
-                      <Image
-                        src={
-                          plusIsHovered
-                            ? "/icons/svg/barbera/plus.svg"
-                            : "/icons/svg/amarone/plus.svg"
-                        }
-                        alt="Logo"
-                        height="12"
-                        width="12"
-                        className="relative"
-                      />
-                    </a>
-                    <a
-                      href="https://developers.embloy.com/docs/category/genius"
-                      target="_blank"
-                      className="text-normal text-sm text-amarone hover:text-barbera p-0"
-                    >
-                      <p>
-                        Help
-                      </p>
-                    </a>
+                    <EmbloyToolboxImgA href="/recruitment" height="12" width="12" path="/icons/svg/amarone/plus.svg" path_hovered="/icons/svg/barbera/plus.svg"  />
+                    <EmbloyToolboxImgA href="https://developers.embloy.com/docs/category/genius" height="12" width="12" path="/icons/svg/amarone/ask.svg" path_hovered="/icons/svg/barbera/ask.svg" target="_blank" />
                   </EmbloyToolbox>
                 </EmbloyH>
-                
+                <EmbloySpacer/>
                 <EmbloyLHPV>
-                  
-                </EmbloyLHPV>
-              </EmbloyV>
-            </EmbloyPageBodySection>
-        </EmbloyPageBody>        
-      </EmbloyPage>
-
-    {/*
-    <main className="text-white flex min-h-screen h-full flex-col items-center ">
-      <div className="overflow-hidden z-10 landscape:max-w-1250px portrait:w-full min-h-screen h-full border-l-[1px] border-r-[1px] border-gray-700 justify-between p-4">
-        
-        <div className="w-full flex flex-col items-start justify-start my-6 gap-6">
-          <div className="w-[2000px] flex flex-row items-start justify-start gap-6">
-          <InfoField title="Traffic report" notes={ana_notes} >
-            <div className="flex flex-col items-start justify-start gap-1.5 ">
-            </div>
-          </ InfoField>
-          <InfoField title="Integration status">
-            <IntegrationStatus/>
-          </InfoField>
-          </div>
-          <div className="w-[2000px] flex flex-row items-start justify-start gap-6">
+                  <EmbloyV className="gap-6">
+                    <EmbloyLHPV className="gap-6">
+                      <EmbloyBox className="max-w-fit portrait:max-w-full">
+                        <EmbloyBoxContent boxhead="Traffic report" notes={ana_notes} >
+                          <div className="flex flex-col items-start justify-start gap-1.5 ">
+                          </div>
+                        </ EmbloyBoxContent>
+                      </EmbloyBox>
+                      <EmbloyBox className="max-w-fit portrait:max-w-full">
+                        <EmbloyBoxContent boxhead="Integration status">
+                          <IntegrationStatus/>
+                        </EmbloyBoxContent>
+                      </EmbloyBox>
+                      
+                    </EmbloyLHPV>
+                    <EmbloyLHPV className="gap-6">
+                      <EmbloyBox className="max-w-fit portrait:max-w-full"> 
+                        <EmbloyBoxContent boxhead="News" notes={news_notes} >
+                          <div className="flex flex-row items-start">
+                            <div className="flex flex-col items-center justify-start gap-1.5 ">
+                              <Image
+                                src={currentNews.imageUrl}
+                                alt={currentNews.title}
+                                height="175"
+                                width="275"
+                                className="relative"
+                              />
+                              <div className="h-1" />
+                              <p className=" font-medium text-md text-white">
+                              {currentNews.title}
+                              </p>
+                              <p className="max-w-[300px] font-light text-xs ">{currentNews.description}</p>
+                              <div className=" flex justify-center items-center">
+                              <div className="flex flex-row items-center justify-between gap-2">
+                                <button
+                                  className=" font-sm text-xs text-gray-700 hover:text-embloy-gray-light rounded-full select-none"
+                                  onClick={handlePrevNews}
+                                >
+                                  {"< Back"}
+                                </button>
+                                <div className="flex flex-row items-center justify-between gap-2">
+                                  <p className="font-sm text-xs text-gray-700">
+                                    {currentNewsIndex + 1}
+                                  </p>
+                                  <p className="font-sm text-xs text-gray-700">
+                                    {" "}
+                                    |{" "}
+                                  </p>
+                                  <p className="font-sm text-xs text-gray-700">
+                                    {newsItems.length}
+                                  </p>
+                                </div>
+                                <button
+                                  className=" font-sm text-xs text-gray-700 hover:text-embloy-gray-light rounded-full select-none"
+                                  onClick={handleNextNews}
+                                >
+                                  {"Next >"}
+                                </button>
+                              </div>
+                              </div>
+                              
+                              
+                            </div>
+                        </div>
+                      </ EmbloyBoxContent>
+                    </EmbloyBox>
+                    <EmbloyBox className="max-w-fit portrait:max-w-full">
+                      <EmbloyBoxContent boxhead="Useful links" >
             
-            <InfoField title="News" notes={news_notes} >
-                <div className="flex flex-row items-start">
-                  <div className="flex flex-col items-start justify-start gap-1.5 ">
-                    <Image
-                      src={currentNews.imageUrl}
-                      alt={currentNews.title}
-                      height="200"
-                      width="300"
-                      className="relative"
-                    />
-                    <div className="h-1" />
-                    <p className=" font-medium text-md text-white">
-                    {currentNews.title}
-                    </p>
-                    <p className="w-[300px] font-light text-xs ">{currentNews.description}</p>
-                    <div className="w-[300px] flex justify-center items-center">
-                    <div className="flex flex-row items-center justify-between gap-2">
-                      <button
-                        className=" font-sm text-xs text-gray-700 hover:text-embloy-gray-light rounded-full select-none"
-                        onClick={handlePrevNews}
-                      >
-                        {"< Back"}
-                      </button>
-                      <div className="flex flex-row items-center justify-between gap-2">
-                        <p className="font-sm text-xs text-gray-700">
-                          {currentNewsIndex + 1}
-                        </p>
-                        <p className="font-sm text-xs text-gray-700">
-                          {" "}
-                          |{" "}
-                        </p>
-                        <p className="font-sm text-xs text-gray-700">
-                          {newsItems.length}
-                        </p>
-                      </div>
-                      <button
-                        className=" font-sm text-xs text-gray-700 hover:text-embloy-gray-light rounded-full select-none"
-                        onClick={handleNextNews}
-                      >
-                        {"Next >"}
-                      </button>
-                    </div>
-                    </div>
-                    
-                    
-                  </div>
-              </div>
-            </ InfoField>
-            
-            <InfoField title="Useful links">
-          
-              <ul className="w-full flex flex-col gap-2 text-sm font-light text-white list-disc pl-5" >
-                <li>
-                  <a
-                    href="/settings?tab=secrets"
-                    className="hover:text-embloy-gray flex items-center gap-2"
-                  >
-                    Generate client token
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="/settings?tab=secrets"
-                    className="hover:text-embloy-gray flex items-center gap-2"
-                  >
-                    Manage 3rd party API keys
-                  </a>   
-                </li>
-                <li>
-                  <a
-                    href="/recruitment"
-                    className="hover:text-embloy-gray flex items-center gap-2"
-                  >
-                    Your jobs
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="/settings?tab=profile"
-                    className="hover:text-embloy-gray flex items-center gap-2"
-                  >
-                    Account settings
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="https://developers.embloy.com"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="hover:text-embloy-gray flex items-center gap-2"
-                  >
-                    Developer documentation
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="https://embloy.com/dashboard/billing"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="hover:text-embloy-gray flex items-center gap-2"
-                  >
-                    Billing
-                  </a>
-                </li>
-              </ul>
-                          
-            </InfoField>
-          </div>
-          
-
-        </div>
-
-      </div>
-    </main>
-    */}
+                        <ul className="w-full flex flex-col gap-2 text-sm font-light text-white list-disc pl-5" >
+                          <li>
+                            <a
+                              href="/settings?tab=secrets"
+                              className="hover:text-embloy-gray flex items-center gap-2"
+                            >
+                              Generate client token
+                            </a>
+                          </li>
+                          <li>
+                            <a
+                              href="/settings?tab=secrets"
+                              className="hover:text-embloy-gray flex items-center gap-2"
+                            >
+                              Manage 3rd party API keys
+                            </a>   
+                          </li>
+                          <li>
+                            <a
+                              href="/recruitment"
+                              className="hover:text-embloy-gray flex items-center gap-2"
+                            >
+                              Your jobs
+                            </a>
+                          </li>
+                          <li>
+                            <a
+                              href="/settings?tab=profile"
+                              className="hover:text-embloy-gray flex items-center gap-2"
+                            >
+                              Account settings
+                            </a>
+                          </li>
+                          <li>
+                            <a
+                              href="https://developers.embloy.com"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="hover:text-embloy-gray flex items-center gap-2"
+                            >
+                              Developer documentation
+                            </a>
+                          </li>
+                          <li>
+                            <a
+                              href="https://embloy.com/dashboard/billing"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="hover:text-embloy-gray flex items-center gap-2"
+                            >
+                              Billing
+                            </a>
+                          </li>
+                        </ul>
+                                    
+                      </EmbloyBoxContent>
+                    </EmbloyBox>
+                  </EmbloyLHPV>
+                </EmbloyV>
+              </EmbloyLHPV>
+            </EmbloyV>
+          </EmbloyPageBodySection>
+      </EmbloyPageBody>        
+    </EmbloyPage>
     </EmbloyPageMount>
   );
 }
