@@ -35,7 +35,7 @@ export const EmbloyLVPH = ({children, className}) => {
 
 export const EmbloySeperator = ({className}) => {
     return (
-        <div className={`w-full bg-biferno h-4px rounded-full ${className}`} />
+        <div className={`w-full bg-etna dark:bg-biferno h-4px rounded-full ${className}`} />
     );
 }
 

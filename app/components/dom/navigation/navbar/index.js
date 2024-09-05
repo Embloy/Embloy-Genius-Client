@@ -16,6 +16,7 @@ import LoadingScreen from "@/app/components/dom/main/screens/LoadingScreen";
 import {AvatarButton} from "@/app/components/ui/misc/avatar";
 import Image from 'next/image';
 import listIcon from "@/public/icons/list.svg"
+import lightListIcon from "@/public/icons/listblack.svg"
 
 
 const HeaderItem = ({name, link, default_path}) => {
@@ -74,7 +75,8 @@ const Navbar = () => {
                                 <div onClick={toggleUserbar} className="flex items-center justify-center m-1">
                                     <AvatarButton updated_image={null} loading={false} user={user} w={40} h={40} styles="portrait:hidden w-10 h-10 rounded-full bg-transparent hover:bg-transparent"/>
                                     <div className='landscape:hidden w-10 h-10 flex items-center justify-center'>
-                                        <Image src={listIcon} className='w-8 h-8'/>
+                                        <Image src={listIcon} className='w-8 h-8 hidden dark:block'/>
+                                        <Image src={lightListIcon} className='w-8 h-8 block dark:hidden'/>
                                     </div>
                                     
                                 </div>

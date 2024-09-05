@@ -7,8 +7,12 @@
     body {
         @apply dark:bg-ciliegiolo bg-white
     }
+    .page-header {
+        @apply font-medium text-2xl dark:text-white text-black
+    }
+
     .stylish-header {
-        @apply rounded-lg p-5px landscape:dark:hover:bg-chianti 
+        @apply rounded-lg p-5px landscape:hover:bg-ferrara landscape:dark:hover:bg-chianti 
     }
     .stylish-header-default {
         @apply transition duration-300 ease-in-out rounded-lg p-5px 
@@ -17,7 +21,7 @@
         @apply transition duration-300 ease-in-out dark:text-white text-black
     }
     .stylish-header-text-default {
-        @apply text-barbera dark:bg-chianti
+        @apply text-black dark:text-barbera bg-ferrara dark:bg-chianti
     }
     
     .bg-na {@apply bg-transparent}

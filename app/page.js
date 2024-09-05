@@ -1,22 +1,6 @@
 "use client";
-import { siteConfig } from "@/config/site";
 import Image from "next/image";
 import React, { useState } from "react";
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { nightOwl } from "react-syntax-highlighter/dist/esm/styles/prism";
-import {
-  Modal,
-  ModalContent,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
-  Button,
-  useDisclosure,
-} from "@nextui-org/react";
-import { GenerateQRButton } from "./components/dom/main/misc/QRGenerator";
-import { useRouter } from "next/navigation";
-import Note from "./components/ui/misc/note";
-import InfoField from "./components/ui/misc/info-field";
 import IntegrationStatus from "./components/ui/dashboard/integration-status";
 import { EmbloyPageMount, EmbloyPage, EmbloyPageBody, EmbloyPageBodySection } from "@/app/components/ui/misc/page";
 import { EmbloyBox, EmbloyBoxContent } from "@/app/components/ui/misc/box";
@@ -67,41 +51,7 @@ const jobItems = [
 ];
 
 export default function Home() {
-  const [topJSXIsHovered, setTopJSXIsHovered] = useState(false);
-  const [embedTopJSXIsHovered, setEmbedTopJSXIsHovered] = useState(false);
-  const [topPythonIsHovered, setTopPythonIsHovered] = useState(false);
-  const [embedTopPythonIsHovered, setEmbedTopPythonIsHovered] = useState(false);
-  const [topRubyIsHovered, setTopRubyIsHovered] = useState(false);
-  const [embedTopRubyIsHovered, setEmbedTopRubyIsHovered] = useState(false);
-  const [topTypeScriptIsHovered, setTopTypeScriptIsHovered] = useState(false);
-  const [embedTopTypeScriptIsHovered, setEmbedTopTypeScriptIsHovered] =
-    useState(false);
-  const [topGoIsHovered, setTopGoIsHovered] = useState(false);
-  const [embedTopGoIsHovered, setEmbedTopGoIsHovered] = useState(false);
-
-  const [plusIsHovered, setPlusIsHovered] = useState(false);
-  const [uploadIsHovered, setUploadIsHovered] = useState(false);
-  const [isCopied, setIsCopied] = useState(false);
-  const router = useRouter();
-
-  const handleUploadMouseEnter = () => {
-    setUploadIsHovered(true);
-  };
-
-  const handleUploadMouseLeave = () => {
-    setUploadIsHovered(false);
-  };
-
-  const handlePlusMouseEnter = () => {
-    setPlusIsHovered(true);
-  };
-
-  const handlePlusMouseLeave = () => {
-    setPlusIsHovered(false);
-  };
-
   //news box
-
   const [currentNewsIndex, setCurrentNewsIndex] = useState(0);
   const handleNextNews = () => {
     // Increment the current index to move to the next news item
@@ -117,32 +67,6 @@ export default function Home() {
 
   const currentNews = newsItems[currentNewsIndex]; // Get the currently displayed news item
 
-  //jobs box
-  const [currentJobIndex, setCurrentJobIndex] = useState(0);
-  const handleNextJob = () => {
-    setCurrentJobIndex((prevIndex) => (prevIndex + 1) % jobItems.length);
-  };
-
-  const handlePrevJob = () => {
-    setCurrentJobIndex(
-      (prevIndex) => (prevIndex - 1 + jobItems.length) % jobItems.length
-    );
-  };
-  const currentJob = jobItems[currentJobIndex]; // Get the currently displayed job item
-
-  const handleApply = async () => {
-    const requestOptions = {
-      method: "POST",
-      redirect: "follow",
-    };
-
-    const response = await fetch(
-      `${siteConfig.api_url}/api/v0/handler?job_slug=${currentJob.job_slug}`,
-      requestOptions
-    );
-    const data = await response.json();
-    window.location.href = data.url;
-  };
 
   const news_notes = [
     { message: 'Last update: 2024/07/02' }
@@ -159,10 +83,10 @@ export default function Home() {
             <EmbloyPageBodySection>
               <EmbloyV>
                 <EmbloyH className="justify-between">
-                  <h1 className="font-medium text-2xl text-white">Genius Dashboard</h1>
+                  <h1 className="page-header">Genius Dashboard</h1>
                   <EmbloyToolbox superClassName="portrait:hidden">
-                    <EmbloyToolboxImgA href="/recruitment" height="12" width="12" path="/icons/svg/amarone/plus.svg" path_hovered="/icons/svg/barbera/plus.svg"  />
-                    <EmbloyToolboxImgA href="https://developers.embloy.com/docs/category/genius" height="12" width="12" path="/icons/svg/amarone/ask.svg" path_hovered="/icons/svg/barbera/ask.svg" target="_blank" />
+                    <EmbloyToolboxImgA href="/recruitment" height="12" width="12" path="/icons/svg/black/plus.svg" path_hovered="/icons/svg/leidoveneta/plus.svg" dark_path="/icons/svg/amarone/plus.svg" dark_path_hovered="/icons/svg/barbera/plus.svg"  />
+                    <EmbloyToolboxImgA href="https://developers.embloy.com/docs/category/genius" height="12" width="12" path="/icons/svg/black/ask.svg" path_hovered="/icons/svg/leidoveneta/ask.svg" dark_path="/icons/svg/amarone/ask.svg" dark_path_hovered="/icons/svg/barbera/ask.svg" target="_blank" />
                   </EmbloyToolbox>
                 </EmbloyH>
                 <EmbloySpacer/>
@@ -195,32 +119,32 @@ export default function Home() {
                                 className="relative"
                               />
                               <div className="h-1" />
-                              <p className=" font-medium text-md text-white">
+                              <p className=" font-medium text-md text-page-head">
                               {currentNews.title}
                               </p>
                               <p className="max-w-[300px] font-light text-xs ">{currentNews.description}</p>
                               <div className=" flex justify-center items-center">
                               <div className="flex flex-row items-center justify-between gap-2">
                                 <button
-                                  className=" font-sm text-xs text-amarone hover:text-barbera rounded-full select-none"
+                                  className=" font-sm text-xs text-lagunaveneta dark:text-amarone hover:text-golfonapoli dark:hover:text-barbera rounded-full select-none"
                                   onClick={handlePrevNews}
                                 >
                                   {"< Back"}
                                 </button>
                                 <div className="flex flex-row items-center justify-between gap-2">
-                                  <p className="font-sm text-xs text-amarone">
+                                  <p className="font-sm text-xs text-lagunaveneta dark:text-amarone">
                                     {currentNewsIndex + 1}
                                   </p>
-                                  <p className="font-sm text-xs text-amarone">
+                                  <p className="font-sm text-xs text-lagunaveneta dark:text-amarone">
                                     {" "}
                                     |{" "}
                                   </p>
-                                  <p className="font-sm text-xs text-amarone">
+                                  <p className="font-sm text-xs text-lagunaveneta dark:text-amarone">
                                     {newsItems.length}
                                   </p>
                                 </div>
                                 <button
-                                  className=" font-sm text-xs text-amarone hover:text-barbera rounded-full select-none"
+                                  className=" font-sm text-xs text-lagunaveneta dark:text-amarone hover:text-golfonapoli dark:hover:text-barbera rounded-full select-none"
                                   onClick={handleNextNews}
                                 >
                                   {"Next >"}
@@ -236,7 +160,7 @@ export default function Home() {
                     <EmbloyBox className="max-w-fit portrait:max-w-full">
                       <EmbloyBoxContent boxhead="Useful links" >
             
-                        <ul className="w-full flex flex-col gap-2 text-sm font-light text-white list-disc pl-5" >
+                        <ul className="w-full flex flex-col gap-2 text-sm font-light text-page-head list-disc pl-5" >
                           <li>
                             <a
                               href="/settings?tab=secrets"

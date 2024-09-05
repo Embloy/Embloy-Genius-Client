@@ -3,7 +3,7 @@ import Image from "next/image";
 
 const LoadingScreen = () => {
     return (
-        <div className="fixed inset-0 flex justify-center items-center z-50 bg-black overflow-hidden">
+        <div className="fixed inset-0 flex justify-center items-center z-50 bg-body overflow-hidden">
             <Image
                 src="/img/logo_on_dark.svg"
                 alt="Logo"

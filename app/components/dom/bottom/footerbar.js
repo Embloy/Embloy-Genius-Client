@@ -23,7 +23,7 @@ const Footerbar = () => {
     return (
         <>
             <div
-                className="w-full h-14 border-t-[1px] border-gray-700 flex flex-row items-center justify-center">
+                className="w-full h-14 border-t-[1px] border-vesuvio dark:border-ischia flex flex-row items-center justify-center">
                 <div className="container h-full max-w-7/12 flex flex-row items-center justify-center gap-12">
 
                     <div className="flex flex-row items-center justify-start gap-2">
@@ -32,11 +32,18 @@ const Footerbar = () => {
                             alt="Logo"
                             height="25"
                             width="25"
-                            className="relative"
+                            className="relative hidden dark:block"
                         />
-                        <p className="text-gray-300 text-xs font-normal">© 2024 Embloy Platforms UG (haftungsbeschränkt)</p>
+                        <Image
+                            src="/icons/logo_white_black.svg"
+                            alt="Logo"
+                            height="25"
+                            width="25"
+                            className="relative block dark:hidden"
+                        />
+                        <p className="text-black dark:text-white text-xs font-normal">© 2024 Embloy Platforms UG (haftungsbeschränkt)</p>
                     </div>
-                    <ul className="hidden md:flex gap-x-6 text-gray-300 text-xs font-normal">
+                    <ul className="hidden md:flex gap-x-6 text-black dark:text-white text-xs font-normal">
                         <li>
                         <a href="https://about.embloy.com" target="_blank" rel="noopener noreferrer">
                                 <p className="hover:underline">About</p>

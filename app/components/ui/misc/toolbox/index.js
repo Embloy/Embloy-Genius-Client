@@ -25,7 +25,7 @@ export const EmbloyToolboxA = ({href, target, children}) => {
         </a>
     )
 }
-export const EmbloyToolboxImg = ({path, path_hovered, height, width}) => {
+export const EmbloyToolboxImg = ({path, path_hovered, height, width, className}) => {
     const [isHovered, setIsHovered] = useState(false);
     return (
         <Image
@@ -37,17 +37,18 @@ export const EmbloyToolboxImg = ({path, path_hovered, height, width}) => {
             alt={`Logo-${path}`}
             height={`${height}`}
             width={`${width}`}
-            className="relative"
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
+            className={`relative ${className}`}
         />
     );
 }
 
-export const EmbloyToolboxImgA = ({href, target="_self", path, path_hovered, height, width}) => {
+export const EmbloyToolboxImgA = ({href, target="_self", path, path_hovered, dark_path, dark_path_hovered, height, width}) => {
     return (
         <EmbloyToolboxA href={href} target={target}>
-            <EmbloyToolboxImg path={path} path_hovered={path_hovered} height={height} width={width} />
+            <EmbloyToolboxImg className="block dark:hidden" path={path} path_hovered={path_hovered} height={height} width={width} />
+            <EmbloyToolboxImg className="hidden dark:block" path={dark_path} path_hovered={dark_path_hovered} height={height} width={width} />
         </EmbloyToolboxA>
     )
 }
