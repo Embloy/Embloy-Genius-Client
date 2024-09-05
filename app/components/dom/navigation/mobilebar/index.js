@@ -46,8 +46,8 @@ export const MobileBar = ({ isVisible, onClose, pageSection, pathname, userData,
                 <EmbloySeperator className={`h-2px my-5px`}/>
                 <EmbloyV className={`items-start`}>
                     <ul className="md:flex gap-x-6 font-normal">
-                        {pageSection.map((page)=>(
-                            <PageItem name={page.name} link={page.link} default_path={pathname} close={onClose}/> 
+                        {pageSection.map((page, index)=>(
+                            <PageItem key={index} name={page.name} link={page.link} default_path={pathname} close={onClose}/> 
                         ))}
                     </ul>
                 </EmbloyV>

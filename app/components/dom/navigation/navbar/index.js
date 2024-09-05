@@ -57,8 +57,8 @@ const Navbar = () => {
                                 <Logo/>
                                 <div className=" h-3/5 w-[1px] rounded-full"/>
                                 <ul className="hidden md:flex gap-x-6 font-normal">
-                                    {headerPages.map((page)=>(
-                                       <HeaderItem name={page.name} link={page.link} default_path={pathname} /> 
+                                    {headerPages.map((page, index)=>(
+                                       <HeaderItem name={page.name} link={page.link} default_path={pathname} key={index} /> 
                                     ))}
                                 </ul>
 
