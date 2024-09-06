@@ -3,6 +3,7 @@ import React, {useState, forwardRef, useImperativeHandle} from "react";
 import '@/app/globals.css'
 import { Tooltip } from "@nextui-org/react";
 import {EmbloyP} from '@/app/components/ui/misc/text'
+import { ex } from "@fullcalendar/core/internal-common";
 
 export const EmbloyV = ({children, className}) => {
     return (
@@ -77,7 +78,7 @@ export const EmbloyChildrenAdvanced = ({className, children, tooltip, disabled})
 
 
 
-export const EmbloyToggle = forwardRef(({ name, onChange, className, ...props }, ref) => {
+const EmbloyToggle = forwardRef(({ name, onChange, className, ...props }, ref) => {
   const [isOn, setIsOn] = useState(false);
 
   const toggleSwitch = () => {
@@ -109,3 +110,6 @@ export const EmbloyToggle = forwardRef(({ name, onChange, className, ...props },
     </EmbloyChildrenAdvanced>
   );
 });
+EmbloyToggle.displayName = 'EmbloyToggle';
+
+export {EmbloyToggle};
