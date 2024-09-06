@@ -106,6 +106,16 @@ export function JobDetails({ job, onUploadSuccess, onClose }) {
               <RemovePosting />
             </EmbloyToolbox>
           </EmbloyH>
+          {job.application_options && job.application_options.length > 0 && (
+          <div className={headerClass}>
+            <ApplicationPreview
+              data={job}
+              handleDataReload={() => {
+                console.log("TEST");
+              }}
+            />
+          </div>
+        )}
         </EmbloyV>
         
         {/*
@@ -341,16 +351,7 @@ export function JobDetails({ job, onUploadSuccess, onClose }) {
               </button>
             ))}
         </div>
-        {job.application_options && job.application_options.length > 0 && (
-          <div className={headerClass}>
-            <ApplicationPreview
-              data={job}
-              handleDataReload={() => {
-                console.log("TEST");
-              }}
-            />
-          </div>
-        )}
+        
         */}
         
       </EmbloyV>

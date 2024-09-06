@@ -166,7 +166,7 @@ const JobTableRowExtendable = React.forwardRef<
 
     const { children, ...otherProps } = props;
 
-    return !extended ? (
+    return extended ? (
       <>
         <tr ref={ref} className={rowClasses} {...otherProps}>
           {children}
