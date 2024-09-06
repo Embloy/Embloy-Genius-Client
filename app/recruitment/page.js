@@ -8,6 +8,10 @@ import { ApplicationDataTable } from "@/app/recruitment/ApplicationDataTable";
 import "./locals.css";
 import { get_core } from "@/lib/misc_requests";
 import { useRouter } from "next/navigation";
+import { EmbloyPageMount, EmbloyPage, EmbloyPageBody, EmbloyPageBodySection, EmbloySubPage } from "@/app/components/ui/misc/page";
+import { EmbloyBox, EmbloyBoxContent } from "@/app/components/ui/misc/box";
+import { EmbloyLHPV, EmbloyV, EmbloyH, EmbloySpacer} from "@/app/components/ui/misc/stuff";
+import { EmbloyToolbox, EmbloyToolboxImgA} from "@/app/components/ui/misc/toolbox";
 
 export default function Jobs() {
   // subpages
@@ -68,60 +72,43 @@ export default function Jobs() {
   }, [reloadApplications]);
 
   return (
-    <main className=" text-white flex min-h-screen h-full flex-col items-center justify-start">
-      <div className="z-10 max-w-6xl w-full min-h-screen h-full border-l-[1px] border-r-[1px] border-gray-700 flex flex-col items-center justify-start">
-        <div className="w-full flex flex-col items-center justify-start p-4">
-          <div className="w-full flex flex-row items-center justify-between my-4">
-            <h1 className="font-medium text-2xl ">Recruitment Portal</h1>
-          </div>
-          <div className="w-full h-4" />
-        </div>
+    <EmbloyPageMount className="overflow-hidden">
+      <EmbloyPage>
+        <EmbloyPageBody >
+          <EmbloyPageBodySection>
+            <EmbloyV>
+              <EmbloyH className="justify-between">
+                <h1 className="page-header">Jobs</h1>
+                <EmbloyToolbox superClassName="portrait:hidden">
+                  <EmbloyToolboxImgA href="https://developers.embloy.com/docs/category/genius" height="12" width="12" path="/icons/svg/black/ask.svg" path_hovered="/icons/svg/leidoveneta/ask.svg" dark_path="/icons/svg/amarone/ask.svg" dark_path_hovered="/icons/svg/barbera/ask.svg" target="_blank" />
+                </EmbloyToolbox>
+              </EmbloyH>
+              <EmbloySpacer />
+              <EmbloySubPage pages={[{name:'Postings', id:1}, {name:'Applications', id:2}]} >
+                <EmbloyV id={1} className="gap-3">
+                  <JobDataTable
+                      columns={jobColumns}
+                      data={jobs}
+                      handleDataReload={() => setReloadJobs(true)}
+                  />
+                </EmbloyV>
+                <EmbloyV id={2} className="gap-3">
+                  <ApplicationDataTable
+                    columns={applicationColumns}
+                    data={applications}
+                    handleDataReload={() => setReloadApplications(true)}
+                  />
+                </EmbloyV>
+              </EmbloySubPage>
+            </EmbloyV>
+          </EmbloyPageBodySection>
+        </EmbloyPageBody >
+      </EmbloyPage>
 
-        <div className="w-full flex flex-col items-center justify-start">
-          <ul className="text-sm w-full flex flex-row items-center justify-start">
-            <li
-              onClick={jobsSubPage}
-              className={cn(
-                currentSubPageID === jobsSubPageID
-                  ? "flex flex-row items-center justify-start border-b-[1px] border-embloy-green py-2 px-4 text-white cursor-pointer"
-                  : "flex flex-row items-center justify-start border-b-[1px] border-gray-700 hover:border-gray-400 py-2 px-4 text-gray-400 hover:text-white cursor-pointer"
-              )}
-            >
-              <div className="h-full w-full">
-                <p>Jobs</p>
-              </div>
-            </li>
-            <li
-              onClick={applicationsSubPage}
-              className={cn(
-                currentSubPageID === applicationsSubPageID
-                  ? "flex flex-row items-center justify-start border-b-[1px] border-embloy-green py-2 px-4 text-white cursor-pointer"
-                  : "flex flex-row items-center justify-start border-b-[1px] border-gray-700 hover:border-gray-400 py-2 px-4 text-gray-400 hover:text-white cursor-pointer"
-              )}
-            >
-              <div className="h-full w-full">
-                <p>Applications</p>
-              </div>
-            </li>
-            <li
-              onClick={promosSubPage}
-              className={cn(
-                currentSubPageID === promosSubPageID
-                  ? "flex flex-row items-center justify-start border-b-[1px] border-embloy-green py-2 px-4 text-white cursor-pointer"
-                  : "flex flex-row items-center justify-start border-b-[1px] border-gray-700 hover:border-gray-400 py-2 px-4 text-gray-400 hover:text-white cursor-pointer"
-              )}
-            >
-              <div className="h-full w-full">
-                <p>Promotions</p>
-              </div>
-            </li>
-            <li className="cursor-default text-transparent select-none w-screen flex flex-row items-center justify-start border-b-[1px] border-gray-700 p-2 pointer-events-none">
-              <button className="cursor-default">
-                <p>Promotions</p>
-              </button>
-            </li>
-          </ul>
-        </div>
+    
+    {/* 
+
+          
 
         <div className="w-full flex flex-col items-center justify-start">
           {currentSubPageID === jobsSubPageID && (
@@ -134,16 +121,12 @@ export default function Jobs() {
             </div>
           )}
           {currentSubPageID === applicationsSubPageID && (
-            <div className="container mx-auto">
-              <ApplicationDataTable
-                columns={applicationColumns}
-                data={applications}
-                handleDataReload={() => setReloadApplications(true)}
-              />
-            </div>
+            
           )}
         </div>
       </div>
     </main>
+    */}
+    </EmbloyPageMount>
   );
 }

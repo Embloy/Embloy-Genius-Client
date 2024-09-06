@@ -38,7 +38,10 @@ import { Job } from "../../lib/types/job";
 import {useRouter} from "next/navigation";
 import LoadingScreen from "@/app/components/dom/main/screens/LoadingScreen";
 import {RemoveJobButton} from "@/app/components/dom/main/datatable/job_remove_button";
-
+import { EmbloyLHPV, EmbloyV, EmbloyH, EmbloySpacer} from "@/app/components/ui/misc/stuff";
+import { EmbloyToolbox, EmbloyToolboxImgA, EmbloyToolboxImgAdvanced } from "@/app/components/ui/misc/toolbox";
+import { button } from "@nextui-org/react";
+import '@/app/globals.css'
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
@@ -127,22 +130,62 @@ export function JobDataTable<TData extends Job, TValue>({columns, data, handleDa
 
 
     return (
-        <div>
+        <EmbloyV className={"gap-2 border-t dark:border-biferno pt-2"}>
+            {
+                /*
+                
             <div className="text-sm w-full flex flex-row items-center justify-between select-none">
-                <div className="px-4 bg-black hover:bg-gray-900 flex flex-row items-center justify-between"
-                     onMouseEnter={handleFilterHover} onMouseLeave={handleFilterNotHover}>
-                    <Image
-                        src={"/icons/filter-dark.svg"}
-                        alt="Logo"
-                        height="25"
-                        width="25"
-                        className="relative"
-                    />
+                
+                <div className="px-4 flex flex-row items-center justify-end">
+                    
+                    
+                    
+                </div>
+            </div>
+            */}
+            <EmbloyH className={"items-center justify-between"}>
+                <p className="w-2/12 page-text text-sm text-normal">Active Postings:</p>
+                <EmbloyH className={"w-8/12 gap-3 justify-end"}>
+                    <EmbloyToolbox superClassName="h-7 border-2 dark:border-chianti" className={undefined} name={undefined} >
+                        <UploadJobFileButton key="Upload" router={router}  formats={['.json']} head="Upload jobs" img="sm-upload" style="relative cursor-pointer" onUploadSuccess={() => handleUploadSuccess()}/>
+                        <RemoveJobButton key="Remove" router={router} getJob={(row_id) => getJob(row_id)} formats={['.json']} img="sm-delete" style="relative px-0.5 bg0-r-full cursor-pointer" getSelectedRows={() => getSelectedRows()} onUploadSuccess={() => handleUploadSuccess()}/>
+                        <DropdownMenu>
+                            <DropdownMenuTrigger asChild className="outline-none">
+                                <button className="">
+                                    <EmbloyToolboxImgAdvanced path="/icons/svg/black/cols.svg" path_hovered="/icons/svg/leidoveneta/cols.svg" dark_path="/icons/svg/amarone/cols.svg" dark_path_hovered="/icons/svg/barbera/cols.svg" height="11" width="11" />
+                                </button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end">
+                                <DropdownMenuLabel>Column selection:</DropdownMenuLabel>
+                                {table
+                                    .getAllColumns()
+                                    .filter(
+                                        (column) => column.getCanHide()
+                                    )
+                                    .map((column) => {
+                                        const column_title = extractContent(column.columnDef.header.toString(), 'title')
+                                        return (
+                                            <DropdownMenuCheckboxItem
+                                                key={column.id}
+                                                className="capitalize text-page-text hover:text-barbera cursor-pointer"
+                                                checked={column.getIsVisible()}
+                                                onCheckedChange={(value) =>
+                                                    column.toggleVisibility(!!value)
+                                                }
+                                            >
+                                                {column_title}
+                                            </DropdownMenuCheckboxItem>
+                                        )
+                                    })}
+                            </DropdownMenuContent>
+                        </DropdownMenu>
+                        <EmbloyToolboxImgA href="https://developers.embloy.com/docs/category/genius" height="12" width="12" path="/icons/svg/black/ask.svg" path_hovered="/icons/svg/leidoveneta/ask.svg" dark_path="/icons/svg/amarone/ask.svg" dark_path_hovered="/icons/svg/barbera/ask.svg" target="_blank" />
+                    </EmbloyToolbox>
                     <input
-                        className={filterIsHovered ? "bg-transparent dark:bg-transparent text-white h-10 w-96 px-2 placeholder-gray-900 border-none outline-none select-all" : "bg-transparent dark:bg-transparent text-white h-10 w-96 px-2 placeholder-gray-900 border-none outline-none select-all"}
+                        className={"rounded-lg text-sm dark:bg-chianti border-2 dark:border-chianti text-white h-7 w-48 px-2 placeholder-amarone border-none outline-none focus:outline-none focus:ring-2 focus:ring-amarone select-all"}
                         type="text"
                         name="name"
-                        placeholder="Filter"
+                        placeholder="Filter..."
                         value={(table.getColumn("position")?.getFilterValue() as string) ?? ""}
                         onChange=
                             {
@@ -158,55 +201,15 @@ export function JobDataTable<TData extends Job, TValue>({columns, data, handleDa
                             }
 
                     />
-                </div>
-                <div className="px-4 flex flex-row items-center justify-end">
-                    <UploadJobFileButton key="Upload" router={router}  formats={['.json']} head="Upload jobs" img="sm-upload" style="relative px-0.5 bg0-r-full cursor-pointer" onUploadSuccess={() => handleUploadSuccess()}/>
-                    <RemoveJobButton key="Remove" router={router} getJob={(row_id) => getJob(row_id)} formats={['.json']} img="sm-delete" style="relative px-0.5 bg0-r-full cursor-pointer" getSelectedRows={() => getSelectedRows()} onUploadSuccess={() => handleUploadSuccess()}/>
-                    <DropdownMenu>
-                        <DropdownMenuTrigger asChild className="outline-none">
-                            <button className="px-0.5 bg0-r-full">
-                                <Image
-                                    src={cn(columnsIsHovered ? "/icons/sm-cols-light.svg" : "/icons/sm-cols-dark.svg")}
-                                    alt="columns"
-                                    height="25"
-                                    width="25"
-                                    className="relative"
-                                    onMouseEnter={handleColumnsHover}
-                                    onMouseLeave={handleColumnsNotHover}
-                                />
-                            </button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent align="end">
-                            <DropdownMenuLabel>Hide columns</DropdownMenuLabel>
-                            {table
-                                .getAllColumns()
-                                .filter(
-                                    (column) => column.getCanHide()
-                                )
-                                .map((column) => {
-                                    const column_title = extractContent(column.columnDef.header.toString(), 'title')
-                                    return (
-                                        <DropdownMenuCheckboxItem
-                                            key={column.id}
-                                            className="capitalize text-gray-400 hover:text-white cursor-pointer"
-                                            checked={column.getIsVisible()}
-                                            onCheckedChange={(value) =>
-                                                column.toggleVisibility(!!value)
-                                            }
-                                        >
-                                            {column_title}
-                                        </DropdownMenuCheckboxItem>
-                                    )
-                                })}
-                        </DropdownMenuContent>
-                    </DropdownMenu>
-                </div>
-            </div>
-            <div className="rounded-sm border-x-0 border-y border-gray-700 text-gray-400">
+                    
+                </EmbloyH>
+            </EmbloyH>
+            
+            <div className="bg-chianti border border-biferno text-white rounded-lg">
                 <Table>
                     <TableHeader>
                         {table.getHeaderGroups().map((headerGroup) => (
-                            <TableRow className="border-gray-700 hover:bg-gray-900" key={headerGroup.id}>
+                            <TableRow className="border-biferno" key={headerGroup.id}>
                                 {headerGroup.headers.map((header) => {
                                     if (typeof header.column.columnDef['accessorKey'] === "undefined") {
                                         return (
@@ -235,11 +238,11 @@ export function JobDataTable<TData extends Job, TValue>({columns, data, handleDa
                             </TableRow>
                         ))}
                     </TableHeader>
-                    <TableBody className="text-gray-200">
+                    <TableBody className="text-white">
                         {table.getRowModel().rows?.length ? (
                             table.getRowModel().rows
                                 .map((row) => (
-                                <JobTableRowExtendable className="border-gray-700 hover:bg-gray-900 cursor-pointer"
+                                <JobTableRowExtendable className="border-biferno hover:bg-biferno cursor-pointer"
                                                        key={row.id}
                                                        extended={!!(openRow !== null && openRow === Number(row.id))}
                                                        job={data.at(Number(row.id))}
@@ -280,13 +283,13 @@ export function JobDataTable<TData extends Job, TValue>({columns, data, handleDa
                 <div className="flex items-center justify-start space-x-2">
                     {table.getFilteredSelectedRowModel().rows.length > 0 && (
                         // If the condition is true
-                        <p className="text-sm font-normal text-gray-700">{table.getFilteredSelectedRowModel().rows.length} of{" "}
+                        <p className="text-page-text">{table.getFilteredSelectedRowModel().rows.length} of{" "}
                             {table.getFilteredRowModel().rows.length} row(s) selected.</p>
                     )}
                 </div>
                 <DataTablePagination table={table}/>
             </div>
 
-        </div>
+        </EmbloyV>
     )
 }

@@ -4,7 +4,7 @@ import { EmbloySeperator } from "../stuff";
 import Note from "@/app/components/ui/misc/note";
 export const EmbloyBox = ({children, className}) => {
     return (
-        <div className={`border-[1px] border-etna dark:border-chianti w-full flex landscape:flex-row portrait:flex-col items-start landscape:justify-between portrait:justify-start bg-transparent dark:bg-chianti  landscape:px-6 portrait:px-4 landscape:py-6 portrait:py-5 rounded-lg g-4 ${className} `}>
+        <div className={`border-[1px] border-etna dark:border-chianti w-full flex landscape:flex-row portrait:flex-col items-start landscape:justify-between portrait:justify-start bg-transparent dark:bg-chianti landscape:px-6 portrait:px-4 landscape:py-6 portrait:py-5 rounded-lg g-4 ${className} `}>
             {children}
         </div>
     );

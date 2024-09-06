@@ -35,11 +35,11 @@ export function DataTableColumnHeader<TData, TValue>({
         <div className={cn("w-full flex items-center space-x-2", className)}>
             <div className="focus:outline-none">
                 <DropdownMenu>
-                <DropdownMenuTrigger asChild className="focus:outline-none bg-transparent dark:bg-transparent hover:bg3 cursor-pointer hover:text-white rounded-full">
+                <DropdownMenuTrigger asChild className="text-xs font-normal focus:outline-none bg-transparent dark:bg-transparent cursor-pointer hover:text-barbera rounded-full">
                     <Button
                         variant="ghost"
                         size="sm"
-                        className="-ml-3 h-8 data-[state=open]:bg-accent focus:outline-none"
+                        className="-ml-3 max-h-5 data-[state=open]:bg-accent focus:outline-none"
                     >
                         <span>{title}</span>
                         {column.getIsSorted() === "desc" ? (

@@ -5,6 +5,7 @@ import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDi
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import {patch_core, post_core} from "@/lib/misc_requests";
+import {EmbloyToolboxImgAdvanced } from "@/app/components/ui/misc/toolbox";
 interface UploadError {
     job: any; // Adjust the type based on your job structure
     error: any; // Adjust the type based on the error structure
@@ -58,16 +59,10 @@ export function RemoveJobButton({ formats = ['*'], router, img, style, getSelect
     };
 
     return (
-        <div onClick={handleDivClick} className="relative inline-block">
-            <Image
-                src={cn(uploadsIsHovered && Object.keys(getSelectedRows()).length > 0 ? "/icons/" + img + "-light.svg" : "/icons/" + img + "-dark.svg")}
-                alt="columns"
-                height="25"
-                width="25"
-                className={cn(Object.keys(getSelectedRows()).length > 0 ? style : style + " cursor-not-allowed")}
-                onMouseEnter={handleUploadsHover}
-                onMouseLeave={handleUploadsNotHover}
-            />
+        <div onClick={handleDivClick} className={cn(Object.keys(getSelectedRows()).length > 0 ? "relative inline-block" : "relative inline-block" + " cursor-not-allowed")}>
+            <div className={cn(Object.keys(getSelectedRows()).length > 0 ? "cursor-pointer" : "" + "pointer-events-none")}>
+                <EmbloyToolboxImgAdvanced path="/icons/svg/black/bin.svg" path_hovered="/icons/svg/leidoveneta/bin.svg" dark_path="/icons/svg/amarone/bin.svg" dark_path_hovered="/icons/svg/barbera/bin.svg" height="10" width="10" />
+            </div>
             <Modal
                 isOpen={consentModal.isOpen}
                 scrollBehavior="inside"

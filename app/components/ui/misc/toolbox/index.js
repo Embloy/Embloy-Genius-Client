@@ -52,3 +52,12 @@ export const EmbloyToolboxImgA = ({href, target="_self", path, path_hovered, dar
         </EmbloyToolboxA>
     )
 }
+
+export const EmbloyToolboxImgAdvanced = ({path, path_hovered, dark_path, dark_path_hovered, height, width}) => {
+    return (
+        <>
+            <EmbloyToolboxImg className="block dark:hidden" path={path} path_hovered={path_hovered} height={height} width={width} />
+            <EmbloyToolboxImg className="hidden dark:block" path={dark_path} path_hovered={dark_path_hovered} height={height} width={width} />
+        </>
+    )
+}

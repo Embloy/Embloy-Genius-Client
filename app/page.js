@@ -1,11 +1,11 @@
 "use client";
 import Image from "next/image";
 import React, { useState } from "react";
-import IntegrationStatus from "./components/ui/dashboard/integration-status";
+import IntegrationStatus from "@/app/components/ui/dashboard/integration-status";
 import { EmbloyPageMount, EmbloyPage, EmbloyPageBody, EmbloyPageBodySection } from "@/app/components/ui/misc/page";
 import { EmbloyBox, EmbloyBoxContent } from "@/app/components/ui/misc/box";
-import { EmbloyLHPV, EmbloyV, EmbloyH, EmbloySpacer} from "./components/ui/misc/stuff";
-import { EmbloyToolbox, EmbloyToolboxImgA} from "./components/ui/misc/toolbox";
+import { EmbloyLHPV, EmbloyV, EmbloyH, EmbloySpacer} from "@/app/components/ui/misc/stuff";
+import { EmbloyToolbox, EmbloyToolboxImgA} from "@/app/components/ui/misc/toolbox";
 const newsItems = [
   {
     id: 1,

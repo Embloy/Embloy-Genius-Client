@@ -11,6 +11,7 @@ import {
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import { post_core } from "@/lib/misc_requests";
+import {EmbloyToolboxImgAdvanced } from "@/app/components/ui/misc/toolbox";
 interface UploadError {
   job: any; // Adjust the type based on your job structure
   error: any; // Adjust the type based on the error structure
@@ -89,7 +90,7 @@ export function UploadJobFileButton({
   };
 
   return (
-    <div onClick={handleDivClick} className="relative inline-block">
+    <div onClick={handleDivClick} className="relative inline-block hover:cursor-pointer">
       <input
         type="file"
         ref={fileInputRef}
@@ -97,19 +98,8 @@ export function UploadJobFileButton({
         onChange={handleFileChange}
         accept={formats.join(",")}
       />
-      <Image
-        src={cn(
-          uploadsIsHovered
-            ? "/icons/" + img + "-light.svg"
-            : "/icons/" + img + "-dark.svg"
-        )}
-        alt="columns"
-        height="25"
-        width="25"
-        className={style}
-        onMouseEnter={handleUploadsHover}
-        onMouseLeave={handleUploadsNotHover}
-      />
+      <EmbloyToolboxImgAdvanced path="/icons/svg/black/upl.svg" path_hovered="/icons/svg/leidoveneta/upl.svg" dark_path="/icons/svg/amarone/upl.svg" dark_path_hovered="/icons/svg/barbera/upl.svg" height="10" width="10" />
+     
 
       <Modal
         isOpen={uploadModal.isOpen}

@@ -23,7 +23,7 @@ export const UserBar = ({ isVisible, onClose, userData, storeData }) => {
     }
 
 
-    const sidebarClass = `bgs z-50 fixed top-0 right-0 h-full w-96 border-l-[1px] border-gray-700 transition-transform transform ${isVisible ? 'translate-x-0' : 'translate-x-full'}`;
+    const sidebarClass = `bg-body z-50 fixed top-0 right-0 h-full w-96 border-l-[1px] border-ischia dark:border-ischia transition-transform transform ${isVisible ? 'translate-x-0' : 'translate-x-full'}`;
     const sidebarfieldClass = `w-full flex flex-row justify-start items-start c0 gap-2.5 dark:hover:bg-gray-700 hover:bg-gray-200 p-2.5 cursor-pointer`;
     const sidebarfieldleftClass = `w-1/7 flex flex-col justify-start items-start c0 gap-2.5`;
     const sidebarfieldrightClass = `w-6/7 flex flex-col justify-start items-start c0 gap-1.5`;
@@ -52,7 +52,7 @@ export const UserBar = ({ isVisible, onClose, userData, storeData }) => {
                             </div>
 
                             <div className="w-full h-4" />
-                            <div className="w-full bg-gray-700 h-[1px]" />
+                            <div className="w-full bg-ischia dark:bg-ischia h-[1px]" />
                             <div className="w-full h-4" />
 
                             <a className={sidebarfieldClass} href="https://www.about.embloy.com" target="_blank" rel="noopener noreferrer">
@@ -100,7 +100,7 @@ export const UserBar = ({ isVisible, onClose, userData, storeData }) => {
                             </div>
 
                             <div className="w-full h-4" />
-                            <div className="w-full bg-gray-700 h-[1px]" />
+                            <div className="w-full bg-ischia dark:bg-ischia h-[1px]" />
                             <div className="w-full h-4" />
 
 
@@ -174,7 +174,7 @@ export const UserBar = ({ isVisible, onClose, userData, storeData }) => {
 
 
                             <div className="w-full h-4" />
-                            <div className="w-full bg-gray-700 h-[1px]" />
+                            <div className="w-full bg-ischia dark:bg-ischia h-[1px]" />
                             <div className="w-full h-4" />
 
 
@@ -226,12 +226,12 @@ export const UserBar = ({ isVisible, onClose, userData, storeData }) => {
 
 
                             <div className="w-full h-4" />
-                            <div className="w-full bg-gray-700 h-[1px]" />
+                            <div className="w-full bg-ischia dark:bg-ischia h-[1px]" />
                             <div className="w-full h-4" />
 
                             <div className="w-full flex flex-row justify-start items-start c0 gap-2.5 p-2.5">
                                 <div className="w-full flex flex-row justify-start items-center c0 gap-2.5">
-                                    <p className="text-sm text-gray-700 italic">On Embloy for {calculateMinutesFromNow(userData["created_at"])} minutes!</p>
+                                    <p className="text-sm text-ischia dark:text-ischia italic">On Embloy for {calculateMinutesFromNow(userData["created_at"])} minutes!</p>
                                 </div>
                             </div>
                             <div className="w-full h-4" />

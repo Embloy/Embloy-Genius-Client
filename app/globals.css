@@ -11,6 +11,10 @@
         @apply font-medium text-2xl dark:text-white text-black
     }
 
+    .page-text {
+        @apply font-normal text-sm dark:text-white text-black
+    }
+
     .stylish-header {
         @apply rounded-lg p-5px landscape:hover:bg-ferrara landscape:dark:hover:bg-chianti 
     }

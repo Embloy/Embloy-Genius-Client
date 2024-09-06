@@ -11,7 +11,7 @@ import {
 import {cn} from "@/lib/utils";
 import Image from "next/image";
 import React, {useState} from "react";
-
+import '@/app/globals.css'
 interface DataTablePaginationProps<TData> {
     table: Table<TData>
 }
@@ -57,14 +57,14 @@ export function DataTablePagination<TData>({
             <div className="flex items-center justify-between px-2">
                 <div className="flex items-center justify-end space-x-2 gap-4">
                     <div className="flex items-center space-x-2">
-                        <p className="text-sm font-normal text-gray-700">Rows per page</p>
+                        <p className="text-page-text">Rows per page</p>
                         <Select
                             value={`${table.getState().pagination.pageSize}`}
                             onValueChange={(value) => {
                                 table.setPageSize(Number(value))
                             }}
                         >
-                            <SelectTrigger className="h-8 w-[70px]">
+                            <SelectTrigger className={undefined}>
                                 <SelectValue placeholder={table.getState().pagination.pageSize} />
                             </SelectTrigger>
                             <SelectContent side="top">
