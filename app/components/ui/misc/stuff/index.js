@@ -112,4 +112,4 @@ const EmbloyToggle = forwardRef(({ name, onChange, className, ...props }, ref) =
 });
 EmbloyToggle.displayName = 'EmbloyToggle';
 
-export {EmbloyToggle};
+export default EmbloyToggle;
