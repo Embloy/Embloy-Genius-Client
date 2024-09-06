@@ -1,5 +1,8 @@
 import React from "react";
 import '@/app/globals.css'
+import { Tooltip } from "@nextui-org/react";
+import {EmbloyP} from '@/app/components/ui/misc/text'
+
 export const EmbloyV = ({children, className}) => {
     return (
         <div className={`w-full flex flex-col items-start justify-start ${className}`}>
@@ -43,4 +46,30 @@ export const EmbloySpacer = ({className}) => {
     return (
         <div className={`w-full h-20px ${className}`} />
     );
+}
+export const EmbloyChildrenAdvanced = ({className, children, tooltip}) => {
+    if (tooltip) {
+        return (
+            <Tooltip
+                title={`${tooltip}`}
+                placement="top"
+                content={
+                    <EmbloyP className="text-xs">
+                        {tooltip}
+                    </EmbloyP>
+                    }
+            >
+                <div className={className}>
+                    {children}
+                </div>
+            </Tooltip>
+        )
+
+    } else {
+        return (
+            <div className={className}>
+                {children}
+            </div>
+        )
+    }
 }

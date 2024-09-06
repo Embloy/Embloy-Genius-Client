@@ -16,6 +16,8 @@ import { useRouter } from "next/navigation";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { nightOwl } from "react-syntax-highlighter/dist/esm/styles/prism";
 import Image from "next/image";
+import { EmbloyToolboxImgAdvanced } from "@/app/components/ui/misc/toolbox";
+import { EmbloyV} from "@/app/components/ui/misc/stuff";
 
 export function GenerateGQButton({ position, jobSlug, jobId }) {
   const generateModal = useDisclosure();
@@ -55,28 +57,15 @@ export function GenerateGQButton({ position, jobSlug, jobId }) {
   };
 
   return (
-    <div className="w-full flex flex-col items-center justify-center gap-6 bg-embloy-green text-black rounded-lg border-[1px] border-transparent">
-      <Tooltip
-        title="Note: Every generated QR code automatically creates a new job that you can find in the 'Hire' section.\nThere you can also generate QR codes for existing jobs."
-        placement="top"
-        content={
-          <div className="text-red-500 text-center">
-            Note: Every generated job-link (aka Genius Query) has a default
-            validity of 1 year and links to one job.
-          </div>
-        }
-      >
-        <Button
-          className="w-full text-white bg-embloy-green hover:bg-embloy-green font-bold py-2 px-4 rounded border-[1px] border-embloy-green"
-          onClick={() => {
-            handleGenerate();
+    <EmbloyV className={undefined}>
+      
+      <button
+      onClick={() => {
+        handleGenerate();
             generateModal.onOpen();
-          }}
-        >
-          Generate job-link
-        </Button>
-      </Tooltip>
-
+      }}>
+        <EmbloyToolboxImgAdvanced tooltip={"Generate Embedding"} path="/icons/svg/black/urllink.svg" path_hovered="/icons/svg/leidoveneta/urllink.svg" dark_path="/icons/svg/amarone/urllink.svg" dark_path_hovered="/icons/svg/barbera/urllink.svg" height="12" width="12" />
+      </button>
       <Modal
         isOpen={generateModal.isOpen}
         scrollBehavior="inside"
@@ -257,6 +246,7 @@ export function GenerateGQButton({ position, jobSlug, jobId }) {
           </>
         </ModalContent>
       </Modal>
-    </div>
+    </EmbloyV>
+    
   );
 }

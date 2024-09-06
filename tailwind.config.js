@@ -42,7 +42,7 @@ module.exports = {
         'embloy-gray-lightest': '#f1f5f9',
         'barbera': '#D2C3FC',
         'amarone': '#9482ba',
-        'nebbiolo': '#453A5C',
+        'nebbiolo': '#3E3454',
         'biferno': '#312844',
         'chianti': '#211B2E',
         'ciliegiolo': '#110E1B',

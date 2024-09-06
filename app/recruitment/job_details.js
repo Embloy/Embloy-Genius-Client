@@ -20,6 +20,7 @@ import { EmbloyBox, EmbloyBoxContent } from "@/app/components/ui/misc/box";
 import { EmbloyLHPV, EmbloyV, EmbloyH, EmbloySpacer, EmbloySeperator} from "@/app/components/ui/misc/stuff";
 import { EmbloyToolbox, EmbloyToolboxImgA, EmbloyToolboxImgAdvanced } from "@/app/components/ui/misc/toolbox";
 import { EmbloyH1Editable, EmbloyP} from "@/app/components/ui/misc/text";
+import { RemovePosting } from "../components/dom/main/misc/RemovePosting";
 
 export function JobDetails({ job, onUploadSuccess, onClose }) {
   const router = useRouter();
@@ -101,20 +102,13 @@ export function JobDetails({ job, onUploadSuccess, onClose }) {
             <EmbloyH1Editable className="page-header text-lg" initialText={job.position} />
             <EmbloyToolbox superClassName="h-7 border-2 dark:border-nebbiolo dark:bg-nebbiolo" >
               <GenerateQRButton jobId={job.job_id} />
-              
+              <GenerateGQButton jobId={job.job_id} position={job.position} jobSlug={job.job_slug}/>
+              <RemovePosting />
             </EmbloyToolbox>
           </EmbloyH>
         </EmbloyV>
         
         {/*
-        <div className={headerClass}>
-          <div className="flex flex-row items-center justify-end-rev gap-4">
-            <div>
-              
-            </div>
-            <div>
-              <GenerateGQButton jobId={job.job_id} position={job.position} jobSlug={job.job_slug}/>
-            </div>
             <DropdownMenu>
               <DropdownMenuTrigger asChild className="outline-none">
                 <button
