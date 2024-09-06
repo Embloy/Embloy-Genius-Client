@@ -3,7 +3,6 @@ import React, {useState, forwardRef, useImperativeHandle} from "react";
 import '@/app/globals.css'
 import { Tooltip } from "@nextui-org/react";
 import {EmbloyP} from '@/app/components/ui/misc/text'
-import { ex } from "@fullcalendar/core/internal-common";
 
 export const EmbloyV = ({children, className}) => {
     return (
