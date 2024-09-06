@@ -137,7 +137,7 @@ export function JobDataTable<TData extends Job, TValue>({columns, data, handleDa
                 <p className="w-2/12 page-text text-sm text-normal">Active Postings:</p>
                 <EmbloyH className={"w-8/12 gap-3 justify-end"}>
                     <EmbloyToolbox superClassName="h-7 border-2 dark:border-chianti" className={undefined} name={undefined} >
-                        <IntegrationSync key="Sync" />
+                        <IntegrationSync key="Sync" name={undefined} />
                         <UploadJobFileButton key="Upload" router={router}  formats={['.json']} head="Upload jobs" img="sm-upload" style="relative cursor-pointer" onUploadSuccess={() => handleUploadSuccess()}/>
                         <RemoveJobButton key="Remove" router={router} getJob={(row_id) => getJob(row_id)} formats={['.json']} img="sm-delete" style="relative px-0.5 bg0-r-full cursor-pointer" getSelectedRows={() => getSelectedRows()} onUploadSuccess={() => handleUploadSuccess()}/>
                         <DropdownMenu>

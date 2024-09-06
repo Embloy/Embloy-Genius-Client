@@ -24,7 +24,7 @@ const LoadingScreen = () => {
                 <span className="sr-only">Loading...</span>
             </div>
 
-            <p className=" absolute bottom-5 text-white font-normal text-sm"> by Embloy Platforms GbR </p>
+            <p className=" absolute bottom-5 text-white font-normal text-sm">©2024 • Embloy Platforms UG (haftungsbeschränkt)</p>
 
 
         </div>
