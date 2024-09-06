@@ -29,6 +29,14 @@ export const jobColumns: ColumnDef<Job>[] = [
         enableHiding: false,
     },
     {
+        accessorKey: "position",
+        header: ({column}) => (
+            <DataTableColumnHeader column={column} title="Position"/>
+        ),
+        enableSorting: false,
+        enableHiding: true,
+    },
+    {
         accessorKey: "job_id",
         header: ({column}) => (
             <DataTableColumnHeader column={column} title="Job ID"/>
@@ -45,6 +53,24 @@ export const jobColumns: ColumnDef<Job>[] = [
         enableHiding: true,
     },
     {
+        accessorKey: "integration_type",
+        header: ({column}) => (
+            <DataTableColumnHeader column={column} title="Hosted by"/>
+        ),
+        enableSorting: true,
+        enableHiding: true,
+        cell: ({row}) => {
+            let bin = (row.getValue('job_slug') as string).split('__');
+            let provider = "Embloy"
+            if (bin.length > 1) {
+                provider = bin[0][0].toUpperCase() + bin[0].slice(1)
+            }
+            
+            return <div>{provider}</div>
+
+        },
+    },
+    {
         accessorKey: "job_type",
         header: ({column}) => (
             <DataTableColumnHeader column={column} title="Category"/>
@@ -52,14 +78,7 @@ export const jobColumns: ColumnDef<Job>[] = [
         enableSorting: false,
         enableHiding: true,
     },
-    {
-        accessorKey: "position",
-        header: ({column}) => (
-            <DataTableColumnHeader column={column} title="Position"/>
-        ),
-        enableSorting: false,
-        enableHiding: true,
-    },
+    
     {
         accessorKey: "job_status",
         header: ({column}) => (

@@ -44,6 +44,7 @@ module.exports = {
         'amarone': '#9482ba',
         'nebbiolo': '#3E3454',
         'biferno': '#312844',
+        'aglianico': '#2B243C',
         'chianti': '#211B2E',
         'ciliegiolo': '#110E1B',
 

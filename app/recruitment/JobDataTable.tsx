@@ -42,6 +42,7 @@ import { EmbloyLHPV, EmbloyV, EmbloyH, EmbloySpacer} from "@/app/components/ui/m
 import { EmbloyToolbox, EmbloyToolboxImgA, EmbloyToolboxImgAdvanced } from "@/app/components/ui/misc/toolbox";
 import { button } from "@nextui-org/react";
 import '@/app/globals.css'
+import { IntegrationSync } from "../components/dom/main/misc/IntegrationSync";
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
@@ -95,6 +96,7 @@ export function JobDataTable<TData extends Job, TValue>({columns, data, handleDa
     const default_hides = () => {
         table.getColumn("job_id").toggleVisibility(false)
         table.getColumn("job_type").toggleVisibility(false)
+        table.getColumn("job_slug").toggleVisibility(false)
     }
     useEffect(() => {
         default_hides()
@@ -131,22 +133,11 @@ export function JobDataTable<TData extends Job, TValue>({columns, data, handleDa
 
     return (
         <EmbloyV className={"gap-2 border-t dark:border-biferno pt-2"}>
-            {
-                /*
-                
-            <div className="text-sm w-full flex flex-row items-center justify-between select-none">
-                
-                <div className="px-4 flex flex-row items-center justify-end">
-                    
-                    
-                    
-                </div>
-            </div>
-            */}
             <EmbloyH className={"items-center justify-between"}>
                 <p className="w-2/12 page-text text-sm text-normal">Active Postings:</p>
                 <EmbloyH className={"w-8/12 gap-3 justify-end"}>
                     <EmbloyToolbox superClassName="h-7 border-2 dark:border-chianti" className={undefined} name={undefined} >
+                        <IntegrationSync key="Sync" />
                         <UploadJobFileButton key="Upload" router={router}  formats={['.json']} head="Upload jobs" img="sm-upload" style="relative cursor-pointer" onUploadSuccess={() => handleUploadSuccess()}/>
                         <RemoveJobButton key="Remove" router={router} getJob={(row_id) => getJob(row_id)} formats={['.json']} img="sm-delete" style="relative px-0.5 bg0-r-full cursor-pointer" getSelectedRows={() => getSelectedRows()} onUploadSuccess={() => handleUploadSuccess()}/>
                         <DropdownMenu>
@@ -205,7 +196,7 @@ export function JobDataTable<TData extends Job, TValue>({columns, data, handleDa
                 </EmbloyH>
             </EmbloyH>
             
-            <div className="bg-chianti border border-biferno text-white rounded-lg">
+            <div className="bg-chianti border border-biferno text-white rounded-lg w-full">
                 <Table>
                     <TableHeader>
                         {table.getHeaderGroups().map((headerGroup) => (

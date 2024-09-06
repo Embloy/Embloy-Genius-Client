@@ -1,5 +1,5 @@
 "use client";
-import React,{ useState} from "react";
+import React,{ useState, useEffect} from "react";
 import '@/app/globals.css'
 import { cn } from "@/lib/utils";
 import { EmbloyLHPV, EmbloyV, EmbloyH, EmbloySpacer} from "@/app/components/ui/misc/stuff";
@@ -65,19 +65,27 @@ export const EmbloySubPageNav = ({className, pages, checked, handleClick}) => {
         </ul>
     );
 }
-export const EmbloySubPage = ({pages, children, className}) => {
+export const EmbloySubPage = ({pages, children, className, onPageChange, externalSetActivePage}) => {
     const [activePage, setActivePage] = useState(pages[0].id);
     const handleClick = (id) => {
         if (activePage !== id) {
             setActivePage(id);
+            if (onPageChange) {
+                onPageChange(id);
+              }
         }
     }
+    useEffect(() => {
+        if (externalSetActivePage && externalSetActivePage !== activePage) {
+          setActivePage(externalSetActivePage);
+        }
+      }, [externalSetActivePage, activePage]);
     return (
         <EmbloyV>
             <EmbloySubPageNav pages={pages} checked={activePage} handleClick={handleClick} />
             <EmbloySpacer />
             {React.Children.map(children, (child, index) => (
-                <div key={index} className={cn(activePage === child.props.id ? "" : "hidden")}>
+                <div key={index} className={cn(activePage === child.props.id ? "w-full" : "hidden")}>
                     {child}
                 </div>
             ))}

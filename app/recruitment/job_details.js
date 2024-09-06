@@ -89,7 +89,7 @@ export function JobDetails({ job, onUploadSuccess, onClose }) {
 
   return (
     <EmbloyV className={"justify-between cursor-default p-2"}>
-      <EmbloyV className="border rounded-md dark:bg-biferno dark:border-biferno items-center gap-2 p-4">
+      <EmbloyV className="border rounded-md dark:bg-aglianico dark:border-biferno items-center gap-2 p-4">
         <EmbloyV className="gap-1.5">
           <EmbloyV className="gap-px">
             <EmbloyH className="max-w-fit gap-2">

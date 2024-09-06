@@ -85,7 +85,7 @@ export default function Jobs() {
               </EmbloyH>
               <EmbloySpacer />
               <EmbloySubPage pages={[{name:'Postings', id:1}, {name:'Applications', id:2}]} >
-                <EmbloyV id={1} className="gap-3">
+                <EmbloyV id={1} className="gap-3 ">
                   <JobDataTable
                       columns={jobColumns}
                       data={jobs}

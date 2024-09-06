@@ -13,6 +13,16 @@ import { useSearchParams } from 'next/navigation'
 import '@/app/globals.css'
 import { useRouter } from 'next/navigation';
 import { BillingSettings } from "./billing/billing";
+import { EmbloyPageMount, EmbloyPage, EmbloyPageBody, EmbloyPageBodySection, EmbloySubPage } from "@/app/components/ui/misc/page";
+import { EmbloyBox, EmbloyBoxContent } from "@/app/components/ui/misc/box";
+import { EmbloyLHPV, EmbloyV, EmbloyH, EmbloySpacer} from "@/app/components/ui/misc/stuff";
+import { EmbloyToolbox, EmbloyToolboxImgA} from "@/app/components/ui/misc/toolbox";
+import { IntegrationControl } from "./integrations/IntegrationControl";
+import { ProfileControl } from "./integrations/ProfileControl";
+import { AccessControl } from "./integrations/AccessControl";
+import { BillingControl } from "./integrations/BillingControl";
+import { SecretsControl } from "./integrations/SecretsControl";
+import { ArchiveControl } from "./integrations/ArchiveControl";
 
 function SettingsPanel() {
     const router = useRouter();
@@ -32,8 +42,8 @@ function SettingsPanel() {
             const tabToSubPageID = {
                 profile: 0,
                 access: 1,
-                secrets: 2,
-                billing: 3,
+                secrets: 3,
+                billing: 2,
                 integrations: 4,
                 archive: 5,
                 // security: 5,
@@ -87,10 +97,61 @@ function SettingsPanel() {
 
     let user = useContext(UserContext);
     let store = useContext(StoreContext);
+
+    const subPages = [{name:'Profile', id:0}, {name:'Access', id:1}, {name:'Billing', id:2}, {name:'Secrets', id:3}, {name:'Integrations', id:4}, {name:'Archive', id:5}]
+
+    const handlePageChange = (id) => {
+        setcurrentSubPageID(id);
+        const tabName = subPages.find(page => page.id === id).name.toLowerCase();
+        router.push(`?tab=${tabName}`);
+    }
     if (!user) return (<LoadingScreen />);
 
     return (
-        <main className="c0 flex min-h-screen h-full flex-col items-center justify-start">
+        <EmbloyPageMount className="overflow-hidden">
+            <EmbloyPage>
+                <EmbloyPageBody >
+                    <EmbloyPageBodySection>
+                    <EmbloyV>
+                        <EmbloyH className="justify-between">
+                            <h1 className="page-header">Settings</h1>
+                            <EmbloyToolbox superClassName="portrait:hidden">
+                            <EmbloyToolboxImgA href="https://developers.embloy.com/docs/category/genius" height="12" width="12" path="/icons/svg/black/ask.svg" path_hovered="/icons/svg/leidoveneta/ask.svg" dark_path="/icons/svg/amarone/ask.svg" dark_path_hovered="/icons/svg/barbera/ask.svg" target="_blank" />
+                            </EmbloyToolbox>
+                        </EmbloyH>
+                        <EmbloySpacer />
+                        <EmbloySubPage 
+                            pages={subPages}
+                            onPageChange={handlePageChange}
+                            externalSetActivePage={currentSubPageID}
+                        >
+                            <EmbloyV id={0} className="gap-3">
+                                <ProfileControl />
+                            </EmbloyV>
+                            <EmbloyV id={1} className="gap-3">
+                                <AccessControl />
+                            </EmbloyV>
+                            <EmbloyV id={2} className="gap-3">
+                                <BillingControl />
+                            </EmbloyV>
+                            <EmbloyV id={3} className="gap-3">
+                                <SecretsControl />
+                            </EmbloyV>
+                            <EmbloyV id={4} className="gap-3">
+                                <IntegrationControl />
+                            </EmbloyV>
+                            <EmbloyV id={5} className="gap-3">
+                                <ArchiveControl />
+                            </EmbloyV>
+                        </EmbloySubPage>
+                        </EmbloyV>
+                    </EmbloyPageBodySection>
+                </EmbloyPageBody>
+            </EmbloyPage>
+        
+        
+        {/* 
+            <main className="c0 flex min-h-screen h-full flex-col items-center justify-start">
             <div className="z-10 max-w-6xl w-full min-h-screen h-full border-l-[1px] border-r-[1px] border-gray-700 flex flex-col items-center justify-start">
                 <div className="w-full flex flex-col items-center justify-start p-4">
                     <div className="w-full flex flex-row items-center justify-between my-4">
@@ -246,7 +307,11 @@ function SettingsPanel() {
                 </div>
             </div>
         </main>
+            */}
+            </EmbloyPageMount>
+        
     );
+    
 }
 
 export default function Settings() {
