@@ -77,7 +77,7 @@ export const EmbloyChildrenAdvanced = ({className, children, tooltip, disabled})
 
 
 
-const EmbloyToggle = forwardRef(({ name, onChange, className, ...props }, ref) => {
+export const EmbloyToggle = forwardRef(({ name, onChange, className, ...props }, ref) => {
   const [isOn, setIsOn] = useState(false);
 
   const toggleSwitch = () => {
@@ -109,6 +109,3 @@ const EmbloyToggle = forwardRef(({ name, onChange, className, ...props }, ref) =
     </EmbloyChildrenAdvanced>
   );
 });
-EmbloyToggle.displayName = 'EmbloyToggle';
-
-export default EmbloyToggle;

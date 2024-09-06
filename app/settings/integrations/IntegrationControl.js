@@ -26,8 +26,7 @@ function IntegrationElement({name, description, doc_link}) {
                         <ResetWebhook key="Reset" name={name} disabled={!isActivated}/>
                         <EmbloyToolboxImgA tooltip={`Help`} href={doc_link} height="12" width="12" path="/icons/svg/black/ask.svg" path_hovered="/icons/svg/leidoveneta/ask.svg" dark_path="/icons/svg/amarone/ask.svg" dark_path_hovered="/icons/svg/barbera/ask.svg" target="_blank" />
                     </EmbloyToolbox>
-                    <EmbloyToggle className="h-7" tooltip={`${isActivated ? "Disconnect Embloy from": "Connect Embloy to"} ${name}`} onChange={handleToggleChange} />
-
+                    <EmbloyToggle name="test" className="h-7" tooltip={`${isActivated ? "Disconnect Embloy from": "Connect Embloy to"} ${name}`} onChange={handleToggleChange} />
                 </EmbloyH>
             </EmbloyH>
         </EmbloyV> 
