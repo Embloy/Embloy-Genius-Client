@@ -126,7 +126,8 @@ function SettingsPanel() {
                             externalSetActivePage={currentSubPageID}
                         >
                             <EmbloyV id={0} className="gap-3">
-                                <ProfileControl />
+                                {/*<ProfileControl />*/}
+                                <ProfileSettings user={user} store={store} />
                             </EmbloyV>
                             <EmbloyV id={1} className="gap-3">
                                 <AccessControl />

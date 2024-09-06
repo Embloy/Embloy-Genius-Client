@@ -48,7 +48,7 @@ export const EmbloySpacer = ({className}) => {
         <div className={`w-full h-20px ${className}`} />
     );
 }
-export const EmbloyChildrenAdvanced = ({className, children, tooltip}) => {
+export const EmbloyChildrenAdvanced = ({className, children, tooltip, disabled}) => {
     if (tooltip) {
         return (
             <Tooltip
@@ -60,7 +60,7 @@ export const EmbloyChildrenAdvanced = ({className, children, tooltip}) => {
                     </EmbloyP>
                     }
             >
-                <div className={className}>
+                <div className={`${className} ${disabled && 'cursor-not-allowed'}`}>
                     {children}
                 </div>
             </Tooltip>
@@ -68,7 +68,7 @@ export const EmbloyChildrenAdvanced = ({className, children, tooltip}) => {
 
     } else {
         return (
-            <div className={className}>
+            <div className={`${className} ${disabled && 'cursor-not-allowed'}`}>
                 {children}
             </div>
         )
@@ -77,33 +77,35 @@ export const EmbloyChildrenAdvanced = ({className, children, tooltip}) => {
 
 
 
-export const EmbloyToggle = forwardRef((className, props, ref) => {
+export const EmbloyToggle = forwardRef(({ onChange, className, ...props }, ref) => {
   const [isOn, setIsOn] = useState(false);
 
   const toggleSwitch = () => {
-    setIsOn(prevState => !prevState);
+    setIsOn(prevState => {
+      const newState = !prevState;
+      if (onChange) {
+        onChange(newState);
+      }
+      return newState;
+    });
   };
 
-  // Expose the state and toggle function to the parent
-  useImperativeHandle(ref, () => ({
-    toggleSwitch,  // Expose the toggle function
-    isOn,          // Expose the current state
-  }));
-
   return (
-    <div 
-      className={`w-16 h-7 flex items-center rounded-lg p-1 cursor-pointer transition-colors duration-300 ${isOn ? 'bg-green-500' : 'dark:bg-nebbiolo'} ${className}`}
-      onClick={toggleSwitch}
-    >
-      <div 
-        className={`${isOn ? 'bg-embloy-green' : 'dark:bg-amarone'} w-4 h-4 rounded-full shadow-md transform transition-transform duration-300 ${isOn ? 'translate-x-8 w-6' : 'translate-x-0'}`}
-      ></div>
-     
-      <span className="ml-2 text-amarone font-normal">
-        <EmbloyP className="text-xs right">
-            {isOn ? 'On' : 'Off'}
-        </EmbloyP>
-      </span>
-    </div>
+    <EmbloyChildrenAdvanced {...props}>
+        <div 
+        className={`border border-etna dark:border-biferno w-16 h-7 flex items-center rounded-lg p-1 cursor-pointer transition-colors duration-300 ${isOn ? 'bg-green-500' : 'dark:bg-nebbiolo bg-transparent'} ${className}`}
+        onClick={toggleSwitch}
+        >
+        <div 
+            className={`${isOn ? 'bg-embloy-green' : 'bg-etna dark:bg-amarone'} w-4 h-4 rounded-full shadow-md transform transition-transform duration-300 ${isOn ? 'translate-x-8 w-6' : 'translate-x-0'}`}
+        ></div>
+        
+        <span className="ml-2 font-normal">
+            <EmbloyP className="text-xs right">
+                {isOn ? 'On' : 'Off'}
+            </EmbloyP>
+        </span>
+        </div>
+    </EmbloyChildrenAdvanced>
   );
 });

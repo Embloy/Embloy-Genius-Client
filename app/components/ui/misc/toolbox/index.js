@@ -70,3 +70,8 @@ export const EmbloyToolboxImgAdvanced = ({path, path_hovered, dark_path, dark_pa
     )
 }
 
+export const EmbloyToolboxImgButton = ({onClick, path, path_hovered, dark_path, dark_path_hovered, height, width, ...props}) => {
+    return (
+        <EmbloyToolboxImgAdvanced path={path} path_hovered={path_hovered} dark_path={dark_path} dark_path_hovered={dark_path_hovered} height={height} width={width} />
+    )
+}
