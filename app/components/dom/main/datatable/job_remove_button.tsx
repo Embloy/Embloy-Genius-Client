@@ -61,7 +61,7 @@ export function RemoveJobButton({ formats = ['*'], router, img, style, getSelect
     return (
         <div onClick={handleDivClick} className={cn(Object.keys(getSelectedRows()).length > 0 ? "relative inline-block" : "relative inline-block" + " cursor-not-allowed")}>
             <div className={cn(Object.keys(getSelectedRows()).length > 0 ? "cursor-pointer" : "" + "pointer-events-none")}>
-                <EmbloyToolboxImgAdvanced path="/icons/svg/black/bin.svg" path_hovered="/icons/svg/leidoveneta/bin.svg" dark_path="/icons/svg/amarone/bin.svg" dark_path_hovered="/icons/svg/barbera/bin.svg" height="10" width="10" />
+                <EmbloyToolboxImgAdvanced tooltip="Deactivate Posting(s)" path="/icons/svg/black/bin.svg" path_hovered="/icons/svg/leidoveneta/bin.svg" dark_path="/icons/svg/amarone/bin.svg" dark_path_hovered="/icons/svg/barbera/bin.svg" height="10" width="10" />
             </div>
             <Modal
                 isOpen={consentModal.isOpen}

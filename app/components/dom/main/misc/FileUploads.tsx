@@ -98,7 +98,7 @@ export function UploadJobFileButton({
         onChange={handleFileChange}
         accept={formats.join(",")}
       />
-      <EmbloyToolboxImgAdvanced path="/icons/svg/black/upl.svg" path_hovered="/icons/svg/leidoveneta/upl.svg" dark_path="/icons/svg/amarone/upl.svg" dark_path_hovered="/icons/svg/barbera/upl.svg" height="10" width="10" />
+      <EmbloyToolboxImgAdvanced tooltip="Manual Job Upload" path="/icons/svg/black/upl.svg" path_hovered="/icons/svg/leidoveneta/upl.svg" dark_path="/icons/svg/amarone/upl.svg" dark_path_hovered="/icons/svg/barbera/upl.svg" height="10" width="10" />
      
 
       <Modal

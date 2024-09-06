@@ -1,0 +1,105 @@
+import { useState } from 'react';
+import '@/app/globals.css'
+
+export const EmbloyP = ({className, children, ...props}) => {
+    return (
+        <p className={`page-text ${className}`} {...props}>
+            {children}
+        </p>
+    )
+}
+
+export const EmbloyPEditable = ({ initialText, className }) => {
+    const [isEditing, setIsEditing] = useState(false);
+    const [text, setText] = useState(initialText);
+  
+    const handleClick = () => {
+      setIsEditing(true);
+    };
+  
+    const handleBlur = () => {
+      setIsEditing(false);
+    };
+  
+    const handleChange = (e) => {
+      setText(e.target.value);
+    };
+  
+    const handleKeyDown = (e) => {
+      if (e.key === "Enter") {
+        setIsEditing(false);
+      }
+    };
+  
+    return (
+      <>
+        {isEditing ? (
+          <input
+            type="text"
+            value={text}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            onKeyDown={handleKeyDown}
+            autoFocus
+            className={`page-header border-none focus:outline-none bg-transparent ${className}`}
+          />
+        ) : (
+          <EmbloyP onClick={handleClick} className={`hover:cursor-pointer ${className}`}>
+            {text}
+          </EmbloyP>
+        )}
+      </>
+    );
+  };
+  
+
+export const EmbloyH1 = ({className, children, ...props}) => {
+    return (
+        <h1 className={`page-header ${className}`} {...props}>
+            {children}
+        </h1>
+    )
+}
+export const EmbloyH1Editable = ({ initialText, className }) => {
+  const [isEditing, setIsEditing] = useState(false);
+  const [text, setText] = useState(initialText);
+
+  const handleClick = () => {
+    setIsEditing(true);
+  };
+
+  const handleBlur = () => {
+    setIsEditing(false);
+  };
+
+  const handleChange = (e) => {
+    setText(e.target.value);
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      setIsEditing(false);
+    }
+  };
+
+  return (
+    <>
+      {isEditing ? (
+        <input
+          type="text"
+          value={text}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          onKeyDown={handleKeyDown}
+          autoFocus
+          className={`page-header border-none focus:outline-none bg-transparent ${className}`}
+        />
+      ) : (
+        <EmbloyH1 onClick={handleClick} className={`hover:cursor-pointer ${className}`}>
+          {text}
+        </EmbloyH1>
+      )}
+    </>
+  );
+};
+

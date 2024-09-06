@@ -15,6 +15,11 @@ import { useRouter } from "next/navigation";
 import { ApplicationPreview } from "@/app/components/dom/main/misc/application_form_preview";
 import { GenerateQRButton } from "@/app/components/dom/main/misc/QRGenerator";
 import { GenerateGQButton } from "@/app/components/dom/main/misc/GQGenerator";
+import { EmbloyPageMount, EmbloyPage, EmbloyPageBody, EmbloyPageBodySection, EmbloySubPage } from "@/app/components/ui/misc/page";
+import { EmbloyBox, EmbloyBoxContent } from "@/app/components/ui/misc/box";
+import { EmbloyLHPV, EmbloyV, EmbloyH, EmbloySpacer, EmbloySeperator} from "@/app/components/ui/misc/stuff";
+import { EmbloyToolbox, EmbloyToolboxImgA, EmbloyToolboxImgAdvanced } from "@/app/components/ui/misc/toolbox";
+import { EmbloyH1Editable, EmbloyP} from "@/app/components/ui/misc/text";
 
 export function JobDetails({ job, onUploadSuccess, onClose }) {
   const router = useRouter();
@@ -28,8 +33,6 @@ export function JobDetails({ job, onUploadSuccess, onClose }) {
 
   const [position, setPosition] = useState(null); // todo: make it like in calendar
 
-  const detailsClass =
-    "w-full flex flex-col items-center justify-between p-4 cursor-default";
   const headerClass = "w-full flex flex-row items-center justify-between";
   const textClass = "cursor-text";
   const set_data = () => {
@@ -80,22 +83,34 @@ export function JobDetails({ job, onUploadSuccess, onClose }) {
     set_data();
   }, []);
 
+  const created_at = cast_date(job.description.created_at, "us");
+  const updated_at = cast_date(job.description.updated_at, "us");
+
   return (
-    <div className={detailsClass}>
-      <div className="w-full flex flex-col items-center justify-start gap-2">
+    <EmbloyV className={"justify-between cursor-default p-2"}>
+      <EmbloyV className="border rounded-md dark:bg-biferno dark:border-biferno items-center gap-2 p-4">
+        <EmbloyV className="gap-1.5">
+          <EmbloyV className="gap-px">
+            <EmbloyH className="max-w-fit gap-2">
+              <EmbloyP className="text-xs dark:text-nebbiolo">Created: {created_at}</EmbloyP>
+              {created_at !== updated_at && <EmbloyP className="text-xs">Last Update: {updated_at}</EmbloyP>}
+            </EmbloyH>
+            <EmbloySeperator className="dark:bg-nebbiolo h-px"/>
+          </EmbloyV>
+          <EmbloyH className="justify-between ">
+            <EmbloyH1Editable className="page-header text-lg" initialText={job.position} />
+            <EmbloyToolbox superClassName="h-7 border-2 dark:border-nebbiolo dark:bg-nebbiolo" >
+              <GenerateQRButton jobId={job.job_id} />
+              
+            </EmbloyToolbox>
+          </EmbloyH>
+        </EmbloyV>
+        
+        {/*
         <div className={headerClass}>
-          <p className={cn(textClass, "font-normal text-lg c0")}>
-            {job.position}
-            <p className={cn(textClass, "font-normal text-xs c3")}>
-              Created on: {cast_date(job.description.created_at, "us")}
-            </p>
-            <p className={cn(textClass, "font-normal text-xs c3")}>
-              Last updated on: {cast_datetime(job.description.updated_at, "us")}
-            </p>
-          </p>
           <div className="flex flex-row items-center justify-end-rev gap-4">
             <div>
-              <GenerateQRButton jobId={job.job_id} />
+              
             </div>
             <div>
               <GenerateGQButton jobId={job.job_id} position={job.position} jobSlug={job.job_slug}/>
@@ -342,7 +357,9 @@ export function JobDetails({ job, onUploadSuccess, onClose }) {
             />
           </div>
         )}
-      </div>
-    </div>
+        */}
+        
+      </EmbloyV>
+    </EmbloyV>
   );
 }
