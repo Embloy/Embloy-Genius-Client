@@ -1,4 +1,5 @@
-import React from "react";
+"use client";
+import React, {useState, forwardRef, useImperativeHandle} from "react";
 import '@/app/globals.css'
 import { Tooltip } from "@nextui-org/react";
 import {EmbloyP} from '@/app/components/ui/misc/text'
@@ -73,3 +74,36 @@ export const EmbloyChildrenAdvanced = ({className, children, tooltip}) => {
         )
     }
 }
+
+
+
+export const EmbloyToggle = forwardRef((className, props, ref) => {
+  const [isOn, setIsOn] = useState(false);
+
+  const toggleSwitch = () => {
+    setIsOn(prevState => !prevState);
+  };
+
+  // Expose the state and toggle function to the parent
+  useImperativeHandle(ref, () => ({
+    toggleSwitch,  // Expose the toggle function
+    isOn,          // Expose the current state
+  }));
+
+  return (
+    <div 
+      className={`w-16 h-7 flex items-center rounded-lg p-1 cursor-pointer transition-colors duration-300 ${isOn ? 'bg-green-500' : 'dark:bg-nebbiolo'} ${className}`}
+      onClick={toggleSwitch}
+    >
+      <div 
+        className={`${isOn ? 'bg-embloy-green' : 'dark:bg-amarone'} w-4 h-4 rounded-full shadow-md transform transition-transform duration-300 ${isOn ? 'translate-x-8 w-6' : 'translate-x-0'}`}
+      ></div>
+     
+      <span className="ml-2 text-amarone font-normal">
+        <EmbloyP className="text-xs right">
+            {isOn ? 'On' : 'Off'}
+        </EmbloyP>
+      </span>
+    </div>
+  );
+});
