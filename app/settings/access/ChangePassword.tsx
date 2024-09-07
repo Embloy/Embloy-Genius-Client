@@ -1,48 +1,10 @@
 import React, {useContext, useEffect, useState} from "react";
 import '@/app/globals.css'
 import {UserContext} from "@/app/components/dom/main/wrappers/UserContext";
-import {logout, request_access, request_refresh, update_password} from "@/lib/authentication";
-import {useRouter} from "next/navigation";
-
-async function fetch_refresh_and_access(username, password, router) {
-
-    if (username === "" || password === "") {
-        throw new Error("No username / pw provided");
-    }
-
-    return request_refresh(username, password)
-        .then((token) => {
-            return request_access(token)
-                .then((token) => {
-                    return token
-                })
-                .catch((error) => {
-                    logout(router);
-                });
-
-        })
-        .catch((error) => {
-            logout(router);
-        });
-
-
-}
-
-async function change_password(access, password, password_confirmation) {
-    if (password === "" || password_confirmation === "") {
-        throw new Error("No username / pw provided");
-    }
-
-    return update_password(access, password, password_confirmation)
-        .then((res) => {
-            return res
-        })
-
-}
+import { login, update_password } from "@/lib/api/auth";
 
 export function ChangePassword() {
     let user = useContext(UserContext)
-    const router = useRouter();
     const [disableRequest, setDisableRequest] = useState(false);
     const [timeOutID, setTimeOutID] = useState(null);
 
@@ -121,18 +83,18 @@ export function ChangePassword() {
 
             try {
                 setDisableRequest(true);
-                const access = await fetch_refresh_and_access(email, password, router);
-                const res = await change_password(access, new_password, newnew_password)
+                
+                try {
+                    await login(email, password);
+                    await update_password(new_password, newnew_password)
+                    setSucess(true);
+                } catch (error) {
+                    setSucess(false);
+                }
+                
                 setOldPassword('');
                 setNewPassword('');
                 setNewNewPassword('');
-
-                if (res) {
-                    setSucess(true);
-
-                } else {
-                    setSucess(false);
-                }
 
 
 

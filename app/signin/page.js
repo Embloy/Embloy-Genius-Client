@@ -2,15 +2,14 @@
 import React, {useState} from "react";
 import Image from "next/image";
 import {useRouter} from "next/navigation";
-import {request_refresh, request_access} from "@/lib/authentication";
-import {getCookie, setCookie} from "cookies-next";
 import '@/app/globals.css'
 import { EmbloyLHPV, EmbloyV, EmbloyH, EmbloySpacer} from "@/app/components/ui/misc/stuff";
 import { EmbloyPageMount, EmbloyPage, EmbloyPageBody, EmbloyPageBodySection, EmbloySubPage } from "@/app/components/ui/misc/page";
-import { Spinner } from "@nextui-org/react";
 import { EmbloyH1, EmbloyP } from "@/app/components/ui/misc/text";
 import { EmbloyBox, EmbloyBoxContent } from "@/app/components/ui/misc/box";
 import Link from "next/link";
+import { siteConfig } from "@/config/site";
+import { login } from "@/lib/api/auth";
 
 const Signin = () => {
     const router = useRouter();
@@ -20,51 +19,22 @@ const Signin = () => {
     const [isLoading, setIsLoading] = useState(false);
 
 
-    async function signin(username, password) {
-        try {
-            setIsLoading(true);
-    
-            if (username === "" || password === "") {
-                throw new Error("No username / pw provided");
-            }
-    
-            request_refresh(username, password)
-                .then((token) => {
-                    setCookie("refresh", token, {path: "/"})
-                    request_access(getCookie("refresh", {path: "/"}))
-                        .then((data) => {
-                            setCookie("access", data.access_token, {path: "/"})
-                            router.replace("/");
-                            setIsLoading(false);
-                        })
-                        .catch((error) => {
-                            setLoginError(true);
-                            setUsername("");
-                            setPassword("");
-                            setIsLoading(false);
-                            throw new Error("Login failed" + " : " + error);
-                        });
-                })
-                .catch(() => {
-                    setLoginError(true);
-                    setUsername("");
-                    setPassword("");
-                    setIsLoading(false);
-                });
-        } catch (error) {
-            console.log("Login failed: " + error);
-            setIsLoading(false);
-        }
-    }
-
     const handleLogin = async (e) => {
         e.preventDefault();
+        setIsLoading(true);
         try {
-          await signin(username, password);
-          setLoginError(false);
+            await login(username, password);
+            setLoginError(false);
+            setIsLoading(false);
+            router.replace("/");
+            
         } catch (error) {
-          console.error(error);
+            setLoginError(true);
+            setUsername("");
+            setPassword("");
+            setIsLoading(false);
         }
+        
     };
     const inputStyle = "mb-2 px-5 h-12 w-96 portrait:w-72 rounded-lg text-md dark:bg-nebbiolo border dark:border-amarone border-etna page-text text-md placeholder-etna dark:placeholder-amarone focus:outline-none focus:ring-2 dark:focus:ring-amarone focus:ring-lagunaveneta select-all";
     return (
@@ -124,7 +94,7 @@ const Signin = () => {
                                            {loginError && (
                                                <EmbloyH className="gap-1">
                                                    <EmbloyP className="text-xs dark:text-red-500 text-red-500">Login failed.</EmbloyP>
-                                                   <Link href="/forgot-password">
+                                                   <Link href={`${siteConfig.core_url}/password-reset`}>
                                                        <EmbloyP className="text-xs dark:text-red-500 text-red-500 cursor-pointer hover:underline">Forgot password?</EmbloyP>
                                                    </Link>
                                                </EmbloyH>
@@ -145,7 +115,7 @@ const Signin = () => {
                                            </a>
                                            <button
                                                type="submit"
-                                               className="mt-3 inline-flex w-20 h-10 rounded-lg border-[2px] items-center justify-center rounded-full text-sm font-semibold bg-lagunaveneta hover:bg-golfonapoli dark:bg-gradient-to-r from-embloy-green to-embloy-blue text-white dark:text-green-950 dark:hover:text-white border-2 border-black border-lagunaveneta dark:border-embloy-green hover:border-golfonapoli placeholder-amarone outline-none focus:outline-none focus:ring-2 dark:focus:ring-amarone focus:ring-lagunaveneta select-all "
+                                               className="mt-3 inline-flex w-20 h-10 rounded-lg border-[2px] items-center justify-center rounded-full text-sm font-semibold bg-lagunaveneta hover:bg-golfotrieste dark:bg-gradient-to-r from-embloy-green to-embloy-blue text-white dark:text-green-950 dark:hover:text-white border-2 border-lagunaveneta dark:border-embloy-green hover:border-golfotrieste placeholder-amarone outline-none focus:outline-none focus:ring-2 dark:focus:ring-amarone focus:ring-lagunaveneta select-all "
                                            >
                                            {isLoading ? (
                                                <svg aria-hidden="true"

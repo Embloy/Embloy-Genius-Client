@@ -2,7 +2,7 @@
 import React from "react";
 import Image from "next/image";
 import {useRouter} from "next/navigation";
-import {logout} from "@/lib/authentication";
+import {logout} from "@/lib/api/auth";
 import Link from "next/link";
 import '@/app/globals.css'
 import {AvatarButton} from "@/app/components/ui/misc/avatar";

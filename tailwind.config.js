@@ -48,7 +48,8 @@ module.exports = {
         'chianti': '#211B2E',
         'ciliegiolo': '#110E1B',
 
-        'lagunaveneta': '#1570DB',
+        'lagunaveneta': '#002f86',
+        'golfotrieste': '#1a4590',
         'golfonapoli': '#5CA7FF',
 
         'leidoveneta': '#FDE961',

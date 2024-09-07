@@ -1,7 +1,6 @@
 import { useRouter } from "next/navigation";
-import React, { useRef, useState } from "react";
-import { logout, request_access } from "@/lib/authentication";
-import { getCookie } from "cookies-next";
+import React, { useState } from "react";
+import { claim_access_token } from "@/lib/api/auth";
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -31,24 +30,6 @@ export function AccessTokenClaim() {
   const [expires, setExpires] = useState(60);
   const [expiresIsHovered, setExpiresIsHovered] = useState(false);
 
-  async function fetch_access_token() {
-    try {
-      // todo: check parameters, if any given
-      try {
-        return request_access(getCookie("refresh", { path: "/" }))
-          .then((token) => {
-            return token;
-          })
-          .catch((error) => {
-            logout(router);
-          });
-      } catch (error) {
-        logout(router);
-      }
-    } catch (error) {
-      console.log("Fetching failed: " + error);
-    }
-  }
 
   const [isLoading, setIsLoading] = useState(false);
   const [success, setSucess] = useState(null);
@@ -57,7 +38,7 @@ export function AccessTokenClaim() {
     e.preventDefault();
     setIsLoading(true);
     try {
-      const token = await fetch_access_token();
+      const token = await claim_access_token(note, expires);
       if (token) {
         navigator.clipboard.writeText(token);
         setSucess(true);

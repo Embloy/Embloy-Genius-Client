@@ -157,7 +157,7 @@ export function GenerateQRButton({ head, jobId }) {
         handleGenerate();
         generateModal.onOpen();
       }}>
-        <EmbloyToolboxImgAdvanced tooltip={"Generate QR"} path="/icons/svg/black/qr.svg" path_hovered="/icons/svg/leidoveneta/qr.svg" dark_path="/icons/svg/amarone/qr.svg" dark_path_hovered="/icons/svg/barbera/qr.svg" height="12" width="12" />
+        <EmbloyToolboxImgAdvanced tooltip={"Generate QR"} path="/icons/svg/black/qr.svg" path_hovered="/icons/svg/leidoveneta/qr.svg" dark_path="/icons/svg/amarone/qr.svg" dark_path_hovered="/icons/svg/barbera/qr.svg" height="12" width="12" disabled={undefined} path_disabled={undefined} dark_path_disabled={undefined} />
       </button>
       <Modal
         isOpen={generateModal.isOpen}

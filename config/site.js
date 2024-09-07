@@ -1,4 +1,9 @@
 export const siteConfig = {
+    name: "Embloy Genius",
+    description: "Recruiter Portal",
+    //core_domain: "localhost", // <-- Dev Domain
+    core_domain: ".embloy.com", // <-- Prod Domain
+    core_url : "https://embloy.com", // <-- Core Backend
     url: "https://genius.embloy.com", // <-- Genius Client
     // api_url: "http://localhost:8080", // <-- Genius Server (local)
     api_url: "https://api2.embloy.com", // <-- Genius Server (remote)

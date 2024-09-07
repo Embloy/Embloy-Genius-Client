@@ -1,44 +1,10 @@
 import React, {useContext, useEffect, useState} from "react";
 import {UserContext} from "@/app/components/dom/main/wrappers/UserContext";
-import {logout, request_access, request_refresh, update_password} from "@/lib/authentication";
+import { logout } from "@/lib/api/auth";
 import {useRouter} from "next/navigation";
 import Image from "next/image";
 import '@/app/globals.css'
-async function fetch_refresh_and_access(username, password, router) {
 
-    if (username === "" || password === "") {
-        throw new Error("No username / pw provided");
-    }
-
-    return request_refresh(username, password)
-        .then((token) => {
-            return request_access(token)
-                .then((token) => {
-                    return token
-                })
-                .catch((error) => {
-                    logout(router);
-                });
-
-        })
-        .catch((error) => {
-            logout(router);
-        });
-
-
-}
-
-async function change_password(access, password, password_confirmation) {
-    if (password === "" || password_confirmation === "") {
-        throw new Error("No username / pw provided");
-    }
-
-    return update_password(access, password, password_confirmation)
-        .then((res) => {
-            return res
-        })
-
-}
 
 export function TwoFactorAuthentication() {
     let user = useContext(UserContext)
@@ -109,56 +75,7 @@ export function TwoFactorAuthentication() {
     }
 
 
-    const handleUpdate = async (e) => {
-        e.preventDefault();
-        if (!disableRequest) {
-            setIsLoading(true);
-            const email = user.email;
-            const password = oldPassword;
-            const new_password = newPassword;
-            const newnew_password = newnewPassword;
-
-
-            try {
-                setDisableRequest(true);
-                const access = await fetch_refresh_and_access(email, password, router);
-                const res = await change_password(access, new_password, newnew_password)
-                setOldPassword('');
-                setNewPassword('');
-                setNewNewPassword('');
-
-                if (res) {
-                    setSucess(true);
-
-                } else {
-                    setSucess(false);
-                }
-
-
-
-                setPasswordMissmatch(false);
-                setIsLoading(false);
-                const id = setTimeout(() => {
-                    setDisableRequest(false);
-                }, 60000); // in milliseconds => 1 min
-                setTimeOutID(id);
-
-            } catch (error) {
-                console.log(error)
-                console.log("was received")
-                if (error == "Error: 422") {
-                    setPasswordMissmatch(true);
-                }
-                setSucess(false);
-                setIsLoading(false);
-                const id = setTimeout(() => {
-                    setDisableRequest(false);
-                }, 30000); // in milliseconds => 1 min
-                setTimeOutID(id);
-
-            }
-        }
-    }
+    
 
     useEffect(() => {
         return () => {

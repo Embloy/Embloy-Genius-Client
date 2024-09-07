@@ -143,7 +143,7 @@ export function JobDataTable<TData extends Job, TValue>({columns, data, handleDa
                         <DropdownMenu>
                             <DropdownMenuTrigger asChild className="outline-none">
                                 <button className="">
-                                    <EmbloyToolboxImgAdvanced tooltip="Show/Hide Columns" path="/icons/svg/black/cols.svg" path_hovered="/icons/svg/leidoveneta/cols.svg" dark_path="/icons/svg/amarone/cols.svg" dark_path_hovered="/icons/svg/barbera/cols.svg" height="11" width="11" />
+                                    <EmbloyToolboxImgAdvanced tooltip="Show/Hide Columns" path="/icons/svg/black/cols.svg" path_hovered="/icons/svg/leidoveneta/cols.svg" dark_path="/icons/svg/amarone/cols.svg" dark_path_hovered="/icons/svg/barbera/cols.svg" height="11" width="11" disabled={undefined} path_disabled={undefined} dark_path_disabled={undefined} />
                                 </button>
                             </DropdownMenuTrigger>
                             <DropdownMenuContent align="end">
@@ -170,7 +170,7 @@ export function JobDataTable<TData extends Job, TValue>({columns, data, handleDa
                                     })}
                             </DropdownMenuContent>
                         </DropdownMenu>
-                        <EmbloyToolboxImgA tooltip="Help" href="https://developers.embloy.com/docs/category/genius" height="12" width="12" path="/icons/svg/black/ask.svg" path_hovered="/icons/svg/leidoveneta/ask.svg" dark_path="/icons/svg/amarone/ask.svg" dark_path_hovered="/icons/svg/barbera/ask.svg" target="_blank" />
+                        <EmbloyToolboxImgA tooltip="Help" href="https://developers.embloy.com/docs/category/genius" height="12" width="12" path="/icons/svg/black/ask.svg" path_hovered="/icons/svg/leidoveneta/ask.svg" dark_path="/icons/svg/amarone/ask.svg" dark_path_hovered="/icons/svg/barbera/ask.svg" target="_blank" disabled={undefined} path_disabled={undefined} dark_path_disabled={undefined} />
                     </EmbloyToolbox>
                     <input
                         className={"rounded-lg text-sm dark:bg-chianti border-2 dark:border-chianti text-white h-7 w-48 px-2 placeholder-amarone border-none outline-none focus:outline-none focus:ring-2 focus:ring-amarone select-all"}
