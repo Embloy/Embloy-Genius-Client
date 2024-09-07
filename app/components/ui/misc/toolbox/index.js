@@ -29,12 +29,12 @@ export const EmbloyToolboxA = ({href, target, children, ...props}) => {
         </EmbloyChildrenAdvanced>
     )
 }
-export const EmbloyToolboxImg = ({path, path_hovered, height, width, className, ...props}) => {
+export const EmbloyToolboxImg = ({disabled=false, path, path_hovered, height, width, className, ...props}) => {
     const [isHovered, setIsHovered] = useState(false);
     return (
         <EmbloyChildrenAdvanced {...props}>
             <Image
-                src={
+                src={!disabled &&
                 isHovered
                     ? path_hovered
                     : path
@@ -44,34 +44,36 @@ export const EmbloyToolboxImg = ({path, path_hovered, height, width, className, 
                 width={`${width}`}
                 onMouseEnter={() => setIsHovered(true)}
                 onMouseLeave={() => setIsHovered(false)}
-                className={`relative ${className}`}
+                className={`relative select-none ${className}`}
             />
         </EmbloyChildrenAdvanced>
     );
 }
 
-export const EmbloyToolboxImgA = ({href, target="_self", path, path_hovered, dark_path, dark_path_hovered, height, width, ...props}) => {
+export const EmbloyToolboxImgA = ({disabled, href, target="_self", path, path_hovered, path_disabled, dark_path, dark_path_hovered, dark_path_disabled, height, width, ...props}) => {
     return (
         <EmbloyChildrenAdvanced {...props}>
-            <EmbloyToolboxA href={href} target={target}>
-                <EmbloyToolboxImg className="block dark:hidden" path={path} path_hovered={path_hovered} height={height} width={width} />
-                <EmbloyToolboxImg className="hidden dark:block" path={dark_path} path_hovered={dark_path_hovered} height={height} width={width} />
+            <EmbloyToolboxA href={href} target={target} >
+                <EmbloyToolboxImg disabled={disabled} className="block dark:hidden" path={path_disabled && disabled ? path_disabled : path} path_hovered={path_hovered} height={height} width={width} />
+                <EmbloyToolboxImg disabled={disabled} className="hidden dark:block" path={dark_path && disabled ? dark_path_disabled : dark_path} path_hovered={dark_path_hovered} height={height} width={width} />
             </EmbloyToolboxA>
         </EmbloyChildrenAdvanced>
     )
 }
 
-export const EmbloyToolboxImgAdvanced = ({path, path_hovered, dark_path, dark_path_hovered, height, width, ...props}) => {
+export const EmbloyToolboxImgAdvanced = ({disabled, path, path_hovered, path_disabled, dark_path, dark_path_hovered, dark_path_disabled, height, width, ...props}) => {
     return (
         <EmbloyChildrenAdvanced {...props}>
-            <EmbloyToolboxImg className="block dark:hidden" path={path} path_hovered={path_hovered} height={height} width={width} />
-            <EmbloyToolboxImg className="hidden dark:block" path={dark_path} path_hovered={dark_path_hovered} height={height} width={width} />
+            <EmbloyToolboxImg className="block dark:hidden" disabled={disabled} path={path_disabled && disabled ? path_disabled : path} path_hovered={path_hovered} height={height} width={width} />
+            <EmbloyToolboxImg className="hidden dark:block" disabled={disabled} path={dark_path && disabled ? dark_path_disabled : dark_path} path_hovered={dark_path_hovered} height={height} width={width} />
         </EmbloyChildrenAdvanced>
     )
 }
 
-export const EmbloyToolboxImgButton = ({onClick, path, path_hovered, dark_path, dark_path_hovered, height, width, ...props}) => {
+export const EmbloyToolboxImgButton = ({onClick, path, path_hovered, path_disabled, dark_path, dark_path_hovered, dark_path_disabled, height, width, ...props}) => {
     return (
-        <EmbloyToolboxImgAdvanced path={path} path_hovered={path_hovered} dark_path={dark_path} dark_path_hovered={dark_path_hovered} height={height} width={width} />
+        <button onClick={onClick} className={`${props.disabled && "cursor-not-allowed"}`} disabled={props.disabled}>
+             <EmbloyToolboxImgAdvanced path={path} path_hovered={path_hovered} path_disabled={path_disabled} dark_path={dark_path} dark_path_hovered={dark_path_hovered} dark_path_disabled={dark_path_disabled} height={height} width={width} {...props}/>
+        </button>
     )
 }
