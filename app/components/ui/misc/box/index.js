@@ -2,9 +2,13 @@ import React from "react";
 import '@/app/globals.css'
 import { EmbloySeperator } from "../stuff";
 import Note from "@/app/components/ui/misc/note";
-export const EmbloyBox = ({children, className}) => {
+export const EmbloyBox = ({children, className, variant}) => {
+    let appearance = "dark:border-chianti";
+    if (variant && variant === "chilled") {
+        appearance = "dark:border-biferno";
+    }
     return (
-        <div className={`border-[1px] border-etna dark:border-chianti w-full flex landscape:flex-row portrait:flex-col items-start landscape:justify-between portrait:justify-start bg-transparent dark:bg-chianti landscape:px-6 portrait:px-4 landscape:py-6 portrait:py-5 rounded-lg g-4 ${className} `}>
+        <div className={`border-[1px] border-etna  w-full flex landscape:flex-row portrait:flex-col items-start landscape:justify-between portrait:justify-start bg-transparent dark:bg-chianti landscape:px-6 portrait:px-4 landscape:py-6 portrait:py-5 rounded-lg g-4 dark:border-biferno ${appearance} ${className} `}>
             {children}
         </div>
     );

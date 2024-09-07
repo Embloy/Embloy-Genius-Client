@@ -10,6 +10,7 @@ import { EmbloyPageMount, EmbloyPage, EmbloyPageBody, EmbloyPageBodySection, Emb
 import { Spinner } from "@nextui-org/react";
 import { EmbloyH1, EmbloyP } from "@/app/components/ui/misc/text";
 import { EmbloyBox, EmbloyBoxContent } from "@/app/components/ui/misc/box";
+import Link from "next/link";
 
 const Signin = () => {
     const router = useRouter();
@@ -65,158 +66,133 @@ const Signin = () => {
           console.error(error);
         }
     };
-
+    const inputStyle = "mb-2 px-5 h-12 w-96 portrait:w-72 rounded-lg text-md dark:bg-nebbiolo border dark:border-amarone border-etna page-text text-md placeholder-etna dark:placeholder-amarone focus:outline-none focus:ring-2 dark:focus:ring-amarone focus:ring-lagunaveneta select-all";
     return (
         <EmbloyPageMount className="overflow-hidden">
             <EmbloyPage>
                 <EmbloyPageBody>
                     <EmbloyPageBodySection>
-                       
-                        <EmbloyV className={`fixed inset-0 flex flex-col justify-center items-center z-50 bg-body`}>
-                            <EmbloyBox
-                                className="dark:bg-aglianico border-[1px] border-etna dark:border-nebbiolo rounded-lg  max-w-fit">
-                                <EmbloyBoxContent className="items-center">
-                                    
-                                <Image
-                                    src="/img/logo_on_dark.svg"
-                                    alt="Logo"
-                                    height="50"
-                                    width="185"
-                                    className="mb-8 relative hidden dark:block"
-                                />
-                                <Image
-                                    src="/img/logo_on_light.svg"
-                                    alt="Logo"
-                                    height="50"
-                                    width="185"
-                                    className="mb-8 dark:hidden"
-                                />
-                                <h1 className="mb-4 c0 text-2xl">Sign in</h1>
-                                <p className="mb-8 c0 text-md">Use your Embloy Account</p>
-                                <div className="flex flex-col items-center justify-center">
-                                    <form onSubmit={handleLogin}>
-                                        {loginError ? (
-                                            <>
-                                                <input
-                                                    className={"mb-2 px-5 h-14 w-96 rounded-lg text-sm dark:bg-nebbiolo border-2 dark:border-amarone text-white placeholder-amarone border-none outline-none focus:outline-none focus:ring-2 focus:ring-amarone select-all"}
-                                                    minLength="0"
-                                                    maxlength="150"
-                                                    name="username"
-                                                    id="username"
-                                                    type="email"
-                                                    placeholder="Email"
-                                                    required
-                                                    value={username}
-                                                    onChange={(e) => setUsername(e.target.value)}
-                                                />
-                                                <br />
-                                                <input
-                                                    className={"mb-2 px-5 h-14 w-96 rounded-lg text-sm dark:bg-nebbiolo border-2 dark:border-amarone text-white placeholder-amarone border-none outline-none focus:outline-none focus:ring-2 focus:ring-amarone select-all"}
-                                                    minLength="8"
-                                                    maxlength="72"
-                                                    name="password"
-                                                    id="password"
-                                                    type="password"
-                                                    placeholder="Password"
-                                                    required
-                                                    value={password}
-                                                    onChange={(e) => setPassword(e.target.value)}
-                                                />
-                                                <br />
-                                                <p className="text-sm text-red-500">Login failed.</p>
-                                            </>
-                                        ) : (
-                                            <>
-                                                <input
-                                                   className={"mb-2 px-5 h-14 w-96 rounded-lg text-sm dark:bg-nebbiolo border-2 dark:border-amarone text-white placeholder-amarone border-none outline-none focus:outline-none focus:ring-2 focus:ring-amarone select-all"}
-                                                    minLength="0"
-                                                    maxLength="150"
-                                                    name="username"
-                                                    id="username"
-                                                    type="text"
-                                                    placeholder="Email"
-                                                    required
-                                                    value={username}
-                                                    onChange={(e) => setUsername(e.target.value)}
-                                                />
-                                                <br />
-                                                <input
-                                                    className={"mb-2 px-5 h-14 w-96 rounded-lg text-sm dark:bg-nebbiolo border-2 dark:border-amarone text-white placeholder-amarone border-none outline-none focus:outline-none focus:ring-2 focus:ring-amarone select-all"}
-                                                    minLength="8"
-                                                    maxLength="72"
-                                                    name="password"
-                                                    id="password"
-                                                    type="password"
-                                                    placeholder="Password"
-                                                    required
-                                                    value={password}
-                                                    onChange={(e) => setPassword(e.target.value)}
-                                                />
-                                                <br/>
-                                            </>
-                                        )}
-                                        <div className="h-16"></div>
-                                        <div className="flex flex-row items-center justify-between">
-                                            <a
-                                                type="button"
-                                                className="mt-3 inline-flex mx-2 justify-center py-2 "
-                                                href="https://www.embloy.com/en-US/register"
-                                                target="_blank"
-                                            >
-                                                <EmbloyP className="font-semibold dark:hover:text-embloy-green hover:text-leidoveneta">
-                                                    Create account
-                                                </EmbloyP>
-                                            </a>
-                                            <button
-                                                type="submit"
-                                                className="mt-3 inline-flex w-20 h-10 rounded-lg border-[2px] border-white dark:border-black items-center justify-center rounded-full text-sm font-semibold bg-gradient-to-r from-embloy-green to-embloy-blue text-green-950 dark:hover:text-white hover:text-black border-2 dark:border-amarone placeholder-amarone border-none outline-none focus:outline-none focus:ring-2 focus:ring-amarone select-all "
-                                            >
-                                            {isLoading ? (
-                                                <svg aria-hidden="true"
-                                                    className="inline w-7 h-7 text-gray-500 animate-spin fill-white"
-                                                    viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                    <path
-                                                        d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
-                                                        fill="currentColor"/>
-                                                    <path
-                                                        d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
-                                                        fill="currentFill"/>
-                                                </svg>
-                                            ) : 'Next'}
-                                            </button>
-                                        </div>
-                                    </form>
+                       <EmbloyV className={`fixed inset-0 flex flex-col justify-center items-center z-50 bg-body `}>
+                           <EmbloyBox
+                               className="dark:bg-aglianico border-[1px] border-etna dark:border-nebbiolo rounded-lg max-w-fit ">
+                               <EmbloyBoxContent className="items-center">
+                               <Image
+                                   src="/img/logo_on_dark.svg"
+                                   alt="Logo"
+                                   height="50"
+                                   width="185"
+                                   className="mb-8 relative hidden dark:block"
+                               />
+                               <Image
+                                   src="/img/logo_on_light.svg"
+                                   alt="Logo"
+                                   height="50"
+                                   width="185"
+                                   className="mb-8 dark:hidden"
+                               />
+                               <EmbloyH1 className="mb-4 text-2xl">Sign in</EmbloyH1>
+                               <EmbloyP className="mb-8 ">Use your Embloy Account</EmbloyP>
+                               <div className="flex flex-col items-center justify-center">
+                                   <form onSubmit={handleLogin}>
+                                       
+                                          
+                                       <EmbloyV className="items-center min-h-32">
+                                           <input
+                                               className={inputStyle}
+                                               minLength="0"
+                                               maxLength="150"
+                                               name="username"
+                                               id="username"
+                                               type="text"
+                                               placeholder="Email"
+                                               required
+                                               value={username}
+                                               onChange={(e) => setUsername(e.target.value)}
+                                           />
+                                           <input
+                                               className={inputStyle}
+                                               minLength="8"
+                                               maxLength="72"
+                                               name="password"
+                                               id="password"
+                                               type="password"
+                                               placeholder="Password"
+                                               required
+                                               value={password}
+                                               onChange={(e) => setPassword(e.target.value)}
+                                           />
+                                           {loginError && (
+                                               <EmbloyH className="gap-1">
+                                                   <EmbloyP className="text-xs dark:text-red-500 text-red-500">Login failed.</EmbloyP>
+                                                   <Link href="/forgot-password">
+                                                       <EmbloyP className="text-xs dark:text-red-500 text-red-500 cursor-pointer hover:underline">Forgot password?</EmbloyP>
+                                                   </Link>
+                                               </EmbloyH>
+                                           )}
+                                       </EmbloyV>
+                                       
+                                       <div className="h-16"></div>
+                                       <div className="flex flex-row items-center justify-between">
+                                           <a
+                                               type="button"
+                                               className="mt-3 inline-flex mx-2 justify-center py-2 rounded-lg outline-none focus:outline-none focus:ring-2 dark:focus:ring-amarone focus:ring-lagunaveneta "
+                                               href="https://www.embloy.com/en-US/register"
+                                               target="_blank"
+                                           >
+                                               <EmbloyP className="font-semibold dark:hover:text-embloy-green hover:text-leidoveneta">
+                                                   Create account
+                                               </EmbloyP>
+                                           </a>
+                                           <button
+                                               type="submit"
+                                               className="mt-3 inline-flex w-20 h-10 rounded-lg border-[2px] items-center justify-center rounded-full text-sm font-semibold bg-lagunaveneta hover:bg-golfonapoli dark:bg-gradient-to-r from-embloy-green to-embloy-blue text-white dark:text-green-950 dark:hover:text-white border-2 border-black border-lagunaveneta dark:border-embloy-green hover:border-golfonapoli placeholder-amarone outline-none focus:outline-none focus:ring-2 dark:focus:ring-amarone focus:ring-lagunaveneta select-all "
+                                           >
+                                           {isLoading ? (
+                                               <svg aria-hidden="true"
+                                                   className="inline w-7 h-7 text-gray-500 animate-spin fill-white"
+                                                   viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                   <path
+                                                       d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                                                       fill="currentColor"/>
+                                                   <path
+                                                       d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                                                       fill="currentFill"/>
+                                               </svg>
+                                           ) : 'Next'}
+                                           </button>
+                                       </div>
+                                   </form>
 
-                                </div>
-                                </EmbloyBoxContent>
-                            </EmbloyBox>
-                            <div className="flex flex-row text-xs items-center justify-center">
-                                <a
-                                    href="https://about.embloy.com/en/contact/"
-                                    target="_blank"
-                                    className="mt-3 inline-flex mx-2 justify-center py-2 "
-                                >
-                                    <EmbloyP className="dark:text-amarone dark:hover:text-barbera text-black hover:text-leidoveneta">
-                                        Help
-                                    </EmbloyP>
+                               </div>
+                               </EmbloyBoxContent>
+                           </EmbloyBox>
+                           <div className="flex flex-row text-xs items-center justify-center">
+                               <a
+                                   href="https://about.embloy.com/en/contact/"
+                                   target="_blank"
+                                   className="mt-3 inline-flex mx-2 justify-center py-2 "
+                               >
+                                   <EmbloyP className="text-xs dark:text-amarone dark:hover:text-barbera text-black hover:text-leidoveneta">
+                                       Help
+                                   </EmbloyP>
 
-                                </a>
-                                <a  
-                                    target="_blank"
-                                    href="https://embloy.com/resources/privacy"
-                                    className="mt-3 inline-flex mx-2 justify-center py-2 "
-                                >
-                                    <EmbloyP className="dark:text-amarone dark:hover:text-barbera text-black hover:text-leidoveneta">
-                                        Privacy & Terms
-                                    </EmbloyP>
-                                   
-                                </a>
-                            </div>
+                               </a>
+                               <a  
+                                   target="_blank"
+                                   href="https://embloy.com/resources/privacy"
+                                   className="mt-3 inline-flex mx-2 justify-center py-2 "
+                               >
+                                   <EmbloyP className="text-xs dark:text-amarone dark:hover:text-barbera text-black hover:text-leidoveneta">
+                                       Privacy & Terms
+                                   </EmbloyP>
+                                  
+                               </a>
+                           </div>
 
 
-                            <EmbloyP className=" absolute bottom-5">©2024 • Embloy Platforms UG (haftungsbeschränkt)</EmbloyP>
-                        </EmbloyV>
-                    </EmbloyPageBodySection>
+                           <EmbloyP className=" absolute bottom-5">©2024 • Embloy Platforms UG (haftungsbeschränkt)</EmbloyP>
+                       </EmbloyV>
+                   </EmbloyPageBodySection>
                 </EmbloyPageBody>
             </EmbloyPage>
         </EmbloyPageMount>

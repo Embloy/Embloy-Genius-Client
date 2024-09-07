@@ -93,13 +93,13 @@ export default function Home() {
                 <EmbloyLHPV>
                   <EmbloyV className="gap-6">
                     <EmbloyLHPV className="gap-6">
-                      <EmbloyBox className="max-w-fit portrait:max-w-full">
+                      <EmbloyBox variant="chilled" className="max-w-fit portrait:max-w-full">
                         <EmbloyBoxContent boxhead="Traffic report" notes={ana_notes} >
                           <div className="flex flex-col items-start justify-start gap-1.5 ">
                           </div>
                         </ EmbloyBoxContent>
                       </EmbloyBox>
-                      <EmbloyBox className="max-w-fit portrait:max-w-full">
+                      <EmbloyBox variant="chilled" className="max-w-fit portrait:max-w-full">
                         <EmbloyBoxContent boxhead="Integration status">
                           <IntegrationStatus/>
                         </EmbloyBoxContent>
@@ -107,7 +107,7 @@ export default function Home() {
                       
                     </EmbloyLHPV>
                     <EmbloyLHPV className="gap-6">
-                      <EmbloyBox className="max-w-fit portrait:max-w-full"> 
+                      <EmbloyBox variant="chilled" className="max-w-fit portrait:max-w-full"> 
                         <EmbloyBoxContent boxhead="News" notes={news_notes} >
                           <div className="flex flex-row items-start">
                             <div className="flex flex-col items-center justify-start gap-1.5 ">
@@ -157,7 +157,7 @@ export default function Home() {
                         </div>
                       </ EmbloyBoxContent>
                     </EmbloyBox>
-                    <EmbloyBox className="max-w-fit portrait:max-w-full">
+                    <EmbloyBox variant="chilled" className="max-w-fit portrait:max-w-full">
                       <EmbloyBoxContent boxhead="Useful links" >
             
                         <ul className="w-full flex flex-col gap-2 text-sm font-light text-page-head list-disc pl-5" >

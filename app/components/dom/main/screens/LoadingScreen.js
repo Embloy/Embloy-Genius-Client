@@ -9,6 +9,14 @@ const LoadingScreen = () => {
                 alt="Logo"
                 height="65"
                 width="200"
+                className="hidden dark:block"
+            />
+            <Image
+                src="/img/logo_on_light.svg"
+                alt="Logo"
+                height="65"
+                width="200"
+                className="block dark:hidden"
             />
             <div role="status">
                 <svg aria-hidden="true"

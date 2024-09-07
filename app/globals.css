@@ -4,6 +4,9 @@
 @tailwind utilities;
 
 @layer base{
+    td input:focus{
+        background: transparent;
+    }
     body {
         @apply dark:bg-ciliegiolo bg-white
     }
