@@ -5,12 +5,18 @@ import { EmbloyLHPV, EmbloyV, EmbloyH, EmbloySpacer, EmbloyToggle} from "@/app/c
 import { EmbloyH1, EmbloyP } from "@/app/components/ui/misc/text";
 import { IntegrationSync } from "@/app/components/dom/main/misc/IntegrationSync";
 import { ResetWebhook } from "@/app/components/dom/main/misc/ResetWebhook";
+import { connect, disconnect } from "@/app/settings/integrations/lever";
 
-function IntegrationElement({name, description, doc_link}) {
+function IntegrationElement({name, description, doc_link, onConnect, onDisconnect}) {
     const [isExpanded, setIsExpanded] = useState(false);
     const [isActivated, setIsActivated] = useState(false);
     const handleToggleChange = (newState) => {
         setIsActivated(newState);
+        if (newState) {
+            onConnect();  
+        } else {
+            onDisconnect();
+        }
       };
     return (
         <EmbloyV className={"bg-transparent dark:bg-chianti border border-etna dark:border-biferno text-white rounded-lg p-4"}>
@@ -40,7 +46,7 @@ export function IntegrationControl({}) {
             </EmbloyH>
             <EmbloyV className={"gap-2"}>
                 <EmbloyV className={"gap-2"}>
-                    <IntegrationElement name={"Lever"} description={"Use Embloy with Lever's recruiting software."} doc_link="https://developers.embloy.com/docs/guides/get-started-integrations-lever" />
+                    <IntegrationElement name={"Lever"} description={"Use Embloy with Lever's recruiting software."} doc_link="https://developers.embloy.com/docs/guides/get-started-integrations-lever" onConnect={connect} onDisconnect={disconnect} />
                 </EmbloyV>
             </EmbloyV>
         </EmbloyV> 

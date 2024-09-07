@@ -81,13 +81,8 @@ export const EmbloyToggle = ({ name, onChange, className, ...props }) => {
   const [isOn, setIsOn] = useState(false);
 
   const toggleSwitch = () => {
-    setIsOn(prevState => {
-      const newState = !prevState;
-      if (onChange) {
-        onChange(newState);
-      }
-      return newState;
-    });
+    setIsOn(!isOn);
+    onChange(!isOn);
   };
 
   return (
