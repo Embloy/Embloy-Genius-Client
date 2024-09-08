@@ -12,7 +12,7 @@ export function SecretsList({ tokens, setTokens, removeToken }) {
   const [error, setError] = useState(false);
   const [formError, setFormError] = useState(null);
   const [excludeTokens, setExcludeTokens] = useState(true);
-  const [filterActive, setFilterActive] = useState(false);
+  const [filterActive, setFilterActive] = useState(true);
   const [inputType, setInputType] = useState("password");
 
   const [tokenId, setTokenId] = useState("");
@@ -136,7 +136,7 @@ export function SecretsList({ tokens, setTokens, removeToken }) {
                       return !(
                         token.issuer === "embloy" &&
                         (token.token_type === "access_token" ||
-                          token.token_type === "request_token")
+                          token.token_type === "refresh_token")
                       );
                     }
                     return true;
@@ -220,6 +220,8 @@ export function SecretsList({ tokens, setTokens, removeToken }) {
                                       word.slice(1)
                                   )
                                   .join(" ")}
+                                {token.scopes &&
+                                  "(" + token.scopes.join(", ") + ")"}
                               </p>
                               <p
                                 className={`c2 text-s ${
@@ -238,7 +240,7 @@ export function SecretsList({ tokens, setTokens, removeToken }) {
                                   : `expires on ${new Date(
                                       token.expires_at
                                     ).toLocaleDateString()}`}
-                              </p>{" "}
+                              </p>
                               <p className="c2 text-s"></p>
                             </div>
                           </div>

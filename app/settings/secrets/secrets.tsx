@@ -11,18 +11,45 @@ import { OpenCloseScaffold } from "@/app/components/dom/main/misc/Scaffolds";
 import Token from "@/lib/types/token";
 import { get_core } from "@/lib/misc_requests";
 import { useRouter } from "next/navigation";
+import { setCookie } from "cookies-next";
+import { siteConfig } from "@/config/site";
 
 export function SecretsSettings() {
   const router = useRouter();
   const [tokens, setTokens] = useState<Token[]>([]);
 
+  const setIntegrationCookies = (tokens: Token[]) => {
+    const integrations = tokens
+      .filter(
+        (token) =>
+          token.issuer !== "embloy" &&
+          token.active &&
+          new Date(token.expires_at) > new Date()
+      )
+      .map(({ id, active, expires_at, issuer, last_used_at, token_type }) => ({
+        id,
+        active,
+        expires_at,
+        issuer,
+        last_used_at,
+        token_type,
+      }));
+
+    console.log("Setting active integrations cookie: ", integrations);
+
+    setCookie("active_integrations", JSON.stringify(integrations), {
+      path: "/",
+      domain: `${siteConfig.core_domain}`,
+    });
+  };
+
   const removeToken = (idToRemove: number) => {
-    console.log("Called remove token with token id: ", idToRemove)
-    console.log("Current size: ", tokens.length)
+    console.log("Called remove token with token id: ", idToRemove);
+    console.log("Current size: ", tokens.length);
     setTokens((prevTokens) =>
       prevTokens.filter((token) => token.id !== idToRemove)
     );
-    console.log("Post size: ", tokens.length)
+    console.log("Post size: ", tokens.length);
   };
 
   const handleGet = async () => {
@@ -30,6 +57,8 @@ export function SecretsSettings() {
       // const data = await get_core(`/tokens?reduce=${excludeTokens ? 1 : 0}&active=${filterActive ? 1 : 0}`, router);
       const data = await get_core("/tokens", router);
       setTokens(data.tokens);
+
+      setIntegrationCookies(data.tokens);
     } catch (error) {
       console.error("Failed to fetch tokens:", error);
     }
@@ -111,10 +140,7 @@ export function SecretsSettings() {
           </div>
         </div>
         <div className="text-sm c2 w-full flex flex-col items-start justify-start gap-4 border-b border-gray-700 p-4">
-          <SecretsForm
-            tokens={tokens}
-            setTokens={setTokens}
-          />
+          <SecretsForm tokens={tokens} setTokens={setTokens} />
           <div className="h-3" />
           <SecretsList
             tokens={tokens}
