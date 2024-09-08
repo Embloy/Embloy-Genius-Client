@@ -3,7 +3,6 @@ import React, {useState, useEffect, use} from "react";
 import '@/app/globals.css'
 import { Tooltip } from "@nextui-org/react";
 import {EmbloyP} from '@/app/components/ui/misc/text'
-import { set } from "zod";
 
 export const EmbloyV = ({children, className}) => {
     return (
@@ -78,20 +77,9 @@ export const EmbloyChildrenAdvanced = ({className, children, tooltip, disabled})
 
 
 
-export const EmbloyToggle = ({ name, onChange, className, disabled, unlock=true, forceStatus, ...props }) => {
+export const EmbloyToggle = ({ name, onChange, className, disabled=false, unlock=true, forceStatus, ...props }) => {
   const [isOn, setIsOn] = useState(false);
   const [pending, setPending] = useState(false);
-
-  useEffect(() => {
-    if (disabled === true) {
-      setIsOn(false);
-      onChange(false);
-    } else if (disabled === false) {
-        setIsOn(true);
-        onChange(false);
-    }
-
-  }, [disabled, onChange]);
 
   useEffect(() => {
     console.log("forceStatus", forceStatus);

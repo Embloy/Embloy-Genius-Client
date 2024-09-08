@@ -12,14 +12,8 @@ import {
 } from "@/app/settings/integrations/lever";
 
 function IntegrationElement({name, activeIntegrations, issuer, description, doc_link, onConnect, onDisconnect, onSync, onReset}) {
-    const [isActivated, setIsActivated] = useState(false);
-    const [isRequested, setIsRequested] = useState(false);
     const [isError, setError] = useState(null);
-    const [resetToggle, setResetToggle] = useState(null);
     const [status, setStatus] = useState(null);
-    const triggerResetToggle = useCallback((to) => {
-        setResetToggle(to);
-    }, []);
 
     const force = (status) => {
         setStatus(status);
@@ -55,17 +49,9 @@ function IntegrationElement({name, activeIntegrations, issuer, description, doc_
     useEffect(() => {
         const integration = findByIssuer();
         if (integration && integration["active"] === true) {
-            console.log("FORCE ACTIVE!!!!", integration);
             force("active");
         }
     }, [activeIntegrations]);
-
-    useEffect(() => {
-        console.log("status", status);
-    }, [status]);
-
-
-
 
     return (
         <EmbloyV className={"bg-transparent dark:bg-chianti border border-etna dark:border-biferno text-white rounded-lg p-4"}>
@@ -82,21 +68,48 @@ function IntegrationElement({name, activeIntegrations, issuer, description, doc_
                     <EmbloyToolbox superClassName="h-7 border-2 dark:border-nebbiolo dark:bg-nebbiolo" className={undefined} name={undefined} >
                         {/*<IntegrationSync key="Sync" name={name} disabled={!isRequested} />
                         <ResetWebhook key="Reset" name={name} disabled={!isRequested}/>*/}
-                        <EmbloyToolboxImgButton disabled={!isActivated} onClick={onSync} tooltip={`Synchronize with ${name}`} path="/icons/svg/black/sync.svg" path_hovered="/icons/svg/leidoveneta/sync.svg" path_disabled="/icons/svg/etna/sync.svg" dark_path="/icons/svg/amarone/sync.svg" dark_path_hovered="/icons/svg/barbera/sync.svg" dark_path_disabled="/icons/svg/biferno/sync.svg" height="12" width="12" />
-                        <EmbloyToolboxImgButton disabled={!isActivated} onClick={onReset} tooltip={`Reset ${name} Webhooks`} path="/icons/svg/black/whk.svg" path_hovered="/icons/svg/leidoveneta/whk.svg" path_disabled="/icons/svg/etna/whk.svg" dark_path="/icons/svg/amarone/whk.svg" dark_path_hovered="/icons/svg/barbera/whk.svg" dark_path_disabled="/icons/svg/biferno/whk.svg"  height="12" width="12"  />
+                        <EmbloyToolboxImgButton 
+                            disabled={`
+                                ${(status === "active" && true) 
+                                || (status !== "active" && false)}
+                            `}
+                            onClick={onSync} 
+                            tooltip={`Synchronize with ${name}`} 
+                            path="/icons/svg/black/sync.svg" 
+                            path_hovered="/icons/svg/leidoveneta/sync.svg" 
+                            path_disabled="/icons/svg/etna/sync.svg" 
+                            dark_path="/icons/svg/amarone/sync.svg" 
+                            dark_path_hovered="/icons/svg/barbera/sync.svg" 
+                            dark_path_disabled="/icons/svg/biferno/sync.svg" 
+                            height="12" width="12" 
+                        />
+                        <EmbloyToolboxImgButton 
+                            disabled={`
+                                ${(status === "active" && true) 
+                                || (status !== "active" && false)}
+                            `}
+                            onClick={onReset} 
+                            tooltip={`Reset ${name} Webhooks`} 
+                            path="/icons/svg/black/whk.svg" 
+                            path_hovered="/icons/svg/leidoveneta/whk.svg" 
+                            path_disabled="/icons/svg/etna/whk.svg" 
+                            dark_path="/icons/svg/amarone/whk.svg" 
+                            dark_path_hovered="/icons/svg/barbera/whk.svg" 
+                            dark_path_disabled="/icons/svg/biferno/whk.svg"  
+                            height="12" width="12"  
+                        />
                         <EmbloyToolboxImgA tooltip={`Help`} href={doc_link} height="12" width="12" path="/icons/svg/black/ask.svg" path_hovered="/icons/svg/leidoveneta/ask.svg" dark_path="/icons/svg/amarone/ask.svg" dark_path_hovered="/icons/svg/barbera/ask.svg" target="_blank" />
                     </EmbloyToolbox>
                     <EmbloyToggle 
                         forceStatus={status} 
-                        disabled={resetToggle} 
                         unlock={`
                             ${(status === "active" && true) 
                             || (status !== "active" && false)}
                         `} 
                         className="h-7" 
                         tooltip={`
-                            ${(status === "active") && "Disconnect Embloy from" + name
-                            || (status === "inactive") && "Connect Embloy to" + name
+                            ${(status === "active") && "Disconnect Embloy from " + name
+                            || (status === "inactive") && "Connect Embloy to " + name
                             || (status === "connect" || status === "disconnect") && "Pending..."}
                         `} onChange={handleToggleChange} 
                     />
