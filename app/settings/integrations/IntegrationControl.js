@@ -1,4 +1,5 @@
-import React, {useState, useCallback, useEffect} from "react";
+"use client";
+import React, {useState, useCallback, useEffect, use} from "react";
 import '@/app/globals.css'
 import { EmbloyToolbox, EmbloyToolboxImgA, EmbloyToolboxImgButton, EmbloyToolboxImgAdvanced } from "@/app/components/ui/misc/toolbox";
 import { EmbloyLHPV, EmbloyV, EmbloyH, EmbloySpacer, EmbloyToggle} from "@/app/components/ui/misc/stuff";
@@ -10,30 +11,61 @@ import {
     reset as leverReset 
 } from "@/app/settings/integrations/lever";
 
-function IntegrationElement({name, description, doc_link, onConnect, onDisconnect, onSync, onReset}) {
+function IntegrationElement({name, activeIntegrations, issuer, description, doc_link, onConnect, onDisconnect, onSync, onReset}) {
     const [isActivated, setIsActivated] = useState(false);
     const [isRequested, setIsRequested] = useState(false);
-    const [isError, setIsError] = useState(false);
-    const [resetToggle, setResetToggle] = useState(false);
-    const triggerResetToggle = useCallback(() => {
-        setResetToggle(prev => !prev); 
+    const [isError, setError] = useState(null);
+    const [resetToggle, setResetToggle] = useState(null);
+    const [status, setStatus] = useState(null);
+    const triggerResetToggle = useCallback((to) => {
+        setResetToggle(to);
     }, []);
+
+    const force = (status) => {
+        setStatus(status);
+    };
+
     const handleToggleChange = (newState) => {
-        if (newState) {
+        if (status === "inactive" && newState === true) {
             try {
+                force("connect");
                 onConnect();
-                setIsError(false);
-                setIsRequested(true);
+                setError(null);
             } catch (error) {
-                setIsError(true);
-                setIsRequested(false);
-                triggerResetToggle();
+                setError("Error connecting to " + name);
+                force("inactive");
+            } 
+        } else if (status === "active" && newState === false) {
+            try {
+                force("disconnect");
+                onDisconnect();
+                setError(null);
+            } catch (error) {
+                setError("Error disconnecting from " + name);
+                force("active");
             }
-        } else {
-            setIsRequested(false);
-            onDisconnect();
         }
       };
+    const findByIssuer = () => {
+        if (issuer && activeIntegrations) {
+            return JSON.parse(activeIntegrations).find((integration) => integration.issuer === issuer);
+        }
+    };
+
+    useEffect(() => {
+        const integration = findByIssuer();
+        if (integration && integration["active"] === true) {
+            console.log("FORCE ACTIVE!!!!", integration);
+            force("active");
+        }
+    }, [activeIntegrations]);
+
+    useEffect(() => {
+        console.log("status", status);
+    }, [status]);
+
+
+
 
     return (
         <EmbloyV className={"bg-transparent dark:bg-chianti border border-etna dark:border-biferno text-white rounded-lg p-4"}>
@@ -44,7 +76,9 @@ function IntegrationElement({name, description, doc_link, onConnect, onDisconnec
                     <EmbloyP className={"text-sm"}>{description}</EmbloyP>
                 </EmbloyH>
                 <EmbloyH className={"items-center justify-end gap-2"}>
-                    {isError && <EmbloyP className={"text-xs text-red-500 dark:text-red-500"}>Could not connect. Try again later.</EmbloyP>}
+                    {(isError !== null) && <EmbloyP className={"text-xs text-red-500 dark:text-red-500"}>{isError}</EmbloyP>}
+                    {(status === "connect") && <EmbloyP className={"text-xs text-yellow-500 dark:text-yellow-500"}>Connecting...</EmbloyP>}
+                    {(status === "disconnect") && <EmbloyP className={"text-xs text-yellow-500 dark:text-yellow-500"}>Disconnecting...</EmbloyP>}
                     <EmbloyToolbox superClassName="h-7 border-2 dark:border-nebbiolo dark:bg-nebbiolo" className={undefined} name={undefined} >
                         {/*<IntegrationSync key="Sync" name={name} disabled={!isRequested} />
                         <ResetWebhook key="Reset" name={name} disabled={!isRequested}/>*/}
@@ -52,13 +86,27 @@ function IntegrationElement({name, description, doc_link, onConnect, onDisconnec
                         <EmbloyToolboxImgButton disabled={!isActivated} onClick={onReset} tooltip={`Reset ${name} Webhooks`} path="/icons/svg/black/whk.svg" path_hovered="/icons/svg/leidoveneta/whk.svg" path_disabled="/icons/svg/etna/whk.svg" dark_path="/icons/svg/amarone/whk.svg" dark_path_hovered="/icons/svg/barbera/whk.svg" dark_path_disabled="/icons/svg/biferno/whk.svg"  height="12" width="12"  />
                         <EmbloyToolboxImgA tooltip={`Help`} href={doc_link} height="12" width="12" path="/icons/svg/black/ask.svg" path_hovered="/icons/svg/leidoveneta/ask.svg" dark_path="/icons/svg/amarone/ask.svg" dark_path_hovered="/icons/svg/barbera/ask.svg" target="_blank" />
                     </EmbloyToolbox>
-                    <EmbloyToggle onDisable={() => {setResetToggle(false)}} disabled={resetToggle} unlock={isActivated} className="h-7" tooltip={`${isRequested ? "Disconnect Embloy from": "Connect Embloy to"} ${name}`} onChange={handleToggleChange} />
+                    <EmbloyToggle 
+                        forceStatus={status} 
+                        disabled={resetToggle} 
+                        unlock={`
+                            ${(status === "active" && true) 
+                            || (status !== "active" && false)}
+                        `} 
+                        className="h-7" 
+                        tooltip={`
+                            ${(status === "active") && "Disconnect Embloy from" + name
+                            || (status === "inactive") && "Connect Embloy to" + name
+                            || (status === "connect" || status === "disconnect") && "Pending..."}
+                        `} onChange={handleToggleChange} 
+                    />
                 </EmbloyH>
             </EmbloyH>
         </EmbloyV> 
     );
 }
-export function IntegrationControl({}) {
+export function IntegrationControl({activeIntegrations}) {
+    
     return (
         <EmbloyV className={"gap-2 border-t dark:border-biferno pt-2"}>
             <EmbloyH className={"items-center justify-between"}>
@@ -66,7 +114,7 @@ export function IntegrationControl({}) {
             </EmbloyH>
             <EmbloyV className={"gap-2"}>
                 <EmbloyV className={"gap-2"}>
-                    <IntegrationElement name={"Lever"} description={"Use Embloy with Lever's recruiting software."} doc_link="https://developers.embloy.com/docs/guides/get-started-integrations-lever" onConnect={leverConnect} onDisconnect={leverDisconnect} onSync={leverSync} onReset={leverReset} />
+                    <IntegrationElement name={"Lever"} activeIntegrations={activeIntegrations} issuer="lever" description={"Use Embloy with Lever's recruiting software."} doc_link="https://developers.embloy.com/docs/guides/get-started-integrations-lever" onConnect={leverConnect} onDisconnect={leverDisconnect} onSync={leverSync} onReset={leverReset} />
                 </EmbloyV>
             </EmbloyV>
         </EmbloyV> 

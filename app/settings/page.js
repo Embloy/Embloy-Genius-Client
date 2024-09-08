@@ -23,6 +23,8 @@ import { AccessControl } from "./integrations/AccessControl";
 import { BillingControl } from "./integrations/BillingControl";
 import { SecretsControl } from "./integrations/SecretsControl";
 import { ArchiveControl } from "./integrations/ArchiveControl";
+import { getCookie } from "cookies-next";
+import { siteConfig } from "@/config/site";
 
 function SettingsPanel() {
     const router = useRouter();
@@ -57,44 +59,7 @@ function SettingsPanel() {
         }
     }, [searchParams]);
 
-    const switchSubPage = (id, tabName) => {
-        if (currentSubPageID != id) {
-            setcurrentSubPageID(id);
-            router.push(`?tab=${tabName}`);
-        }
-    }
-
-    const profileSubPageID = 0;
-    const profileSubPage = () => {
-        switchSubPage(profileSubPageID, 'profile');
-    };
-
-    const accessSubPageID = 1;
-    const accessSubPage = () => {
-        switchSubPage(accessSubPageID, 'access');
-    };
-
-    const secretsSubPageID = 2;
-    const secretsSubPage = () => {
-        switchSubPage(secretsSubPageID, 'secrets');
-    };
-
-    const billingSubPageID = 3;
-    const billingSubPage = () => {
-        switchSubPage(billingSubPageID, 'billing');
-    };
-
-    const integrationsSubPageID = 4;
-    const integrationsSubPage = () => {
-        switchSubPage(integrationsSubPageID, 'integrations');
-    };
-
-    const archiveSubPageID = 5;
-    const archiveSubPage = () => {
-        switchSubPage(archiveSubPageID, 'archive');
-    };
-
-
+ 
     let user = useContext(UserContext);
     let store = useContext(StoreContext);
 
@@ -105,6 +70,7 @@ function SettingsPanel() {
         const tabName = subPages.find(page => page.id === id).name.toLowerCase();
         router.push(`?tab=${tabName}`);
     }
+
     if (!user) return (<LoadingScreen />);
 
     return (
@@ -142,7 +108,7 @@ function SettingsPanel() {
                                 <SecretsSettings user={user} store={store} />
                             </EmbloyV>
                             <EmbloyV id={4} className="gap-3">
-                                <IntegrationControl />
+                                <IntegrationControl activeIntegrations={ getCookie("active_integrations", {path: "/", domain: `${siteConfig.core_domain}`})} />
                             </EmbloyV>
                             <EmbloyV id={5} className="gap-3">
                                 <ArchiveControl />

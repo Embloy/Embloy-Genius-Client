@@ -56,7 +56,9 @@ export const EmbloySubPageNav = ({className, pages, checked, handleClick}) => {
                     className={cn(
                         checked === page.id ? "stylish-header-default stylish-header-text-default cursor-default" : "cursor-pointer stylish-header stylish-header-text"
                     )}
-                    onClick={() => handleClick(page.id)}
+                    onClick={() => {
+                        handleClick(page.id)
+                    }}
 
                 >
                     <p>{page.name}</p>
@@ -72,7 +74,7 @@ export const EmbloySubPage = ({pages, children, className, onPageChange, externa
             setActivePage(id);
             if (onPageChange) {
                 onPageChange(id);
-              }
+            }
         }
     }
     useEffect(() => {

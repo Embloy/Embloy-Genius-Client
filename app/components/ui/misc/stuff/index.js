@@ -3,6 +3,7 @@ import React, {useState, useEffect, use} from "react";
 import '@/app/globals.css'
 import { Tooltip } from "@nextui-org/react";
 import {EmbloyP} from '@/app/components/ui/misc/text'
+import { set } from "zod";
 
 export const EmbloyV = ({children, className}) => {
     return (
@@ -77,21 +78,42 @@ export const EmbloyChildrenAdvanced = ({className, children, tooltip, disabled})
 
 
 
-export const EmbloyToggle = ({ name, onChange, className, disabled=false, unlock=true, onDisable,...props }) => {
+export const EmbloyToggle = ({ name, onChange, className, disabled, unlock=true, forceStatus, ...props }) => {
   const [isOn, setIsOn] = useState(false);
+  const [pending, setPending] = useState(false);
 
   useEffect(() => {
-    if (disabled) {
+    if (disabled === true) {
       setIsOn(false);
       onChange(false);
-      onDisable();
+    } else if (disabled === false) {
+        setIsOn(true);
+        onChange(false);
     }
+
   }, [disabled, onChange]);
+
+  useEffect(() => {
+    console.log("forceStatus", forceStatus);
+    if (forceStatus === "active") {
+        setPending(false);
+        setIsOn(true);
+    } else if (forceStatus === "inactive") {
+        setPending(false);
+        setIsOn(false);
+    } else if (forceStatus === "connect") {
+        setPending(true);
+        setIsOn(true);
+    } else if (forceStatus === "disconnect") {
+        setPending(true);
+        setIsOn(false);
+    }
+
+  }, [forceStatus]);
 
   const toggleSwitch = () => {
     if (!disabled) {
       const newState = !isOn;
-      setIsOn(newState);
       onChange(newState);
     }
   };
@@ -99,21 +121,25 @@ export const EmbloyToggle = ({ name, onChange, className, disabled=false, unlock
   return (
     <EmbloyChildrenAdvanced {...props}>
       <div 
-        className={`border border-etna dark:border-biferno w-16 h-7 flex items-center rounded-lg p-1 cursor-pointer transition-colors duration-300 
+        className={`
+            border border-etna dark:border-biferno w-16 h-7 flex items-center rounded-lg p-1 cursor-pointer transition-colors duration-300 
             ${isOn ? 
-                `${unlock ? 'bg-green-500' : 'bg-amber-200'}` 
-                : 'dark:bg-nebbiolo bg-transparent'} 
+                (pending ? 'cursor-wait bg-amber-200 dark:bg-amber-200' : 'bg-green-500 dark:bg-green-500' ) 
+                : (pending ? 'cursor-wait bg-amber-200 dark:bg-amber-200' : 'dark:bg-nebbiolo bg-transparent')
+            } 
             ${className} ${disabled ? 'opacity-50 cursor-not-allowed' : ''}`}
         onClick={toggleSwitch}
       >
-        <div 
-          className={`w-4 h-4 rounded-full shadow-md transform transition-transform duration-300 
-            ${isOn ? 
-              `${unlock ? 'bg-embloy-green' : 'bg-amber-600'} translate-x-8 w-6` 
-              : 
-              'bg-etna dark:bg-amarone translate-x-0'}`}
-        ></div>
-        
+            <div 
+                className={`
+                    w-4 h-4 rounded-full shadow-md transform transition-transform duration-300 
+                    ${isOn ? 
+                        (pending ? 'cursor-wait dark:bg-amber-600 bg-amber-600 translate-x-8 w-6' : 'bg-embloy-green dark:bg-embloy-green translate-x-8 w-6') 
+                        : (pending ? 'cursor-wait dark:bg-amber-600 bg-amber-600 translate-x-0' : 'bg-etna dark:bg-amarone translate-x-0')
+                    }
+                `}
+            />
+
         <span className="ml-2 font-normal">
           <EmbloyP className="text-xs right select-none">
             {isOn ? 'On' : 'Off'}

@@ -10,6 +10,7 @@ export const connect = () => {
 
 
 export const disconnect = () => {
+    //throw new Error("Not implemented");
 };
 
 export const sync = () => {

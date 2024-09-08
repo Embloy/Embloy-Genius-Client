@@ -1,5 +1,5 @@
 "use client";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import Image from "next/image";
 import {useRouter} from "next/navigation";
 import '@/app/globals.css'
@@ -14,22 +14,30 @@ import { login } from "@/lib/api/auth";
 const Signin = () => {
     const router = useRouter();
     const [loginError, setLoginError] = useState(false);
+    const [internalError, setInternalError] = useState(false);
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [isLoading, setIsLoading] = useState(false);
+  
 
 
     const handleLogin = async (e) => {
         e.preventDefault();
+        console.log("DOMAIN ",siteConfig.core_domain);
         setIsLoading(true);
         try {
             await login(username, password);
+            setInternalError(false);
             setLoginError(false);
             setIsLoading(false);
             router.replace("/");
             
         } catch (error) {
-            setLoginError(true);
+            if (error.status === 401 || error.status === 403) {
+                setLoginError(true);
+            } else {
+                setInternalError(true);
+            }
             setUsername("");
             setPassword("");
             setIsLoading(false);
@@ -97,6 +105,11 @@ const Signin = () => {
                                                    <Link href={`${siteConfig.core_url}/password-reset`}>
                                                        <EmbloyP className="text-xs dark:text-red-500 text-red-500 cursor-pointer hover:underline">Forgot password?</EmbloyP>
                                                    </Link>
+                                               </EmbloyH>
+                                           )}
+                                           {internalError && (
+                                               <EmbloyH className="gap-1">
+                                                   <EmbloyP className="text-xs dark:text-red-500 text-red-500">Login failed. This is not related to your credentials. Try again later.</EmbloyP>
                                                </EmbloyH>
                                            )}
                                        </EmbloyV>
