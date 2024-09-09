@@ -14,7 +14,7 @@ import {
 
 function IntegrationElement({name, activeIntegrations, description, doc_link, onConnect, onDisconnect, onSync, onReset, onVerify}) {
     const [isError, setError] = useState(null);
-    const [status, setStatus] = useState(null);
+    const [status, setStatus] = useState("inactive");
 
     const force = (status) => {
         setStatus(status);
@@ -48,6 +48,7 @@ function IntegrationElement({name, activeIntegrations, description, doc_link, on
         }
     }, [activeIntegrations]);
 
+   
 
     return (
         <EmbloyV className={"bg-transparent dark:bg-chianti border border-etna dark:border-biferno text-white rounded-lg p-4"}>
@@ -65,7 +66,7 @@ function IntegrationElement({name, activeIntegrations, description, doc_link, on
                         {/*<IntegrationSync key="Sync" name={name} disabled={!isRequested} />
                         <ResetWebhook key="Reset" name={name} disabled={!isRequested}/>*/}
                         <EmbloyToolboxImgButton 
-                            disabled={!status === "active"}
+                            disabled={status !== "active"}
                             onClick={onSync} 
                             tooltip={`Synchronize with ${name}`} 
                             path="/icons/svg/black/sync.svg" 
@@ -77,7 +78,7 @@ function IntegrationElement({name, activeIntegrations, description, doc_link, on
                             height="12" width="12" 
                         />
                         <EmbloyToolboxImgButton 
-                            disabled={!status === "active"}
+                            disabled={status !== "active"}
                             onClick={onReset} 
                             tooltip={`Reset ${name} Webhooks`} 
                             path="/icons/svg/black/whk.svg" 

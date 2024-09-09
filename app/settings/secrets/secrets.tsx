@@ -9,10 +9,10 @@ import { SecretsForm } from "@/app/settings/secrets/SecretsForm";
 import { SecretsList } from "@/app/settings/secrets/SecretsList";
 import { OpenCloseScaffold } from "@/app/components/dom/main/misc/Scaffolds";
 import Token from "@/lib/types/token";
-import { get_core } from "@/lib/misc_requests";
 import { useRouter } from "next/navigation";
 import { setCookie } from "cookies-next";
 import { siteConfig } from "@/config/site";
+import { claim_core_tokens } from "@/lib/api/user";
 
 export function SecretsSettings() {
   const router = useRouter();
@@ -54,11 +54,8 @@ export function SecretsSettings() {
 
   const handleGet = async () => {
     try {
-      // const data = await get_core(`/tokens?reduce=${excludeTokens ? 1 : 0}&active=${filterActive ? 1 : 0}`, router);
-      const data = await get_core("/tokens", router);
-      setTokens(data.tokens);
-
-      setIntegrationCookies(data.tokens);
+      const claimed_tokens = await claim_core_tokens();
+      setTokens(claimed_tokens);
     } catch (error) {
       console.error("Failed to fetch tokens:", error);
     }

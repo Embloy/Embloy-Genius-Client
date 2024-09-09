@@ -1,7 +1,6 @@
 "use client";
-import { getLeverOAuthUrl, disconnectLever } from "@/lib/api/integration";
-import { deleteCookie } from "cookies-next";
-import { siteConfig } from "@/config/site";
+import { core_get, not_core_get } from "@/lib/api/core"; 
+import { claim_core_tokens } from "@/lib/api/user";
 const issuer = "lever";
 
 export const verify = (activeIntegrations) => {
@@ -13,10 +12,10 @@ export const verify = (activeIntegrations) => {
 };
 
 export const connect = () => {
-    getLeverOAuthUrl()
+    core_get("/integrations/lever/auth")
         .then((data) => {
-           window.open(data.url, "_blank");
-           return true;  
+            window.open(data.url, "_blank");
+            return true;  
         })
         .catch(() => {
             return false;
@@ -25,19 +24,29 @@ export const connect = () => {
 
 
 export const disconnect = (active_integrations) => {
+    const disconnect_id = async (token_id) => {
+        await not_core_get("DELETE", `/tokens/${token_id}`, {});
+    };
     const ids = active_integrations
         .filter((integration) => integration.issuer === issuer)
         .map((token) => token.id);
-    disconnectLever(ids)
-        .then((data) => {
-            console.log("disconnectLever", data);
-            deleteCookie("active_integrations", { path: "/", domain: `${siteConfig.core_domain}` });
-            return true;
-        })
-        .catch(() => {
-            console.log("error catched");
-            return false;
+
+    try {
+        ids.forEach(async (id) => {
+            await disconnect_id(id);
         });
+        claim_core_tokens()
+            .then(() => {
+                return true;
+            })
+            .catch(() => {
+                throw new Error("Error claiming core tokens");
+            });
+        return true;
+    } catch (error) {
+        console.error("Error disconnecting from Lever", error);
+        return false
+    }
 };
 
 export const sync = () => {

@@ -29,12 +29,7 @@ import { siteConfig } from "@/config/site";
 function SettingsPanel() {
     const router = useRouter();
     const [currentSubPageID, setcurrentSubPageID] = useState(0);
-    const [profileIsHovered, setProfileIsHovered] = useState(false);
-    const [accessIsHovered, setAccessIsHovered] = useState(false);
-    const [billingIsHovered, setBillingIsHovered] = useState(false);
-    const [integrationsIsHovered, setIntegrationsIsHovered] = useState(false);
-    const [archiveIsHovered, setArchiveIsHovered] = useState(false);
-    const [secretsIsHovered, setSecretsIsHovered] = useState(false);
+    
     const searchParams = useSearchParams();
 
     useEffect(() => {
