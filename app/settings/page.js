@@ -74,6 +74,11 @@ function SettingsPanel() {
     } else {
         integrations = [];
     }
+    const reload = () => {
+        router.push(window.location.href);
+        router.refresh();
+    };
+
 
     return (
         <EmbloyPageMount className="overflow-hidden">
@@ -110,7 +115,7 @@ function SettingsPanel() {
                                 <SecretsSettings user={user} store={store} />
                             </EmbloyV>
                             <EmbloyV id={4} className="gap-3">
-                                <IntegrationControl activeIntegrations={ integrations } />
+                                <IntegrationControl onReload={reload} activeIntegrations={ integrations } />
                             </EmbloyV>
                             <EmbloyV id={5} className="gap-3">
                                 <ArchiveControl />

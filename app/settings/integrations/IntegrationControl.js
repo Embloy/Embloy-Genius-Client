@@ -12,7 +12,7 @@ import {
     verify as leverVerify
 } from "@/app/settings/integrations/lever";
 
-function IntegrationElement({name, activeIntegrations, description, doc_link, onConnect, onDisconnect, onSync, onReset, onVerify}) {
+function IntegrationElement({name, activeIntegrations, description, doc_link, onConnect, onDisconnect, onSync, onReset, onVerify, onReload}) {
     const [isError, setError] = useState(null);
     const [status, setStatus] = useState("inactive");
 
@@ -30,11 +30,13 @@ function IntegrationElement({name, activeIntegrations, description, doc_link, on
                 setError("Error connecting to " + name);
                 force("inactive");
             } 
+            onReload();
         } else if (status === "active" && newState === false) {
             try {
                 force("disconnect");
                 onDisconnect(activeIntegrations);
                 setError(null);
+                onReload();
             } catch (error) {
                 setError("Error disconnecting from " + name);
                 force("active");
@@ -109,7 +111,7 @@ function IntegrationElement({name, activeIntegrations, description, doc_link, on
         </EmbloyV> 
     );
 }
-export function IntegrationControl({activeIntegrations}) {
+export function IntegrationControl({activeIntegrations, onReload}) {
     
     return (
         <EmbloyV className={"gap-2 border-t dark:border-biferno pt-2"}>
@@ -118,7 +120,7 @@ export function IntegrationControl({activeIntegrations}) {
             </EmbloyH>
             <EmbloyV className={"gap-2"}>
                 <EmbloyV className={"gap-2"}>
-                    <IntegrationElement name="Lever" activeIntegrations={activeIntegrations} description={"Use Embloy with Lever's recruiting software."} doc_link="https://developers.embloy.com/docs/guides/get-started-integrations-lever" onConnect={leverConnect} onDisconnect={leverDisconnect} onSync={leverSync} onReset={leverReset} onVerify={leverVerify} />
+                    <IntegrationElement name="Lever" activeIntegrations={activeIntegrations} description={"Use Embloy with Lever's recruiting software."} doc_link="https://developers.embloy.com/docs/guides/get-started-integrations-lever" onConnect={leverConnect} onDisconnect={leverDisconnect} onSync={leverSync} onReset={leverReset} onVerify={leverVerify} onReload={onReload}/>
                 </EmbloyV>
             </EmbloyV>
         </EmbloyV> 

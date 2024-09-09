@@ -18,6 +18,7 @@ export const connect = () => {
             return true;  
         })
         .catch(() => {
+            throw new Error("Error connecting to Lever");
             return false;
         });
 };
