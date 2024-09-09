@@ -8,10 +8,11 @@ import {
     connect as leverConnect, 
     disconnect as leverDisconnect, 
     sync as leverSync, 
-    reset as leverReset 
+    reset as leverReset ,
+    verify as leverVerify
 } from "@/app/settings/integrations/lever";
 
-function IntegrationElement({name, activeIntegrations, issuer, description, doc_link, onConnect, onDisconnect, onSync, onReset}) {
+function IntegrationElement({name, activeIntegrations, description, doc_link, onConnect, onDisconnect, onSync, onReset, onVerify}) {
     const [isError, setError] = useState(null);
     const [status, setStatus] = useState(null);
 
@@ -32,7 +33,7 @@ function IntegrationElement({name, activeIntegrations, issuer, description, doc_
         } else if (status === "active" && newState === false) {
             try {
                 force("disconnect");
-                onDisconnect();
+                onDisconnect(activeIntegrations);
                 setError(null);
             } catch (error) {
                 setError("Error disconnecting from " + name);
@@ -40,18 +41,13 @@ function IntegrationElement({name, activeIntegrations, issuer, description, doc_
             }
         }
       };
-    const findByIssuer = () => {
-        if (issuer && activeIntegrations) {
-            return JSON.parse(activeIntegrations).find((integration) => integration.issuer === issuer);
-        }
-    };
 
     useEffect(() => {
-        const integration = findByIssuer();
-        if (integration && integration["active"] === true) {
+        if (onVerify(activeIntegrations) === true) {
             force("active");
         }
     }, [activeIntegrations]);
+
 
     return (
         <EmbloyV className={"bg-transparent dark:bg-chianti border border-etna dark:border-biferno text-white rounded-lg p-4"}>
@@ -69,10 +65,7 @@ function IntegrationElement({name, activeIntegrations, issuer, description, doc_
                         {/*<IntegrationSync key="Sync" name={name} disabled={!isRequested} />
                         <ResetWebhook key="Reset" name={name} disabled={!isRequested}/>*/}
                         <EmbloyToolboxImgButton 
-                            disabled={`
-                                ${(status === "active" && true) 
-                                || (status !== "active" && false)}
-                            `}
+                            disabled={!status === "active"}
                             onClick={onSync} 
                             tooltip={`Synchronize with ${name}`} 
                             path="/icons/svg/black/sync.svg" 
@@ -84,10 +77,7 @@ function IntegrationElement({name, activeIntegrations, issuer, description, doc_
                             height="12" width="12" 
                         />
                         <EmbloyToolboxImgButton 
-                            disabled={`
-                                ${(status === "active" && true) 
-                                || (status !== "active" && false)}
-                            `}
+                            disabled={!status === "active"}
                             onClick={onReset} 
                             tooltip={`Reset ${name} Webhooks`} 
                             path="/icons/svg/black/whk.svg" 
@@ -127,7 +117,7 @@ export function IntegrationControl({activeIntegrations}) {
             </EmbloyH>
             <EmbloyV className={"gap-2"}>
                 <EmbloyV className={"gap-2"}>
-                    <IntegrationElement name={"Lever"} activeIntegrations={activeIntegrations} issuer="lever" description={"Use Embloy with Lever's recruiting software."} doc_link="https://developers.embloy.com/docs/guides/get-started-integrations-lever" onConnect={leverConnect} onDisconnect={leverDisconnect} onSync={leverSync} onReset={leverReset} />
+                    <IntegrationElement name="Lever" activeIntegrations={activeIntegrations} description={"Use Embloy with Lever's recruiting software."} doc_link="https://developers.embloy.com/docs/guides/get-started-integrations-lever" onConnect={leverConnect} onDisconnect={leverDisconnect} onSync={leverSync} onReset={leverReset} onVerify={leverVerify} />
                 </EmbloyV>
             </EmbloyV>
         </EmbloyV> 

@@ -73,6 +73,13 @@ function SettingsPanel() {
 
     if (!user) return (<LoadingScreen />);
 
+    let integrations = getCookie("active_integrations", {path: "/", domain: `${siteConfig.core_domain}`});
+    if (integrations !== undefined) {
+        integrations = JSON.parse(integrations);
+    } else {
+        integrations = [];
+    }
+
     return (
         <EmbloyPageMount className="overflow-hidden">
             <EmbloyPage>
@@ -108,7 +115,7 @@ function SettingsPanel() {
                                 <SecretsSettings user={user} store={store} />
                             </EmbloyV>
                             <EmbloyV id={4} className="gap-3">
-                                <IntegrationControl activeIntegrations={ getCookie("active_integrations", {path: "/", domain: `${siteConfig.core_domain}`})} />
+                                <IntegrationControl activeIntegrations={ integrations } />
                             </EmbloyV>
                             <EmbloyV id={5} className="gap-3">
                                 <ArchiveControl />
