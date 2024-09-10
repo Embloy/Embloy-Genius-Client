@@ -96,7 +96,7 @@ function IntegrationElement({name, activeIntegrations, description, doc_link, on
                     {(isError !== null) && <EmbloyP className={"text-xs text-red-500 dark:text-red-500"}>{isError}</EmbloyP>}
                     {(status === "connect") && <EmbloyP className={"text-xs text-yellow-500 dark:text-yellow-500"}>Connecting...</EmbloyP>}
                     {(status === "disconnect") && <EmbloyP className={"text-xs text-yellow-500 dark:text-yellow-500"}>Disconnecting...</EmbloyP>}
-                    {(syncStatus === "syncing" || resetStatus === "resetting") && <EmbloyP className={"text-xs text-yellow-500 dark:text-yellow-500"}>Please wait, this may take up to 30 seconds. Don't refresh.</EmbloyP>}
+                    {(resetStatus === "resetting") && <EmbloyP className={"text-xs text-yellow-500 dark:text-yellow-500"}>Please wait, this may take up to 30 seconds. Don't refresh.</EmbloyP>}
                     
                     <EmbloyToolbox superClassName="h-7 border-2 dark:border-nebbiolo dark:bg-nebbiolo" className={undefined} name={undefined} >
                         {/*<IntegrationSync key="Sync" name={name} disabled={!isRequested} />
