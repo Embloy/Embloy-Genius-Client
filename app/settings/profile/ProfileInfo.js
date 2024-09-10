@@ -3,9 +3,14 @@ import {UserContext} from "@/app/components/dom/main/wrappers/UserContext";
 import '@/app/globals.css'
 import {cn} from "@/lib/utils";
 import {AvatarButton} from "@/app/components/ui/misc/avatar";
-import {patch_core, upload_profile_image} from "@/lib/misc_requests";
+import {upload_profile_image} from "@/lib/misc_requests";
+import { not_core_get } from "@/lib/api/core";
+import '@/app/globals.css'
+import { EmbloyToolbox, EmbloyToolboxImgA, EmbloyToolboxImgButton, EmbloyToolboxImgAdvanced } from "@/app/components/ui/misc/toolbox";
+import { EmbloyLHPV, EmbloyV, EmbloyH, EmbloySpacer, EmbloyToggle} from "@/app/components/ui/misc/stuff";
+import { EmbloyH1, EmbloyP } from "@/app/components/ui/misc/text";
 
-export function ProfileInfo({router}) {
+export function ProfileInfo() {
     let user = useContext(UserContext)
     const [changesMade, setChangesMade] = useState(false);
     const [nameIsHovered, setNameIsHovered] = useState(false);
@@ -118,15 +123,8 @@ export function ProfileInfo({router}) {
 
     }
 
-    interface UserBody {
-        first_name?: string;
-        last_name?: string;
-        email?: string;
-    }
 
-    const body: UserBody = {};
     const submitChanges = async () => {
-        const body: UserBody = {};
         if (firstName !== '' && firstName !== user.first_name) {
             body.first_name = firstName;
         }
@@ -137,7 +135,7 @@ export function ProfileInfo({router}) {
             body.email = email;
         }
         try {
-            const result = await patch_core("/user", router, {"user": body})
+            const result = await not_core_get("PATCH", "/user", {"user": body})
         } catch (error) {
             console.error(error);
             setError(error);
@@ -159,10 +157,80 @@ export function ProfileInfo({router}) {
         resetChanges();
 
     }
+    const [first_name, set_first_name] = useState(user.first_name);
+    const [last_name, set_last_name] = useState(user.last_name);
 
-    return (
+    return (  
+        <EmbloyV className="gap-4">
+            <EmbloyH className={"justify-end"}>
+                <EmbloyV className={"bg-transparent dark:bg-chianti border border-etna dark:border-biferno rounded-lg p-4 w-10/12"}>
+                    <EmbloyH className={"items-center justify-between h-10"}>
+                        <EmbloyV className={"h-full w-4/12 gap-1"}>
+                            <EmbloyH1 className={"text-sm"}>Name</EmbloyH1>
+                            <EmbloyP className={"text-xs"}>Your full name</EmbloyP>
+                        </EmbloyV>
+                        <EmbloyV className={"h-full justify-center w-6/12 gap-2"}>
+                            <EmbloyH className={"gap-2"}>
+                                <input
+                                    className="page-text px-2 h-9 w-6/12 border-[2px] rounded-lg text-sm dark:bg-nebbiolo border dark:border-amarone border-etna page-text text-md placeholder-etna dark:placeholder-amarone focus:outline-none focus:ring-2 dark:focus:ring-amarone focus:ring-lagunaveneta select-all"
+                                    type="text"
+                                    name="First Name"
+                                    value={first_name}
+                                    required={true}
+                                    onChange={(e) => set_first_name(e.target.value)}
+                                    onMouseEnter={fNameHover}
+                                    onMouseLeave={fNameNotHover}
+                                    placeholder="First Name"
+                                    onKeyPress={handleNameSubmit}/>
+                                    
+                                <input
+                                    className="page-text px-2 h-9 w-6/12 border-[2px] rounded-lg text-sm dark:bg-nebbiolo border dark:border-amarone border-etna page-text text-md placeholder-etna dark:placeholder-amarone focus:outline-none focus:ring-2 dark:focus:ring-amarone focus:ring-lagunaveneta select-all"
+                                    type="text"
+                                    name="Last Name"
+                                    value={last_name}
+                                    required={true}
+                                    onChange={(e) => set_last_name(e.target.value)}
+                                    onMouseEnter={lNameHover}
+                                    onMouseLeave={lNameNotHover}
+                                    placeholder="Last Name"
+                                    onKeyPress={handleNameSubmit}
+                                />
+                            </EmbloyH>
 
-        <div className="w-full flex flex-col items-start justify-start gap-4 ">
+                        </EmbloyV>
+
+                    </EmbloyH>
+
+                </EmbloyV>
+            </EmbloyH> 
+            <EmbloyH className={"justify-end"}>
+                <EmbloyV className={"bg-transparent dark:bg-chianti border border-etna dark:border-biferno rounded-lg p-4 w-10/12"}>
+                        <EmbloyH className={"items-center justify-between h-10"}>
+                            <EmbloyV className={"h-full w-5/12 gap-1"}>
+                                <EmbloyH1 className={"text-sm"}>User ID</EmbloyH1>
+                                <EmbloyP className={"text-xs"}>The unique identifier for your account. It cannot be modified.</EmbloyP>
+                            </EmbloyV>
+                            <EmbloyV className={"h-full justify-center w-6/12 gap-2"}>
+                                <EmbloyH className={"gap-2"}>
+                                    <input
+                                        className="page-text px-2 h-9 w-6/12 border-[2px] rounded-lg text-sm dark:bg-nebbiolo border dark:border-biferno border-etna page-text text-md placeholder-etna dark:placeholder-amarone focus:outline-none focus:ring-2 dark:focus:ring-amarone focus:ring-lagunaveneta select-all"
+                                        type="text"
+                                        name="UID"
+                                        disabled={true}
+                                        value={user.id}
+                                        required={true}
+                                        />
+                                        
+                                </EmbloyH>
+
+                            </EmbloyV>
+
+                    </EmbloyH>
+
+                </EmbloyV>
+            </EmbloyH>
+
+        {/*<div className="w-full flex flex-col items-start justify-start gap-4 ">
             <div className="w-full flex flex-row items-center justify-start gap-3">
             </div>
 
@@ -316,6 +384,8 @@ export function ProfileInfo({router}) {
                 <button>Sign in</button>
             )}
 
-        </div>
+        </div>*/}
+        </EmbloyV>
+        
     )
 }

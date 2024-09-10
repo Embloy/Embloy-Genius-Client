@@ -32,7 +32,7 @@ export function ProfileSettings({store, user}) {
 
                 <div
                     className="text-sm w-full flex flex-col items-start justify-start gap-4 border-b border-gray-700 p-4">
-                    <ProfileInfo router={router}/>
+                    <ProfileInfo/>
                     <div className="h-3"/>
                     <NotificationSettings/>
                     <div className="h-3"/>

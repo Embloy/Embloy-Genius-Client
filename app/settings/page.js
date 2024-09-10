@@ -4,7 +4,6 @@ import { cn } from "@/lib/utils";
 import Image from "next/image";
 import { AccessSettings } from "@/app/settings/access/access";
 import { SecretsSettings } from "@/app/settings/secrets/secrets";
-import { ProfileSettings } from "@/app/settings/profile/profile";
 import { UserContext } from "@/app/components/dom/main/wrappers/UserContext";
 import { StoreContext } from "@/app/components/dom/main/wrappers/StoreWrapper";
 import LoadingScreen from "@/app/components/dom/main/screens/LoadingScreen";
@@ -18,7 +17,7 @@ import { EmbloyBox, EmbloyBoxContent } from "@/app/components/ui/misc/box";
 import { EmbloyLHPV, EmbloyV, EmbloyH, EmbloySpacer} from "@/app/components/ui/misc/stuff";
 import { EmbloyToolbox, EmbloyToolboxImgA} from "@/app/components/ui/misc/toolbox";
 import { IntegrationControl } from "./integrations/IntegrationControl";
-import { ProfileControl } from "./integrations/ProfileControl";
+import { ProfileControl } from "./profile/ProfileControl";
 import { AccessControl } from "./integrations/AccessControl";
 import { BillingControl } from "./integrations/BillingControl";
 import { SecretsControl } from "./integrations/SecretsControl";
@@ -99,8 +98,8 @@ function SettingsPanel() {
                             externalSetActivePage={currentSubPageID}
                         >
                             <EmbloyV id={0} className="gap-3">
-                                {/*<ProfileControl />*/}
-                                <ProfileSettings user={user} store={store} />
+                                <ProfileControl />
+                                {/*<ProfileSettings user={user} store={store} />*/}
                             </EmbloyV>
                             <EmbloyV id={1} className="gap-3">
                                 {/*<AccessControl />*/}
