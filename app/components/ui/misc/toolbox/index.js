@@ -61,19 +61,37 @@ export const EmbloyToolboxImgA = ({disabled, href, target="_self", path, path_ho
     )
 }
 
-export const EmbloyToolboxImgAdvanced = ({disabled, path, path_hovered, path_disabled, dark_path, dark_path_hovered, dark_path_disabled, height, width, ...props}) => {
+export const EmbloyToolboxImgAdvanced = ({disabled,success, action, path, path_success, path_success_hovered, path_action,  path_hovered, path_hovered_action, path_disabled, dark_path, dark_path_action, dark_path_hovered, dark_path_hovered_action, dark_path_disabled, height, width, ...props}) => {
+    if (success && success === true && disabled !== true) {
+        return (
+            <EmbloyChildrenAdvanced {...props}>
+                <EmbloyToolboxImg className="block dark:block" path={path_success} path_hovered={path_success_hovered} height={height} width={width} />
+            </EmbloyChildrenAdvanced>
+        )
+    }
     return (
         <EmbloyChildrenAdvanced {...props}>
-            <EmbloyToolboxImg className="block dark:hidden" disabled={disabled} path={path_disabled && disabled ? path_disabled : path} path_hovered={path_hovered} height={height} width={width} />
-            <EmbloyToolboxImg className="hidden dark:block" disabled={disabled} path={dark_path && disabled ? dark_path_disabled : dark_path} path_hovered={dark_path_hovered} height={height} width={width} />
+            {
+                action && action === true
+                ? <EmbloyToolboxImg className="block dark:hidden" disabled={disabled} path={path_disabled && disabled ? path_disabled : path_action} path_hovered={path_hovered_action} height={height} width={width} />
+                : <EmbloyToolboxImg className="block dark:hidden" disabled={disabled} path={path_disabled && disabled ? path_disabled : path} path_hovered={path_hovered} height={height} width={width} />
+            }
+            {
+                action && action === true
+                ? <EmbloyToolboxImg className="hidden dark:block" disabled={disabled} path={dark_path && disabled ? dark_path_disabled : dark_path_action} path_hovered={dark_path_hovered_action} height={height} width={width} />
+                : <EmbloyToolboxImg className="hidden dark:block" disabled={disabled} path={dark_path && disabled ? dark_path_disabled : dark_path} path_hovered={dark_path_hovered} height={height} width={width} />
+            }
+            
+            
+            
         </EmbloyChildrenAdvanced>
     )
 }
 
-export const EmbloyToolboxImgButton = ({onClick, path, path_hovered, path_disabled, dark_path, dark_path_hovered, dark_path_disabled, height, width, ...props}) => {
+export const EmbloyToolboxImgButton = ({success, action, onClick, path, path_action, path_success, path_success_hovered, path_hovered, path_hovered_action, path_disabled, dark_path, dark_path_action, dark_path_hovered, dark_path_hovered_action, dark_path_disabled, height, width, ...props}) => {
     return (
-        <button onClick={onClick} className={`${props.disabled && "cursor-not-allowed"}`} disabled={props.disabled}>
-             <EmbloyToolboxImgAdvanced path={path} path_hovered={path_hovered} path_disabled={path_disabled} dark_path={dark_path} dark_path_hovered={dark_path_hovered} dark_path_disabled={dark_path_disabled} height={height} width={width} {...props}/>
+        <button onClick={onClick} className={action ? 'cursor-progress' : props.disabled && "cursor-not-allowed"} disabled={props.disabled}>
+             <EmbloyToolboxImgAdvanced success={success} action={action} path={path} path_success={path_success} path_success_hovered={path_success_hovered} path_action={path_action} path_hovered={path_hovered} path_hovered_action={path_hovered_action} path_disabled={path_disabled} dark_path_action={dark_path_action} dark_path={dark_path} dark_path_hovered={dark_path_hovered} dark_path_hovered_action={dark_path_hovered_action} dark_path_disabled={dark_path_disabled} height={height} width={width} {...props}/>
         </button>
     )
 }

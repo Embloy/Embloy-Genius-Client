@@ -9,16 +9,41 @@ import {
     disconnect as leverDisconnect, 
     sync as leverSync, 
     reset as leverReset ,
-    verify as leverVerify
+    verify as leverVerify,
+    sync
 } from "@/app/settings/integrations/lever";
 import { claim_core_tokens } from "@/lib/api/user";
+import { ProgressLoadingScreen } from "@/app/components/dom/main/screens/ProgressLoadingScreen.js";
+import { cn } from "@/lib/utils";
 
 function IntegrationElement({name, activeIntegrations, description, doc_link, onConnect, onDisconnect, onSync, onReset, onVerify, onReload}) {
     const [isError, setError] = useState(null);
     const [status, setStatus] = useState("inactive");
+    const [syncStatus, setSyncStatus] = useState("inactive");
+    const [resetStatus, setResetStatus] = useState("inactive");
 
     const force = (status) => {
         setStatus(status);
+    };
+
+    const handleReset = async () => {
+        if (resetStatus !== 'resetting') {
+            setResetStatus("resetting");
+            await onReset();
+            setResetStatus("success");
+        } else {
+            setResetStatus("inactive");
+        }
+    };
+
+    const handleSync = async () => {
+        if (syncStatus !== 'syncing') {
+            setSyncStatus("syncing");
+            await onSync();
+            setSyncStatus("success");
+        } else {
+            setSyncStatus("inactive");
+        }
     };
 
     const handleToggleChange = async (newState) => {
@@ -52,6 +77,8 @@ function IntegrationElement({name, activeIntegrations, description, doc_link, on
         }
     }, [activeIntegrations]);
 
+    
+
    
 
     return (
@@ -62,34 +89,55 @@ function IntegrationElement({name, activeIntegrations, description, doc_link, on
                     <div className="h-5 w-[1px] dark:bg-nebbiolo "/>
                     <EmbloyP className={"text-sm"}>{description}</EmbloyP>
                 </EmbloyH>
-                <EmbloyH className={"items-center justify-end gap-2"}>
+                
+               
+                <EmbloyH className={"items-center justify-end gap-4 max-w-fit"}>
+                    
                     {(isError !== null) && <EmbloyP className={"text-xs text-red-500 dark:text-red-500"}>{isError}</EmbloyP>}
                     {(status === "connect") && <EmbloyP className={"text-xs text-yellow-500 dark:text-yellow-500"}>Connecting...</EmbloyP>}
                     {(status === "disconnect") && <EmbloyP className={"text-xs text-yellow-500 dark:text-yellow-500"}>Disconnecting...</EmbloyP>}
+                    {(syncStatus === "syncing" || resetStatus === "resetting") && <EmbloyP className={"text-xs text-yellow-500 dark:text-yellow-500"}>Please wait, this may take up to 30 seconds. Don't refresh.</EmbloyP>}
+                    
                     <EmbloyToolbox superClassName="h-7 border-2 dark:border-nebbiolo dark:bg-nebbiolo" className={undefined} name={undefined} >
                         {/*<IntegrationSync key="Sync" name={name} disabled={!isRequested} />
                         <ResetWebhook key="Reset" name={name} disabled={!isRequested}/>*/}
                         <EmbloyToolboxImgButton 
-                            disabled={status !== "active"}
-                            onClick={onSync} 
-                            tooltip={`Synchronize with ${name}`} 
+                            disabled={status !== "active" || resetStatus === "resetting"}
+                            action={syncStatus === "syncing"}
+                            path_success="/icons/svg/lugana/success.svg" 
+                            path_success_hovered="/icons/svg/custoza/success.svg"
+                            success={syncStatus === "success"}
+                            onClick={handleSync} 
+                            tooltip={syncStatus === "success" ? 'Successfully synced with ' + name : syncStatus === 'syncing' ? ('Syncing with ' + name + '...') : ('Synchronize with ' + name)} 
                             path="/icons/svg/black/sync.svg" 
+                            path_action="/icons/svg/black/no-sync.svg" 
                             path_hovered="/icons/svg/leidoveneta/sync.svg" 
+                            path_hovered_action="/icons/svg/leidoveneta/no-sync.svg" 
                             path_disabled="/icons/svg/etna/sync.svg" 
-                            dark_path="/icons/svg/amarone/sync.svg" 
+                            dark_path="/icons/svg/amarone/sync.svg"
+                            dark_path_action="/icons/svg/amarone/no-sync.svg" 
                             dark_path_hovered="/icons/svg/barbera/sync.svg" 
+                            dark_path_hovered_action="/icons/svg/barbera/no-sync.svg" 
                             dark_path_disabled="/icons/svg/biferno/sync.svg" 
                             height="12" width="12" 
                         />
                         <EmbloyToolboxImgButton 
-                            disabled={status !== "active"}
-                            onClick={onReset} 
-                            tooltip={`Reset ${name} Webhooks`} 
-                            path="/icons/svg/black/whk.svg" 
-                            path_hovered="/icons/svg/leidoveneta/whk.svg" 
+                            disabled={status !== "active" || syncStatus === "syncing"}
+                            action={resetStatus === "resetting"}
+                            onClick={handleReset} 
+                            tooltip={resetStatus === "success" ? 'Successfully reset ' + name + ' Webhooks' : resetStatus === 'resetting' ? ('Resetting ' + name + ' Webhooks...') : ('Reset ' + name + ' Webhooks')} 
+                            path_success="/icons/svg/lugana/success.svg" 
+                            path_success_hovered="/icons/svg/custoza/success.svg"
+                            success={resetStatus === "success"}
+                            path="/icons/svg/black/whk.svg"
+                            path_action="/icons/svg/black/no-whk.svg" 
+                            path_hovered="/icons/svg/leidoveneta/whk.svg"
+                            path_hovered_action="/icons/svg/leidoveneta/no-whk.svg" 
                             path_disabled="/icons/svg/etna/whk.svg" 
                             dark_path="/icons/svg/amarone/whk.svg" 
+                            dark_path_action="/icons/svg/amarone/no-whk.svg" 
                             dark_path_hovered="/icons/svg/barbera/whk.svg" 
+                            dark_path_hovered_action="/icons/svg/barbera/no-whk.svg" 
                             dark_path_disabled="/icons/svg/biferno/whk.svg"  
                             height="12" width="12"  
                         />

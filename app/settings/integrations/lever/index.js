@@ -51,10 +51,28 @@ export const disconnect = async (active_integrations) => {
     }
 };
 
-export const sync = () => {
-    // Custom connection logic for Service A
-}
+export const sync = async () => {
+    try {
+        console.log("syncing Lever");
+        const res = await not_core_get("POST", "/jobs/sync/lever", {});
+        console.log("sync response", res);
+        return true;
+    }
+    catch (error) {
+        console.error("Error syncing Lever", error);
+    }
+  };
+  
 
-export const reset= () => {
-    // Custom connection logic for Service A
+export const reset = async () => {
+    try {
+        console.log("resetting Lever webhooks");
+        const res = await not_core_get("POST", "/user/webhooks/lever", {});
+        console.log("reset response", res);
+        return true;
+    }
+    catch (error) {
+        console.error("Error resetting Lever webhooks", error);
+    }
+
 }

@@ -59,6 +59,8 @@ module.exports = {
         'ischia': '#374151',
         'ferrara': '#f1f5f9',
 
+        'lugana': '#43C265',
+        'custoza': '#a3f5cc',
       },
       spacing : {
         '70%': '70%',
