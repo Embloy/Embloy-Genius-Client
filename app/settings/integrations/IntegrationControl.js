@@ -11,6 +11,7 @@ import {
     reset as leverReset ,
     verify as leverVerify
 } from "@/app/settings/integrations/lever";
+import { claim_core_tokens } from "@/lib/api/user";
 
 function IntegrationElement({name, activeIntegrations, description, doc_link, onConnect, onDisconnect, onSync, onReset, onVerify, onReload}) {
     const [isError, setError] = useState(null);
@@ -20,12 +21,14 @@ function IntegrationElement({name, activeIntegrations, description, doc_link, on
         setStatus(status);
     };
 
-    const handleToggleChange = (newState) => {
+    const handleToggleChange = async (newState) => {
         if (status === "inactive" && newState === true) {
             try {
                 force("connect");
-                onConnect();
+                await onConnect();
+                onReload();
                 setError(null);
+                force("active");
             } catch (error) {
                 setError("Error connecting to " + name);
                 force("inactive");
@@ -34,9 +37,10 @@ function IntegrationElement({name, activeIntegrations, description, doc_link, on
         } else if (status === "active" && newState === false) {
             try {
                 force("disconnect");
-                onDisconnect(activeIntegrations);
+                const token = await onDisconnect(activeIntegrations);
+                onReload(token);
                 setError(null);
-                onReload();
+                force("inactive");
             } catch (error) {
                 setError("Error disconnecting from " + name);
                 force("active");
@@ -111,8 +115,22 @@ function IntegrationElement({name, activeIntegrations, description, doc_link, on
         </EmbloyV> 
     );
 }
-export function IntegrationControl({activeIntegrations, onReload}) {
-    
+export function IntegrationControl({activeIntegrations}) {
+    const [integrations, setIntegrations] = useState([]);
+    useEffect(() => {
+        setIntegrations(activeIntegrations);
+    }, [activeIntegrations]);
+    const reload = async (token) => {
+        if (token===undefined) {
+            console.log("i gOT NO TOKEN");
+            const tokens = await claim_core_tokens(true);
+            setIntegrations(tokens);
+        } else {
+            console.log("i gOT TOKEN", token);
+            setIntegrations(token);
+        }
+        return true;
+    };
     return (
         <EmbloyV className={"gap-2 border-t dark:border-biferno pt-2"}>
             <EmbloyH className={"items-center justify-between"}>
@@ -120,7 +138,7 @@ export function IntegrationControl({activeIntegrations, onReload}) {
             </EmbloyH>
             <EmbloyV className={"gap-2"}>
                 <EmbloyV className={"gap-2"}>
-                    <IntegrationElement name="Lever" activeIntegrations={activeIntegrations} description={"Use Embloy with Lever's recruiting software."} doc_link="https://developers.embloy.com/docs/guides/get-started-integrations-lever" onConnect={leverConnect} onDisconnect={leverDisconnect} onSync={leverSync} onReset={leverReset} onVerify={leverVerify} onReload={onReload}/>
+                    <IntegrationElement name="Lever" activeIntegrations={integrations} description={"Use Embloy with Lever's recruiting software."} doc_link="https://developers.embloy.com/docs/guides/get-started-integrations-lever" onConnect={leverConnect} onDisconnect={leverDisconnect} onSync={leverSync} onReset={leverReset} onVerify={leverVerify} onReload={reload} />
                 </EmbloyV>
             </EmbloyV>
         </EmbloyV> 

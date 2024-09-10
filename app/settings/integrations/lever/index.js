@@ -1,6 +1,7 @@
 "use client";
 import { core_get, not_core_get } from "@/lib/api/core"; 
-import { claim_core_tokens } from "@/lib/api/user";
+import { setCookie, getCookie, deleteCookie } from "cookies-next";
+import { siteConfig } from "@/config/site";
 const issuer = "lever";
 
 export const verify = (activeIntegrations) => {
@@ -11,20 +12,25 @@ export const verify = (activeIntegrations) => {
     }
 };
 
-export const connect = () => {
-    core_get("/integrations/lever/auth")
-        .then((data) => {
-            window.open(data.url, "_blank");
-            return true;  
-        })
-        .catch(() => {
-            throw new Error("Error connecting to Lever");
-            return false;
-        });
+export const connect = async () => {
+    try {
+        const data = await core_get("/integrations/lever/auth");
+        window.open(data.url, "_self");
+    } catch (error) {
+        console.error("Error connecting to Lever", error);
+    }       
 };
 
 
-export const disconnect = (active_integrations) => {
+export const disconnect = async (active_integrations) => {
+    const delete_ids_from_cookie = (ids) => {
+        const active_integrations = JSON.parse(getCookie("active_integrations", {path: "/", domain: `${siteConfig.core_domain}`}));
+        const integrations_without_ids = active_integrations.filter((integration) => !ids.includes(integration.id));
+        console.log("integrations_without_ids", integrations_without_ids);
+        deleteCookie("active_integrations", {path: "/", domain: `${siteConfig.core_domain}`});
+        setCookie("active_integrations", JSON.stringify(integrations_without_ids), {path: "/", domain: `${siteConfig.core_domain}`});
+        return integrations_without_ids;
+    };
     const disconnect_id = async (token_id) => {
         await not_core_get("DELETE", `/tokens/${token_id}`, {});
     };
@@ -32,18 +38,13 @@ export const disconnect = (active_integrations) => {
         .filter((integration) => integration.issuer === issuer)
         .map((token) => token.id);
 
+
     try {
         ids.forEach(async (id) => {
             await disconnect_id(id);
         });
-        claim_core_tokens()
-            .then(() => {
-                return true;
-            })
-            .catch(() => {
-                throw new Error("Error claiming core tokens");
-            });
-        return true;
+        const remaining = delete_ids_from_cookie(ids);
+        return remaining;
     } catch (error) {
         console.error("Error disconnecting from Lever", error);
         return false
