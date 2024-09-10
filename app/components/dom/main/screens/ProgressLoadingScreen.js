@@ -50,7 +50,7 @@ export const ProgressLoadingScreen = ({ task, className, forceProgress }) => {
     <EmbloyV className={`min-w-[350px] max-w-fit max-h-fit items-center justify-end ${className}`}>
       <EmbloyH>
         <EmbloyP className="text-xs text-red-500 dark:text-red-500">
-          This takes 30 seconds. Please wait! Don't refresh the page.
+          This takes 30 seconds. Please wait! Don&apost refresh the page.
         </EmbloyP>
       </EmbloyH>
       <EmbloyH>

@@ -143,7 +143,7 @@ export function JobDataTable<TData extends Job, TValue>({columns, data, handleDa
                         <DropdownMenu>
                             <DropdownMenuTrigger asChild className="outline-none">
                                 <button className="">
-                                    <EmbloyToolboxImgAdvanced tooltip="Show/Hide Columns" path="/icons/svg/black/cols.svg" path_hovered="/icons/svg/leidoveneta/cols.svg" dark_path="/icons/svg/amarone/cols.svg" dark_path_hovered="/icons/svg/barbera/cols.svg" height="11" width="11" disabled={undefined} path_disabled={undefined} dark_path_disabled={undefined} />
+                                    <EmbloyToolboxImgAdvanced tooltip="Show/Hide Columns" path="/icons/svg/black/cols.svg" path_hovered="/icons/svg/leidoveneta/cols.svg" dark_path="/icons/svg/amarone/cols.svg" dark_path_hovered="/icons/svg/barbera/cols.svg" height="11" width="11" disabled={undefined} path_disabled={undefined} dark_path_disabled={undefined} failure={undefined} path_failure={undefined} path_failure_hovered={undefined} success={undefined} action={undefined} path_success={undefined} path_success_hovered={undefined} path_action={undefined} path_hovered_action={undefined} dark_path_action={undefined} dark_path_hovered_action={undefined} />
                                 </button>
                             </DropdownMenuTrigger>
                             <DropdownMenuContent align="end">

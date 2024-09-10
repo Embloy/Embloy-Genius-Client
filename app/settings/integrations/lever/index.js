@@ -26,7 +26,6 @@ export const disconnect = async (active_integrations) => {
     const delete_ids_from_cookie = (ids) => {
         const active_integrations = JSON.parse(getCookie("active_integrations", {path: "/", domain: `${siteConfig.core_domain}`}));
         const integrations_without_ids = active_integrations.filter((integration) => !ids.includes(integration.id));
-        console.log("integrations_without_ids", integrations_without_ids);
         deleteCookie("active_integrations", {path: "/", domain: `${siteConfig.core_domain}`});
         setCookie("active_integrations", JSON.stringify(integrations_without_ids), {path: "/", domain: `${siteConfig.core_domain}`});
         return integrations_without_ids;
@@ -53,26 +52,24 @@ export const disconnect = async (active_integrations) => {
 
 export const sync = async () => {
     try {
-        console.log("syncing Lever");
         const res = await not_core_get("POST", "/jobs/sync/lever", {});
-        console.log("sync response", res);
         return true;
     }
     catch (error) {
         console.error("Error syncing Lever", error);
+        return false
     }
   };
   
 
 export const reset = async () => {
     try {
-        console.log("resetting Lever webhooks");
         const res = await not_core_get("POST", "/user/webhooks/lever", {});
-        console.log("reset response", res);
         return true;
     }
     catch (error) {
         console.error("Error resetting Lever webhooks", error);
+        return false
     }
 
 }

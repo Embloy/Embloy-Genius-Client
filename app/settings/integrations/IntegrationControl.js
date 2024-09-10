@@ -29,8 +29,12 @@ function IntegrationElement({name, activeIntegrations, description, doc_link, on
     const handleReset = async () => {
         if (resetStatus !== 'resetting') {
             setResetStatus("resetting");
-            await onReset();
-            setResetStatus("success");
+            const res = await onReset();
+            if (res === true) {
+                setResetStatus("success");
+            } else {
+                setResetStatus("failure");
+            }
         } else {
             setResetStatus("inactive");
         }
@@ -39,8 +43,12 @@ function IntegrationElement({name, activeIntegrations, description, doc_link, on
     const handleSync = async () => {
         if (syncStatus !== 'syncing') {
             setSyncStatus("syncing");
-            await onSync();
-            setSyncStatus("success");
+            const res = await onSync();
+            if (res === true) {
+                setSyncStatus("success");
+            } else {
+                setSyncStatus("failure");
+            }
         } else {
             setSyncStatus("inactive");
         }
@@ -96,7 +104,7 @@ function IntegrationElement({name, activeIntegrations, description, doc_link, on
                     {(isError !== null) && <EmbloyP className={"text-xs text-red-500 dark:text-red-500"}>{isError}</EmbloyP>}
                     {(status === "connect") && <EmbloyP className={"text-xs text-yellow-500 dark:text-yellow-500"}>Connecting...</EmbloyP>}
                     {(status === "disconnect") && <EmbloyP className={"text-xs text-yellow-500 dark:text-yellow-500"}>Disconnecting...</EmbloyP>}
-                    {(resetStatus === "resetting") && <EmbloyP className={"text-xs text-yellow-500 dark:text-yellow-500"}>Please wait, this may take up to 30 seconds. Don't refresh.</EmbloyP>}
+                    {(resetStatus === "resetting") && <EmbloyP className={"text-xs text-yellow-500 dark:text-yellow-500"}>Please wait, this may take up to 30 seconds. Don&apos;t refresh.</EmbloyP>}
                     
                     <EmbloyToolbox superClassName="h-7 border-2 dark:border-nebbiolo dark:bg-nebbiolo" className={undefined} name={undefined} >
                         {/*<IntegrationSync key="Sync" name={name} disabled={!isRequested} />
@@ -107,8 +115,11 @@ function IntegrationElement({name, activeIntegrations, description, doc_link, on
                             path_success="/icons/svg/lugana/success.svg" 
                             path_success_hovered="/icons/svg/custoza/success.svg"
                             success={syncStatus === "success"}
+                            failure={syncStatus === "failure"}
                             onClick={handleSync} 
-                            tooltip={syncStatus === "success" ? 'Successfully synced with ' + name : syncStatus === 'syncing' ? ('Syncing with ' + name + '...') : ('Synchronize with ' + name)} 
+                            tooltip={syncStatus === "success" ? 'Successfully synced with ' + name : syncStatus === 'syncing' ? ('Syncing with ' + name + '...') : syncStatus === "failure" ? ('Try agian to synchronize with ' + name) : ('Synchronize with ' + name)} 
+                            path_failure="/icons/svg/primitivo/failure.svg" 
+                            path_failure_hovered="/icons/svg/zinfandel/failure.svg"
                             path="/icons/svg/black/sync.svg" 
                             path_action="/icons/svg/black/no-sync.svg" 
                             path_hovered="/icons/svg/leidoveneta/sync.svg" 
@@ -125,9 +136,12 @@ function IntegrationElement({name, activeIntegrations, description, doc_link, on
                             disabled={status !== "active" || syncStatus === "syncing"}
                             action={resetStatus === "resetting"}
                             onClick={handleReset} 
-                            tooltip={resetStatus === "success" ? 'Successfully reset ' + name + ' Webhooks' : resetStatus === 'resetting' ? ('Resetting ' + name + ' Webhooks...') : ('Reset ' + name + ' Webhooks')} 
+                            failure={resetStatus === "failure"}
+                            tooltip={resetStatus === "success" ? 'Successfully reset ' + name + ' Webhooks' : resetStatus === 'resetting' ? ('Resetting ' + name + ' Webhooks...') : resetStatus === "failure" ? ('Try again to reset ' + name + ' Webhooks') : ('Reset ' + name + ' Webhooks')} 
                             path_success="/icons/svg/lugana/success.svg" 
+                            path_failure="/icons/svg/primitivo/failure.svg" 
                             path_success_hovered="/icons/svg/custoza/success.svg"
+                            path_failure_hovered="/icons/svg/zinfandel/failure.svg"
                             success={resetStatus === "success"}
                             path="/icons/svg/black/whk.svg"
                             path_action="/icons/svg/black/no-whk.svg" 

@@ -98,7 +98,7 @@ export function UploadJobFileButton({
         onChange={handleFileChange}
         accept={formats.join(",")}
       />
-      <EmbloyToolboxImgAdvanced tooltip="Manual Job Upload" path="/icons/svg/black/upl.svg" path_hovered="/icons/svg/leidoveneta/upl.svg" dark_path="/icons/svg/amarone/upl.svg" dark_path_hovered="/icons/svg/barbera/upl.svg" height="10" width="10" disabled={undefined} path_disabled={undefined} dark_path_disabled={undefined} />
+      <EmbloyToolboxImgAdvanced tooltip="Manual Job Upload" path="/icons/svg/black/upl.svg" path_hovered="/icons/svg/leidoveneta/upl.svg" dark_path="/icons/svg/amarone/upl.svg" dark_path_hovered="/icons/svg/barbera/upl.svg" height="10" width="10" disabled={undefined} path_disabled={undefined} dark_path_disabled={undefined} failure={undefined} path_failure={undefined} path_failure_hovered={undefined} success={undefined} action={undefined} path_success={undefined} path_success_hovered={undefined} path_action={undefined} path_hovered_action={undefined} dark_path_action={undefined} dark_path_hovered_action={undefined} />
      
 
       <Modal
