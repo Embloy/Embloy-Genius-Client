@@ -26,9 +26,7 @@ function IntegrationElement({name, activeIntegrations, description, doc_link, on
             try {
                 force("connect");
                 await onConnect();
-                onReload();
                 setError(null);
-                force("active");
             } catch (error) {
                 setError("Error connecting to " + name);
                 force("inactive");
