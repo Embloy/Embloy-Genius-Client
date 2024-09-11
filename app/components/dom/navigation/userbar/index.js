@@ -55,7 +55,7 @@ export const UserBar = ({ isVisible, onClose, userData, storeData }) => {
                             <div className="w-full bg-ischia dark:bg-ischia h-[1px]" />
                             <div className="w-full h-4" />
 
-                            <a className={sidebarfieldClass} href="https://www.about.embloy.com" target="_blank" rel="noopener noreferrer">
+                            <a className={sidebarfieldClass} href="" target="_blank" rel="noopener noreferrer">
                                 <div className={sidebarfieldleftClass}>
                                     <Image
                                         src="/icons/logo_black_white.svg"
@@ -104,7 +104,7 @@ export const UserBar = ({ isVisible, onClose, userData, storeData }) => {
                             <div className="w-full h-4" />
 
 
-                            <a className={sidebarfieldClass} href="https://documenter.getpostman.com/view/24977803/2s9YRB2rkE" target="_blank" rel="noopener noreferrer">
+                            <a className={sidebarfieldClass} href="https://docs.embloy.com" target="_blank" rel="noopener noreferrer">
                                 <div className={sidebarfieldleftClass}>
                                     <Image
                                         src="/icons/api.svg"
@@ -127,7 +127,7 @@ export const UserBar = ({ isVisible, onClose, userData, storeData }) => {
                             </a>
 
 
-                            <div className={sidebarfieldClass} onClick={out}>
+                            <div className={sidebarfieldClass} onClick={undefined}>
                                 <div className={sidebarfieldleftClass}>
                                     <Image
                                         src="/icons/languages.svg"
@@ -201,7 +201,7 @@ export const UserBar = ({ isVisible, onClose, userData, storeData }) => {
                             </a>
 
 
-                            <a className={sidebarfieldClass} href="https://about.embloy.com/en/contact/" target="_blank" rel="noopener noreferrer">
+                            <a className={sidebarfieldClass} href="https://www.embloy.com/en-US/dashboard/report-an-issue" target="_blank" rel="noopener noreferrer">
                                 <div className={sidebarfieldleftClass}>
                                     <Image
                                         src="/icons/feedback.svg"
@@ -219,7 +219,7 @@ export const UserBar = ({ isVisible, onClose, userData, storeData }) => {
                                     />
                                 </div>
                                 <div className={sidebarfieldrightClass}>
-                                        <p className="text-sm">Feedback</p>
+                                        <p className="text-sm">Report an issue</p>
                                 </div>
                             </a>
 

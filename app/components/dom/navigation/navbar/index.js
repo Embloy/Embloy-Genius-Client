@@ -42,7 +42,6 @@ const Navbar = () => {
     const {isUserbarVisible, toggleUserbar} = app;
 
     useEffect(() => {
-       console.log("CHANGED TO DONT CARE");
       }, [isUserbarVisible]);
 
 

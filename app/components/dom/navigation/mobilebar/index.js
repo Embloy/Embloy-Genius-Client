@@ -55,8 +55,6 @@ export const MobileBar = ({ isVisible, onClose, pageSection, pathname, userData,
                         ))}
                     </ul>
                 </EmbloyV>
-                
-           
             </EmbloyBoxContent>
         </EmbloyBox>
     );
