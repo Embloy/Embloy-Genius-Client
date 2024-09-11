@@ -4,7 +4,7 @@ import Image from "next/image";
 import {useRouter} from "next/navigation";
 import '@/app/globals.css'
 import { EmbloyLHPV, EmbloyV, EmbloyH, EmbloySpacer} from "@/app/components/ui/misc/stuff";
-import { EmbloyPageMount, EmbloyPage, EmbloyPageBody, EmbloyPageBodySection, EmbloySubPage } from "@/app/components/ui/misc/page";
+import { EmbloyPageMount, EmbloyPage, EmbloyPageBody, EmbloyPageBodySection, EmbloySubPage, EmbloyPageLight } from "@/app/components/ui/misc/page";
 import { EmbloyH1, EmbloyP } from "@/app/components/ui/misc/text";
 import { EmbloyBox, EmbloyBoxContent } from "@/app/components/ui/misc/box";
 import Link from "next/link";
@@ -25,19 +25,19 @@ const Signin = () => {
         e.preventDefault();
         console.log("DOMAIN ",siteConfig.core_domain);
         setIsLoading(true);
-        try {
-            await login(username, password);
+        const res = await login(username, password);
+       if (res === 200) {
             setInternalError(false);
             setLoginError(false);
             setIsLoading(false);
             router.replace("/");
-            
-        } catch (error) {
-            if (error.status === 401 || error.status === 403) {
-                setLoginError(true);
-            } else {
-                setInternalError(true);
-            }
+        } else if (res === 401) {
+            setLoginError(true);
+            setUsername("");
+            setPassword("");
+            setIsLoading(false);
+        } else {
+            setInternalError(true);
             setUsername("");
             setPassword("");
             setIsLoading(false);
@@ -47,10 +47,10 @@ const Signin = () => {
     const inputStyle = "mb-2 px-5 h-12 w-96 portrait:w-72 rounded-lg text-md dark:bg-nebbiolo border dark:border-amarone border-etna page-text text-md placeholder-etna dark:placeholder-amarone focus:outline-none focus:ring-2 dark:focus:ring-amarone focus:ring-lagunaveneta select-all";
     return (
         <EmbloyPageMount className="overflow-hidden">
-            <EmbloyPage>
+            <EmbloyPageLight >
                 <EmbloyPageBody>
                     <EmbloyPageBodySection>
-                       <EmbloyV className={`fixed inset-0 flex flex-col justify-center items-center z-50 bg-body `}>
+                       <EmbloyV className={`fixed inset-0 flex flex-col justify-center items-center z-100 bg-body `}>
                            <EmbloyBox
                                className="dark:bg-aglianico border-[1px] border-etna dark:border-nebbiolo rounded-lg max-w-fit ">
                                <EmbloyBoxContent className="items-center">
@@ -177,7 +177,7 @@ const Signin = () => {
                        </EmbloyV>
                    </EmbloyPageBodySection>
                 </EmbloyPageBody>
-            </EmbloyPage>
+            </EmbloyPageLight>
         </EmbloyPageMount>
     );
 };

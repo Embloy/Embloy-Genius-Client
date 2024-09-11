@@ -23,6 +23,7 @@ const AuthWrapper = ({children}) => {
             }
         };
 
+    
     checkAuth();  
   }, [path, router]);
 

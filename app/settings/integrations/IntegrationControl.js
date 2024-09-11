@@ -15,39 +15,54 @@ import {
 import { claim_core_tokens } from "@/lib/api/user";
 import { ProgressLoadingScreen } from "@/app/components/dom/main/screens/ProgressLoadingScreen.js";
 import { cn } from "@/lib/utils";
+import {
+    useDisclosure,
+  } from "@nextui-org/react";
+import { EmbloyModal } from "@/app/components/ui/misc/modal";
 
 function IntegrationElement({name, activeIntegrations, description, doc_link, onConnect, onDisconnect, onSync, onReset, onVerify, onReload}) {
     const [isError, setError] = useState(null);
     const [status, setStatus] = useState("inactive");
     const [syncStatus, setSyncStatus] = useState("inactive");
     const [resetStatus, setResetStatus] = useState("inactive");
-
+    const [resetResult, setResetResult] = useState(null);
+    const resetResultModal = useDisclosure();
     const force = (status) => {
         setStatus(status);
     };
 
     const handleReset = async () => {
         if (resetStatus !== 'resetting') {
+            setError(null);
+            setResetResult(null);
             setResetStatus("resetting");
             const res = await onReset();
-            if (res === true) {
+            console.log("RES RES", res);
+            if (res.type === 'success') {
+                setResetResult(res.message);
+                resetResultModal.onOpenChange(true);
+
                 setResetStatus("success");
             } else {
                 setResetStatus("failure");
+                setError(res.message);
             }
         } else {
             setResetStatus("inactive");
         }
     };
+    
 
     const handleSync = async () => {
         if (syncStatus !== 'syncing') {
+            setError(null);
             setSyncStatus("syncing");
             const res = await onSync();
-            if (res === true) {
+            if (res.type === 'success') {
                 setSyncStatus("success");
             } else {
                 setSyncStatus("failure");
+                setError(res.message);
             }
         } else {
             setSyncStatus("inactive");
@@ -90,6 +105,7 @@ function IntegrationElement({name, activeIntegrations, description, doc_link, on
    
 
     return (
+        <>
         <EmbloyV className={"bg-transparent dark:bg-chianti border border-etna dark:border-biferno text-white rounded-lg p-4"}>
             <EmbloyH className={"items-center justify-between"}>
                 <EmbloyH className={"items-center gap-2"}>
@@ -117,7 +133,7 @@ function IntegrationElement({name, activeIntegrations, description, doc_link, on
                             success={syncStatus === "success"}
                             failure={syncStatus === "failure"}
                             onClick={handleSync} 
-                            tooltip={syncStatus === "success" ? 'Successfully synced with ' + name : syncStatus === 'syncing' ? ('Syncing with ' + name + '...') : syncStatus === "failure" ? ('Try agian to synchronize with ' + name) : ('Synchronize with ' + name)} 
+                            tooltip={syncStatus === "success" ? 'Successfully synced with ' + name : syncStatus === 'syncing' ? ('Syncing with ' + name + '...') : syncStatus === "failure" ? ('Try again to synchronize with ' + name) : ('Synchronize with ' + name)} 
                             path_failure="/icons/svg/primitivo/failure.svg" 
                             path_failure_hovered="/icons/svg/zinfandel/failure.svg"
                             path="/icons/svg/black/sync.svg" 
@@ -173,6 +189,16 @@ function IntegrationElement({name, activeIntegrations, description, doc_link, on
                 </EmbloyH>
             </EmbloyH>
         </EmbloyV> 
+        <EmbloyModal
+            variant="lineprinter"
+            isOpen={resetResultModal.isOpen}
+            onOpenChange={resetResultModal.onOpenChange}
+            head={name + " Webhooks Reset"}
+            className="w-[750px]"
+        >
+            {resetResult}
+        </EmbloyModal>
+        </>
     );
 }
 export function IntegrationControl({activeIntegrations}) {

@@ -17,6 +17,9 @@ module.exports = {
       '2xl': '1536px',
     },
     extend: {
+      zIndex: {
+        '100': '100',
+      },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'gradient-conic':
@@ -42,6 +45,7 @@ module.exports = {
         'embloy-gray-lightest': '#f1f5f9',
         'barbera': '#D2C3FC',
         'amarone': '#9482ba',
+        'rubeno': '#5B4E76',
         'nebbiolo': '#3E3454',
         'biferno': '#312844',
         'aglianico': '#2B243C',
@@ -50,6 +54,7 @@ module.exports = {
 
         'primitivo': '#DF3840',
         'zinfandel': '#FF8C92',
+        'fragole': '#c7511b',
 
         'lagunaveneta': '#002f86',
         'golfotrieste': '#1a4590',
@@ -61,11 +66,14 @@ module.exports = {
         'vesuvio': '#787878',
         'ischia': '#374151',
         'ferrara': '#f1f5f9',
+        'pompei': '#fbfafb',
 
         'lugana': '#43C265',
         'custoza': '#a3f5cc',
       },
       spacing : {
+        '10%': '10%',
+        '50%': '50%',
         '70%': '70%',
         '75%': '75%',
         '80%': '80%',

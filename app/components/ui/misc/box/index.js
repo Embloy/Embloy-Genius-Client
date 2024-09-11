@@ -8,7 +8,7 @@ export const EmbloyBox = ({children, className, variant}) => {
         appearance = "dark:border-biferno";
     }
     return (
-        <div className={`border-[1px] border-etna  w-full flex landscape:flex-row portrait:flex-col items-start landscape:justify-between portrait:justify-start bg-transparent dark:bg-chianti landscape:px-6 portrait:px-4 landscape:py-6 portrait:py-5 rounded-lg g-4 dark:border-biferno ${appearance} ${className} `}>
+        <div className={`border-[1px] border-etna  w-full flex landscape:flex-row portrait:flex-col items-start landscape:justify-between portrait:justify-start bg-transparent dark:bg-chianti landscape:px-6 portrait:px-4 landscape:py-6 portrait:py-5 rounded-lg dark:border-biferno ${appearance} ${className} `}>
             {children}
         </div>
     );

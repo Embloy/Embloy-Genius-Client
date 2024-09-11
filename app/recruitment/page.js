@@ -73,7 +73,7 @@ export default function Jobs() {
 
   return (
     <EmbloyPageMount className="overflow-hidden">
-      <EmbloyPage>
+      <EmbloyPage sandboxed={false}>
         <EmbloyPageBody >
           <EmbloyPageBodySection>
             <EmbloyV>

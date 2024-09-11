@@ -52,7 +52,7 @@ const Navbar = () => {
 
                 <>
                     <div
-                        className="bg-body z-20 w-full h-14 sticky top-0 border-b-[1px] border-gray-700 flex flex-row items-center justify-center">
+                        className="bg-body z-30 w-full h-14 sticky top-0 border-b-[1px] border-gray-700 flex flex-row items-center justify-center">
                         <div className="container h-full min-w-98% flex flex-row items-center justify-between">
                             <div className="flex horizontal start-0 items-center h-full gap-x-6">
                                 <Logo/>

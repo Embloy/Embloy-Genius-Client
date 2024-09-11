@@ -9,15 +9,10 @@ import {PreferenceInfo} from "@/app/settings/profile/PreferenceInfo.js";
 import { SettingsPage, SettingsSection } from "@/app/components/dom/main/misc/settings_section";
 
 
-export function ProfileControl() {
+export function BillingControl() {
     return (
-        <SettingsPage>
-            <SettingsSection head="Account Details">
-                <ProfileInfo />
-            </SettingsSection>
-            <SettingsSection head="Preferences">
-                <PreferenceInfo/>
-            </SettingsSection>
+        <SettingsPage sandboxed={false}>
+            
         </SettingsPage>
     );
 }

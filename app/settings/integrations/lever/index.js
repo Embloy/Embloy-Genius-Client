@@ -3,6 +3,12 @@ import { core_get, not_core_get } from "@/lib/api/core";
 import { setCookie, getCookie, deleteCookie } from "cookies-next";
 import { siteConfig } from "@/config/site";
 const issuer = "lever";
+function parseWebhookLog(log) {
+    
+    const lines = log.split('\n');
+    const processedLines = lines.map(line => line.replace(/\t/g, '     '));
+    return processedLines;
+}
 
 export const verify = (activeIntegrations) => {
     if (activeIntegrations.filter((integration) => integration.issuer === issuer).length > 0) {
@@ -45,7 +51,6 @@ export const disconnect = async (active_integrations) => {
         const remaining = delete_ids_from_cookie(ids);
         return remaining;
     } catch (error) {
-        console.error("Error disconnecting from Lever", error);
         return false
     }
 };
@@ -53,11 +58,10 @@ export const disconnect = async (active_integrations) => {
 export const sync = async () => {
     try {
         const res = await not_core_get("POST", "/jobs/sync/lever", {});
-        return true;
+        return {type: "success", message: "Synced with Lever!"};
     }
     catch (error) {
-        console.error("Error syncing Lever", error);
-        return false
+        return {type: "error", message: error.message}
     }
   };
   
@@ -65,11 +69,10 @@ export const sync = async () => {
 export const reset = async () => {
     try {
         const res = await not_core_get("POST", "/user/webhooks/lever", {});
-        return true;
+        return {type: "success", message: parseWebhookLog(res.message)};
     }
     catch (error) {
-        console.error("Error resetting Lever webhooks", error);
-        return false
+        return {type: "error", message: error.message}
     }
 
 }

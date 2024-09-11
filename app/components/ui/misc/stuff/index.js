@@ -48,7 +48,7 @@ export const EmbloySpacer = ({className}) => {
         <div className={`w-full h-20px ${className}`} />
     );
 }
-export const EmbloyChildrenAdvanced = ({className, children, tooltip, disabled}) => {
+export const EmbloyChildrenAdvanced = ({className, children, tooltip, disabled, ...props}) => {
     if (tooltip) {
         return (
             <Tooltip

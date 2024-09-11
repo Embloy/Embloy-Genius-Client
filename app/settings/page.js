@@ -18,8 +18,8 @@ import { EmbloyLHPV, EmbloyV, EmbloyH, EmbloySpacer} from "@/app/components/ui/m
 import { EmbloyToolbox, EmbloyToolboxImgA} from "@/app/components/ui/misc/toolbox";
 import { IntegrationControl } from "./integrations/IntegrationControl";
 import { ProfileControl } from "./profile/ProfileControl";
-import { AccessControl } from "./integrations/AccessControl";
-import { BillingControl } from "./integrations/BillingControl";
+import { AccessControl } from "./access/AccessControl";
+import { BillingControl } from "./billing/BillingControl";
 import { SecretsControl } from "./integrations/SecretsControl";
 import { ArchiveControl } from "./integrations/ArchiveControl";
 import { getCookie } from "cookies-next";
@@ -74,6 +74,7 @@ function SettingsPanel() {
         integrations = [];
     }
     const reload = () => {
+        console.log("reloading");
         router.push(window.location.href);
         router.refresh();
     };
@@ -106,8 +107,8 @@ function SettingsPanel() {
                                 <AccessSettings />
                             </EmbloyV>
                             <EmbloyV id={2} className="gap-3">
-                                {/*<BillingControl />*/}
-                                <BillingSettings store={store} />
+                                <BillingControl />
+                                {/*<BillingSettings store={store} />*/}
                             </EmbloyV>
                             <EmbloyV id={3} className="gap-3">
                                 {/*<SecretsControl />*/}

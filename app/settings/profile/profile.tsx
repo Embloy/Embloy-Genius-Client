@@ -9,6 +9,7 @@ import {ProfileInfo} from "@/app/settings/profile/ProfileInfo";
 import {SubscriptionSettings} from "@/app/settings/SubscriptionSettings";
 import {AppearanceSettings} from "@/app/settings/profile/Appearance";
 import {useRouter} from "next/navigation";
+import { PreferenceInfo } from '@/app/settings/profile/PreferenceInfo';
 
 
 
@@ -33,6 +34,8 @@ export function ProfileSettings({store, user}) {
                 <div
                     className="text-sm w-full flex flex-col items-start justify-start gap-4 border-b border-gray-700 p-4">
                     <ProfileInfo/>
+                    <div className="h-3"/>
+                    <PreferenceInfo/>
                     <div className="h-3"/>
                     <NotificationSettings/>
                     <div className="h-3"/>

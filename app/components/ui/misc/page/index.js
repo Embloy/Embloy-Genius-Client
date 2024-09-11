@@ -1,8 +1,10 @@
 "use client";
-import React,{ useState, useEffect} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import '@/app/globals.css'
 import { cn } from "@/lib/utils";
 import { EmbloyLHPV, EmbloyV, EmbloyH, EmbloySpacer} from "@/app/components/ui/misc/stuff";
+import {UserContext} from "@/app/components/dom/main/wrappers/UserContext";
+import { EmbloyP, EmbloyH1 } from "../text";
 export const EmbloyPageMount = ({children, className}) => {
     return (
         <div className={`overflow-x-hidden flex flex-col w-full min-h-screen ${className}`}>
@@ -11,14 +13,68 @@ export const EmbloyPageMount = ({children, className}) => {
     );
 }
 
-export const EmbloyPage = ({children, className}) => {
+export const EmbloyPageLight = ({children, className}) => {
     return (
-        <div className={`w-full flex flex-col items-center justify-start`}>
+        <EmbloyH className={`justify-center`}>
             <div className={`w-full min-h-screen landscape:max-w-80% portrait:max-w-93% flex flex-col items-center justify-start border-l-[1px] border-r-[1px] border-gray-700 p-4 ${className}`}>
                 {children}
             </div>
-        </div>
+        </EmbloyH>
     );
+}
+
+export const EmbloyPageNoAccess = ({className, variant}) => {
+    return (
+        <EmbloyV className={`p-4 h-screen items-center justify-center gap-2 ${variant==="settings" && "border-t dark:border-biferno pt-2"} ${className}`}>
+            
+            <EmbloyH className="w-fit justify-center">
+                <div className="p-4 bg-fragole rounded-full ">
+                    <EmbloyH1 className="text-2xl">Ah, so this is what that Sandbox mode 🏖️ does....</EmbloyH1>
+                </div>
+            </EmbloyH>
+            <EmbloyH className="w-fit justify-center">
+                <EmbloyP className="text-2xl italic dark:text-nebbiolo text-vesuvio">Sorry, this feature is not available in Sandbox mode.</EmbloyP>
+            </EmbloyH>
+        </EmbloyV>
+    );
+}
+export const EmbloyPage = ({children, className, sandboxed=true}) => {
+    let user = useContext(UserContext)
+    
+
+    return (
+        <EmbloyH className={`justify-between`}>
+            <EmbloyV className="landscape:max-w-10% items-start">
+                {user && user.user_type === "sandbox" && (
+                    <EmbloyH className="fixed top-0 left-0 h-screen justify-start">
+                        <div className="flex flex-col w-[50px] h-full items-center justify-center text-white bg-fragole">
+                            <p className="rotate-[270deg] w-[470px] text-right">Sandbox mode 🏖️ - access to some features may be limited.</p>
+                        </div>
+                </EmbloyH>
+                ) }
+            </EmbloyV>
+            <div className={`z-20 w-full min-h-screen landscape:max-w-80% portrait:max-w-93% flex flex-col items-center justify-start border-l-[1px] border-r-[1px] border-gray-700 p-4 ${className}`}>
+                {sandboxed ? (
+                    children
+                ) : user && user.user_type === "sandbox" ? (
+                    <EmbloyPageNoAccess />
+                ) : (
+                    children
+                )}
+            </div>
+            <EmbloyV className="landscape:max-w-10% ">
+                {user && user.user_type === "sandbox" && (
+                    <EmbloyH className="fixed top-0 right-0 h-screen justify-end">
+                        <div className="flex flex-col w-[50px] h-full items-center justify-center text-white bg-fragole">
+                            <p className="rotate-[90deg] w-[470px] text-left">Sandbox mode 🏖️ - access to some features may be limited.</p>
+                        </div>
+                    </EmbloyH>
+                ) }
+            </EmbloyV>
+        </EmbloyH>
+    );
+    
+    
 }
 
 export const EmbloyPageBody = ({children, className}) => {

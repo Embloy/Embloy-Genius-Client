@@ -6,6 +6,7 @@ import {UserContext} from "@/app/components/dom/main/wrappers/UserContext";
 import {UserBar} from "@/app/components/dom/navigation/userbar";
 import {StoreContext} from "@/app/components/dom/main/wrappers/StoreWrapper";
 import Image from "next/image";
+import "@/app/globals.css";
 
 const Footerbar = () => {
     const pathname = usePathname()
@@ -23,7 +24,7 @@ const Footerbar = () => {
     return (
         <>
             <div
-                className="w-full h-14 border-t-[1px] border-vesuvio dark:border-ischia flex flex-row items-center justify-center">
+                className="z-20 w-full h-14 border-t-[1px] border-vesuvio dark:border-ischia flex flex-row items-center justify-center bg-body">
                 <div className="container h-full max-w-7/12 flex flex-row items-center justify-center gap-12">
 
                     <div className="flex flex-row items-center justify-start gap-2">

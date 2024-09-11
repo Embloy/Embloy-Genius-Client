@@ -1,118 +1,105 @@
-import React, {useContext, useRef, useState} from "react";
+import React, {useContext, useEffect, useRef, useState} from "react";
 import {UserContext} from "@/app/components/dom/main/wrappers/UserContext";
 import '@/app/globals.css'
-import {cn} from "@/lib/utils";
 import {AvatarButton} from "@/app/components/ui/misc/avatar";
-import {upload_profile_image} from "@/lib/misc_requests";
 import { not_core_get } from "@/lib/api/core";
 import '@/app/globals.css'
-import { EmbloyToolbox, EmbloyToolboxImgA, EmbloyToolboxImgButton, EmbloyToolboxImgAdvanced } from "@/app/components/ui/misc/toolbox";
 import { EmbloyLHPV, EmbloyV, EmbloyH, EmbloySpacer, EmbloyToggle} from "@/app/components/ui/misc/stuff";
-import { EmbloyH1, EmbloyP } from "@/app/components/ui/misc/text";
-
-export function ProfileInfo() {
+import { EmbloyInput, EmbloyInputbox, EmbloyInputboxElement, EmbloyRadioOption } from "@/app/components/ui/misc/input";
+import { patch_user, set_avatar as post_avatar, remove_avatar } from "@/lib/api/user";
+export function ProfileInfo(reload) {
     let user = useContext(UserContext)
     const [changesMade, setChangesMade] = useState(false);
-    const [nameIsHovered, setNameIsHovered] = useState(false);
     const [nameIsClicked, setNameIsClicked] = useState(false);
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
-    const nameHover = () => {
-        setNameIsHovered(true);
-    }
-    const nameNotHover = () => {
-        setNameIsHovered(false);
-    }
-    const nameClick = () => {
-        if (firstName == '') {
-            setFirstName(user.first_name)
-        }
-        if (lastName == '') {
-            setLastName(user.last_name)
-        }
-        setNameIsClicked(!nameIsClicked);
-    }
-    const handleNameSubmit = (e) => {
-        if (e.key === 'Enter') {
-            nameClick();
-            checkChanges();
-        }
-    }
 
-    const [fNameIsHovered, setfNameIsHovered] = useState(false);
-    const fNameHover = () => {
-        setfNameIsHovered(true);
-    }
-    const fNameNotHover = () => {
-        setfNameIsHovered(false);
-    }
 
-    const [lNameIsHovered, setlNameIsHovered] = useState(false);
-    const lNameHover = () => {
-        setlNameIsHovered(true);
-    }
-    const lNameNotHover = () => {
-        setlNameIsHovered(false);
-    }
-
-    const [emailIsHovered, setEmailIsHovered] = useState(false);
-    const [emailIsClicked, setEmailIsClicked] = useState(false);
-    const [email, setEmail] = useState('');
-    const emailHover = () => {
-        setEmailIsHovered(true);
-    }
-    const emailNotHover = () => {
-        setEmailIsHovered(false);
-    }
-    const emailClick = () => {
-        if (email == '') {
-            setEmail(user.email);
-        }
-        setEmailIsClicked(!emailIsClicked);
-    }
-    const handleEmailSubmit = (e) => {
-        if (e.key === 'Enter') {
-            emailClick();
-            checkChanges();
-
-        }
-    }
-
-    const checkChanges = () => {
-        if (email != '' && email != user.email && !changesMade) {
-            setChangesMade(true);
-        }
-        if ((firstName != '' && firstName != user.first_name || lastName != '' && lastName != user.last_name) && !changesMade) {
-            setChangesMade(true);
-        }
-        if (email == user.email && firstName == user.first_name && lastName == user.last_name) {
-            setChangesMade(false)
-        }
-    }
 
     const [newImageUrl, setNewImageUrl] = useState(null);
-    const fileInputRef = useRef(null);
-    const [uploading, setUploading] = useState(false);
+    const [avatar, set_avatar] = useState(false);
+
     const [showReload, setShowReload] = useState(false);
     const [error, setError] = useState(null);
+    const [uploading, setUploading] = useState(false);
+    const [uploadError, setUploadError] = useState(null);
+    const [removing, setRemoving] = useState(false);
+    const [removeError, setRemoveError] = useState(null);
+    const handleImageReset = async () => {
+        try {
+            setRemoveError(null);
+            setRemoving(true);
+            await remove_avatar();
+            setNewImageUrl("default");
+            setRemoving(false);
+            setShowReload(true);
+            set_avatar(false);
+        } catch (error) {
+            setRemoving(false);
+            console.error(error);
+            setRemoveError('error');
+        }
+    };
     const handleImageChange = async (e) => {
-        console.log("Handling image change")
         const file = e.target.files[0];
         if (file) {
-            setUploading(true);
-            const result = await upload_profile_image(file, router)
-            if (result.image_url) {
-                setNewImageUrl(result.image_url);
+            try {
+                setUploadError(null);
+                setUploading(true);
+                const result = await post_avatar(file);
+                if (result.image_url) {
+                    setNewImageUrl(result.image_url);
+                }
+                setUploading(false);
+                setShowReload(true);
+                set_avatar(true);
+
+            } catch (error) {
+                setUploading(false);
+                console.error(error);
+                setUploadError('error');
             }
-
         }
-        setUploading(false);
-        setShowReload(true);
+        
     };
 
-    const handleDivClick = () => {
-        fileInputRef.current.click();
-    };
+    const handleFirstNameChange = async (e) => {
+        if (user.first_name !== first_name) {
+            const res = await patch_user({first_name: first_name});
+            if (res.type === 'success') {
+                user.first_name = first_name;
+                set_first_name(first_name);
+            } else {
+                set_first_name(user.first_name);
+            }
+        }
+    }
+    const handleLastNameChange = async (e) => {
+        if (user.last_name !== last_name) {
+            const res = await patch_user({last_name: last_name});
+            if (res.type === 'success') {
+                user.last_name = last_name;
+                set_last_name(last_name);
+            } else {
+                set_last_name(user.last_name);
+            }
+        } else { console.log('no changes made') }
+    }
+
+    const handleEmailChange = async (e) => {
+        if (user.email !== email_address) {
+            const res = await patch_user({email: email_address});
+            if (res.type === 'success') {
+                user.email = email_address;
+                set_email_address(email_address);
+            } else {
+                set_email_address(user.email);
+            }
+        }
+    }
+    
+   
+
     const resetChanges = () => {
         setFirstName('');
         setNameIsClicked(false);
@@ -120,271 +107,132 @@ export function ProfileInfo() {
         setEmail('');
         setEmailIsClicked(false);
         setChangesMade(false);
-
     }
 
 
-    const submitChanges = async () => {
-        if (firstName !== '' && firstName !== user.first_name) {
-            body.first_name = firstName;
-        }
-        if (lastName !== '' && lastName !== user.last_name) {
-            body.last_name = lastName;
-        }
-        if (email !== '' && email !== user.email) {
-            body.email = email;
-        }
-        try {
-            const result = await not_core_get("PATCH", "/user", {"user": body})
-        } catch (error) {
-            console.error(error);
-            setError(error);
-        }
-        if (error) {
-            resetChanges();
-            return setError(null);
-        }
-        if (firstName !== '' && firstName) {
-            user.first_name = body.first_name
-        }
-        if (lastName !== '' && lastName !== user.last_name) {
-            user.last_name = body.last_name
-        }
-        if (email !== '' && email !== user.email) {
-            user.email = body.email
-        }
-        setShowReload(true);
-        resetChanges();
-
-    }
+    
     const [first_name, set_first_name] = useState(user.first_name);
     const [last_name, set_last_name] = useState(user.last_name);
+    const [email_address, set_email_address] = useState(user.email);
+    const fileInputRef = useRef(null);
+
+    const handleAvatarChange = (value) => {
+        if (value === 'initials') {
+            handleImageReset();       
+        } else if (value === 'image' && fileInputRef.current) {
+            fileInputRef.current.click();
+        }
+    };
+    useEffect(() => {
+        if (user.image_url===null) {
+            set_avatar(false);
+        } else {
+            set_avatar(true);
+        }
+    }, [user]);
 
     return (  
         <EmbloyV className="gap-4">
-            <EmbloyH className={"justify-end"}>
-                <EmbloyV className={"bg-transparent dark:bg-chianti border border-etna dark:border-biferno rounded-lg p-4 w-10/12"}>
-                    <EmbloyH className={"items-center justify-between h-10"}>
-                        <EmbloyV className={"h-full w-4/12 gap-1"}>
-                            <EmbloyH1 className={"text-sm"}>Name</EmbloyH1>
-                            <EmbloyP className={"text-xs"}>Your full name</EmbloyP>
-                        </EmbloyV>
-                        <EmbloyV className={"h-full justify-center w-6/12 gap-2"}>
-                            <EmbloyH className={"gap-2"}>
-                                <input
-                                    className="page-text px-2 h-9 w-6/12 border-[2px] rounded-lg text-sm dark:bg-nebbiolo border dark:border-amarone border-etna page-text text-md placeholder-etna dark:placeholder-amarone focus:outline-none focus:ring-2 dark:focus:ring-amarone focus:ring-lagunaveneta select-all"
-                                    type="text"
-                                    name="First Name"
-                                    value={first_name}
-                                    required={true}
-                                    onChange={(e) => set_first_name(e.target.value)}
-                                    onMouseEnter={fNameHover}
-                                    onMouseLeave={fNameNotHover}
-                                    placeholder="First Name"
-                                    onKeyPress={handleNameSubmit}/>
+            <EmbloyInputbox>
+                <EmbloyInputboxElement head="Name" description="Your full name">
+                    <EmbloyInput
+                        name="First Name"
+                        value={first_name}
+                        required={true}
+                        onChange={(e) => set_first_name(e.target.value)}
+                        placeholder="First Name"
+                        onKeyPress={(e) => {
+                            if (e.key === 'Enter') {
+                                handleFirstNameChange(e);
+                            }
+                        }}
+                        onBlur={handleFirstNameChange}
+                        />
                                     
-                                <input
-                                    className="page-text px-2 h-9 w-6/12 border-[2px] rounded-lg text-sm dark:bg-nebbiolo border dark:border-amarone border-etna page-text text-md placeholder-etna dark:placeholder-amarone focus:outline-none focus:ring-2 dark:focus:ring-amarone focus:ring-lagunaveneta select-all"
-                                    type="text"
-                                    name="Last Name"
-                                    value={last_name}
-                                    required={true}
-                                    onChange={(e) => set_last_name(e.target.value)}
-                                    onMouseEnter={lNameHover}
-                                    onMouseLeave={lNameNotHover}
-                                    placeholder="Last Name"
-                                    onKeyPress={handleNameSubmit}
-                                />
-                            </EmbloyH>
-
-                        </EmbloyV>
-
-                    </EmbloyH>
-
-                </EmbloyV>
-            </EmbloyH> 
-            <EmbloyH className={"justify-end"}>
-                <EmbloyV className={"bg-transparent dark:bg-chianti border border-etna dark:border-biferno rounded-lg p-4 w-10/12"}>
-                        <EmbloyH className={"items-center justify-between h-10"}>
-                            <EmbloyV className={"h-full w-5/12 gap-1"}>
-                                <EmbloyH1 className={"text-sm"}>User ID</EmbloyH1>
-                                <EmbloyP className={"text-xs"}>The unique identifier for your account. It cannot be modified.</EmbloyP>
-                            </EmbloyV>
-                            <EmbloyV className={"h-full justify-center w-6/12 gap-2"}>
-                                <EmbloyH className={"gap-2"}>
-                                    <input
-                                        className="page-text px-2 h-9 w-6/12 border-[2px] rounded-lg text-sm dark:bg-nebbiolo border dark:border-biferno border-etna page-text text-md placeholder-etna dark:placeholder-amarone focus:outline-none focus:ring-2 dark:focus:ring-amarone focus:ring-lagunaveneta select-all"
-                                        type="text"
-                                        name="UID"
-                                        disabled={true}
-                                        value={user.id}
-                                        required={true}
-                                        />
-                                        
-                                </EmbloyH>
-
-                            </EmbloyV>
-
-                    </EmbloyH>
-
-                </EmbloyV>
-            </EmbloyH>
-
-        {/*<div className="w-full flex flex-col items-start justify-start gap-4 ">
-            <div className="w-full flex flex-row items-center justify-start gap-3">
-            </div>
-
-            {user ? (
-                <div
-                    className={cn(error === null ? " w-[800px] flex flex-col items-start justify-start border border-gray-700 rounded-lg mb-6" : " w-[800px] flex flex-col items-start justify-start border border-red-500 rounded-lg mb-6")}>
-                    <div className="flex flex-row items-start justify-start px-4 py-2 gap-4">
-                        {error === null ? (
-                                nameIsClicked || emailIsClicked ? (
-                                    <p className="c3 text-xs bgneg italic">Hit return to stage changes</p>) : (
-                                    <p className="c3 text-xs bgneg italic">Click to edit</p>)
-                            ) :
-                            <p className="text-red-500 text-xs bgneg italic">An Error has occured. Try again</p>
-                        }
-
-                    </div>
-                    <div className="h-4"/>
-                    <div
-                        className=" w-[800px] flex flex-row items-start justify-between px-4 py-2 gap-10">
-                        <div className="flex flex-col items-start justify-start ">
-
-                            {nameIsClicked ? (
-                                <div
-                                    className="flex flex-row items-start justify-start py-4 rounded-lg">
-                                    <p className="w-[150px] left font-medium c0">Name</p>
-                                    <input
-                                        className="c0 h-9 w-40 px-2 border-[2px] dark:border-gray-600 border-gray-700 outline-none rounded-lg"
-                                        type="text"
-                                        name="First Name"
-                                        value={firstName}
-                                        required={true}
-                                        onChange={(e) => setFirstName(e.target.value)}
-                                        onMouseEnter={fNameHover}
-                                        onMouseLeave={fNameNotHover}
-                                        onKeyPress={handleNameSubmit}
-                                    />
-                                    <div className="w-2"/>
-                                    <input
-                                        className="c0 h-9 w-40 px-2 border-[2px] dark:border-gray-600 border-gray-700  outline-none rounded-lg"
-                                        type="text"
-                                        name="Last Name"
-                                        value={lastName}
-                                        required={true}
-                                        onChange={(e) => setLastName(e.target.value)}
-                                        onMouseEnter={lNameHover}
-                                        onMouseLeave={lNameNotHover}
-                                        onKeyPress={handleNameSubmit}
-                                    />
-                                </div>
-                            ) : (
-                                <div onMouseEnter={nameHover} onMouseLeave={nameNotHover} onClick={nameClick}
-                                     className="flex flex-row items-start justify-start py-4 rounded-lg">
-                                    <p className="w-[150px] left font-medium c0">Name</p>
-                                    <input
-                                        className="c2-5 h-9 w-40 px-2 border-[2px] dark:border-gray-900 border-gray-200 outline-none rounded-lg pointer-events-none"
-                                        type="text"
-                                        name="First Name"
-                                        value={firstName == '' ? user.first_name : firstName}
-                                        disabled={true}
-                                    />
-                                    <div className="w-2"/>
-                                    <input
-                                        className="c2-5 h-9 w-40 px-2 border-[2px] dark:border-gray-900 border-gray-200 outline-none rounded-lg pointer-events-none"
-                                        type="text"
-                                        name="Last Name"
-                                        value={lastName == '' ? user.last_name : lastName}
-                                        disabled={true}
-                                    />
-                                </div>
-                            )}
-                            {emailIsClicked ? (
-                                <div
-                                    className="flex flex-row items-start justify-start py-4 rounded-lg">
-                                    <p className="w-[150px] left font-medium c0">Email</p>
-                                    <input
-                                        className="c0 h-9 w-80 px-2 border-[2px] dark:border-gray-600 border-gray-700 outline-none rounded-lg"
-                                        type="email"
-                                        name="Email"
-                                        value={email}
-                                        required={true}
-                                        onChange={(e) => setEmail(e.target.value)}
-                                        onMouseEnter={emailHover}
-                                        onMouseLeave={emailNotHover}
-                                        onKeyPress={handleEmailSubmit}
-                                    />
-                                </div>
-                            ) : (
-                                <div onMouseEnter={emailHover} onMouseLeave={emailNotHover} onClick={emailClick}
-                                     className="flex flex-row items-start justify-start py-4 rounded-lg">
-                                    <p className="w-[150px] left font-medium c0">Email</p>
-                                    <input
-                                        className="c2-5 h-9 w-80 px-2 border-[2px] dark:border-gray-900 border-gray-200 outline-none rounded-lg pointer-events-none"
-                                        type="text"
-                                        name="Last Name"
-                                        value={email == '' ? user.email : email}
-                                        disabled={true}
-                                    />
-                                </div>
-                            )}
-
-                            {user.user_type == "company" && (
-                                <div className="flex flex-row items-start justify-between py-4 rounded-lg">
-                                    <p className="w-[150px] left font-medium c0">Company</p>
-                                    <p className="w-[300px] left px-4 c0">@MUSS NOCH WEG</p>
-                                </div>
-                            )}
-                        </div>
-
-                        <div onClick={handleDivClick} className="relative inline-block">
-                            <input
-                                type="file"
-                                ref={fileInputRef}
-                                style={{display: 'none'}}
-                                onChange={handleImageChange}
+                    <EmbloyInput
+                        name="Last Name"
+                        value={last_name}
+                        required={true}
+                        onChange={(e) => set_last_name(e.target.value)}
+                        placeholder="Last Name"
+                        onKeyPress={(e) => {
+                            if (e.key === 'Enter') {
+                                handleLastNameChange(e);
+                            }
+                        }}
+                        onBlur={handleLastNameChange}
+                    />
+                </EmbloyInputboxElement>
+            </EmbloyInputbox>
+            <EmbloyInputbox>
+                <EmbloyInputboxElement head="Email">
+                    <EmbloyInput
+                        name="Email"
+                        value={email_address}
+                        required={true}
+                        onChange={(e) => set_email_address(e.target.value)}
+                        placeholder="Email Address"
+                        onKeyPress={(e) => {
+                            if (e.key === 'Enter') {
+                                handleEmailChange(e);
+                            }
+                        }}
+                        onBlur={handleEmailChange}
+                        />
+                </EmbloyInputboxElement>
+            </EmbloyInputbox>
+            <EmbloyInputbox>
+            <EmbloyInputboxElement head="Avatar" description="Your public profile image">
+                    <EmbloyH>
+                        <EmbloyInput variant="single-choice">
+                            <EmbloyRadioOption
+                                value="initials"
+                                head="Use initials"
+                                checked={!avatar}
+                                onChange={() => handleAvatarChange('initials')}
+                                note = {removing ? 'Removing...' : removeError && 'Error removing'}
+                                note_state = {removeError ? 'error' : 'default'}
+                                
                             />
-                            <AvatarButton updated_image={newImageUrl} user={user} w={160} h={160}
-                                          styles="w-40 h-40 rounded-full bg-transparent hover:bg-transparent"
-                                          loading={uploading}/>
-                        </div>
+                            <EmbloyRadioOption
+                                value="image"
+                                head="Upload an image"
+                                checked={avatar}
+                                onChange={() => handleAvatarChange('image')}
+                                note={uploading ? 'Uploading...' : uploadError && 'Error uploading'}
+                                note_state={uploadError ? 'error' : 'default'}
+                            />
+                        </EmbloyInput>
+                    </EmbloyH>
 
-
-                    </div>
-                    <div className="h-4"/>
-                    <div className="flex flex-row items-start justify-start px-4 py-2 gap-4">
-                        <a href="https://developers.embloy.com/docs/category/account" target="_blank" rel="noreferrer"
-                           className="rounded-full c2-5 hover:underline text-xs bgneg">
-                            <p>Learn more</p>
-                        </a>
-                        {changesMade && (
-                            <button onClick={submitChanges}
-                                    className="rounded-full c2-5 hover:underline text-xs bgneg">
-                                <p>Save</p>
-                            </button>
-                        )}
-                        {changesMade && (
-                            <button onClick={resetChanges}
-                                    className="rounded-full c2-5 hover:underline text-xs bgneg">
-                                <p>Undo changes</p>
-                            </button>
-                        )}
-                        {showReload && (
-                            <a href={window.location.href}
-                               className="rounded-full c2-5 hover:underline text-xs bgneg">
-                                <p>Reload</p>
-                            </a>)}
-
-                    </div>
-
-                </div>
-            ) : (
-                <button>Sign in</button>
-            )}
-
-        </div>*/}
+                    <EmbloyH className="justify-end">
+                        <EmbloyInput
+                            variant="file"
+                            ref={fileInputRef}
+                            style={{ display: 'none' }} // Hide the file input
+                            onChange={handleImageChange} // Handle file change
+                        />
+                        <AvatarButton
+                            updated_image={newImageUrl}
+                            user={user}
+                            w={80}
+                            h={80}
+                            styles="max-h-fit rounded-full bg-transparent hover:bg-transparent"
+                        />
+                    </EmbloyH>
+                </EmbloyInputboxElement>
+            </EmbloyInputbox>
+            <EmbloyInputbox>
+                <EmbloyInputboxElement head="User ID" description="The unique identifier for your account. It cannot be modified." disabled={true}>
+                    <EmbloyInput
+                        name="UID"
+                        disabled={true}
+                        value={user.id}
+                        required={true}
+                        sandboxed={false}
+                    />
+                </EmbloyInputboxElement>
+            </EmbloyInputbox>
         </EmbloyV>
         
     )
