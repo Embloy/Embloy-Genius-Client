@@ -103,8 +103,8 @@ function SettingsPanel() {
                                 {/*<ProfileSettings user={user} store={store} />*/}
                             </EmbloyV>
                             <EmbloyV id={1} className="gap-3">
-                                {/*<AccessControl />*/}
-                                <AccessSettings />
+                                <AccessControl />
+                                {/*<AccessSettings />*/}
                             </EmbloyV>
                             <EmbloyV id={2} className="gap-3">
                                 <BillingControl />

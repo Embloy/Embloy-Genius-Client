@@ -115,7 +115,7 @@ export const EmbloyToggle = ({ name, onChange, className, disabled=false, unlock
                 (pending ? 'cursor-wait bg-amber-200 dark:bg-amber-200' : 'bg-green-500 dark:bg-green-500' ) 
                 : (pending ? 'cursor-wait bg-amber-200 dark:bg-amber-200' : 'dark:bg-nebbiolo bg-transparent')
             } 
-            ${className} ${disabled ? 'opacity-50 cursor-not-allowed' : ''}`}
+            ${disabled === true && 'opacity-50 cursor-not-allowed'} ${className}`}
         onClick={toggleSwitch}
       >
             <div 
@@ -125,10 +125,11 @@ export const EmbloyToggle = ({ name, onChange, className, disabled=false, unlock
                         (pending ? 'cursor-wait dark:bg-amber-600 bg-amber-600 translate-x-8 w-6' : 'bg-embloy-green dark:bg-embloy-green translate-x-8 w-6') 
                         : (pending ? 'cursor-wait dark:bg-amber-600 bg-amber-600 translate-x-0' : 'bg-etna dark:bg-amarone translate-x-0')
                     }
+                    ${disabled === true && 'opacity-50 cursor-not-allowed'}
                 `}
             />
 
-        <span className="ml-2 font-normal">
+        <span className={`ml-2 font-normal  ${disabled === true && 'opacity-50 cursor-not-allowed'}`}>
           <EmbloyP className="text-xs right select-none">
             {isOn ? 'On' : 'Off'}
           </EmbloyP>

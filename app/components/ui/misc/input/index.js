@@ -6,7 +6,7 @@ import { EmbloyChildrenAdvanced, EmbloyH, EmbloyV } from "@/app/components/ui/mi
 
 export const EmbloyInputbox = ({ children, className, variant }) => {
   return (
-    <EmbloyBox variant="chilled" className={`landscape:px-3.5 portrait:px-2 landscape:py-3.5 portrait:py-2 ${className}`}>
+    <EmbloyBox variant="chilled" className={`landscape:px-3.5 portrait:px-2 landscape:py-2.5 portrait:py-2 ${className}`}>
       {children}
     </EmbloyBox>
   );
@@ -50,6 +50,11 @@ export const EmbloyInput = forwardRef(({ sandboxed=true, children, className, va
         <EmbloyV className={`${basicStyle} ${props.disabled && disabledColorStyle} p-2 gap-2 ${className}`}>
           {children}
         </EmbloyV>
+      );
+
+    } else if (variant === "password") {
+      return (
+        <input className={`${basicStyle} ${props.disabled && disabledColorStyle} ${className}`} type="password" {...props} />
       );
     } else {
       return (
