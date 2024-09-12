@@ -48,7 +48,6 @@ const Navbar = () => {
     return (
         <>{user ?
             (
-
                 <>
                     <div
                         className="bg-body z-30 w-full h-14 sticky top-0 border-b-[1px] border-gray-700 flex flex-row items-center justify-center">

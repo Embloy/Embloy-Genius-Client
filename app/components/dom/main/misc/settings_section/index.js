@@ -25,7 +25,7 @@ export const SettingsPage = ({children, sandboxed=true}) => {
 export const SettingsSection = ({children, head}) => {
     return (
         <>
-            <EmbloyH className={"items-center justify-between border-t dark:border-biferno pt-2"}>
+            <EmbloyH className={"items-center justify-between border-t dark:border-biferno border-etna pt-2"}>
                 <EmbloyH1 className={"text-lg"}>{head}</EmbloyH1>
             </EmbloyH>
             <EmbloyV className={"gap-2"}>

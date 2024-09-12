@@ -35,7 +35,7 @@ export const EmbloyToolboxImg = ({disabled=false, path, path_hovered, height, wi
         <EmbloyChildrenAdvanced {...props}>
             <Image
                 src={!disabled &&
-                isHovered
+                isHovered && path_hovered
                     ? path_hovered
                     : path
                 }
