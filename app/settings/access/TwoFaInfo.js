@@ -47,7 +47,7 @@ export function TwoFaInfo(reload) {
                 </EmbloyInputboxElement>
             </EmbloyInputbox>
             <EmbloyInputbox>
-                <EmbloyInputboxElement className="items-center" head="SMS/Text message" description="Get one-time suthentication codes sent to your phone via SMS. (Android users' choice)">
+                <EmbloyInputboxElement className="items-center" head="SMS/Text message" description="Get one-time authentication codes sent to your phone via SMS. (Android users' choice)">
                     <EmbloyP></EmbloyP>
                     <EmbloyH className={"justify-end"}>
                         <EmbloyToggle 
