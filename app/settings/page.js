@@ -20,7 +20,7 @@ import { IntegrationControl } from "./integrations/IntegrationControl";
 import { ProfileControl } from "./profile/ProfileControl";
 import { AccessControl } from "./access/AccessControl";
 import { BillingControl } from "./billing/BillingControl";
-import { SecretsControl } from "./integrations/SecretsControl";
+import { SecretsControl } from "./secrets/SecretsControl";
 import { ArchiveControl } from "./integrations/ArchiveControl";
 import { getCookie } from "cookies-next";
 import { siteConfig } from "@/config/site";
@@ -111,8 +111,8 @@ function SettingsPanel() {
                                 {/*<BillingSettings store={store} />*/}
                             </EmbloyV>
                             <EmbloyV id={3} className="gap-3">
-                                {/*<SecretsControl />*/}
-                                <SecretsSettings user={user} store={store} />
+                                <SecretsControl />
+                                {/*<<SecretsSettings user={user} store={store} /> */}
                             </EmbloyV>
                             <EmbloyV id={4} className="gap-3">
                                 <IntegrationControl onReload={reload} activeIntegrations={ integrations } />

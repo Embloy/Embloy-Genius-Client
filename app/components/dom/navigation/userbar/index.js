@@ -71,8 +71,8 @@ export const UserBar = ({ isVisible, onClose, userData, storeData }) => {
                                 <EmbloyH className="w-full flex flex-row justify-between items-center gap-2.5 border-[1px] rounded-lg p-4 bg-transparent dark:bg-chianti dark:border-biferno border-etna">
                                     <AvatarButton loading={false} updated_image={null} user={userData} w={40} h={40} styles="w-10 h-10 rounded-full bg-transparent hover:bg-transparent"/>
                                     <EmbloyV className="w-4/6 justify-start items-start gap-1.5">
-                                        <EmbloyH1 className="font-semibold text-sm">{userData.first_name} {userData.last_name}</EmbloyH1>
-                                        <EmbloyP className="text-xs">{userData.email}</EmbloyP>
+                                        <EmbloyH1 className="font-semibold text-sm line-clamp-1">{userData.first_name} {userData.last_name}</EmbloyH1>
+                                        <EmbloyP className="text-xs w-56 line-clamp-1">{userData.email}</EmbloyP>
                                     </EmbloyV>
                                 </EmbloyH>
                             </EmbloyV>

@@ -24,16 +24,16 @@ export function TwoFaInfo(reload) {
     return (  
         <EmbloyV className="gap-4">
             <EmbloyP>
-                Two-factor authentication minimizes the chances of unauthorized access. In the event of a compromised password, the 2nd auth step is a barrier against potential breaches.
+                Two-factor authentication (2FA) significantly reduces the risk of unauthorized access. If a password is compromised, the second authentication step adds a crucial layer of protection. While we don't currently offer an Android app, we plan to in the future.
+                For now, using SMS for 2FA is better than not having any extra security, but authentication apps are still the preferred method.
                 <a
                     className="px-1 italic text-embloy-purple-lighter hover:underline cursor-pointer"
-                    href="https://documenter.getpostman.com/view/24977803/2s9YRB2rkE"
+                    href="https://www.ccc.de/en/updates/2024/2fa-sms"
                     target="_blank"
                     rel="noopener noreferrer"
                 >
                     Learn more
                 </a>
-                about the benefits of 2FA.
             </EmbloyP>
             <EmbloyInputbox>
                 <EmbloyInputboxElement className="items-center" head="Embloy Mobile" description="Embloy Mobile can be used for two-factor authentication through your IOS device.">

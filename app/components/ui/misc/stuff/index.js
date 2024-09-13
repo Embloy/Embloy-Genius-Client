@@ -138,3 +138,17 @@ export const EmbloyToggle = ({ name, onChange, className, disabled=false, unlock
     </EmbloyChildrenAdvanced>
   );
 };
+
+export const EmbloyButton = ({ name, className, disabled=false, unlock=true, ...props }) => {
+    return (
+        <EmbloyChildrenAdvanced {...props}>
+            <button 
+                className={`
+                    w-full h-10 flex items-center justify-center rounded-lg bg-embloy-green text-embloy-purple-dark font-semibold cursor-pointer transition-colors duration-300 
+                    ${disabled === true && 'opacity-50 cursor-not-allowed'} ${className}`}
+            >
+                {name}
+            </button>
+        </EmbloyChildrenAdvanced>
+    );
+}
