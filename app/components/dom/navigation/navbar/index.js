@@ -33,7 +33,7 @@ const HeaderItem = ({name, link, default_path}) => {
 
 const Navbar = () => {
     const pathname = usePathname()
-
+    console.log("PATHNAME:", pathname)
     let app = useContext(AppContext)
     let user = useContext(UserContext)
     let store = useContext(StoreContext)

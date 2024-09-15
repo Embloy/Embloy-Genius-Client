@@ -11,7 +11,7 @@ import Link from "next/link";
 import { siteConfig } from "@/config/site";
 import { login } from "@/lib/api/auth";
 
-const Signin = () => {
+export const Signin = () => {
     const router = useRouter();
     const [loginError, setLoginError] = useState(false);
     const [internalError, setInternalError] = useState(false);

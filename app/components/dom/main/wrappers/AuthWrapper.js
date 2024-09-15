@@ -14,13 +14,10 @@ const AuthWrapper = ({children}) => {
                 try {
                     await claim_access_token();
                     router.push(path);
-                    console.log("Access token valid");
                 } catch (error) {
-                    console.log("ERROR IN AUTH WRAPPER", error);
                     logout();
-                    router.push("/signin");
                 }
-            }
+            } 
         };
 
     
