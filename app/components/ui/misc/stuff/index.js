@@ -149,7 +149,7 @@ export const EmbloyButton = ({ name, className, disabled=false, unlock=true, var
     let textcolor = "text-white dark:text-white";
     if (type === "text") {
         textcolor = "text-golfotrieste dark:text-amarone";
-        if (disalbed === false) {
+        if (disabled === false) {
             textcolor = textcolor + " hover:text-golfonapoli dark:hover:text-barbera";
         }
     }
