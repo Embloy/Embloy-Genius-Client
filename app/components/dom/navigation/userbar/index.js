@@ -13,17 +13,33 @@ import { EmbloyP, EmbloyH1 } from "@/app/components/ui/misc/text";
 import {AvatarButton} from "@/app/components/ui/misc/avatar";
 import { EmbloyToolboxImgAdvanced } from "@/app/components/ui/misc/toolbox";
 const UserBarItem = ({name, link, close, target="_self", icon, className}) => {
-    const listStyle = "stylish-header stylish-header-text p-[10px] bg-transparent dark:bg-chianti landscape:dark:hover:bg-biferno cursor-pointer border-[1px] dark:border-biferno border-etna";
+    const listStyle = " stylish-header stylish-header-text p-[10px] bg-white dark:bg-chianti landscape:dark:hover:bg-biferno cursor-pointer border-[1px] dark:border-biferno border-etna w-full items-center gap-2";
+    const setLink = (href, target="_self") => {
+        if (target === "_blank") {
+            window.open(href, "_blank");
+        } else {
+            window.open(href, "_self");
+        }
+    };
+    const handleClick = () => {
+        if (link) {
+            setLink(link, target);
+        }   
+        close();
+    }
     return (
-        <li className={listStyle} onClick={close}>
-            {link ? (<Link href={link} target={target}>
-                <EmbloyH className="items-center gap-2">
-                    <EmbloyToolboxImgAdvanced path={"/icons/svg/black/"+icon+".svg"} dark_path={"/icons/svg/white/"+icon+".svg"} height={13} width={13} />
+        <li className="w-full">
+            {link ? (
+                <Link href={link} target={target} onClick={close} >
+                    <EmbloyH className={listStyle}>
+                        <EmbloyToolboxImgAdvanced path={"/icons/svg/black/"+icon+".svg"} dark_path={"/icons/svg/white/"+icon+".svg"} height={13} width={13} />
+                        <EmbloyP className={`select-none ${className}`}>{name}</EmbloyP>
+                    </EmbloyH>
+                </Link>
+        ) : (<div className="w-full" onClick={close}>
+                <EmbloyH className={listStyle}>
                     <EmbloyP className={`select-none ${className}`}>{name}</EmbloyP>
                 </EmbloyH>
-                
-            </Link>) : (<div>
-                <EmbloyP className={`select-none ${className}`}>{name}</EmbloyP>
             </div>)}
             
         </li>
