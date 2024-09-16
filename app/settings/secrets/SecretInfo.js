@@ -22,6 +22,18 @@ export function SecretInfo() {
             setSecrets(new_tokens);
         }
     };
+    const validateToken = (token_ids) => {
+        if (secrets) {
+            let new_tokens = secrets.map((token) => {
+                if (token_ids.includes(token.id)) {
+                    return { ...token, active: true }; 
+                }
+                return token; 
+            });
+            
+            setSecrets(new_tokens);
+        }
+    };
 
     const deleteToken = async (token_ids) => {
         if (secrets) {
@@ -72,11 +84,13 @@ export function SecretInfo() {
                 <SecretDataTable 
                     columns={secretListColumns}
                     data={secrets}
-                    handleDataReload={deleteToken}
+                    onTokenDelete={deleteToken}
+                    onTokenInvalidate={invalidateToken}
                     onInternal={handleInternal}
                     internal={showInternal}
                     onExpired={handleExpired}
                     expired={showExpired}
+                    onTokenValidate={validateToken}
                 />
             </EmbloyV>
         </EmbloyV>

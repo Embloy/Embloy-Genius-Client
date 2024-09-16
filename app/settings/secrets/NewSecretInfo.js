@@ -22,16 +22,21 @@ export function NewSecretInfo({refresh}) {
 
 
     useEffect(() => {
-        if (issuer && secret && name && type && token_expiration) {
+        if ((issuer !== "" || secret !== "" || name !== "" || type !== "") && (status === "success" || status === "error")) {
+            setStatus(null);
+            setMessage(null);
+        }
+        if ((issuer !== "" && secret !== "" && name !== "" && type !== "" && token_expiration && status === null) || (status == "success" || status === "error")) {
             setDisabled(false);
         } else {
             setDisabled(true);
         }
     }
-    , [issuer, secret, name, type, token_expiration]);
+    , [status, issuer, secret, name, type]);
     
     const min = new Date(new Date().getTime() + 1 * 60 * 1000).toISOString().split('.')[0];
     const max = new Date(new Date().setFullYear(new Date().getFullYear() + 1)).toISOString().split('T')[0] + 'T00:00';
+    const hunderedYears = new Date(new Date().setFullYear(new Date().getFullYear() + 100)).toISOString().split('T')[0] + 'T00:00';
 
 
     const add_secret = async (e) => {
@@ -39,7 +44,8 @@ export function NewSecretInfo({refresh}) {
         if (status !== "success" && status !== "error") {
             setMessage(null);
             setStatus("loading");
-            const body = {
+            
+            let body = {
                 name: name,
                 issuer: issuer,
                 token: secret,
@@ -47,6 +53,10 @@ export function NewSecretInfo({refresh}) {
                 issued_at: new Date().toISOString(),
                 expires_at: token_expiration
             }
+            if (typeof body.expires_at === "object") {
+                body.expires_at = hunderedYears;
+                
+            } 
             try {
                 const res = await not_core_get("POST", "/tokens", body);
                 if (res) {
@@ -84,6 +94,7 @@ export function NewSecretInfo({refresh}) {
             set_token_expiration(parseAbsoluteToLocal(new Date().toISOString()));
         }
     }
+    
 
 
 

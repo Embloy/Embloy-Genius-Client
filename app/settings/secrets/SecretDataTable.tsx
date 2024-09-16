@@ -49,10 +49,12 @@ interface DataTableProps<TData, TValue> {
     internal: boolean
     onExpired: () => void
     expired: boolean
-    handleDataReload: (token_id?: number[]) => void
+    onTokenDelete: (token_id?: number[]) => void
+    onTokenInvalidate: (token_id?: number[]) => void
+    onTokenValidate: (token_id?: number[]) => void
 }
 
-export function SecretDataTable<TData extends Secret, TValue>({columns, data, onInternal, internal, expired, onExpired, handleDataReload}: DataTableProps<TData, TValue>) {
+export function SecretDataTable<TData extends Secret, TValue>({columns, data, onInternal, internal, expired, onExpired, onTokenDelete, onTokenValidate, onTokenInvalidate}: DataTableProps<TData, TValue>) {
 
     const [sorting, setSorting] = useState<SortingState>([])
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
@@ -87,7 +89,7 @@ export function SecretDataTable<TData extends Secret, TValue>({columns, data, on
 
     
     const invalidateRowModel = () => {
-        handleDataReload()
+        onTokenDelete()
     }
 
     const handleUploadSuccess = () => {
@@ -119,7 +121,7 @@ export function SecretDataTable<TData extends Secret, TValue>({columns, data, on
         }
     }
 
-    const handleTokenInvalidate = async () => {
+    const handleTokenDelete = async () => {
         const invalidateToken = async (token_id) => {
             try {
                 await not_core_get("DELETE", `/tokens/${token_id}`)
@@ -138,8 +140,55 @@ export function SecretDataTable<TData extends Secret, TValue>({columns, data, on
                 }
                 
             }
-            handleDataReload(removed);
+            onTokenDelete(removed);
+            setRowSelection({});
             
+        }
+    }
+    const handleTokenDeactivate = async () => {
+        const invalidateToken = async (token_id) => {
+            try {
+                await not_core_get("PATCH", `/tokens/${token_id}`, {active: false})
+                return true
+            } catch (e) {
+                return false
+            }
+        }
+        const selectedRows = getSelectedRows();
+        if (selectedRows && Object.keys(selectedRows).length > 0) {
+            let removed = []
+            for (const token in selectedRows) {
+                const res: boolean = await invalidateToken(getToken(token).id)
+                if (res === true) {
+                    removed.push(getToken(token).id)
+                }
+                
+            }
+            onTokenInvalidate(removed);
+            setRowSelection({});
+        }
+    }
+    const handleTokenActivate = async () => {
+        const invalidateToken = async (token_id) => {
+            try {
+                await not_core_get("PATCH", `/tokens/${token_id}`, {active: true})
+                return true
+            } catch (e) {
+                return false
+            }
+        }
+        const selectedRows = getSelectedRows();
+        if (selectedRows && Object.keys(selectedRows).length > 0) {
+            let removed = []
+            for (const token in selectedRows) {
+                const res: boolean = await invalidateToken(getToken(token).id)
+                if (res === true) {
+                    removed.push(getToken(token).id)
+                }
+                
+            }
+            onTokenValidate(removed);
+            setRowSelection({});
         }
     }
 
@@ -150,7 +199,9 @@ export function SecretDataTable<TData extends Secret, TValue>({columns, data, on
                 <EmbloyH className={"w-8/12 gap-3 justify-end"}>
                     <EmbloyToolbox superClassName="h-7 border-2 dark:border-chianti" className={undefined} name={undefined} >
                         <EmbloyToolboxImgButton tooltip={"Copy Token(s) to Clipboard"} success={undefined} failure={undefined} action={undefined} onClick={handleTokenClipboard} path="/icons/svg/black/cp.svg" path_action={undefined} path_success={undefined} path_failure={undefined} path_success_hovered={undefined} path_failure_hovered={undefined} path_hovered="/icons/svg/leidoveneta/cp.svg" path_hovered_action={undefined} path_disabled={undefined} dark_path="/icons/svg/amarone/cp.svg" dark_path_action={undefined} dark_path_hovered="/icons/svg/barbera/cp.svg" dark_path_hovered_action={undefined} dark_path_disabled={undefined} height="13" width="13" />
-                        <EmbloyToolboxImgButton tooltip={"Delete Token(s)"} success={undefined} failure={undefined} action={undefined} onClick={handleTokenInvalidate} path="/icons/svg/black/bin.svg" path_action={undefined} path_success={undefined} path_failure={undefined} path_success_hovered={undefined} path_failure_hovered={undefined} path_hovered="/icons/svg/leidoveneta/bin.svg" path_hovered_action={undefined} path_disabled={undefined} dark_path="/icons/svg/amarone/bin.svg" dark_path_action={undefined} dark_path_hovered="/icons/svg/barbera/bin.svg" dark_path_hovered_action={undefined} dark_path_disabled={undefined} height="13" width="13" />
+                        <EmbloyToolboxImgButton tooltip={"Activate Token(s)"} success={undefined} failure={undefined} action={undefined} onClick={handleTokenActivate} path="/icons/svg/black/success.svg" path_action={undefined} path_success={undefined} path_failure={undefined} path_success_hovered={undefined} path_failure_hovered={undefined} path_hovered="/icons/svg/leidoveneta/success.svg" path_hovered_action={undefined} path_disabled={undefined} dark_path="/icons/svg/amarone/success.svg" dark_path_action={undefined} dark_path_hovered="/icons/svg/barbera/success.svg" dark_path_hovered_action={undefined} dark_path_disabled={undefined} height="13" width="13" />
+                        <EmbloyToolboxImgButton tooltip={"Deactivate Token(s)"} success={undefined} failure={undefined} action={undefined} onClick={handleTokenDeactivate} path="/icons/svg/black/no.svg" path_action={undefined} path_success={undefined} path_failure={undefined} path_success_hovered={undefined} path_failure_hovered={undefined} path_hovered="/icons/svg/leidoveneta/no.svg" path_hovered_action={undefined} path_disabled={undefined} dark_path="/icons/svg/amarone/no.svg" dark_path_action={undefined} dark_path_hovered="/icons/svg/barbera/no.svg" dark_path_hovered_action={undefined} dark_path_disabled={undefined} height="13" width="13" />
+                        <EmbloyToolboxImgButton tooltip={"Delete Token(s)"} success={undefined} failure={undefined} action={undefined} onClick={handleTokenDelete} path="/icons/svg/black/bin.svg" path_action={undefined} path_success={undefined} path_failure={undefined} path_success_hovered={undefined} path_failure_hovered={undefined} path_hovered="/icons/svg/leidoveneta/bin.svg" path_hovered_action={undefined} path_disabled={undefined} dark_path="/icons/svg/amarone/bin.svg" dark_path_action={undefined} dark_path_hovered="/icons/svg/barbera/bin.svg" dark_path_hovered_action={undefined} dark_path_disabled={undefined} height="13" width="13" />
                         <EmbloyToolboxImgButton tooltip={internal ? "Hide Internal Authentication Tokens" : "Show Internal Authentication Tokens"} success={undefined} failure={undefined} action={undefined} onClick={onInternal} path="/icons/svg/black/embloy.svg" path_action={undefined} path_success={undefined} path_failure={undefined} path_success_hovered={undefined} path_failure_hovered={undefined} path_hovered="/icons/svg/leidoveneta/embloy.svg" path_hovered_action={undefined} path_disabled={undefined} dark_path="/icons/svg/amarone/embloy.svg" dark_path_action={undefined} dark_path_hovered="/icons/svg/barbera/embloy.svg" dark_path_hovered_action={undefined} dark_path_disabled={undefined} height="13" width="13" />
                         <EmbloyToolboxImgButton tooltip={expired ? "Hide Expired Tokens" : "Show Expired Tokens"} success={undefined} failure={undefined} action={undefined} onClick={onExpired} path="/icons/svg/black/exp.svg" path_action={undefined} path_success={undefined} path_failure={undefined} path_success_hovered={undefined} path_failure_hovered={undefined} path_hovered="/icons/svg/leidoveneta/exp.svg" path_hovered_action={undefined} path_disabled={undefined} dark_path="/icons/svg/amarone/exp.svg" dark_path_action={undefined} dark_path_hovered="/icons/svg/barbera/exp.svg" dark_path_hovered_action={undefined} dark_path_disabled={undefined} height="13" width="13" />
                         <DropdownMenu>
@@ -246,9 +297,13 @@ export function SecretDataTable<TData extends Secret, TValue>({columns, data, on
                         {table.getRowModel().rows?.length ? (
                             table.getRowModel().rows
                                 .map((row) => (
-                                <JobTableRowExtendable className="border-vesuvio dark:border-biferno hover:bg-ferrara dark:hover:bg-biferno"
+                                <JobTableRowExtendable className="cursor-copy active:cursor-progress border-vesuvio dark:border-biferno hover:bg-ferrara dark:hover:bg-biferno"
                                     key={row.id}
                                     extended={false}
+                                    onClick={() => {
+                                        const thisRow = data.at(Number(row.id))
+                                        navigator.clipboard.writeText(thisRow.token)
+                                    }}
                                     data-state={row.getIsSelected() && "selected"}
                                     onUploadSuccess={() => handleUploadSuccess()} onClose={function (): void {
                                         throw new Error("Function not implemented.");

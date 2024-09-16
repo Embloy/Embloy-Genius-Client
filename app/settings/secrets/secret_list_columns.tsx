@@ -38,18 +38,26 @@ export const secretListColumns: ColumnDef<Secret>[] = [
         enableSorting: true,
         enableHiding: true,
         cell: ({row}) => {
+            if (row.getValue('expires_at') < new Date().toISOString()) {
+                return (
+                    <EmbloyH className="gap-1.5 items-center">
+                        <div className="h-2 w-2 rounded-full bg-vesuvio dark:bg-vesuvio" />
+                        <EmbloyP className="text-xs" >Expired</EmbloyP>
+                    </EmbloyH>
+                )
+            } 
             if (row.getValue('active') === true) {
                 return (
                     <EmbloyH className="gap-1.5 items-center">
                         <div className="h-2 w-2 rounded-full bg-lugana dark:bg-lugana" />
-                        <EmbloyP className="text-xs" >Valid</EmbloyP>
+                        <EmbloyP className="text-xs" >Active</EmbloyP>
                     </EmbloyH>
                 )
             } else {
                 return (
                     <EmbloyH className="gap-1.5 items-center">
                         <div className="h-2 w-2 rounded-full bg-primitivo dark:bg-zinfandel" />
-                        <EmbloyP className="text-xs" >Invalid</EmbloyP>
+                        <EmbloyP className="text-xs" >Inactive</EmbloyP>
                     </EmbloyH>
                 )
             }
