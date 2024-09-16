@@ -1,12 +1,20 @@
 import { useState } from 'react';
 import '@/app/globals.css'
 
-export const EmbloyP = ({className, children, ...props}) => {
-    return (
-        <p className={`page-text ${className}`} {...props}>
-            {children}
-        </p>
-    )
+export const EmbloyP = ({className, children, variant="default", ...props}) => {
+    if (variant === "mini") {
+      return (
+        <p className={`text-xs dark:text-amarone text-etna ${className}`} {...props}>
+              {children}
+          </p>
+      )
+
+    } else {
+      return (
+          <p className={`page-text ${className}`} {...props}>
+              {children}
+          </p>
+    )}
 }
 
 export const EmbloyPEditable = ({ initialText, className }) => {

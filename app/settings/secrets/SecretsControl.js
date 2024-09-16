@@ -8,6 +8,7 @@ import {ProfileInfo} from "@/app/settings/profile/ProfileInfo.js";
 import {PreferenceInfo} from "@/app/settings/profile/PreferenceInfo.js";
 import { SettingsPage, SettingsSection } from "@/app/components/dom/main/misc/settings_section";
 import { TokenInfo } from "./TokenInfo";
+import { SecretInfo } from "./SecretInfo";
 
 export function SecretsControl() {
     return (
@@ -15,9 +16,8 @@ export function SecretsControl() {
             <SettingsSection head="Embloy Tokens">
                 <TokenInfo/>
             </SettingsSection>
-            <SettingsSection head="3rd-Party Secrets">
-            </SettingsSection>
             <SettingsSection head="Account Secrets Center">
+                <SecretInfo/>
             </SettingsSection>
         </SettingsPage>
     );

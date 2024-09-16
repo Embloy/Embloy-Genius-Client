@@ -31,6 +31,14 @@ export const EmbloyInputboxElement = ({ children, disabled = false, className, d
 };
 
 export const EmbloyInput = forwardRef(({ sandboxed=true, children, className, variant, ...props }, ref) => {
+  let max = "2100-12-31";
+  if (props.max) {
+    max = props.max;
+  }
+  let min = "2000-01-01";
+  if (props.min) {
+    min = props.min;
+  }
   const disabledStyle = "dark:border-biferno cursor-not-allowed";
   const basicStyle = `${props.disabled ? disabledStyle : "dark:border-rubeno"} px-2 min-h-9 w-full border-[1px] rounded-lg dark:bg-nebbiolo border border-etna page-text placeholder-etna dark:placeholder-amarone focus:outline-none focus:ring-2 dark:focus:ring-amarone focus:ring-lagunaveneta select-all`;
   const disabledColorStyle = 'dark:text-etna text-vesuvio bg-pompei dark:bg-aglianico';
@@ -56,6 +64,14 @@ export const EmbloyInput = forwardRef(({ sandboxed=true, children, className, va
       return (
         <input className={`${basicStyle} ${props.disabled && disabledColorStyle} ${className}`} type="password" {...props} />
       );
+    } else if (variant === "date") {
+      return (
+        <input className={`${basicStyle} ${props.disabled && disabledColorStyle} ${className}`} type="date" max={max} min={min} {...props} />
+      );
+    } else if (variant === "datetime-local") {
+      return (
+        <input className={`${basicStyle} ${props.disabled && disabledColorStyle} ${className}`} type="datetime-local" max={max} min={min} {...props} />
+      );
     } else {
       return (
         <input className={`${basicStyle} ${props.disabled && disabledColorStyle} ${className}`} type="text" {...props} />
@@ -69,7 +85,12 @@ export const EmbloyInput = forwardRef(({ sandboxed=true, children, className, va
 });
 EmbloyInput.displayName = "EmbloyInput";
 
-export const EmbloySelectOption = ({ children, value, head }) => {
+export const EmbloySelectOption = ({ placeholder=false, children, value, head }) => {
+  if (placeholder) {
+    return (
+      <option value="" disabled>{children ?? head}</option>
+    )
+  }
   return (
     <option value={value}>{children ?? head}</option>
   );

@@ -4,7 +4,7 @@ import LoadingScreen from "@/app/components/dom/main/screens/LoadingScreen";
 import ErrorScreen from "@/app/components/dom/main/screens/ErrorScreen";
 import {get_genius_query} from "@/lib/misc_requests";
 import {isNotNumeric} from "@/lib/utils/helpers";
-import Signin from "./signin/page";
+import Signin from "./signin";
 
 export default function Page({params}) {
     const [content, setContent] = useState(null)

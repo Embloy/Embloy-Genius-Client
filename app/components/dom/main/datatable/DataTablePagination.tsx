@@ -12,6 +12,7 @@ import {cn} from "@/lib/utils";
 import Image from "next/image";
 import React, {useState} from "react";
 import '@/app/globals.css'
+import { EmbloyP } from "@/app/components/ui/misc/text";
 interface DataTablePaginationProps<TData> {
     table: Table<TData>
 }
@@ -54,10 +55,10 @@ export function DataTablePagination<TData>({
     }
     if (table.getPageCount() > 1) {
         return (
-            <div className="flex items-center justify-between px-2">
+            <div className="flex items-center justify-between px-2 w-full">
                 <div className="flex items-center justify-end space-x-2 gap-4">
                     <div className="flex items-center space-x-2">
-                        <p className="text-page-text">Rows per page</p>
+                        <EmbloyP className="text-xs">Rows/page</EmbloyP>
                         <Select
                             value={`${table.getState().pagination.pageSize}`}
                             onValueChange={(value) => {
@@ -109,10 +110,10 @@ export function DataTablePagination<TData>({
                                 className="relative"
                             />
                         </button>
-                        <div className="flex w-[100px] items-center justify-center text-sm font-normal text-gray-700">
+                        <EmbloyP className="flex items-center justify-center text-xs ">
                             Page {table.getState().pagination.pageIndex + 1} of{" "}
                             {table.getPageCount()}
-                        </div>
+                        </EmbloyP >
                         <button
                             onMouseEnter={handleNextHover}
                             onMouseLeave={handleNextNotHover}
@@ -163,7 +164,7 @@ export function DataTablePagination<TData>({
         <div className="flex items-center justify-between px-2">
             <div className="flex items-center justify-end space-x-2 gap-4">
                 <div className="flex items-center space-x-2">
-                    <p className="text-sm font-normal text-gray-700">Rows per page</p>
+                    <EmbloyP className="text-xs">Rows per page</EmbloyP>
                     <Select
                         value={`${table.getRowModel().rows.length}`}
                         onValueChange={(value) => {

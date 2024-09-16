@@ -44,12 +44,9 @@ export function SecretsSettings() {
   };
 
   const removeToken = (idToRemove: number) => {
-    console.log("Called remove token with token id: ", idToRemove);
-    console.log("Current size: ", tokens.length);
     setTokens((prevTokens) =>
       prevTokens.filter((token) => token.id !== idToRemove)
     );
-    console.log("Post size: ", tokens.length);
   };
 
   const handleGet = async () => {

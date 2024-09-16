@@ -19,10 +19,8 @@ export function PasswordInfo(reload) {
 
     const handlePasswordChange = async () => {
         if (password !== '' && newPassword !== '' && verifyPassword !== '' && password.length >= 8 && newPassword.length >= 8 && verifyPassword.length >= 8) {
-            console.log("WIFI");
             if (password !== newPassword && newPassword === verifyPassword) {
                 try {
-                    console.log("OK LETS GO");
                     setError(null);
                     await force_login(user.email, password, router);
                     const response = await not_core_get("PATCH", "/user/password", { user: { password: newPassword, password_confirmation: verifyPassword } });
@@ -37,13 +35,9 @@ export function PasswordInfo(reload) {
                     set_verify_password('');
                     
                 }
-            } else {
-                console.log("NOPE");
-            }
+            } 
         }
-        else {
-            console.log("Double NOPE");    
-        }
+        
 
     }
 
