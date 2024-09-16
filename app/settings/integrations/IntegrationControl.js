@@ -10,8 +10,14 @@ import {
     sync as leverSync, 
     reset as leverReset ,
     verify as leverVerify,
-    sync
 } from "@/app/settings/integrations/lever";
+import { 
+    connect as ashbyConnect, 
+    disconnect as ashbyDisconnect, 
+    sync as ashbySync, 
+    reset as ashbyReset ,
+    verify as ashbyVerify,
+} from "@/app/settings/integrations/ashby";
 import { claim_core_tokens } from "@/lib/api/user";
 import { ProgressLoadingScreen } from "@/app/components/dom/main/screens/ProgressLoadingScreen.js";
 import { cn } from "@/lib/utils";
@@ -225,6 +231,7 @@ export function IntegrationControl({activeIntegrations}) {
             <EmbloyV className={"gap-2"}>
                 <EmbloyV className={"gap-2"}>
                     <IntegrationElement name="Lever" activeIntegrations={integrations} description={"Use Embloy with Lever's recruiting software."} doc_link="https://developers.embloy.com/docs/guides/get-started-integrations-lever" onConnect={leverConnect} onDisconnect={leverDisconnect} onSync={leverSync} onReset={leverReset} onVerify={leverVerify} onReload={reload} />
+                    <IntegrationElement name="Ashby" activeIntegrations={integrations} description={"Use Embloy with Ashby’s all-in-one recruiting platform."} doc_link="https://developers.embloy.com/docs/guides/get-started-integrations-ashby" onConnect={ashbyConnect} onDisconnect={ashbyDisconnect} onSync={ashbySync} onReset={ashbyReset} onVerify={ashbyVerify} onReload={reload} />
                 </EmbloyV>
             </EmbloyV>
         </EmbloyV> 
