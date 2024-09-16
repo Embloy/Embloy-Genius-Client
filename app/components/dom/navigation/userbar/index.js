@@ -81,10 +81,10 @@ export const UserBar = ({ isVisible, onClose, userData, storeData }) => {
                             <ul className="flex flex-col gap-4 w-full">
                                     <EmbloySpacer className="h-px" />
                                     <UserBarItem icon="embloy" name="To Embloy.com" link="https://www.embloy.com" target="_blank" close={onClose}/>
-                                    <UserBarItem icon="urllink" name="API Doc" link="/account" close={onClose}/>
+                                    <UserBarItem icon="urllink" name="API Doc" link="https://docs.embloy.com" close={onClose}/>
                                     <UserBarItem icon="setting" name="Settings" link="/settings" close={onClose}/>
-                                    <UserBarItem icon="issue" name="Report an issue" link="/settings" close={onClose}/>
-                                    <UserBarItem icon="ask" name="Help & Support" link="/settings" close={onClose}/>
+                                    <UserBarItem icon="issue" name="Report an issue" link="https://www.embloy.com/en-US/dashboard/report-an-issue" close={onClose}/>
+                                    <UserBarItem icon="ask" name="Help & Support" link="https://www.embloy.com/en-US/resources" close={onClose}/>
                                     <UserBarItem name="Logout" close={out} className="text-primitivo dark:text-zinfandel"/>
                                     <EmbloySpacer className="h-px" />
                                     <EmbloySeperator className="dark:bg-biferno bg-etna h-[2px]" />
