@@ -34,12 +34,12 @@ import {extractContent} from "@/lib/utils/helpers";
 import { EmbloyLHPV, EmbloyV, EmbloyH, EmbloySpacer, EmbloyButton, EmbloySeperator} from "@/app/components/ui/misc/stuff";
 import { EmbloyToolbox, EmbloyToolboxImgA, EmbloyToolboxImgAdvanced, EmbloyToolboxImgButton } from "@/app/components/ui/misc/toolbox";
 import '@/app/globals.css'
-import { Secret } from "@/lib/types/secret";
+import { Secret, TokenIssuer } from "@/lib/types/secret";
 import {
     useDisclosure,
   } from "@nextui-org/react";
 import { EmbloyModal } from "@/app/components/ui/misc/modal";
-import { EmbloyP } from "@/app/components/ui/misc/text";
+import { EmbloyH1, EmbloyP } from "@/app/components/ui/misc/text";
 import { not_core_get } from "@/lib/api/core";
 
 interface DataTableProps<TData, TValue> {
@@ -196,6 +196,17 @@ export function SecretDataTable<TData extends Secret, TValue>({columns, data, on
         <>
         <EmbloyV className={"gap-2"}>
             <EmbloyH className={"items-center justify-between"}>
+                <EmbloyH className={"w-4/12 gap-3 justify-start"}>
+                    <EmbloyH className="bg-body dark:bg-chianti gap-1.5 items-center rounded-lg border dark:border-biferno p-2 max-w-fit items-center gap-12">
+                        <EmbloyH1 className=" text-sm">All Account Secrets</EmbloyH1>
+                        <EmbloyH className="max-w-fit gap-2">
+                            <EmbloyP className="text-xs dark:text-amarone text-etna">Note:</EmbloyP>
+                            <EmbloyP className="border dark:border-biferno border-vesuvio px-3 py rounded-lg text-xs italic">Internal issuer</EmbloyP>
+                            <EmbloyP className="border dark:border-lagunaveneta border-leidoveneta dark:bg-lagunaveneta bg-leidoveneta px-3 py rounded-lg text-xs italic">External issuer</EmbloyP>
+                        </EmbloyH>
+                    </EmbloyH>
+                    
+                </EmbloyH>
                 <EmbloyH className={"w-8/12 gap-3 justify-end"}>
                     <EmbloyToolbox superClassName="h-7 border-2 dark:border-chianti" className={undefined} name={undefined} >
                         <EmbloyToolboxImgButton tooltip={"Copy Token(s) to Clipboard"} success={undefined} failure={undefined} action={undefined} onClick={handleTokenClipboard} path="/icons/svg/black/cp.svg" path_action={undefined} path_success={undefined} path_failure={undefined} path_success_hovered={undefined} path_failure_hovered={undefined} path_hovered="/icons/svg/leidoveneta/cp.svg" path_hovered_action={undefined} path_disabled={undefined} dark_path="/icons/svg/amarone/cp.svg" dark_path_action={undefined} dark_path_hovered="/icons/svg/barbera/cp.svg" dark_path_hovered_action={undefined} dark_path_disabled={undefined} height="13" width="13" />
@@ -297,7 +308,7 @@ export function SecretDataTable<TData extends Secret, TValue>({columns, data, on
                         {table.getRowModel().rows?.length ? (
                             table.getRowModel().rows
                                 .map((row) => (
-                                <JobTableRowExtendable className="cursor-copy active:cursor-progress border-vesuvio dark:border-biferno hover:bg-ferrara dark:hover:bg-biferno"
+                                <JobTableRowExtendable className={`cursor-copy active:cursor-progress border-vesuvio dark:border-biferno hover:bg-ferrara dark:hover:bg-biferno ${(data.at(Number(row.id)).issuer.toString()  !== "embloy") && 'bg-leidoveneta dark:bg-lagunaveneta'}`}
                                     key={row.id}
                                     extended={false}
                                     onClick={() => {
@@ -330,7 +341,9 @@ export function SecretDataTable<TData extends Secret, TValue>({columns, data, on
                     </TableBody>
                 </Table>
             </div>
-            <div className="p-4 flex flex-row items-center justify-between">
+            
+            
+            <EmbloyH className="bg-body dark:bg-chianti gap-1.5 items-center rounded-lg border dark:border-biferno p-2 max-w-fit">
                 <div className="flex items-center justify-start space-x-2">
                     {table.getFilteredSelectedRowModel().rows.length > 0 && (
                         // If the condition is true
@@ -339,8 +352,8 @@ export function SecretDataTable<TData extends Secret, TValue>({columns, data, on
                     )}
                 </div>
                 <DataTablePagination table={table}/>
-            </div>
-
+            </EmbloyH>
+            
         </EmbloyV>
         <EmbloyModal
             isOpen={clipboardModal.isOpen}

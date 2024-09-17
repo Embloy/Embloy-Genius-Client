@@ -14,7 +14,7 @@ export type Secret = {
   type TokenType = {
     allowed: "api_key" | "refresh_token" | "access_token" | "client_token" | "request_token" ;
   };
-  type TokenIssuer = {
+  export type TokenIssuer = {
     allowed: "ashby" | "embloy" | "lever";
   };
   

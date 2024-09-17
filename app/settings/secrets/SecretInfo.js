@@ -87,7 +87,7 @@ export function SecretInfo({onShow}) {
     }, [onShow]);
 
     return (  
-        <EmbloyV className="gap-4">
+        <EmbloyV className="gap-8">
             <NewSecretInfo refresh={getSecrets}/>
             <EmbloyV className="gap-4">
                 <SecretDataTable 
