@@ -241,7 +241,7 @@ export function SecretDataTable<TData extends Secret, TValue>({columns, data, on
                         type="text"
                         name="name"
                         placeholder="Filter..."
-                        value={(table.getColumn("token_type")?.getFilterValue() as string) ?? ""}
+                        value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
                         onChange=
                             {
                                 (event) => {
@@ -251,7 +251,7 @@ export function SecretDataTable<TData extends Secret, TValue>({columns, data, on
                                             behavior: "smooth"
                                         });
                                     }
-                                    table.getColumn("position")?.setFilterValue(event.target.value)
+                                    table.getColumn("name")?.setFilterValue(event.target.value)
                                 }
                             }
 

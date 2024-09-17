@@ -23,8 +23,10 @@ export function NewSecretInfo({refresh}) {
 
     useEffect(() => {
         if ((issuer !== "" || secret !== "" || name !== "" || type !== "") && (status === "success" || status === "error")) {
-            setStatus(null);
-            setMessage(null);
+            setTimeout(() => {
+                setStatus(null);
+                setMessage(null);
+            }, 3500);            
         }
         if ((issuer !== "" && secret !== "" && name !== "" && type !== "" && token_expiration && status === null) || (status == "success" || status === "error")) {
             setDisabled(false);
@@ -75,9 +77,9 @@ export function NewSecretInfo({refresh}) {
                 
 
             } catch (error) {
-                console.log(error);
                 setStatus("error");
                 if (error.status === 403) {
+
                     setMessage("Insufficient level");
                 } else {
                     setMessage("Try again later");
