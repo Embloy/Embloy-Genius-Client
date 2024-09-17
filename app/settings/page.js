@@ -54,8 +54,18 @@ function SettingsPanel() {
     let store = useContext(StoreContext);
 
     const subPages = [{name:'Profile', id:0}, {name:'Access', id:1}, {name:'Billing', id:2}, {name:'Secrets', id:3}, {name:'Integrations', id:4}, {name:'Archive', id:5}]
+    const [integrations, setIntegrations] = useState([]);
+    const setIntegrationToken = () => {
+        const res = getCookie("active_integrations", {path: "/", domain: `${siteConfig.core_domain}`});
+        if (res !== undefined) {
+           setIntegrations(JSON.parse(res));
+        } else {
+            setIntegrations([]);
+        }
+    };
 
     const handlePageChange = (id) => {
+        setIntegrationToken();
         setcurrentSubPageID(id);
         const tabName = subPages.find(page => page.id === id).name.toLowerCase();
         router.push(`?tab=${tabName}`);
@@ -63,17 +73,6 @@ function SettingsPanel() {
 
     if (!user) return (<LoadingScreen />);
 
-    let integrations = getCookie("active_integrations", {path: "/", domain: `${siteConfig.core_domain}`});
-    if (integrations !== undefined) {
-        integrations = JSON.parse(integrations);
-    } else {
-        integrations = [];
-    }
-    const reload = () => {
-        console.log("reloading");
-        router.push(window.location.href);
-        router.refresh();
-    };
 
 
     return (
@@ -102,13 +101,12 @@ function SettingsPanel() {
                             </EmbloyV>
                             <EmbloyV id={2} className="gap-3">
                                 <BillingControl />
-                                {/*<BillingSettings store={store} />*/}
                             </EmbloyV>
                             <EmbloyV id={3} className="gap-3">
-                                <SecretsControl />
+                                <SecretsControl onShow={currentSubPageID === 3} />
                             </EmbloyV>
                             <EmbloyV id={4} className="gap-3">
-                                <IntegrationControl onReload={reload} activeIntegrations={ integrations } />
+                                <IntegrationControl activeIntegrations={ integrations } />
                             </EmbloyV>
                             <EmbloyV id={5} className="gap-3">
                                 <ArchiveControl />

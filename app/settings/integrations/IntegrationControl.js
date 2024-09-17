@@ -18,15 +18,12 @@ import {
     reset as ashbyReset ,
     verify as ashbyVerify,
 } from "@/app/settings/integrations/ashby";
-import { claim_core_tokens } from "@/lib/api/user";
-import { ProgressLoadingScreen } from "@/app/components/dom/main/screens/ProgressLoadingScreen.js";
-import { cn } from "@/lib/utils";
 import {
     useDisclosure,
   } from "@nextui-org/react";
 import { EmbloyModal } from "@/app/components/ui/misc/modal";
 
-function IntegrationElement({name, activeIntegrations, description, doc_link, onConnect, onDisconnect, onSync, onReset, onVerify, onReload}) {
+function IntegrationElement({name, activeIntegrations, description, doc_link, onConnect, onDisconnect, onSync, onReset, onVerify}) {
     const [isError, setError] = useState(null);
     const [status, setStatus] = useState("inactive");
     const [syncStatus, setSyncStatus] = useState("inactive");
@@ -43,7 +40,6 @@ function IntegrationElement({name, activeIntegrations, description, doc_link, on
             setResetResult(null);
             setResetStatus("resetting");
             const res = await onReset();
-            console.log("RES RES", res);
             if (res.type === 'success') {
                 setResetResult(res.message);
                 resetResultModal.onOpenChange(true);
@@ -76,7 +72,7 @@ function IntegrationElement({name, activeIntegrations, description, doc_link, on
     };
 
     const handleToggleChange = async (newState) => {
-        if (status === "inactive" && newState === true) {
+        if (status === "inactive" && newState === true && onConnect !== undefined) {
             try {
                 force("connect");
                 await onConnect();
@@ -85,15 +81,14 @@ function IntegrationElement({name, activeIntegrations, description, doc_link, on
                 setError("Error connecting to " + name);
                 force("inactive");
             } 
-            onReload();
-        } else if (status === "active" && newState === false) {
+        } else if (status === "active" && newState === false && onDisconnect !== undefined) {
             try {
                 force("disconnect");
                 const token = await onDisconnect(activeIntegrations);
-                onReload(token);
                 setError(null);
                 force("inactive");
             } catch (error) {
+                console.log(error);
                 setError("Error disconnecting from " + name);
                 force("active");
             }
@@ -103,6 +98,8 @@ function IntegrationElement({name, activeIntegrations, description, doc_link, on
     useEffect(() => {
         if (onVerify(activeIntegrations) === true) {
             force("active");
+        } else {
+            force("inactive");
         }
     }, [activeIntegrations]);
 
@@ -126,7 +123,7 @@ function IntegrationElement({name, activeIntegrations, description, doc_link, on
                     {(isError !== null) && <EmbloyP className={"text-xs text-red-500 dark:text-red-500"}>{isError}</EmbloyP>}
                     {(status === "connect") && <EmbloyP className={"text-xs text-yellow-500 dark:text-yellow-500"}>Connecting...</EmbloyP>}
                     {(status === "disconnect") && <EmbloyP className={"text-xs text-yellow-500 dark:text-yellow-500"}>Disconnecting...</EmbloyP>}
-                    {(resetStatus === "resetting") && <EmbloyP className={"text-xs text-yellow-500 dark:text-yellow-500"}>Please wait, this may take up to 30 seconds. Don&apos;t refresh.</EmbloyP>}
+                    {(resetStatus === "resetting" || syncStatus === "syncing") && <EmbloyP className={"text-xs text-yellow-500 dark:text-yellow-500"}>Please wait, this may take up to 30 seconds. Don&apos;t refresh.</EmbloyP>}
                     
                     <EmbloyToolbox superClassName="h-7 border-2 dark:border-nebbiolo dark:bg-nebbiolo" className={undefined} name={undefined} >
                         {/*<IntegrationSync key="Sync" name={name} disabled={!isRequested} />
@@ -208,21 +205,7 @@ function IntegrationElement({name, activeIntegrations, description, doc_link, on
     );
 }
 export function IntegrationControl({activeIntegrations}) {
-    const [integrations, setIntegrations] = useState([]);
-    useEffect(() => {
-        setIntegrations(activeIntegrations);
-    }, [activeIntegrations]);
-    const reload = async (token) => {
-        if (token===undefined) {
-            console.log("i gOT NO TOKEN");
-            const tokens = await claim_core_tokens(true);
-            setIntegrations(tokens);
-        } else {
-            console.log("i gOT TOKEN", token);
-            setIntegrations(token);
-        }
-        return true;
-    };
+
     return (
         <EmbloyV className={"gap-2 border-t dark:border-biferno pt-2"}>
             <EmbloyH className={"items-center justify-between"}>
@@ -230,8 +213,8 @@ export function IntegrationControl({activeIntegrations}) {
             </EmbloyH>
             <EmbloyV className={"gap-2"}>
                 <EmbloyV className={"gap-2"}>
-                    <IntegrationElement name="Lever" activeIntegrations={integrations} description={"Use Embloy with Lever's recruiting software."} doc_link="https://developers.embloy.com/docs/guides/get-started-integrations-lever" onConnect={leverConnect} onDisconnect={leverDisconnect} onSync={leverSync} onReset={leverReset} onVerify={leverVerify} onReload={reload} />
-                    <IntegrationElement name="Ashby" activeIntegrations={integrations} description={"Use Embloy with Ashby’s all-in-one recruiting platform."} doc_link="https://developers.embloy.com/docs/guides/get-started-integrations-ashby" onConnect={ashbyConnect} onDisconnect={ashbyDisconnect} onSync={ashbySync} onReset={ashbyReset} onVerify={ashbyVerify} onReload={reload} />
+                    <IntegrationElement name="Lever" activeIntegrations={activeIntegrations} description={"Use Embloy with Lever's recruiting software."} doc_link="https://developers.embloy.com/docs/guides/get-started-integrations-lever" onConnect={leverConnect} onDisconnect={leverDisconnect} onSync={leverSync} onReset={leverReset} onVerify={leverVerify}  />
+                    <IntegrationElement name="Ashby" activeIntegrations={activeIntegrations} description={"Use Embloy with Ashby’s all-in-one recruiting platform."} doc_link="https://developers.embloy.com/docs/guides/get-started-integrations-ashby"  onDisconnect={ashbyDisconnect} onSync={ashbySync} onReset={ashbyReset} onVerify={ashbyVerify} />
                 </EmbloyV>
             </EmbloyV>
         </EmbloyV> 

@@ -2,13 +2,10 @@
 import { core_get, not_core_get } from "@/lib/api/core"; 
 import { setCookie, getCookie, deleteCookie } from "cookies-next";
 import { siteConfig } from "@/config/site";
+import { parseWebhookLog } from "@/lib/utils/helper";
 const issuer = "lever";
-function parseWebhookLog(log) {
-    
-    const lines = log.split('\n');
-    const processedLines = lines.map(line => line.replace(/\t/g, '     '));
-    return processedLines;
-}
+
+
 
 export const verify = (activeIntegrations) => {
     if (activeIntegrations.filter((integration) => integration.issuer === issuer).length > 0) {

@@ -10,14 +10,14 @@ import { SettingsPage, SettingsSection } from "@/app/components/dom/main/misc/se
 import { TokenInfo } from "./TokenInfo";
 import { SecretInfo } from "./SecretInfo";
 
-export function SecretsControl() {
+export function SecretsControl({onShow}) {
     return (
         <SettingsPage>
             <SettingsSection head="Embloy Tokens">
                 <TokenInfo/>
             </SettingsSection>
             <SettingsSection head="Account Secrets Center">
-                <SecretInfo/>
+                <SecretInfo onShow={onShow} />
             </SettingsSection>
         </SettingsPage>
     );

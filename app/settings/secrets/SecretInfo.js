@@ -6,11 +6,13 @@ import { NewSecretInfo } from "./NewSecretInfo";
 import { claim_core_tokens } from "@/lib/api/user";
 import { SecretDataTable } from "./SecretDataTable";
 import { secretListColumns } from "./secret_list_columns";
-export function SecretInfo() {
+
+
+export function SecretInfo({onShow}) {
     const [showExpired, setShowExpired] = useState(false);
     const [showInternal, setShowInternal] = useState(false)
     const [secrets, setSecrets] = React.useState([]);
-    const invalidateToken = (token_ids) => {
+    const invalidateToken = async (token_ids) => {
         if (secrets) {
             let new_tokens = secrets.map((token) => {
                 if (token_ids.includes(token.id)) {
@@ -18,11 +20,11 @@ export function SecretInfo() {
                 }
                 return token; 
             });
-            
             setSecrets(new_tokens);
+            await getSecrets();
         }
     };
-    const validateToken = (token_ids) => {
+    const validateToken = async (token_ids) => {
         if (secrets) {
             let new_tokens = secrets.map((token) => {
                 if (token_ids.includes(token.id)) {
@@ -32,6 +34,7 @@ export function SecretInfo() {
             });
             
             setSecrets(new_tokens);
+            await getSecrets();
         }
     };
 
@@ -55,6 +58,7 @@ export function SecretInfo() {
         };
         try {
             let tokens = await claim_core_tokens();
+            
             if (!showExpired) {
                 tokens = tokens.filter((token) => !isExpired(token));
             }
@@ -76,6 +80,11 @@ export function SecretInfo() {
     const handleExpired = () => {
         setShowExpired(!showExpired);
     }
+    useEffect(() => {
+        if (onShow) {
+            getSecrets();
+        }
+    }, [onShow]);
 
     return (  
         <EmbloyV className="gap-4">
