@@ -46,6 +46,8 @@ function SettingsPanel() {
             if (subPageID !== undefined) {
                 setcurrentSubPageID(subPageID);
             }
+        } else {
+            handlePageChange(currentSubPageID);
         }
     }, [searchParams]);
 
