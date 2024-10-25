@@ -47,7 +47,7 @@ function SettingsPanel() {
                 setcurrentSubPageID(subPageID);
             }
         } else {
-            setcurrentSubPageID(0);
+            handlePageChange(currentSubPageID);
         }
     }, [searchParams]);
 
@@ -72,9 +72,7 @@ function SettingsPanel() {
         const tabName = subPages.find(page => page.id === id).name.toLowerCase();
         router.push(`?tab=${tabName}`);
     }
-    useEffect(() => {
-        console.log("Subpage ID", currentSubPageID);
-    }, [currentSubPageID]);
+
 
     if (!user) return (<LoadingScreen />);
 
