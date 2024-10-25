@@ -46,12 +46,14 @@ function SettingsPanel() {
             if (subPageID !== undefined) {
                 setcurrentSubPageID(subPageID);
             }
+        } else {
+            setcurrentSubPageID(0);
         }
     }, [searchParams]);
 
  
     let user = useContext(UserContext);
-    let store = useContext(StoreContext);
+    //let store = useContext(StoreContext);
 
     const subPages = [{name:'Profile', id:0}, {name:'Access', id:1}, {name:'Billing', id:2}, {name:'Secrets', id:3}, {name:'Integrations', id:4}, {name:'Archive', id:5}]
     const [integrations, setIntegrations] = useState([]);
@@ -70,6 +72,9 @@ function SettingsPanel() {
         const tabName = subPages.find(page => page.id === id).name.toLowerCase();
         router.push(`?tab=${tabName}`);
     }
+    useEffect(() => {
+        console.log("Subpage ID", currentSubPageID);
+    }, [currentSubPageID]);
 
     if (!user) return (<LoadingScreen />);
 
@@ -80,38 +85,38 @@ function SettingsPanel() {
             <EmbloyPage>
                 <EmbloyPageBody >
                     <EmbloyPageBodySection>
-                    <EmbloyV>
-                        <EmbloyH className="justify-between">
-                            <h1 className="page-header">Settings</h1>
-                            <EmbloyToolbox superClassName="portrait:hidden">
-                            <EmbloyToolboxImgA href="https://developers.embloy.com/docs/category/genius" height="12" width="12" path="/icons/svg/black/ask.svg" path_hovered="/icons/svg/leidoveneta/ask.svg" dark_path="/icons/svg/amarone/ask.svg" dark_path_hovered="/icons/svg/barbera/ask.svg" target="_blank" />
-                            </EmbloyToolbox>
-                        </EmbloyH>
-                        <EmbloySpacer />
-                        <EmbloySubPage 
-                            pages={subPages}
-                            onPageChange={handlePageChange}
-                            externalSetActivePage={currentSubPageID}
-                        >
-                            <EmbloyV id={0} className="gap-3">
-                                <ProfileControl />
-                            </EmbloyV>
-                            <EmbloyV id={1} className="gap-3">
-                                <AccessControl />
-                            </EmbloyV>
-                            <EmbloyV id={2} className="gap-3">
-                                <BillingControl />
-                            </EmbloyV>
-                            <EmbloyV id={3} className="gap-3">
-                                <SecretsControl onShow={currentSubPageID === 3} />
-                            </EmbloyV>
-                            <EmbloyV id={4} className="gap-3">
-                                <IntegrationControl activeIntegrations={ integrations } />
-                            </EmbloyV>
-                            <EmbloyV id={5} className="gap-3">
-                                <ArchiveControl />
-                            </EmbloyV>
-                        </EmbloySubPage>
+                        <EmbloyV>
+                            <EmbloyH className="justify-between">
+                                <h1 className="page-header">Settings</h1>
+                                <EmbloyToolbox superClassName="portrait:hidden">
+                                    <EmbloyToolboxImgA href="https://developers.embloy.com/docs/category/genius" height="12" width="12" path="/icons/svg/black/ask.svg" path_hovered="/icons/svg/leidoveneta/ask.svg" dark_path="/icons/svg/amarone/ask.svg" dark_path_hovered="/icons/svg/barbera/ask.svg" target="_blank" />
+                                </EmbloyToolbox>
+                            </EmbloyH>
+                            <EmbloySpacer />
+                            <EmbloySubPage 
+                                pages={subPages}
+                                onPageChange={handlePageChange}
+                                externalSetActivePage={currentSubPageID}
+                            >
+                                <EmbloyV id={0} className="gap-3">
+                                    <ProfileControl />
+                                </EmbloyV>
+                                <EmbloyV id={1} className="gap-3">
+                                    <AccessControl />
+                                </EmbloyV>
+                                <EmbloyV id={2} className="gap-3">
+                                    <BillingControl />
+                                </EmbloyV>
+                                <EmbloyV id={3} className="gap-3">
+                                    <SecretsControl onShow={currentSubPageID === 3} />
+                                </EmbloyV>
+                                <EmbloyV id={4} className="gap-3">
+                                    <IntegrationControl activeIntegrations={ integrations } />
+                                </EmbloyV>
+                                <EmbloyV id={5} className="gap-3">
+                                    <ArchiveControl />
+                                </EmbloyV>
+                            </EmbloySubPage>
                         </EmbloyV>
                     </EmbloyPageBodySection>
                 </EmbloyPageBody>

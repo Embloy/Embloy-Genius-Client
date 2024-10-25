@@ -123,7 +123,7 @@ export const EmbloySubPageNav = ({className, pages, checked, handleClick}) => {
         </ul>
     );
 }
-export const EmbloySubPage = ({pages, children, className, onPageChange, externalSetActivePage}) => {
+export const EmbloySubPage = ({pages, children, className, onPageChange, externalSetActivePage, showSubPageBar=true}) => {
     const [activePage, setActivePage] = useState(pages[0].id);
     const handleClick = (id) => {
         if (activePage !== id) {
@@ -140,7 +140,12 @@ export const EmbloySubPage = ({pages, children, className, onPageChange, externa
       }, [externalSetActivePage, activePage]);
     return (
         <EmbloyV>
-            <EmbloySubPageNav pages={pages} checked={activePage} handleClick={handleClick} />
+            {showSubPageBar===true && 
+                <>
+                    <EmbloySubPageNav pages={pages} checked={activePage} handleClick={handleClick} />
+                    
+                </>
+            }
             <EmbloySpacer />
             {React.Children.map(children, (child, index) => (
                 <div key={index} className={cn(activePage === child.props.id ? "w-full" : "hidden")}>
