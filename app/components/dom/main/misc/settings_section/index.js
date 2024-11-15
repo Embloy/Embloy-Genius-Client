@@ -13,7 +13,7 @@ export const SettingsPage = ({children, sandboxed=true}) => {
     <EmbloyV className={"gap-2 "}>
        {sandboxed ? (
                     children
-                ) : user && user.user_type === "sandbox" ? (
+                ) : user && user.type === "SandboxUser" ? (
                     <EmbloyPageNoAccess variant="settings" />
                 ) : (
                     children
