@@ -29,9 +29,9 @@ export function RemoveJobButton({ formats = ['*'], router, img, style, getSelect
             setUploading(true);
             let accumulatedErrors = [];
             for (const job in selectedRows) {
-                const job_id = getJob(job).job_id;
+                const id = getJob(job).id;
                 try {
-                    const res = await patch_core(`/jobs?id=${job_id}`, router, {job_status: 'archived'})
+                    const res = await patch_core(`/jobs?id=${id}`, router, {job_status: 'archived'})
                 } catch (e) {
                     console.log("Error occurred during removing job: ", e);
                     accumulatedErrors.push({ job, error: e });
