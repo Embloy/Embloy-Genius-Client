@@ -45,7 +45,7 @@ export const EmbloyPage = ({children, className, sandboxed=true}) => {
     return (
         <EmbloyH className={`justify-between`}>
             <EmbloyV className="landscape:max-w-10% items-start">
-                {user && user.user_type === "sandbox" && (
+                {user && user.type === "SandboxUser" && (
                     <EmbloyH className="fixed top-0 left-0 h-screen justify-start">
                         <div className="flex flex-col w-[50px] h-full items-center justify-center text-white bg-fragole">
                             <p className="rotate-[270deg] w-[470px] text-right">Sandbox mode 🏖️ - access to some features may be limited.</p>
@@ -56,14 +56,14 @@ export const EmbloyPage = ({children, className, sandboxed=true}) => {
             <div className={`z-20 w-full min-h-screen landscape:max-w-80% portrait:max-w-93% flex flex-col items-center justify-start border-l-[1px] border-r-[1px] border-gray-700 p-4 ${className}`}>
                 {sandboxed ? (
                     children
-                ) : user && user.user_type === "sandbox" ? (
+                ) : user && user.type === "SandboxUser" ? (
                     <EmbloyPageNoAccess />
                 ) : (
                     children
                 )}
             </div>
             <EmbloyV className="landscape:max-w-10% ">
-                {user && user.user_type === "sandbox" && (
+                {user && user.type === "SandboxUser" && (
                     <EmbloyH className="fixed top-0 right-0 h-screen justify-end">
                         <div className="flex flex-col w-[50px] h-full items-center justify-center text-white bg-fragole">
                             <p className="rotate-[90deg] w-[470px] text-left">Sandbox mode 🏖️ - access to some features may be limited.</p>
