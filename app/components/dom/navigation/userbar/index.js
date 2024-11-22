@@ -77,8 +77,8 @@ export const UserBar = ({ isVisible, onClose, userData, storeData }) => {
                         <EmbloyV className="h-full items-center landscape:py-2 portrait:py-2 gap-4">
                             <EmbloyV className="gap-2.5 pt-[5px]">
                                 <EmbloyH className='flex items-center justify-end'>
-                                    <Image src={xwIcon} className='w-8 h-8 hidden dark:block cursor-pointer' onClick={onClose} />
-                                    <Image src={xbIcon} className='w-8 h-8 block dark:hidden cursor-pointer' onClick={onClose}/>
+                                    <Image alt={"user-1"}  src={xwIcon} className='w-8 h-8 hidden dark:block cursor-pointer' onClick={onClose} />
+                                    <Image alt={"user-2"} src={xbIcon} className='w-8 h-8 block dark:hidden cursor-pointer' onClick={onClose}/>
                                 </EmbloyH>
                                 <EmbloySeperator className="dark:bg-biferno bg-etna h-[2px]" />
                             </EmbloyV>

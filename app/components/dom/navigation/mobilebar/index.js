@@ -38,12 +38,12 @@ export const MobileBar = ({ isVisible, onClose, pageSection, pathname, userData,
             <EmbloyBoxContent className={`items-center gap-5px`}>
                 <EmbloyH className={`justify-between`}>
                     <div className='w-8 h-8 flex items-center justify-center' onClick={onClose}>
-                        <Image src={edIcon} className='w-8 h-8 hidden dark:block' />
-                        <Image src={ebIcon} className='w-8 h-8 block dark:hidden'/>
+                        <Image alt={"mobile-1"} src={edIcon} className='w-8 h-8 hidden dark:block' />
+                        <Image alt={"mobile-2"} src={ebIcon} className='w-8 h-8 block dark:hidden'/>
                     </div>
                     <div className='w-8 h-8 flex items-center justify-end' onClick={onClose}>
-                        <Image src={xwIcon} className='w-8 h-8 hidden dark:block'/>
-                        <Image src={xbIcon} className='w-8 h-8 block dark:hidden'/>
+                        <Image alt={"mobile-3"} src={xwIcon} className='w-8 h-8 hidden dark:block'/>
+                        <Image alt={"mobile-4"} src={xbIcon} className='w-8 h-8 block dark:hidden'/>
                     </div>
 
                 </EmbloyH>
