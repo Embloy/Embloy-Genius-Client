@@ -36,7 +36,6 @@ export function ProfileInfo(reload) {
             set_avatar(false);
         } catch (error) {
             setRemoving(false);
-            console.error(error);
             setRemoveError('error');
         }
     };
@@ -44,6 +43,9 @@ export function ProfileInfo(reload) {
         const file = e.target.files[0];
         if (file) {
             try {
+                if (file.size > 2000000) {
+                    throw new Error('File too large');
+                }
                 setUploadError(null);
                 setUploading(true);
                 const result = await post_avatar(file);
@@ -56,7 +58,6 @@ export function ProfileInfo(reload) {
 
             } catch (error) {
                 setUploading(false);
-                console.error(error);
                 setUploadError('error');
             }
         }
@@ -83,7 +84,7 @@ export function ProfileInfo(reload) {
             } else {
                 set_last_name(user.last_name);
             }
-        } else { console.log('no changes made') }
+        } else {  }
     }
 
     const handleEmailChange = async (e) => {
@@ -209,8 +210,8 @@ export function ProfileInfo(reload) {
                         <EmbloyInput
                             variant="file"
                             ref={fileInputRef}
-                            style={{ display: 'none' }} // Hide the file input
-                            onChange={handleImageChange} // Handle file change
+                            style={{ display: 'none' }} 
+                            onChange={handleImageChange} 
                         />
 
                             
