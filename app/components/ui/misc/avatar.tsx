@@ -5,7 +5,7 @@ import { alpha_24 } from "@/lib/utils/formats";
 import { cn } from "@/lib/utils";
 import "./local.css";
 
-export const AvatarButton = ({ user, styles = "", w = 50, h = 50, updated_image, ...props }) => {
+export const AvatarButton = ({ user, styles = "", w = 50, h = 50, updated_image, onClick }) => {
   // Fallback image based on the first character of the user's first name
   const fallbackImage = `/icons/${
     user?.first_name && alpha_24.includes(user.first_name.charAt(0).toLowerCase())
@@ -24,7 +24,7 @@ export const AvatarButton = ({ user, styles = "", w = 50, h = 50, updated_image,
 
 
   return (
-    <button className={cn("relative flex items-center justify-center", styles)}>
+    <button className={cn("relative flex items-center justify-center", styles)} onClick={() => {onClick}}>
       <div
         style={{
           backgroundImage: `url(${imageUrl})`,
