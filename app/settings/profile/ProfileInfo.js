@@ -215,14 +215,16 @@ export function ProfileInfo(reload) {
                         />
 
                             
-                        <AvatarButton
-                            updated_image={newImageUrl}
-                            user={user}
-                            w={80}
-                            h={80}
-                            styles="max-h-fit rounded-full bg-transparent hover:bg-transparent"
-                            onClick={handleAvatarChange('image')}
-                        />
+                        <button onClick={() => {handleAvatarChange('image')}} >
+                            <AvatarButton
+                                updated_image={newImageUrl}
+                                user={user}
+                                w={80}
+                                h={80}
+                                styles="max-h-fit rounded-full bg-transparent hover:bg-transparent"
+                                btn={false}
+                            />
+                        </button>
                         
                     </EmbloyH>
                 </EmbloyInputboxElement>

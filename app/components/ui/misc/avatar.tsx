@@ -5,7 +5,7 @@ import { alpha_24 } from "@/lib/utils/formats";
 import { cn } from "@/lib/utils";
 import "./local.css";
 
-export const AvatarButton = ({ user, styles = "", w = 50, h = 50, updated_image, onClick }) => {
+export const AvatarButton = ({ user, styles = "", w = 50, h = 50, updated_image, btn = true }) => {
   // Fallback image based on the first character of the user's first name
   const fallbackImage = `/icons/${
     user?.first_name && alpha_24.includes(user.first_name.charAt(0).toLowerCase())
@@ -22,9 +22,9 @@ export const AvatarButton = ({ user, styles = "", w = 50, h = 50, updated_image,
     ? user.image_url
     : fallbackImage;
 
-
+if (btn) { 
   return (
-    <button className={cn("relative flex items-center justify-center", styles)} onClick={() => {onClick}}>
+    <button className={cn("relative flex items-center justify-center", styles)}>
       <div
         style={{
           backgroundImage: `url(${imageUrl})`,
@@ -38,4 +38,21 @@ export const AvatarButton = ({ user, styles = "", w = 50, h = 50, updated_image,
       />
     </button>
   );
+ } else {
+  return (
+    <div className={cn("relative flex items-center justify-center", styles)}>
+      <div
+        style={{
+          backgroundImage: `url(${imageUrl})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          borderRadius: "50%",
+          width: `${Math.min(h, w)}px`,
+          height: `${Math.min(h, w)}px`,
+        }}
+        className="rounded-full border border-[2px] dark:border-rubeno border-etna"
+      />
+    </div>
+  );
+}
 };
