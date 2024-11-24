@@ -162,6 +162,10 @@ export const EmbloyButton = ({ name, className, disabled=false, unlock=true, var
             color = color + " hover:bg-golfonapoli dark:hover:bg-barbera hover:border-golfonapoli dark:hover:border-barbera";
         }
     } 
+    if (variant === "bold") {
+        color = "bg-transparent dark:bg-transparent border-black dark:border-amarone hover:border-leidoveneta dark:hover:border-barbera "; 
+        textcolor = "text-black dark:text-white ";
+    }
     if (loading) {
         color = color + " cursor-wait";
     }

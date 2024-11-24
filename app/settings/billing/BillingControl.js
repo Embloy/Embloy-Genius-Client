@@ -113,7 +113,7 @@ function SubscriptionItem(subscription) {
         <EmbloyInputbox>
             <EmbloyInputboxElement head={"Active " + activePlan + " Subscription"} description={"Your plan renews on " + cast_date(subscription.subscription.current_period_end, "us")} />
             <EmbloyH className="justify-end gap-4">
-                <EmbloyButton variant="paypal" name="Manage Subscription" onStatus={cncStatus} onMessage={cncMessage} onClick={handleCancel} className="" />
+                <EmbloyButton variant="bold" name="Manage Subscription" onStatus={cncStatus} onMessage={cncMessage} onClick={handleCancel} className="" />
                 {nextPlan !== "" && <EmbloyButton name={"Upgrade to " + nextPlan.name} onStatus={upgStatus} onMessage={upgMessage} disabled={nextPlan === ""} onClick={handleUpgrade} className="" />}
             </EmbloyH>
         </EmbloyInputbox>
