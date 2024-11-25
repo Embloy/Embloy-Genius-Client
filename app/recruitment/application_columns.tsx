@@ -3,7 +3,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { Checkbox } from "@/app/components/ui/misc/checkbox";
 import { DataTableColumnHeader } from "@/app/components/dom/main/datatable/DataTableColumnHeader";
 import { Application } from "@/lib/types/application";
-import { cast_date } from "@/lib/utils/formats";
+import {cast_date_no_null } from "@/lib/utils/cast";
 
 export const applicationColumns: ColumnDef<Application>[] = [
   {
@@ -99,8 +99,7 @@ export const applicationColumns: ColumnDef<Application>[] = [
     enableSorting: true,
     enableHiding: true,
     cell: ({ row }) => {
-      const date = cast_date(row.getValue("created_at"), "us");
-      return <div>{date}</div>;
+      return <div>{cast_date_no_null(row.getValue('created_at'))}</div>
     },
   },
   {
@@ -111,8 +110,7 @@ export const applicationColumns: ColumnDef<Application>[] = [
     enableSorting: true,
     enableHiding: true,
     cell: ({ row }) => {
-      const date = cast_date(row.getValue("created_at"), "us");
-      return <div>{date}</div>;
+      return <div>{cast_date_no_null(row.getValue('updated_at'))}</div>
     },
   },
 ];

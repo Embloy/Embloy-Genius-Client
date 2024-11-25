@@ -3,7 +3,7 @@ import {ColumnDef} from "@tanstack/react-table"
 import {Checkbox} from "@/app/components/ui/misc/checkbox"
 import {DataTableColumnHeader} from "@/app/components/dom/main/datatable/DataTableColumnHeader";
 import {Job} from "@/lib/types/job";
-import {cast_date} from "@/lib/utils/formats";
+import {cast_date_no_null} from "@/lib/utils/cast";
 
 export const jobColumns: ColumnDef<Job>[] = [
     {
@@ -109,8 +109,7 @@ export const jobColumns: ColumnDef<Job>[] = [
         enableSorting: true,
         enableHiding: true,
         cell: ({row}) => {
-            const date = cast_date(row.getValue('start_slot'), 'us')
-            return <div>{date}</div>
+            return <div>{cast_date_no_null(row.getValue('start_slot'))}</div>
         },
     },
     {
@@ -137,8 +136,7 @@ export const jobColumns: ColumnDef<Job>[] = [
         enableSorting: true,
         enableHiding: true,
         cell: ({row}) => {
-            const date = cast_date(row.getValue('created_at'), 'us')
-            return <div>{date}</div>
+            return <div>{cast_date_no_null(row.getValue('created_at'))}</div>
         },
     },
 

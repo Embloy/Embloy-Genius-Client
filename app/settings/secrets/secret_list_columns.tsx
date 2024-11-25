@@ -3,7 +3,7 @@ import {ColumnDef} from "@tanstack/react-table"
 import {Checkbox} from "@/app/components/ui/misc/checkbox"
 import {DataTableColumnHeader} from "@/app/components/dom/main/datatable/DataTableColumnHeader";
 import {Secret} from "@/lib/types/secret";
-import {cast_date} from "@/lib/utils/formats";
+import {cast_date_no_null} from "@/lib/utils/cast";
 import { EmbloyH } from "@/app/components/ui/misc/stuff";
 import { EmbloyP } from "@/app/components/ui/misc/text";
 
@@ -133,8 +133,7 @@ export const secretListColumns: ColumnDef<Secret>[] = [
         enableSorting: true,
         enableHiding: true,
         cell: ({row}) => {
-            const date = cast_date(row.getValue('issued_at'), 'us')
-            return <EmbloyP className="text-xs" >{date}</EmbloyP>
+            return <EmbloyP className="text-xs" >{cast_date_no_null(row.getValue('issued_at'))}</EmbloyP>
         },
     },
     {
@@ -145,8 +144,7 @@ export const secretListColumns: ColumnDef<Secret>[] = [
         enableSorting: true,
         enableHiding: true,
         cell: ({row}) => {
-            const date = cast_date(row.getValue('expires_at'), 'us')
-            return <EmbloyP className="text-xs" >{date}</EmbloyP>
+            return <EmbloyP className="text-xs" >{cast_date_no_null(row.getValue('expires_at'))}</EmbloyP>
         },
     },
     {
@@ -157,8 +155,7 @@ export const secretListColumns: ColumnDef<Secret>[] = [
         enableSorting: true,
         enableHiding: true,
         cell: ({row}) => {
-            const date = cast_date(row.getValue('last_used_at'), 'us')
-            return <EmbloyP className="text-xs" >{date}</EmbloyP>
+            return <EmbloyP className="text-xs" >{cast_date_no_null(row.getValue('last_used_at'))}</EmbloyP>
         },
     },
 ]
