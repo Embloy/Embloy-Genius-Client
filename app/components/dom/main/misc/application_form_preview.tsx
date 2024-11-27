@@ -208,7 +208,7 @@ export function ApplicationPreview({data, handleDataReload}) {
                         type="text"
                         required={option.required}
                         placeholder="https://example.com"
-                        className="c0 p-2 border border-etna dark:border-biferno bg-palatinio dark:bg-nebbiolo text-inherit dark:text-inherit outline-none rounded-sm focus:ring-2 focus:ring-white"
+                        className="c0 p-2 border border-etna dark:border-biferno bg-palatinio dark:bg-nebbiolo rounded-md text-inherit dark:text-inherit outline-none w-full focus:ring-2 focus:ring-white"
                         onChange={(event) =>
                             handleTextChange(option.id, event.target.value, option.required)
                         }
