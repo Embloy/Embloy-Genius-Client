@@ -8,7 +8,7 @@ import { EmbloyLHPV, EmbloyV, EmbloyH, EmbloySpacer, EmbloyToggle, EmbloyButton}
 import { EmbloyInput, EmbloyInputbox, EmbloyInputboxElement, EmbloyRadioOption } from "@/app/components/ui/misc/input";
 import { patch_user, set_avatar as post_avatar, remove_avatar } from "@/lib/api/user";
 export function ProfileInfo(reload) {
-    let user = useContext(UserContext)
+    let {user, company} = useContext(UserContext)
     const [changesMade, setChangesMade] = useState(false);
     const [nameIsClicked, setNameIsClicked] = useState(false);
     const [firstName, setFirstName] = useState('');
@@ -236,7 +236,7 @@ export function ProfileInfo(reload) {
                         disabled={true}
                         value={user.id}
                         required={true}
-                        sandboxed={false}
+                        sandboxed={true}
                     />
                 </EmbloyInputboxElement>
             </EmbloyInputbox>

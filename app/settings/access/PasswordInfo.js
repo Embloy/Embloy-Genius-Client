@@ -10,7 +10,7 @@ import { patch_user, set_avatar as post_avatar, remove_avatar } from "@/lib/api/
 import { force_login } from "@/lib/api/auth";
 import { useRouter } from "next/navigation";
 export function PasswordInfo(reload) {
-    let user = useContext(UserContext)
+    let {user, company} = useContext(UserContext)
     let router = useRouter();
     const [password, set_password] = useState('');
     const [newPassword, set_new_password] = useState('');

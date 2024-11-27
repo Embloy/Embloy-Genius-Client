@@ -20,9 +20,9 @@ export const EmbloyToolbox = ({name, children, className, superClassName}) => {
 
 
 
-export const EmbloyToolboxA = ({href, target, children, ...props}) => {
+export const EmbloyToolboxA = ({href, disabled, target, children, ...props}) => {
     return (
-        <EmbloyChildrenAdvanced {...props}>
+        <EmbloyChildrenAdvanced disabled={disabled} {...props}>
             <a href={`${href}`} target={`${target}`}>
                 {children}
             </a>
@@ -52,8 +52,8 @@ export const EmbloyToolboxImg = ({disabled=false, path, path_hovered, height, wi
 
 export const EmbloyToolboxImgA = ({disabled, href, target="_self", path, path_hovered, path_disabled, dark_path, dark_path_hovered, dark_path_disabled, height, width, ...props}) => {
     return (
-        <EmbloyChildrenAdvanced {...props}>
-            <EmbloyToolboxA href={href} target={target} >
+        <EmbloyChildrenAdvanced disabled={disabled} {...props}>
+            <EmbloyToolboxA disabled={disabled} href={href} target={target} >
                 <EmbloyToolboxImg disabled={disabled} className="block dark:hidden" path={path_disabled && disabled ? path_disabled : path} path_hovered={path_hovered} height={height} width={width} />
                 <EmbloyToolboxImg disabled={disabled} className="hidden dark:block" path={dark_path && disabled ? dark_path_disabled : dark_path} path_hovered={dark_path_hovered} height={height} width={width} />
             </EmbloyToolboxA>
@@ -64,21 +64,21 @@ export const EmbloyToolboxImgA = ({disabled, href, target="_self", path, path_ho
 export const EmbloyToolboxImgAdvanced = ({failure, path_failure, path_failure_hovered, disabled,success, action, path, path_success, path_success_hovered, path_action,  path_hovered, path_hovered_action, path_disabled, dark_path, dark_path_action, dark_path_hovered, dark_path_hovered_action, dark_path_disabled, height, width, ...props}) => {
     if (failure && failure === true && disabled !== true) {
         return (
-            <EmbloyChildrenAdvanced {...props}>
-                <EmbloyToolboxImg className="block dark:block" path={path_failure} path_hovered={path_failure_hovered} height={height} width={width} />
+            <EmbloyChildrenAdvanced disabled={disabled} {...props}>
+                <EmbloyToolboxImg disabled={disabled} className="block dark:block" path={path_failure} path_hovered={path_failure_hovered} height={height} width={width} />
             </EmbloyChildrenAdvanced>
         )
     }
 
     if (success && success === true && disabled !== true) {
         return (
-            <EmbloyChildrenAdvanced {...props}>
+            <EmbloyChildrenAdvanced disabled={disabled} {...props}>
                 <EmbloyToolboxImg className="block dark:block" path={path_success} path_hovered={path_success_hovered} height={height} width={width} />
             </EmbloyChildrenAdvanced>
         )
     }
     return (
-        <EmbloyChildrenAdvanced {...props}>
+        <EmbloyChildrenAdvanced disabled={disabled} {...props}>
             {
                 action && action === true
                 ? <EmbloyToolboxImg className="block dark:hidden" disabled={disabled} path={path_disabled && disabled ? path_disabled : path_action} path_hovered={path_hovered_action} height={height} width={width} />

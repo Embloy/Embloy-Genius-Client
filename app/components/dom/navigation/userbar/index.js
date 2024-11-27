@@ -71,7 +71,7 @@ export const UserBar = ({ isVisible, onClose, userData, storeData }) => {
 
 
     return (
-        <div className={`bg-body z-50 fixed top-0 right-0 h-full transition-transform transform ${isVisible ? ' translate-x-0' : ' translate-x-full'} border-l-[1px] landscape:px-6 portrait:px-4 border-gray-700`}>
+        <div className={`bg-body z-50 fixed top-0 right-0 h-full transition-transform transform ${isVisible ? ' translate-x-0' : ' translate-x-full'} border-l-[1px] landscape:px-6 portrait:px-4 border-etna dark:border-biferno `}>
             <div className="flex h-full w-full">
                     {userData ? (
                         <EmbloyV className="h-full items-center landscape:py-2 portrait:py-2 gap-4">

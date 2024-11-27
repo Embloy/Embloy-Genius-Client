@@ -80,7 +80,7 @@ export default function Jobs() {
               <EmbloyH className="justify-between">
                 <h1 className="page-header">Jobs</h1>
                 <EmbloyToolbox superClassName="portrait:hidden">
-                  <EmbloyToolboxImgA href="https://developers.embloy.com/docs/category/genius" height="12" width="12" path="/icons/svg/black/ask.svg" path_hovered="/icons/svg/leidoveneta/ask.svg" dark_path="/icons/svg/amarone/ask.svg" dark_path_hovered="/icons/svg/barbera/ask.svg" target="_blank" />
+                  <EmbloyToolboxImgA href="https://developers.embloy.com/docs/category/genius" height="12" width="12" path="/icons/svg/black/ask.svg" path_hovered="/icons/svg/capri/ask.svg" dark_path="/icons/svg/amarone/ask.svg" dark_path_hovered="/icons/svg/barbera/ask.svg" target="_blank" />
                 </EmbloyToolbox>
               </EmbloyH>
               <EmbloySpacer />

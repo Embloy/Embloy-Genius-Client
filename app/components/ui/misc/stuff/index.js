@@ -48,8 +48,8 @@ export const EmbloySpacer = ({className}) => {
         <div className={`w-full h-20px ${className}`} />
     );
 }
-export const EmbloyChildrenAdvanced = ({className, children, tooltip, disabled, ...props}) => {
-    if (tooltip) {
+export const EmbloyChildrenAdvanced = ({className, children, tooltip, disabled=false, ...props}) => {
+    if (disabled === false && tooltip) {
         return (
             <Tooltip
                 title={`${tooltip}`}
@@ -60,19 +60,19 @@ export const EmbloyChildrenAdvanced = ({className, children, tooltip, disabled, 
                     </EmbloyP>
                     }
             >
-                <div className={`${className} ${disabled && 'cursor-not-allowed'}`}>
+                <div className={`${className}`}>
                     {children}
                 </div>
             </Tooltip>
         )
 
-    } else {
-        return (
-            <div className={`${className} ${disabled && 'cursor-not-allowed'}`}>
-                {children}
-            </div>
-        )
     }
+    return (
+        <div className={`${className} ${disabled && 'cursor-not-allowed'}`}>
+            {children}
+        </div>
+    )
+    
 }
 
 
@@ -154,7 +154,7 @@ export const EmbloyButton = ({ name, className, disabled=false, unlock=true, var
         }
     }
     if (loading===false && disabled === false) {
-        color = color + " hover:bg-leidoveneta dark:hover:bg-barbera hover:border-leidoveneta dark:hover:border-barbera ";
+        color = color + " hover:bg-capri dark:hover:bg-barbera hover:border-capri dark:hover:border-barbera ";
     }
     if (variant === "paypal") {
         color = "bg-golfotrieste dark:bg-nebbiolo border-golfotrieste dark:border-rubeno x";
@@ -163,7 +163,7 @@ export const EmbloyButton = ({ name, className, disabled=false, unlock=true, var
         }
     } 
     if (variant === "bold") {
-        color = "bg-transparent dark:bg-transparent border-black dark:border-amarone hover:border-leidoveneta dark:hover:border-barbera "; 
+        color = "bg-transparent dark:bg-transparent border-black dark:border-amarone hover:border-capri dark:hover:border-barbera "; 
         textcolor = "text-black dark:text-white ";
     }
     if (loading) {

@@ -59,13 +59,16 @@ module.exports = {
         'lagunaveneta': '#002f86',
         'golfotrieste': '#1a4590',
         'golfonapoli': '#5CA7FF',
+        'capri': '#3b82f7',
 
         'leidoveneta': '#FDE961',
 
         'etna': '#D1D1D1',
+        'palatinio': '#e2e9f1',
+        'testaccio': '#a9a9b1',
         'vesuvio': '#787878',
         'ischia': '#374151',
-        'ferrara': '#f1f5f9',
+        'ferrara': '#f0f5f8',
         'pompei': '#fbfafb',
 
         'lugana': '#43C265',

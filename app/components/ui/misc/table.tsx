@@ -174,7 +174,7 @@ const JobTableRowExtendable = React.forwardRef<
         <tr
           className={cn(
             rowClasses,
-            "relative, w-screen, bg-transparent, hover:bg-transparent"
+            "relative, w-screen, bg-transparent, hover:bg-transparent, dark:hover:bg-transparent"
           )}
         >
           <td colSpan={onExtending()}>

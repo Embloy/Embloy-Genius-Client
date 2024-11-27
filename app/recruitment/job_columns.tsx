@@ -3,7 +3,8 @@ import {ColumnDef} from "@tanstack/react-table"
 import {Checkbox} from "@/app/components/ui/misc/checkbox"
 import {DataTableColumnHeader} from "@/app/components/dom/main/datatable/DataTableColumnHeader";
 import {Job} from "@/lib/types/job";
-import {cast_date_no_null} from "@/lib/utils/cast";
+import {cast_date_no_null, job_slug_to_host} from "@/lib/utils/cast";
+import { EmbloyP } from "../components/ui/misc/text";
 
 export const jobColumns: ColumnDef<Job>[] = [
     {
@@ -33,6 +34,9 @@ export const jobColumns: ColumnDef<Job>[] = [
         header: ({column}) => (
             <DataTableColumnHeader column={column} title="Position"/>
         ),
+        cell: ({row}) => {
+            return <EmbloyP className="text-xs" >{row.getValue('position')}</EmbloyP>
+        },
         enableSorting: false,
         enableHiding: true,
     },
@@ -41,6 +45,9 @@ export const jobColumns: ColumnDef<Job>[] = [
         header: ({column}) => (
             <DataTableColumnHeader column={column} title="Job ID"/>
         ),
+        cell: ({row}) => {
+            return <EmbloyP className="text-xs" >{row.getValue('job_id')}</EmbloyP>
+        },
         enableSorting: true,
         enableHiding: true,
     },
@@ -49,6 +56,9 @@ export const jobColumns: ColumnDef<Job>[] = [
         header: ({column}) => (
             <DataTableColumnHeader column={column} title="Jobslug"/>
         ),
+        cell: ({row}) => {
+            return <EmbloyP className="text-xs" >{row.getValue('job_slug')}</EmbloyP>
+        },
         enableSorting: true,
         enableHiding: true,
     },
@@ -65,8 +75,9 @@ export const jobColumns: ColumnDef<Job>[] = [
             if (bin.length > 1) {
                 provider = bin[0][0].toUpperCase() + bin[0].slice(1)
             }
+
             
-            return <div>{provider}</div>
+            return <EmbloyP className="text-xs" >{job_slug_to_host(row.getValue('job_slug'))}</EmbloyP>
 
         },
     },
@@ -75,6 +86,9 @@ export const jobColumns: ColumnDef<Job>[] = [
         header: ({column}) => (
             <DataTableColumnHeader column={column} title="Category"/>
         ),
+        cell: ({row}) => {
+            return <EmbloyP className="text-xs" >{row.getValue('job_type')}</EmbloyP>
+        },
         enableSorting: false,
         enableHiding: true,
     },
@@ -97,7 +111,7 @@ export const jobColumns: ColumnDef<Job>[] = [
             } else {
                 visibility = undefined
             }
-            return <div>{visibility}</div>
+            return <EmbloyP className="text-xs" >{visibility}</EmbloyP>
 
         },
     },
@@ -109,7 +123,7 @@ export const jobColumns: ColumnDef<Job>[] = [
         enableSorting: true,
         enableHiding: true,
         cell: ({row}) => {
-            return <div>{cast_date_no_null(row.getValue('start_slot'))}</div>
+            return <EmbloyP className="text-xs" >{cast_date_no_null(row.getValue('start_slot'))}</EmbloyP>
         },
     },
     {
@@ -117,6 +131,9 @@ export const jobColumns: ColumnDef<Job>[] = [
         header: ({column}) => (
             <DataTableColumnHeader column={column} title="Views"/>
         ),
+        cell: ({row}) => {
+            return <EmbloyP className="text-xs" >{row.getValue('view_count')}</EmbloyP>
+        },
         enableSorting: true,
         enableHiding: true,
     },
@@ -125,6 +142,9 @@ export const jobColumns: ColumnDef<Job>[] = [
         header: ({column}) => (
             <DataTableColumnHeader column={column} title="Applications"/>
         ),
+        cell: ({row}) => {
+            return <EmbloyP className="text-xs" >{row.getValue('applications_count')}</EmbloyP>
+        },
         enableSorting: true,
         enableHiding: true,
     },
@@ -136,7 +156,7 @@ export const jobColumns: ColumnDef<Job>[] = [
         enableSorting: true,
         enableHiding: true,
         cell: ({row}) => {
-            return <div>{cast_date_no_null(row.getValue('created_at'))}</div>
+            return <EmbloyP className="text-xs" >{cast_date_no_null(row.getValue('created_at'))}</EmbloyP>
         },
     },
 

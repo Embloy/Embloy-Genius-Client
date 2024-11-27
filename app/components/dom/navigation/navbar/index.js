@@ -34,7 +34,7 @@ const HeaderItem = ({name, link, default_path}) => {
 const Navbar = () => {
     const pathname = usePathname()
     let app = useContext(AppContext)
-    let user = useContext(UserContext)
+    let {user, company} = useContext(UserContext)
     let store = useContext(StoreContext)
 
     const headerPages = [{name:'Home', link:'/'}, {name:'Jobs', link:'/recruitment'}, {name:'Analytics', link:'/analytics'}]
@@ -49,7 +49,7 @@ const Navbar = () => {
             (
                 <>
                     <div
-                        className="bg-body z-30 w-full h-14 sticky top-0 border-b-[1px] border-gray-700 flex flex-row items-center justify-center">
+                        className="bg-body z-30 w-full h-14 sticky top-0 border-b-[1px] border-etna dark:border-biferno  flex flex-row items-center justify-center">
                         <div className="container h-full min-w-98% flex flex-row items-center justify-between">
                             <div className="flex horizontal start-0 items-center h-full gap-x-6">
                                 <Logo/>

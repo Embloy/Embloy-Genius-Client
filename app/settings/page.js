@@ -52,7 +52,7 @@ function SettingsPanel() {
     }, [searchParams]);
 
  
-    let user = useContext(UserContext);
+    let {user, company} = useContext(UserContext)
     let store = useContext(StoreContext);
 
     const subPages = [{name:'Profile', id:0}, {name:'Access', id:1}, {name:'Billing', id:2}, {name:'Secrets', id:3}, {name:'Integrations', id:4}, {name:'Archive', id:5}]
@@ -86,7 +86,7 @@ function SettingsPanel() {
                         <EmbloyH className="justify-between">
                             <h1 className="page-header">Settings</h1>
                             <EmbloyToolbox superClassName="portrait:hidden">
-                            <EmbloyToolboxImgA href="https://developers.embloy.com/docs/category/genius" height="12" width="12" path="/icons/svg/black/ask.svg" path_hovered="/icons/svg/leidoveneta/ask.svg" dark_path="/icons/svg/amarone/ask.svg" dark_path_hovered="/icons/svg/barbera/ask.svg" target="_blank" />
+                            <EmbloyToolboxImgA href="https://developers.embloy.com/docs/category/genius" height="12" width="12" path="/icons/svg/black/ask.svg" path_hovered="/icons/svg/capri/ask.svg" dark_path="/icons/svg/amarone/ask.svg" dark_path_hovered="/icons/svg/barbera/ask.svg" target="_blank" />
                             </EmbloyToolbox>
                         </EmbloyH>
                         <EmbloySpacer />

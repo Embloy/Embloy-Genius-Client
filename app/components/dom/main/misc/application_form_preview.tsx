@@ -8,6 +8,8 @@ import './locals.css';
 import dynamic from "next/dynamic";
 import {OutputData} from "@editorjs/editorjs";
 import {editor_to_json, json_to_editor} from "@/lib/utils/formats";
+import { EmbloySeperator, EmbloyV } from "@/app/components/ui/misc/stuff";
+import { EmbloyH1, EmbloyP } from "@/app/components/ui/misc/text";
 const EditorBlock = dynamic(() => import("@/app/components/dom/main/misc/application_editor"), {ssr: false});
 
 export function ApplicationPreview({data, handleDataReload}) {
@@ -149,8 +151,171 @@ export function ApplicationPreview({data, handleDataReload}) {
         console.log("\n");
 
     }, [localOpt]);
-
     return (
+        <EmbloyV className={"items-center"}>
+            <div className="min-h-[250px] flex flex-col items-center justify-start gap-4 px-4 py-2 ">
+                <div className="flex flex-col text-center">
+                    <EmbloyH1 className="text-lg font-semibold tracking-tight">
+                        Apply for {title ?? "this job"}
+                    </EmbloyH1>
+                    <EmbloyP className="text-sm text-muted-foreground">
+                        Enter your details below to apply
+                    </EmbloyP>
+                </div>
+                <div className="w-full">
+                    <textarea
+                        maxLength={500}
+                        onChange={handleInputChange}
+                        value={applicationText}
+                        style={{resize: 'none', overflow: 'auto'}}
+                        className="h-32 w-full resize-none rounded-md border  p-2 text-sm focus:outline-none focus:ring-2 focus:ring-white border-gray-700"
+                        placeholder="* Enter your application text here... (max. 500 characters)"
+                    />
+                </div>
+                {cv_required && (
+                    <div className="w-full">
+                        <legend className="text-lg font-semibold">
+                            <EmbloyP className={"text-xs"} >Upload your CV *</EmbloyP>
+                        </legend>
+                        <div
+                            className="mt-1 flex justify-center rounded-md border-2 border-dashed border-gray-300 px-6 pb-6 pt-5">
+                            <div className="space-y-1 text-center">
+                                <input
+                                    type="file"
+                                    onChange={handleFileChange}
+                                    accept={allowed_cv_formats.join(",")}
+                                    className="w-full focus:border-indigo-500 focus:ring-indigo-500"
+                                />
+                                <EmbloyP className="text-xs ">
+                                    Allowed formats: {allowed_cv_formats.join(", ")}
+                                </EmbloyP>
+                            </div>
+                        </div>
+                    </div>
+                )}
+                {application_options.map((option, index) => {
+                    const label = option.required
+                        ? `${option.question} *`
+                        : option.question;
+                    switch (option.question_type) {
+                        case "link":
+                            return (
+                                <div className="w-full">
+                                    <legend className="text-lg font-semibold"><EmbloyP className="text-inherit">{label}</EmbloyP></legend>
+                                    <input
+                                        key={index}
+                                        type="text"
+                                        required={option.required}
+                                        placeholder="https://example.com"
+                                        className="c0 px-2 border border-gray-700 outline-none rounded-sm focus:ring-2 focus:ring-white"
+                                        onChange={(event) =>
+                                            handleTextChange(option.id, event.target.value, option.required)
+                                        }
+                                    />
+                                    {errorMessages[option.id] &&
+                                        <div className="text-sm text-red-500">{errorMessages[option.id]}</div>}
+                                </div>
+                            );
+                        case "text":
+                            return (
+                                <div className="w-full">
+                                     <legend className="text-lg font-semibold"><EmbloyP className="text-inherit">{label}</EmbloyP></legend>
+                                    <textarea
+                                        key={index}
+                                        required={option.required}
+                                        onChange={(event) =>
+                                            handleTextChange(option.id, event.target.value, option.required)
+                                        }
+                                        maxLength={200}
+                                        style={{resize: 'none', overflow: 'auto'}}
+                                        className="h-20 w-full rounded-md border bg-secondary p-2 text-sm focus:outline-none focus:ring-2 focus:ring-white bg0-r border-gray-700"
+                                        placeholder="Enter your response (max. 200 characters)"
+                                    />
+                                    {errorMessages[option.id] &&
+                                        <div className="text-sm text-red-500">{errorMessages[option.id]}</div>}
+                                </div>
+                            );
+                        case "yes_no":
+                            return (
+                                <div className="w-full">
+                                    <Select
+                                        key={index}
+                                        required={option.required}
+                                        onValueChange={(value) => {
+                                            handleSingleChoiceChange(option.id, value);
+                                        }}
+                                    >
+                                        <SelectTrigger>{label}</SelectTrigger>
+                                        <SelectContent>
+                                            <SelectItem key="1" value={"Yes"}>
+                                                {"Yes"}
+                                            </SelectItem>
+                                            <SelectItem key="2" value={"No"}>
+                                                {"No"}
+                                            </SelectItem>
+                                        </SelectContent>
+                                    </Select>
+                                    {errorMessages[option.id] &&
+                                        <div className="text-sm text-red-500">{errorMessages[option.id]}</div>}
+                                </div>
+                            );
+                        case "single_choice":
+                            return (
+                                <div className="w-full">
+                                    <Select
+                                        key={index}
+                                        required={option.required}
+                                        onValueChange={(value) => {
+                                            handleSingleChoiceChange(option.id, value);
+                                        }}
+                                    >
+                                        <SelectTrigger>{label}</SelectTrigger>
+                                        <SelectContent>
+                                            {option.options.map((opt, optIndex) => (
+                                                <SelectItem key={optIndex} value={opt}>
+                                                    {opt}
+                                                </SelectItem>
+                                            ))}
+                                        </SelectContent>
+                                    </Select>
+                                    {errorMessages[option.id] &&
+                                        <div className="text-sm text-red-500">{errorMessages[option.id]}</div>}
+                                </div>
+                            );
+                        case "multiple_choice":
+                            return (
+                                <fieldset key={index} className="flex flex-col space-y-2 w-full">
+                                    <legend className="text-lg font-semibold">{label}</legend>
+                                    {option.options.map((opt, optIndex) => (
+                                        <label
+                                            key={optIndex}
+                                            className="flex items-center space-x-2"
+                                        >
+                                            <Checkbox
+                                                value={opt}
+                                                onCheckedChange={(isChecked) => {
+                                                    handleMultipleChoiceChange(
+                                                        option.id,
+                                                        opt,
+                                                        !!isChecked,
+                                                    );
+                                                }}
+                                            />{" "}
+                                            <span>{opt}</span>
+                                        </label>
+                                    ))}
+                                    {errorMessages[option.id] &&
+                                        <div className="text-sm text-red-500">{errorMessages[option.id]}</div>}
+                                </fieldset>
+                            );
+                        default:
+                            return null;
+                    }
+                })}
+            </div>
+        </EmbloyV>
+    );
+    /*return (
         <div
             className={cn(previewClass, containerStyle, cn(testMode ? "border-embloy-green" : "border-gray-700"))}>
             <div
@@ -363,5 +528,5 @@ export function ApplicationPreview({data, handleDataReload}) {
                 </div>
             )}
         </div>
-    );
+    );*/
 }

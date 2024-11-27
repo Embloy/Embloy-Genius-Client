@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import '@/app/globals.css'
 
+
 export const EmbloyP = ({className, children, variant="default", ...props}) => {
     if (variant === "mini") {
       return (

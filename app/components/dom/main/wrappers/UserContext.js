@@ -10,6 +10,7 @@ import { core_get } from "@/lib/api/core";
 export const UserContext = createContext();
 const UserWrapper = ({children}) => {
     const [user, setUser] = useState(null);
+    const [company, setCompany] = useState(null);
     const pathname = usePathname();
 
     useEffect(() => {
@@ -17,7 +18,9 @@ const UserWrapper = ({children}) => {
             core_get("/user")
                 .then(data => {
                     setUser(data.user)
-                    console.log(data.user)
+                    if (data.company) {
+                        setCompany(data.company)
+                    }
                 })  
                 .catch(e => {
                     console.log(e)
@@ -30,7 +33,7 @@ const UserWrapper = ({children}) => {
 
 
     return (
-        <UserContext.Provider value={user}>
+        <UserContext.Provider value={{ user, company }}>
             {children}
         </UserContext.Provider>
     );
