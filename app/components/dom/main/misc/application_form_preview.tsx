@@ -8,7 +8,7 @@ import './locals.css';
 import dynamic from "next/dynamic";
 import {OutputData} from "@editorjs/editorjs";
 import {editor_to_json, json_to_editor} from "@/lib/utils/formats";
-import { EmbloySeperator, EmbloyV } from "@/app/components/ui/misc/stuff";
+import { EmbloyButton, EmbloySeperator, EmbloySpacer, EmbloyV } from "@/app/components/ui/misc/stuff";
 import { EmbloyH1, EmbloyP } from "@/app/components/ui/misc/text";
 const EditorBlock = dynamic(() => import("@/app/components/dom/main/misc/application_editor"), {ssr: false});
 
@@ -393,8 +393,10 @@ export function ApplicationPreview({data, handleDataReload}) {
     }
 })}
 
-            </div>
-        </EmbloyV>
+        </div>
+        <EmbloySpacer className={"h-8"}/>
+        <EmbloyButton className="py-0 px-8" name={"Apply"} onStatus={undefined} onClick={() => {}} onMessage={undefined} />
+    </EmbloyV>
     );
     /*return (
         <div
