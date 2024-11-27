@@ -203,7 +203,7 @@ export function JobDetails({ job, onUploadSuccess, onClose }) {
               if (applicationOptionsStatus !== "loading") {
                 handleApplicationForm();
               }}} className={`max-w-fit px-2 rounded-full border border-etna dark:border-nebbiolo text-black dark:text-amarone flex flex-row gap-1.5 ${applicationOptionsStatus === "loading" ? 'cursor-wait' : "cursor-pointer hover:text-capri hover:dark:text-barbera"}`}>
-                <EmbloyP className="max-w-fit text-xs text-inherit dark:text-inherit">{applicationOptionsStatus === "error" ? "Try again" : "Application Form"}</EmbloyP>
+                <EmbloyP className="max-w-fit text-xs text-inherit dark:text-inherit">{applicationOptionsStatus === "error" ? "Try again" : "Application Form Preview"}</EmbloyP>
                 {applicationOptionsStatus !== "loading" ? (
                   showApplicationOptions ? (
                     <ChevronDoubleUpIcon className="w-4 h-4 p-0 m-0" />
@@ -220,12 +220,9 @@ export function JobDetails({ job, onUploadSuccess, onClose }) {
             <EmbloyV>
               <EmbloySeperator className="bg-palatinio dark:bg-nebbiolo h-px"/> 
               <div className={headerClass}>
-                
                 <ApplicationPreview
                   data={applicationOptions}
-                  handleDataReload={() => {
-
-                  }}
+                  handleDataReload={() => {}}
                 />
               </div>
             </EmbloyV>
