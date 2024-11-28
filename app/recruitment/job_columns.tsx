@@ -41,12 +41,12 @@ export const jobColumns: ColumnDef<Job>[] = [
         enableHiding: true,
     },
     {
-        accessorKey: "job_id",
+        accessorKey: "id",
         header: ({column}) => (
             <DataTableColumnHeader column={column} title="Job ID"/>
         ),
         cell: ({row}) => {
-            return <EmbloyP className="text-xs" >{row.getValue('job_id')}</EmbloyP>
+            return <EmbloyP className="text-xs" >{row.getValue('id')}</EmbloyP>
         },
         enableSorting: true,
         enableHiding: true,

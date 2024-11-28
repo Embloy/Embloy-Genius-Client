@@ -95,7 +95,7 @@ export function JobDataTable<TData extends Job, TValue>({columns, data, handleDa
         },
     })
     const default_hides = () => {
-        table.getColumn("job_id").toggleVisibility(false)
+        table.getColumn("id").toggleVisibility(false)
         table.getColumn("job_type").toggleVisibility(false)
         table.getColumn("job_slug").toggleVisibility(false)
     }

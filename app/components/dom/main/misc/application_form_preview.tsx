@@ -156,7 +156,7 @@ export function ApplicationPreview({data, handleDataReload}) {
         <EmbloyV className={"items-center "}>
             <div className="min-h-[250px] w-9/12 flex flex-col items-center justify-start gap-4 px-4 py-2 ">
                 <div className="flex flex-col text-center">
-                    <EmbloyH1 className="text-lg font-semibold tracking-tight">
+                    <EmbloyH1 className="text-lg font-heading tracking-tight">
                         Apply for {title ?? "this job"}
                     </EmbloyH1>
                     <EmbloyP className="text-sm text-muted-foreground">
@@ -203,7 +203,7 @@ export function ApplicationPreview({data, handleDataReload}) {
         case "link":
             return (
                 <div key={index} className="w-full text-black dark:text-white">
-                    <legend><EmbloyP className="font-semibold text-base text-inherit">{label}</EmbloyP></legend>
+                    <legend><EmbloyP className="font-heading text-base text-inherit">{label}</EmbloyP></legend>
                     <input
                         type="text"
                         required={option.required}
@@ -220,7 +220,7 @@ export function ApplicationPreview({data, handleDataReload}) {
         case "short_text":
             return (
                 <div key={index} className="w-full text-black dark:text-white">
-                    <legend><EmbloyP className="font-semibold text-base text-inherit">{label}</EmbloyP></legend>
+                    <legend><EmbloyP className="font-heading text-base text-inherit">{label}</EmbloyP></legend>
                     <input
                         type="text"
                         required={option.required}
@@ -236,7 +236,7 @@ export function ApplicationPreview({data, handleDataReload}) {
         case "long_text":
             return (
                 <div key={index} className="w-full text-black dark:text-white">
-                    <legend><EmbloyP className="font-semibold text-base text-inherit">{label}</EmbloyP></legend>
+                    <legend><EmbloyP className="font-heading text-base text-inherit">{label}</EmbloyP></legend>
                     <textarea
                         required={option.required}
                         onChange={(event) =>
@@ -277,7 +277,7 @@ export function ApplicationPreview({data, handleDataReload}) {
         case "number":
             return (
                 <div key={index} className="w-full text-black dark:text-white">
-                    <legend><EmbloyP className="font-semibold text-base text-inherit">{label}</EmbloyP></legend>
+                    <legend><EmbloyP className="font-heading text-base text-inherit">{label}</EmbloyP></legend>
                     <input
                         type="number"
                         required={option.required}
@@ -293,7 +293,7 @@ export function ApplicationPreview({data, handleDataReload}) {
         case "date":
             return (
                 <div key={index} className="w-full text-black dark:text-white">
-                    <legend><EmbloyP className="font-semibold text-base text-inherit">{label}</EmbloyP></legend>
+                    <legend><EmbloyP className="font-heading text-base text-inherit">{label}</EmbloyP></legend>
                     <input
                         type="date"
                         required={option.required}
@@ -309,7 +309,7 @@ export function ApplicationPreview({data, handleDataReload}) {
         case "file":
             return (
                 <div key={index} className="w-full text-black dark:text-white">
-                    <legend><EmbloyP className="font-semibold text-base text-inherit">{label}</EmbloyP></legend>
+                    <legend><EmbloyP className="font-heading text-base text-inherit">{label}</EmbloyP></legend>
                     <input
                         type="file"
                         required={option.required}
@@ -325,7 +325,7 @@ export function ApplicationPreview({data, handleDataReload}) {
         case "location":
             return (
                 <div key={index} className="w-full text-black dark:text-white">
-                    <legend><EmbloyP className="font-semibold text-base text-inherit">{label}</EmbloyP></legend>
+                    <legend><EmbloyP className="font-heading text-base text-inherit">{label}</EmbloyP></legend>
                     <input
                         type="text"
                         required={option.required}
@@ -364,7 +364,7 @@ export function ApplicationPreview({data, handleDataReload}) {
         case "multiple_choice":
             return (
                 <fieldset key={index} className="flex flex-col space-y-2 w-full text-black dark:text-white">
-                    <legend><EmbloyP className="font-semibold text-base text-inherit">{label}</EmbloyP></legend>
+                    <legend><EmbloyP className="font-heading text-base text-inherit">{label}</EmbloyP></legend>
                     {option.options.map((opt, optIndex) => (
                         <label
                             key={optIndex}
@@ -442,7 +442,7 @@ export function ApplicationPreview({data, handleDataReload}) {
             {testMode ? (
                 <div className="min-h-[250px] w-9/10 flex flex-col items-center justify-start gap-4 px-4 py-2">
                     <div className="flex flex-col text-center">
-                        <h1 className="text-lg font-semibold tracking-tight">
+                        <h1 className="text-lg font-heading tracking-tight">
                             Apply for {title ?? "this job"}
                         </h1>
                         <p className="text-sm text-muted-foreground">
