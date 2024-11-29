@@ -434,10 +434,10 @@ export function ApplicationPreview({data, handleDataReload, editable=false, onCh
                 setLocData({ ...locData, application_options: updated });
             }
         } else if (type === "down") {
-            if (key < updated.length - 1) { // Check if the element can move down
+            if (key < updated.length - 1) {
                 const element = updated[key];
-                updated.splice(key, 1); // Remove the element
-                updated.splice(key + 1, 0, element); // Insert it at the new position
+                updated.splice(key, 1); 
+                updated.splice(key + 1, 0, element); 
                 setLocData({ ...locData, application_options: updated });
             }
         } else {
@@ -452,6 +452,7 @@ export function ApplicationPreview({data, handleDataReload, editable=false, onCh
         }
     };
     useEffect(() => {
+        console.log("data",locData);
 
     }, [locData])
 
@@ -471,7 +472,7 @@ export function ApplicationPreview({data, handleDataReload, editable=false, onCh
                 </div>
             </EditorTool>
             {locData.application_options.map((option, index) => {
-                console.log("Option", option.question_type, option.question, index);
+                //console.log("Option", option.question_type, option.question, index);
 
                 return (
                     <EditorTool
