@@ -307,11 +307,9 @@ export function ApplicationPreview({data, handleDataReload, editable=false, onCh
             Object.keys(locData).length === 1 && // Corrected to use `.length` instead of `.length()`
             locData.application_options.length === 0 // Correctly checking if the array is empty
         ) {
-            console.log("Data is not empty", data);
             setLocData(data);
             setOriginal(data)
         } else {
-            console.log("Data is empty", data, Object.keys(locData).length === 1, locData.application_options.length === 0);
         }
     }, []);
 
@@ -454,7 +452,6 @@ export function ApplicationPreview({data, handleDataReload, editable=false, onCh
         }
     };
     useEffect(() => {
-        console.log("MAGAQ", locData)
 
     }, [locData])
 
@@ -678,7 +675,6 @@ export function ApplicationPreview({data, handleDataReload, editable=false, onCh
                                         </fieldset>
                                     );
                                 default:
-                                    console.log("Unknown question type", option.question_type);
                                     return null;
                             }
                         })()}
