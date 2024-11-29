@@ -122,23 +122,38 @@ export function JobDetails({ job, onUploadSuccess, onClose}) {
   const [applicationOptions, setApplicationOptions] = useState(null);
   const [applicationOptionsStatus, setApplicationOptionsStatus] = useState(null);
   const [showApplicationOptions, setShowApplicationOptions] = useState(false);
+  const [editApplicationOptions, setEditApplicationOptions] = useState(false);
   const handleApplicationForm = async () => {
     if (showApplicationOptions === false) {
       if (job && applicationOptions === null) {
         setApplicationOptionsStatus("loading");
+        setEditApplicationOptions(false);
+
         try {
           const res = await core_get(`/jobs/${job.id}`);
           if (res && res.job.application_options) {
             setApplicationOptions(res.job);
             setApplicationOptionsStatus(null);
+            if (job_slug_to_host(res.job.job_slug) === "Embloy") {
+              setEditApplicationOptions(true)
+            }
             setShowApplicationOptions(true);
           } else {
             setApplicationOptionsStatus("error");
           }
         } catch (e) {
-          setApplicationOptionsStatus("error");
+          if (new_job) {
+            setEditApplicationOptions(true)
+            setApplicationOptionsStatus(null)
+            setShowApplicationOptions(true);
+
+          } else {
+            setApplicationOptionsStatus("error");
+          }
+          
         }
-      } else {
+      } 
+      else {
         setShowApplicationOptions(true);
       }
       
@@ -328,13 +343,15 @@ export function JobDetails({ job, onUploadSuccess, onClose}) {
             </button>
           </EmbloyH>
 
-          {applicationOptions && showApplicationOptions === true && (
+          {showApplicationOptions === true && (
             <EmbloyV className="gap-2">
               <EmbloySeperator className="bg-etna dark:bg-nebbiolo h-px"/> 
               <div className={headerClass}>
                 <ApplicationPreview
                   data={applicationOptions}
                   handleDataReload={() => {}}
+                  onChange={() => {}}
+                  editable={editApplicationOptions}
                 />
               </div>
               <EmbloySeperator className="bg-etna dark:bg-nebbiolo h-px"/> 

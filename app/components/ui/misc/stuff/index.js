@@ -12,9 +12,9 @@ export const EmbloyV = ({children, className}) => {
     );
 }
 
-export const EmbloyH = ({children, className}) => {
+export const EmbloyH = ({children, className, ...props}) => {
     return (
-        <div className={`w-full flex flex-row items-start justify-start ${className}`}>
+        <div className={`w-full flex flex-row items-start justify-start ${className}`} {...props}>
             {children}
         </div>
     );
