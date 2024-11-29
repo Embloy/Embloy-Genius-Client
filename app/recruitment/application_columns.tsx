@@ -4,6 +4,8 @@ import { Checkbox } from "@/app/components/ui/misc/checkbox";
 import { DataTableColumnHeader } from "@/app/components/dom/main/datatable/DataTableColumnHeader";
 import { Application } from "@/lib/types/application";
 import {cast_date_no_null } from "@/lib/utils/cast";
+import { EmbloyP } from "@/app/components/ui/misc/text";
+import { EmbloyH } from "@/app/components/ui/misc/stuff";
 
 export const applicationColumns: ColumnDef<Application>[] = [
   {
@@ -29,66 +31,36 @@ export const applicationColumns: ColumnDef<Application>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: "job_id",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Job ID" />
-    ),
-    enableSorting: true,
-    enableHiding: true,
-  },
-  {
-    accessorKey: "user_id",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="User ID" />
-    ),
-    enableSorting: true,
-    enableHiding: true,
-  },
-  {
-    accessorKey: "application_text",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Application Text" />
-    ),
-    enableSorting: false,
-    enableHiding: true,
-  },
-  {
-    accessorKey: "response",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Your Response" />
-    ),
-    enableSorting: false,
-    enableHiding: true,
-  },
-  {
     accessorKey: "status",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Status" />
     ),
-    enableSorting: false,
+    enableSorting: true,
     enableHiding: true,
     cell: ({ row }) => {
-      let colorClasses = "";
-      if (row.getValue("status") === "rejected") {
-        colorClasses = "cursor-text px-4 py-1 bg-red-100 dark:bg-red-950 rounded-full border border-red-600 dark:border-red-500 font-normal text-red-600 dark:text-red-500 text-xs";
-      } else if (row.getValue("status") === "accepted") {
-        colorClasses = "cursor-text px-4 py-1 bg-emerald-100 dark:bg-emerald-950 rounded-full border border-emerald-600 dark:border-emerald-500 font-normal text-emerald-600 dark:text-emerald-500 text-xs";
-      } else if (row.getValue("status") === "pending") {
-        colorClasses = "cursor-text px-4 py-1 bg-yellow-100 dark:bg-yellow-950 rounded-full border border-yellow-600 dark:border-yellow-500 font-normal text-yellow-600 dark:text-yellow-500 text-xs";
-      } else {
-        colorClasses =
-          "cursor-text px-4 py-1 bg-gray-100 dark:bg-gray-950 rounded-full border border-gray-600 dark:border-gray-500 font-normal text-gray-600 dark:text-gray-500 text-xs";
-      }
 
-      return (
-        <div className="flex justify-center space-x-2">
-          <span
-            className={`inline-flex items-center rounded-full px-3 py-0.5 text-sm font-medium ${colorClasses}`}
-          >
-            {row.getValue("status")}
-          </span>
-        </div>
-      );
+    if (row.getValue('status') === "accepted") {
+        return (
+            <EmbloyH className="gap-1.5 items-center">
+                <div className="h-2 w-2 rounded-full bg-lugana dark:bg-lugana" />
+                <EmbloyP className="text-xs" >Offer</EmbloyP>
+            </EmbloyH>
+        )
+    } else if (row.getValue('status') === "rejected") {
+        return (
+          <EmbloyH className="gap-1.5 items-center">
+              <div className="h-2 w-2 rounded-full bg-primitivo dark:bg-zinfandel" />
+              <EmbloyP className="text-xs" >Rejected</EmbloyP>
+          </EmbloyH>
+      )
+    } else {
+        return (
+          <EmbloyH className="gap-1.5 items-center">
+              <div className="h-2 w-2 rounded-full bg-capri dark:bg-barbera" />
+              <EmbloyP className="text-xs" >Pending</EmbloyP>
+          </EmbloyH>
+        )
+      }
     },
   },
   {
@@ -99,7 +71,7 @@ export const applicationColumns: ColumnDef<Application>[] = [
     enableSorting: true,
     enableHiding: true,
     cell: ({ row }) => {
-      return <div>{cast_date_no_null(row.getValue('created_at'))}</div>
+      return <EmbloyP className={"text-xs"}>{cast_date_no_null(row.getValue('created_at'))}</EmbloyP>
     },
   },
   {
@@ -110,7 +82,7 @@ export const applicationColumns: ColumnDef<Application>[] = [
     enableSorting: true,
     enableHiding: true,
     cell: ({ row }) => {
-      return <div>{cast_date_no_null(row.getValue('updated_at'))}</div>
+      return <EmbloyP className="text-xs">{cast_date_no_null(row.getValue('updated_at'))}</EmbloyP>
     },
   },
 ];

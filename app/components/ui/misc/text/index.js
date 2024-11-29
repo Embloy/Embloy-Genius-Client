@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import '@/app/globals.css'
 
 
@@ -69,7 +69,7 @@ export const EmbloyH1 = ({className, children, ...props}) => {
         </h1>
     )
 }
-export const EmbloyH1Editable = ({ initialText, className }) => {
+export const EmbloyH1Editable = ({ initialText,placeholder="", className }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [text, setText] = useState(initialText);
 
@@ -90,7 +90,20 @@ export const EmbloyH1Editable = ({ initialText, className }) => {
       setIsEditing(false);
     }
   };
-
+  if (text === null || text === "") {
+    return (
+    <input
+          type="text"
+          value={text}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          onKeyDown={handleKeyDown}
+          placeholder={placeholder}
+          autoFocus
+          className={`page-header border-none focus:outline-none bg-transparent ${className}`}
+        />
+    );
+  }
   return (
     <>
       {isEditing ? (
@@ -100,6 +113,7 @@ export const EmbloyH1Editable = ({ initialText, className }) => {
           onChange={handleChange}
           onBlur={handleBlur}
           onKeyDown={handleKeyDown}
+          placeholder={placeholder}
           autoFocus
           className={`page-header border-none focus:outline-none bg-transparent ${className}`}
         />

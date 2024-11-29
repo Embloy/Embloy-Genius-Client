@@ -71,6 +71,13 @@ export default function Jobs() {
       });
   }, [reloadApplications]);
 
+  const new_job = () => {
+    const new_job = {
+      job_slug: "new"
+    };
+    setJobs([new_job, ...jobs]);
+  }
+
   return (
     <EmbloyPageMount className="overflow-hidden">
       <EmbloyPage sandboxed={false}>
@@ -90,6 +97,7 @@ export default function Jobs() {
                       columns={jobColumns}
                       data={jobs}
                       handleDataReload={() => setReloadJobs(true)}
+                      onNewJob={() => {new_job()}}
                   />
                 </EmbloyV>
                 <EmbloyV id={2} className="gap-3">

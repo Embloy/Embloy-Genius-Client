@@ -38,20 +38,21 @@ import { Job } from "../../lib/types/job";
 import {useRouter} from "next/navigation";
 import LoadingScreen from "@/app/components/dom/main/screens/LoadingScreen";
 import {RemoveJobButton} from "@/app/components/dom/main/datatable/job_remove_button";
-import { EmbloyLHPV, EmbloyV, EmbloyH, EmbloySpacer} from "@/app/components/ui/misc/stuff";
+import { EmbloyLHPV, EmbloyV, EmbloyH, EmbloySpacer, EmbloyChildrenAdvanced} from "@/app/components/ui/misc/stuff";
 import { EmbloyToolbox, EmbloyToolboxImgA, EmbloyToolboxImgAdvanced } from "@/app/components/ui/misc/toolbox";
-import { button } from "@nextui-org/react";
 import '@/app/globals.css'
 import { IntegrationSync } from "../components/dom/main/misc/IntegrationSync";
 import { EmbloyH1, EmbloyP } from "../components/ui/misc/text";
+import { PlusIcon } from "lucide-react";
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
     data: TData[]
     handleDataReload: () => void
+    onNewJob: () => void;
 }
 
-export function JobDataTable<TData extends Job, TValue>({columns, data, handleDataReload}: DataTableProps<TData, TValue>) {
+export function JobDataTable<TData extends Job, TValue>({columns, data, handleDataReload, onNewJob}: DataTableProps<TData, TValue>) {
     const router = useRouter();
     const [filterIsHovered, setFilterIsHovered] = useState(false);
     const [columnsIsHovered, setColumnsIsHovered] = useState(false)
@@ -126,6 +127,7 @@ export function JobDataTable<TData extends Job, TValue>({columns, data, handleDa
         return data.at(Number(row_id))
     }
 
+
     if (!data) {
         return <LoadingScreen />
     }
@@ -140,6 +142,9 @@ export function JobDataTable<TData extends Job, TValue>({columns, data, handleDa
                 </EmbloyH>
                 <EmbloyH className={"w-8/12 gap-3 justify-end"}>
                     <EmbloyToolbox superClassName="h-7 border-2 dark:border-chianti" className={undefined} name={undefined} >
+                        <button className="" onClick={onNewJob}>
+                            <EmbloyToolboxImgAdvanced tooltip="New Job" path="/icons/svg/black/plus.svg" path_hovered="/icons/svg/capri/plus.svg" dark_path="/icons/svg/amarone/plus.svg" dark_path_hovered="/icons/svg/barbera/plus.svg" height="11" width="11" disabled={undefined} path_disabled={undefined} dark_path_disabled={undefined} failure={undefined} path_failure={undefined} path_failure_hovered={undefined} success={undefined} action={undefined} path_success={undefined} path_success_hovered={undefined} path_action={undefined} path_hovered_action={undefined} dark_path_action={undefined} dark_path_hovered_action={undefined} />
+                        </button>
                         <IntegrationSync disabled={true} key="Sync" name={""} />
                         <UploadJobFileButton key="Upload" router={router}  formats={['.json']} head="Upload jobs" img="sm-upload" style="relative cursor-pointer" onUploadSuccess={() => handleUploadSuccess()}/>
                         <RemoveJobButton key="Remove" router={router} getJob={(row_id) => getJob(row_id)} formats={['.json']} img="sm-delete" style="relative px-0.5 bg0-r-full cursor-pointer" getSelectedRows={() => getSelectedRows()} onUploadSuccess={() => handleUploadSuccess()}/>

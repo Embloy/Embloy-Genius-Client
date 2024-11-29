@@ -15,7 +15,7 @@ import { cast_date_no_null, job_slug_to_host, slug_to_host } from "@/lib/utils/c
 import Link from "next/link";
 import { siteConfig } from "@/config/site";
 import { UserContext } from "@/app/components/dom/main/wrappers/UserContext";
-import { Share2 } from "lucide-react";
+import { Share2, XIcon } from "lucide-react";
 import { EmbloySelectOption } from "../components/ui/misc/input";
 import { ChevronDoubleDownIcon, ChevronDoubleUpIcon } from "@heroicons/react/20/solid";
 import { core_get } from "@/lib/api/core";
@@ -76,7 +76,7 @@ export function JobDetails({ job, onUploadSuccess, onClose}) {
           onClose();
         }
       } catch (e) {
-        console.log(e);
+
       }
     }
     setUploading(false);
@@ -107,7 +107,10 @@ export function JobDetails({ job, onUploadSuccess, onClose}) {
         document.removeEventListener("mousedown", handleClickOutside);
     };
 }, [shareDropdownOpen]);
-
+  const new_job = job.job_slug === "new"
+  const [draft, setDraft] = useState({
+    "position": null,
+  });
   const created_at = cast_date_no_null(job.created_at, "us");
   const updated_at = cast_date_no_null(job.updated_at, "us");
   let board_url = `${siteConfig.core_url}/board/${user.id}/${job.job_slug}`
@@ -154,10 +157,10 @@ export function JobDetails({ job, onUploadSuccess, onClose}) {
       if (job && applications === null) {
         setApplicationsStatus("loading");
         try {
-          console.log("job", job);
           const res = await core_get(`/jobs/${job.id}/applications`);
           if (res && res.applications) {
             setApplications(res.applications);
+            await handleApplicants(res.applications);
             setApplicationsStatus(null);
             setShowApplications(true);
           } else {
@@ -166,7 +169,6 @@ export function JobDetails({ job, onUploadSuccess, onClose}) {
             setShowApplications(true);
           }
         } catch (e) {
-          console.log("ivanka", e);
           setApplicationsStatus("error");
         }
 
@@ -178,14 +180,24 @@ export function JobDetails({ job, onUploadSuccess, onClose}) {
     
     }
   }
-
+  const handleApplicants = async (args) => {
+    if (args && Array.isArray(args)) {
+      args.map((application) => {
+        if (application.user_id) {
+          //try {}
+        }
+      });
+    }
+  };
+  
   useEffect(() => {
     const fetchData = async () => {
       await handleApplications();
     };
-    fetchData();
+    if (!new_job){
+      fetchData();
+    } 
   }, []);
-
 
 
   return (
@@ -195,32 +207,38 @@ export function JobDetails({ job, onUploadSuccess, onClose}) {
           <EmbloyV className="gap-px">
             <EmbloyH className="justify-between">
               <EmbloyH className="max-w-fit gap-2.5">
-                <EmbloyP className="text-xs text-testaccio dark:text-nebbiolo">Created: {created_at}</EmbloyP>
+                {!new_job && <EmbloyP className="text-xs text-testaccio dark:text-nebbiolo">Created: {created_at}</EmbloyP>}
                 {created_at !== updated_at && <EmbloyP className="text-xs text-testaccio dark:text-nebbiolo">Last Update: {updated_at}</EmbloyP>}
-                {!editable && <EmbloyP className="text-xs text-testaccio dark:text-nebbiolo">Can only be edited on {ats}!</EmbloyP>}
+                {!editable && <EmbloyP className="text-xs text-testaccio dark:text-nebbiolo">View only! Externally hosted on {ats}.</EmbloyP>}
               </EmbloyH>
               {job.job_status === "listed" && <Link href={board_url} target="_blank"><EmbloyP className="text-xs text-capri dark:text-capri underline">{"Go to post"}</EmbloyP></Link>}
             </EmbloyH>
             <EmbloySeperator className="bg-etna dark:bg-nebbiolo h-px"/>
           </EmbloyV>
           <EmbloyH className="justify-between ">
-            {editable ? (
-              <EmbloyH1Editable className="page-header text-lg" initialText={job.position} />
+          {!new_job ? (
+            editable ? (
+                <EmbloyH1Editable className="page-header text-lg" initialText={job.position} />
+              ) : (
+                <EmbloyH1 className="page-header text-lg">{job.position}</EmbloyH1>
+              )
             ) : (
-              <EmbloyH1 className="page-header text-lg">{job.position}</EmbloyH1> 
-            )}
-            <EmbloyToolbox superClassName="h-7 border-2 dark:border-nebbiolo dark:bg-nebbiolo" >
-              <EmbloyV className="max-w-fit">
-                <button
-                  onClick={() => {toggleShareDropdown(); }}
-                  className="bg-transparent p-0 text-black hover:text-capri dark:text-amarone dark:hover:text-barbera"
-                >
-                  <EmbloyChildrenAdvanced tooltip="Share">
-                    <Share2 className="w-[12px] h-[12px] p-0 m-0" />
-                  </EmbloyChildrenAdvanced>
-                </button>
-              </EmbloyV>
-              {shareDropdownOpen && job && (
+              <EmbloyH1Editable placeholder="Enter Position Title" className="page-header text-lg" initialText={draft.position} />
+          )}
+
+            {!new_job ?
+              <EmbloyToolbox superClassName="h-7 border-2 dark:border-nebbiolo dark:bg-nebbiolo" >
+                <EmbloyV className="max-w-fit">
+                  <button
+                    onClick={() => {toggleShareDropdown(); }}
+                    className="bg-transparent p-0 text-black hover:text-capri dark:text-amarone dark:hover:text-barbera"
+                  >
+                    <EmbloyChildrenAdvanced tooltip="Share">
+                      <Share2 className="w-[12px] h-[12px] p-0 m-0" />
+                    </EmbloyChildrenAdvanced>
+                  </button>
+                </EmbloyV>
+                {shareDropdownOpen && job && (
                   <div ref={dropdownRef} className="absolute right-0 z-50 mt-2 min-w-48 rounded-md border border-etna dark:border-amarone bg-white p-2 shadow-lg dark:bg-nebbiolo">
                       <button onClick={() => {setShareDropdownOpen(false); }} disabled={true} className="block w-full px-4 py-2 text-left text-sm text-etna dark:text-vesuvio cursor-not-allowed ">
                         <EmbloyP className="text-inherit dark:text-inherit">Share via email</EmbloyP>
@@ -236,16 +254,29 @@ export function JobDetails({ job, onUploadSuccess, onClose}) {
                           <EmbloyP className="text-inherit dark:text-inherit">Copy Post Link</EmbloyP>
                       </button>
                   </div>
-              )}
-              <GenerateQRButton jobId={job.job_id} />
-              <GenerateGQButton jobId={job.job_id} position={job.position} jobSlug={job.job_slug}/>
-              <DuplicateJobButton disabled={true} jobId={job.job_id} external={!editable} ats={ats}/>
-              {editable && <RemovePosting /> }
-              
-            </EmbloyToolbox>
+                )}
+                <GenerateQRButton jobId={job.job_id} />
+                <GenerateGQButton jobId={job.job_id} position={job.position} jobSlug={job.job_slug}/>
+                <DuplicateJobButton disabled={true} jobId={job.job_id} external={!editable} ats={ats}/>
+                {editable && <RemovePosting /> }
+                
+              </EmbloyToolbox> :
+              <EmbloyToolbox superClassName="h-7 border-2 dark:border-nebbiolo dark:bg-nebbiolo" >
+                <EmbloyV className="max-w-fit">
+                  <button
+                    onClick={() => {onClose()}}
+                    className="bg-transparent p-0 text-black hover:text-capri dark:text-amarone dark:hover:text-barbera"
+                  >
+                    <EmbloyChildrenAdvanced tooltip="Close">
+                      <XIcon className="w-[12px] h-[12px] p-0 m-0 text-inherit dark:text-inherit" strokeWidth={3} />
+                    </EmbloyChildrenAdvanced>
+                  </button>
+                </EmbloyV>                
+              </EmbloyToolbox>
+            }
           </EmbloyH>
-
-          <EmbloyH className="justify-start items-center gap-1.5 text-black dark:text-amarone">
+          
+          {!new_job && <EmbloyH className="justify-start items-center gap-1.5 text-black dark:text-amarone">
             <button onClick={() => {
               if (applicationsStatus !== "loading") {
                 handleApplications();
@@ -261,7 +292,7 @@ export function JobDetails({ job, onUploadSuccess, onClose}) {
                   <Spinner size="sm" color="current" className="w-4 h-4 p-0 m-0" />
                 )}
             </button>
-          </EmbloyH>
+          </EmbloyH>}
           {showApplications === true && (
             <EmbloyV className="gap-2">
               <EmbloySeperator className="bg-etna dark:bg-nebbiolo h-px" />

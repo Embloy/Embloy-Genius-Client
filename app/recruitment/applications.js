@@ -11,7 +11,8 @@ export const Applications = ({applications}) => {
     const rejected_candidates = applications.filter((app) => app.status === "rejected").length;
     const accepted_candidates = applications.filter((app) => app.status === "accepted").length;
     const pending_candidates = applications.filter((app) => app.status === "pending").length;
-    const rate = (accepted_candidates / total_candidates) * 100;
+    const rate = ((accepted_candidates / total_candidates) * 100).toFixed(1);
+
     
     const get_by_status = (status) => {
         return applications.filter((app) => app.status === status);
@@ -21,21 +22,25 @@ export const Applications = ({applications}) => {
     const [showMetric, setShowMetric] = useState(false);
     const [metric, setMetric] = useState(null);
     const handle_metric = (applications) => {
-        if (applications.length !== 0) {
-            if (showMetric) {
-                if (metric !== applications) {
-                    setMetric(applications);
-                }
-            } else {
+        if (showMetric) {
+            if (metric !== applications) {
                 setMetric(applications);
-                setShowMetric(true);
             }
+        } else {
+            setMetric(applications);
+            setShowMetric(true);
         }
+        
     }
     const handle_close = () => {
         setShowMetric(false)
         setMetric(null)
     }
+
+    useEffect(() => {
+        handle_metric(get_by_status("pending"));
+    }, [applications])
+
     
     return (
         <EmbloyV>
@@ -114,8 +119,8 @@ export const Applications = ({applications}) => {
                     </EmbloyH>
                 </EmbloyV>
 
-                <EmbloyV className="border border-etna dark:border-nebbiolo p-1.5 gap-px rounded-md w-full">
-                    <EmbloyH className="justify-between">
+                <EmbloyV className="border border-etna dark:border-nebbiolo gap-px rounded-md w-full">
+                    <EmbloyH className="justify-between p-1.5">
                         <EmbloyP className={"text-xs flex"}>
                             Overview
                         </EmbloyP>
@@ -135,7 +140,7 @@ export const Applications = ({applications}) => {
                             </EmbloyP>
                         </EmbloyH>
                     }
-                    {showMetric && metric && 
+                    {showMetric && 
                         <EmbloyH className={"justify-center"}>
                             <ApplicationDataTable
                                 columns={applicationColumns}
