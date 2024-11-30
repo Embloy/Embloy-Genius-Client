@@ -90,6 +90,9 @@ export const EmbloyH1Editable = ({ initialText,placeholder="", className }) => {
       setIsEditing(false);
     }
   };
+  useEffect(() => {
+    setText(initialText);
+  }, [initialText]);
   if (text === null || text === "") {
     return (
     <input

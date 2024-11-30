@@ -12,10 +12,10 @@ import { EmbloyButton, EmbloyChildrenAdvanced, EmbloyH, EmbloySeperator, EmbloyS
 import { EmbloyH1, EmbloyH1Editable, EmbloyP } from "@/app/components/ui/misc/text";
 import { ChevronDownIcon, ChevronUpIcon, DeleteIcon, EditIcon, MinusIcon, Plus, PlusIcon, Share2, Trash, TrashIcon } from "lucide-react";
 import { EllipsisVerticalIcon } from "@heroicons/react/20/solid";
-import { CaretUpIcon } from "@radix-ui/react-icons";
 const EditorBlock = dynamic(() => import("@/app/components/dom/main/misc/application_editor"), {ssr: false});
 
 function EditorTool({ editable = false, onChange, index, children, title, required = false, ...props }) {
+    console.log("Required", index ,required);
     const [label, setLabel] = useState(title);
     
     const [essential, setEssential] = useState(required);
@@ -45,7 +45,9 @@ function EditorTool({ editable = false, onChange, index, children, title, requir
         onChange(direction, index);
     }
     const toggleDropdown = () => {
+        setHovered(false);
         setDropdown((prev) => !prev);
+        
     };
 
     useEffect(() => {
@@ -86,7 +88,10 @@ function EditorTool({ editable = false, onChange, index, children, title, requir
 
     if (!editable) {
         return <EmbloyV className="">
-         
+            <EmbloyH className="justify-between">
+                <EmbloyH1 className="font-heading text-base text-black dark:text-white">{title}</EmbloyH1>
+                {required && <EmbloyP className={"text-xs italic text-primitivo dark:text-primitivo"}>* Required</EmbloyP>}
+            </EmbloyH>
         {children}
         </EmbloyV>;
         
@@ -98,15 +103,29 @@ function EditorTool({ editable = false, onChange, index, children, title, requir
                 className="w-full cursor-pointer items-center justify-between"
             >
                 <EmbloyV className={`w-95%`}>
+                    <EmbloyH className="justify-between">
+                        {editable ? <legend><EmbloyH1Editable initialText={title} placeholder="Enter Question" className="font-heading text-base text-black dark:text-white" /></legend> : <legend><EmbloyH1 className="font-heading text-base text-black dark:text-white">{title}</EmbloyH1></legend>}
+                        {required && <EmbloyP className={"text-xs italic text-primitivo dark:text-primitivo"}>* Required</EmbloyP>}
+                    </EmbloyH>
                     {children}
+                    
                     <div
-                        onClick={toggleDropdown} // Fixed this line
+                        onClick={toggleDropdown}
                         className={`w-full flex flex-col items-center justify-center transition-all duration-300 ease-in-out ${
-                            hovered ? ' h-3' : 'h-0'
+                            hovered ? 'h-3' : 'h-0'
                         }`}
                     >
-                        <div className={`bg-etna dark:bg-nebbiolo rounded-full w-full transition-all duration-300 ease-in-out ${
-                            hovered ? ' h-px' : 'h-0'} `}/>
+                        <div
+                            className={`relative bg-etna dark:bg-nebbiolo rounded-full w-full transition-all duration-300 ease-in-out ${
+                                hovered ? 'h-px' : 'h-0'
+                            }`}
+                        >
+                            <div className="absolute inset-0 flex items-center justify-center">
+                                <div className={`bg-white hover:bg-capri dark:bg-biferno dark:hover:bg-barbera text-black hover:text-white dark:text-white border border-etna dark:border-nebbiolo p-2 rounded-full ${hovered ? 'block' : 'hidden'}`}>
+                                    <Plus size={16} className="text-inherit dark:text-inherit" />
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     {dropdown && (
                         <div
@@ -256,7 +275,7 @@ function EditorTool({ editable = false, onChange, index, children, title, requir
                             <button
                                 onClick={() => {
                                     setShareDropdownOpen(false)
-                                    handleMove("down")
+                                    handleMove("up")
                                 }}
                                 disabled={false}
                                 className="block w-full px-4 py-2 text-left text-sm text-black dark:text-white hover:text-capri hover:dark:text-barbera flex flex-row gap-2"
@@ -424,32 +443,30 @@ export function ApplicationPreview({data, handleDataReload, editable=false, onCh
 
 
     const handleAdd = (type, key) => {
-        let updated = locData.application_options;
-        setLocData({ ...locData, application_options:[] });
-        if (type === "up") {
-            if (key > 0) { // Check if the element can move up
-                const element = updated[key];
-                updated.splice(key, 1); // Remove the element
-                updated.splice(key - 1, 0, element); // Insert it at the new position
-                setLocData({ ...locData, application_options: updated });
+        setLocData((prevData) => {
+            let updatedOptions = [...prevData.application_options];
+            if (type === "up" && key > 0) {
+                [updatedOptions[key - 1], updatedOptions[key]] = [updatedOptions[key], updatedOptions[key - 1]];
+            } else if (type === "down" && key < updatedOptions.length - 1) {
+                [updatedOptions[key], updatedOptions[key + 1]] = [updatedOptions[key + 1], updatedOptions[key]];
+            } else if (type === "remove") {
+                updatedOptions.splice(key, 1);
+            } else if (type === "require") {
+                const updatedItem = { ...updatedOptions[key], required: !updatedOptions[key].required };
+                updatedOptions[key] = updatedItem;
+            } else if (type !== "up" && type !== "down" && type !== "remove" && type !== "require") {
+                const newElement = {
+                    id: null,
+                    question_type: type,
+                    question: null,
+                    required: false,
+                    options: [],
+                };
+                updatedOptions.splice(key + 1, 0, newElement);
             }
-        } else if (type === "down") {
-            if (key < updated.length - 1) {
-                const element = updated[key];
-                updated.splice(key, 1); 
-                updated.splice(key + 1, 0, element); 
-                setLocData({ ...locData, application_options: updated });
-            }
-        } else {
-            const element = {
-                question_type: type,
-                question: null,
-                required: false,
-                options: [],
-            };
-            updated.splice(key + 1, 0, element);
-            setLocData({ ...locData, application_options: updated });
-        }
+    
+            return { ...prevData, application_options: updatedOptions };
+        });
     };
     useEffect(() => {
         console.log("data",locData);
@@ -483,10 +500,6 @@ export function ApplicationPreview({data, handleDataReload, editable=false, onCh
                         index={index}
                         onChange={(type, id) => { handleAdd(type, id); }}
                         >
-                        <EmbloyH className="justify-between">
-                            {editable ? <legend><EmbloyH1Editable initialText={option.question} placeholder="Enter Question" className="font-heading text-base text-black dark:text-white" /></legend> : <legend><EmbloyH1 className="font-heading text-base text-black dark:text-white">{option.question}</EmbloyH1></legend>}
-                            {option.required && <EmbloyP className={"text-xs italic text-primitivo dark:text-primitivo"}>* Required</EmbloyP>}
-                    </EmbloyH>
                         {(() => {
                             switch (option.question_type) {
                                 case "link":
@@ -508,7 +521,6 @@ export function ApplicationPreview({data, handleDataReload, editable=false, onCh
                                     case "short_text":
                                     return (
                                         <div className="w-full text-black dark:text-white">
-                                            
                                             <input
                                                 type="text"
                                                 required={option.required}
