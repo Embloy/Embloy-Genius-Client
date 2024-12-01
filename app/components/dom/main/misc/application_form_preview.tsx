@@ -15,7 +15,7 @@ import { EllipsisVerticalIcon } from "@heroicons/react/20/solid";
 import { not_core_get } from "@/lib/api/core";
 const EditorBlock = dynamic(() => import("@/app/components/dom/main/misc/application_editor"), {ssr: false});
 
-function EditorTool({dummy=false, id=null, job_id,  editable = false, onChange, index, children, title, required = false, options=[], hasOptions=false, formats=[], ...props }) {
+function EditorTool({dummy=false, id=null, job_id, tag="", editable = false, onChange, index, children, title, required = false, options=[], defaultOptions = false, hasOptions=false, formats=[], ...props }) {
   
     const [label, setLabel] = useState(title);
     useEffect(() => {
@@ -105,7 +105,9 @@ function EditorTool({dummy=false, id=null, job_id,  editable = false, onChange, 
             document.removeEventListener("mousedown", handleClickOutside);
         };
     }, [shareDropdownOpen])
-    const [localOptions, setLocalOptions] = useState([...options]);
+    const [localOptions, setLocalOptions] = useState(defaultOptions ? options : []);
+
+
     const [optionsOpen, setOptionsOpen] = useState(false);
 
     const handleAddOption = () => {
@@ -431,6 +433,7 @@ function EditorTool({dummy=false, id=null, job_id,  editable = false, onChange, 
                                 <TrashIcon size={16} className="text-inherit dark:text-inherit"/>
                                 
                             </button>
+                            <EmbloyP className="text-xs text-etna dark:text-rubeno text-center italic">{tag}</EmbloyP>
                             
                         </div>
                     )}
@@ -474,9 +477,6 @@ export function ApplicationPreview({data, handleDataReload, editable=false, onCh
                 return true;
             } else {
                 for (let i = 0; i < ref.length; i++) {
-                    if (can[i].question === undefined || can[i].question === null) {
-                        return true;
-                    }
                     if (ref[i].question.trim() !== can[i].question.trim()) {
                         return true;
                     }
@@ -663,21 +663,23 @@ export function ApplicationPreview({data, handleDataReload, editable=false, onCh
             filterd_ids = filterd_ids.sort((a, b) => a - b);
             locData.application_options.forEach((option, index) => {
                 let newOption = {};
-                
+                if (option.question === null || option.question === undefined || option.question.trim() === "") {
+                    newOption["question"] = "Null";
+                } else {
+                    newOption["question"] = option.question.trim();
+                }
+                newOption["question_type"] = option.question_type;
+                newOption["required"] = option.required;
+                if ((option.question_type === "single_choice" || option.question_type === "multiple_choice" || option.question_type === "file") && option.options.length === 0) {
+                    newOption["options"] = ["Null"];
+                } else {
+                    newOption["options"] = option.options;
+                }
                 if (filterd_ids[index] !== undefined) {
                     newOption["id"] = filterd_ids[index];
                     newOption["job_id"] = original.id;
                     newOption["ext_id"] = original.job_slug;
-                    newOption["question"] = option.question.trim();
-                    newOption["question_type"] = option.question_type;
-                    newOption["required"] = option.required;
-                    newOption["options"] = option.options;
-                } else {
-                    newOption["question"] = option.question.trim();
-                    newOption["question_type"] = option.question_type;
-                    newOption["required"] = option.required;
-                    newOption["options"] = option.options;
-                }
+                } 
                 ao.push(newOption);
                 
             });
@@ -749,6 +751,8 @@ export function ApplicationPreview({data, handleDataReload, editable=false, onCh
                         options={option.options}
                         hasOptions={option.question_type === "single_choice" || option.question_type === "multiple_choice" || option.question_type === "file"}
                         formats={option.question_type === "file" ? allFormats : []}
+                        defaultOptions={option.options.length === 0 ? false : true}
+                        tag={option.question_type.split("_").map((word) => word.charAt(0).toUpperCase() + word.slice(1)).join(" ")}
                         >
                         {(() => {
                             switch (option.question_type) {

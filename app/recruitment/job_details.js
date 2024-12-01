@@ -123,9 +123,17 @@ export function JobDetails({ job, onUploadSuccess, onClose}) {
   const [applicationOptionsStatus, setApplicationOptionsStatus] = useState(null);
   const [showApplicationOptions, setShowApplicationOptions] = useState(false);
   const [editApplicationOptions, setEditApplicationOptions] = useState(false);
+  const [rel, setRel] = useState(false);
+
+  const relOn = () => {
+    if (!rel) {
+    console.log("rel on");
+    setRel(true);}
+  }
+
   const handleApplicationForm = async () => {
     if (showApplicationOptions === false) {
-      if (job && applicationOptions === null) {
+      if ((job && applicationOptions === null) || (job && rel === true)) {
         setApplicationOptionsStatus("loading");
         setEditApplicationOptions(false);
 
@@ -137,6 +145,7 @@ export function JobDetails({ job, onUploadSuccess, onClose}) {
             if (job_slug_to_host(res.job.job_slug) === "Embloy" && res.job.activity_status === 1) {
               setEditApplicationOptions(true)
             }
+            setRel(false);
             setShowApplicationOptions(true);
           } else {
             setApplicationOptionsStatus("error");
@@ -278,10 +287,10 @@ export function JobDetails({ job, onUploadSuccess, onClose}) {
                       </button>
                   </div>
                 )}
-                <GenerateQRButton jobId={job.job_id} />
-                <GenerateGQButton jobId={job.job_id} position={job.position} jobSlug={job.job_slug}/>
-                <DuplicateJobButton disabled={true} jobId={job.job_id} external={!editable} ats={ats}/>
-                {editable && <RemovePosting /> }
+                <GenerateQRButton jobId={job.id} />
+                <GenerateGQButton jobId={job.id} position={job.position} jobSlug={job.job_slug}/>
+                <DuplicateJobButton disabled={true} jobId={job.id} external={!editable} ats={ats}/>
+                {editable && <RemovePosting jobId={job.id} /> }
                 
               </EmbloyToolbox> :
               <EmbloyToolbox superClassName="h-7 border-2 dark:border-nebbiolo dark:bg-nebbiolo" >
@@ -357,7 +366,7 @@ export function JobDetails({ job, onUploadSuccess, onClose}) {
               <div className={headerClass}>
                 <ApplicationPreview
                   data={applicationOptions}
-                  handleDataReload={() => {}}
+                  handleDataReload={() => {relOn()}}
                   onChange={() => {}}
                   editable={editApplicationOptions}
                 />
