@@ -354,7 +354,7 @@ export function JobDetails({ job, onUploadSuccess, onClose, onRemove }) {
 
             {!new_job ?
               <EmbloyH className="max-w-fit items-center gap-2">
-                <EmbloyToggle 
+                {editable && <EmbloyToggle 
                   tooltip={`
                       ${(listedStatus=== "active") && "Unlist Job"
                       || (listedStatus === "inactive") && "Publish Job"
@@ -362,7 +362,7 @@ export function JobDetails({ job, onUploadSuccess, onClose, onRemove }) {
                   `} className="h-7"  unlock={`
                     ${(listedStatus === "active" && true) 
                     || (listedStatus !== "active" && false)}
-                `}  forceStatus={listedStatus} onChange={handleVisibility} />
+                `}  forceStatus={listedStatus} onChange={handleVisibility} />}
                 <EmbloyToolbox superClassName="h-7 border-2 dark:border-nebbiolo dark:bg-nebbiolo" >
                   <EmbloyV className="max-w-fit">
                     <button
