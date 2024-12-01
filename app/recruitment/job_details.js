@@ -22,6 +22,7 @@ import { core_get, not_core_get } from "@/lib/api/core";
 import { Spinner } from "@nextui-org/react";
 import { PlusIcon } from "lucide-react";
 import { Applications } from "./applications";
+import { PostDetails } from "./post_details";
 
 export function JobDetails({ job, onUploadSuccess, onClose, onRemove }) {
   let { user, company } = useContext(UserContext);
@@ -130,43 +131,83 @@ export function JobDetails({ job, onUploadSuccess, onClose, onRemove }) {
     setRel(true);}
   }
 
-  const handleApplicationForm = async () => {
-    if (showApplicationOptions === false) {
+  const handleApplicationForm = async (mode = "ao") => {
+    if ((showApplicationOptions === false && mode === "ao") || (showBoard === false && mode === "p")) {
       if ((job && applicationOptions === null) || (job && rel === true)) {
-        setApplicationOptionsStatus("loading");
+        if (mode === "ao") {
+          setApplicationOptionsStatus("loading");
+        } else if (mode === "p") {
+          setBoardStatus("loading");
+        }
+        
+        
         setEditApplicationOptions(false);
+
 
         try {
           const res = await core_get(`/jobs/${job.id}`);
           if (res && res.job.application_options) {
+            setBoard(res.job);
             setApplicationOptions(res.job);
             setApplicationOptionsStatus(null);
+            setBoardStatus(null);
             if (job_slug_to_host(res.job.job_slug) === "Embloy" && res.job.activity_status === 1) {
               setEditApplicationOptions(true)
             }
             setRel(false);
-            setShowApplicationOptions(true);
+            
+            if (mode === "ao") {
+              setShowApplicationOptions(true);
+            } else if (mode === "p") {
+              setShowBoard(true);
+            }
+            
           } else {
-            setApplicationOptionsStatus("error");
+            if (mode === "ao") {
+              setApplicationOptionsStatus("error");
+            } else if (mode === "p") {
+              setBoardStatus("error");
+            }
+           
+            
           }
         } catch (e) {
           if (new_job) {
             setEditApplicationOptions(true)
             setApplicationOptionsStatus(null)
-            setShowApplicationOptions(true);
+            setBoardStatus(null)
+            if (mode === "ao") {
+              setShowApplicationOptions(true);
+            } else if (mode === "p") {
+              setShowBoard(true);
+            }
+            
 
           } else {
-            setApplicationOptionsStatus("error");
+            if (mode === "ao") {
+              setApplicationOptionsStatus("error");
+            } else if (mode === "p") {
+              setBoardStatus("error");
+            } 
           }
           
         }
       } 
       else {
-        setShowApplicationOptions(true);
+        if (mode === "ao") {
+          setShowApplicationOptions(true);
+        } else if (mode === "p") {
+          setShowBoard(true);
+        }
       }
       
     } else {
-      setShowApplicationOptions(false);
+      if (mode === "ao") {
+        setShowApplicationOptions(false);
+      } else if (mode === "p") {
+        setShowBoard(false);
+      }
+      
     }
     
   }
@@ -240,7 +281,9 @@ export function JobDetails({ job, onUploadSuccess, onClose, onRemove }) {
   const handleSave = async () => {
     if (draft.position !== null) {
       const body = {
-        "position": draft.position
+        "position": draft.position,
+        "job_status": "unlisted",
+        "title": draft.position,
       }
       try {
         const res = await not_core_get("POST", `/jobs`, body);
@@ -251,6 +294,11 @@ export function JobDetails({ job, onUploadSuccess, onClose, onRemove }) {
       }
     }
   }
+
+  const [board, setBoard] = useState(null);
+  const [boardStatus, setBoardStatus] = useState(null);
+  const [showBoard, setShowBoard] = useState(false);
+
 
   return (
     <EmbloyV className={"justify-between cursor-default p-2 bg-ferrara dark:bg-transparent"}>
@@ -319,7 +367,7 @@ export function JobDetails({ job, onUploadSuccess, onClose, onRemove }) {
                     onClick={() => {handleSave()}}
                     className="bg-transparent p-0 text-black hover:text-capri dark:text-amarone dark:hover:text-barbera"
                   >
-                    <EmbloyChildrenAdvanced tooltip="Close">
+                    <EmbloyChildrenAdvanced tooltip="Save">
                       <SaveIcon className="w-[12px] h-[12px] p-0 m-0 text-inherit dark:text-inherit" strokeWidth={3} />
                     </EmbloyChildrenAdvanced>
                   </button>
@@ -370,9 +418,37 @@ export function JobDetails({ job, onUploadSuccess, onClose, onRemove }) {
 
 
 
+          {!new_job && <EmbloyH className="justify-start items-center gap-1.5 text-black dark:text-amarone">
+            <button onClick={() => {
+              if (boardStatus !== "loading") {
+                handleApplicationForm("p");
+              }}} className={`px-2 py-px border border-etna dark:border-nebbiolo rounded-md max-w-fit flex flex-row gap-1.5 ${boardStatus === "loading" ? 'cursor-wait' : "cursor-pointer hover:text-capri hover:dark:text-barbera"} transition-colors duration-200`}>
+                <EmbloyP className="max-w-fit text-xs text-inherit dark:text-inherit">{boardStatus === "error" ? "Try again" : "Board Post"}</EmbloyP>
+                {boardStatus !== "loading" ? (
+                  showBoard ? (
+                    <ChevronDoubleUpIcon className="w-4 h-4 p-0 m-0" />
+                  ) : (
+                    <PlusIcon className="w-4 h-4 p-0 m-0" />
+                  )
+                ) : (
+                  <Spinner size="sm" color="current" className="w-4 h-4 p-0 m-0" />
+                )}
+            </button>
+          </EmbloyH>}
 
+          {showBoard=== true && (
+            <EmbloyV className="gap-2">
+              <EmbloySeperator className="bg-etna dark:bg-nebbiolo h-px"/> 
+              <div className={headerClass}>
+                <PostDetails job={board} handleDataReload={() => {relOn()}}
+                  onChange={() => {}}
+                  editable={editApplicationOptions} />
+              </div>
+              <EmbloySeperator className="bg-etna dark:bg-nebbiolo h-px"/> 
+            </EmbloyV>
+        )}
 
-          <EmbloyH className="justify-start items-center gap-1.5 text-black dark:text-amarone">
+{!new_job && <EmbloyH className="justify-start items-center gap-1.5 text-black dark:text-amarone">
             <button onClick={() => {
               if (applicationOptionsStatus !== "loading") {
                 handleApplicationForm();
@@ -389,6 +465,7 @@ export function JobDetails({ job, onUploadSuccess, onClose, onRemove }) {
                 )}
             </button>
           </EmbloyH>
+          }
 
           {showApplicationOptions === true && (
             <EmbloyV className="gap-2">
