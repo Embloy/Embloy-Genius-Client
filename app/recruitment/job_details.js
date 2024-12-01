@@ -7,7 +7,7 @@ import { ApplicationPreview } from "@/app/components/dom/main/misc/application_f
 import { GenerateQRButton } from "@/app/components/dom/main/misc/QRGenerator";
 import { GenerateGQButton } from "@/app/components/dom/main/misc/GQGenerator";
 import { DuplicateJobButton } from "@/app/components/dom/main/misc/DuplicateJobButton";
-import { EmbloyLHPV, EmbloyV, EmbloyH, EmbloySpacer, EmbloySeperator, EmbloyChildrenAdvanced} from "@/app/components/ui/misc/stuff";
+import { EmbloyLHPV, EmbloyV, EmbloyH, EmbloySpacer, EmbloySeperator, EmbloyChildrenAdvanced, EmbloyToggle} from "@/app/components/ui/misc/stuff";
 import { EmbloyToolbox, EmbloyToolboxImgA, EmbloyToolboxImgAdvanced } from "@/app/components/ui/misc/toolbox";
 import { EmbloyH1Editable, EmbloyP, EmbloyH1} from "@/app/components/ui/misc/text";
 import { RemovePosting } from "../components/dom/main/misc/RemovePosting";
@@ -299,6 +299,32 @@ export function JobDetails({ job, onUploadSuccess, onClose, onRemove }) {
   const [boardStatus, setBoardStatus] = useState(null);
   const [showBoard, setShowBoard] = useState(false);
 
+  const [listedStatus, setListedStatus] = useState(job.job_status === "listed" ? "active" : "inactive");
+  const force = (status) => {
+    setListedStatus(status);
+  };
+  const handleVisibility = async () => {
+    if (listedStatus === "active" && job.job_status === "listed") {
+      try {
+        force("disconnect");
+        await not_core_get("PATCH", `/jobs/${job.id}`, {job_status: "unlisted"});
+        force("inactive");
+        onUploadSuccess();
+      } catch (e) {
+        force("active");
+      }
+    } else {
+      try {
+        force("connect");
+        await not_core_get("PATCH", `/jobs/${job.id}`, {job_status: "listed"});
+        force("active");
+        onUploadSuccess();
+      } catch (e) {
+        force("inactive");
+      }
+    }
+  }
+
 
   return (
     <EmbloyV className={"justify-between cursor-default p-2 bg-ferrara dark:bg-transparent"}>
@@ -327,40 +353,51 @@ export function JobDetails({ job, onUploadSuccess, onClose, onRemove }) {
           )}
 
             {!new_job ?
-              <EmbloyToolbox superClassName="h-7 border-2 dark:border-nebbiolo dark:bg-nebbiolo" >
-                <EmbloyV className="max-w-fit">
-                  <button
-                    onClick={() => {toggleShareDropdown(); }}
-                    className="bg-transparent p-0 text-black hover:text-capri dark:text-amarone dark:hover:text-barbera"
-                  >
-                    <EmbloyChildrenAdvanced tooltip="Share">
-                      <Share2 className="w-[12px] h-[12px] p-0 m-0" />
-                    </EmbloyChildrenAdvanced>
-                  </button>
-                </EmbloyV>
-                {shareDropdownOpen && job && (
-                  <div ref={dropdownRef} className="absolute right-0 z-50 mt-2 min-w-48 rounded-md border border-etna dark:border-amarone bg-white p-2 shadow-lg dark:bg-nebbiolo">
-                      <button onClick={() => {setShareDropdownOpen(false); }} disabled={true} className="block w-full px-4 py-2 text-left text-sm text-etna dark:text-vesuvio cursor-not-allowed ">
-                        <EmbloyP className="text-inherit dark:text-inherit">Share via email</EmbloyP>
-                      </button>
-                      <button onClick={() => {setShareDropdownOpen(false); }} disabled={true} className="block w-full px-4 py-2 text-left text-sm text-etna dark:text-vesuvio cursor-not-allowed">
-                        <EmbloyP className="text-inherit dark:text-inherit">Share on LinkedIn</EmbloyP>
-                      </button>
-                      <button onClick={() => {
-                          navigator.clipboard.writeText(`${board_url}`);
-                          alert("Link copied to clipboard!"); 
-                          setShareDropdownOpen(false); 
-                          }} className="cursor-copy w-full px-4 py-2 text-left text-sm text-black dark:text-white hover:text-capri hover:dark:text-barbera">
-                          <EmbloyP className="text-inherit dark:text-inherit">Copy Post Link</EmbloyP>
-                      </button>
-                  </div>
-                )}
-                <GenerateQRButton jobId={job.id} />
-                <GenerateGQButton jobId={job.id} position={job.position} jobSlug={job.job_slug}/>
-                <DuplicateJobButton disabled={true} jobId={job.id} external={!editable} ats={ats}/>
-                {editable && <RemovePosting jobId={job.id} onChange={(type, id) => handleAdd(type, id)}/> }
-                
-              </EmbloyToolbox> :
+              <EmbloyH className="max-w-fit items-center gap-2">
+                <EmbloyToggle 
+                  tooltip={`
+                      ${(listedStatus=== "active") && "Unlist Job"
+                      || (listedStatus === "inactive") && "Publish Job"
+                      || (listedStatus === "connect" || listedStatus === "disconnect") && "Pending..."}
+                  `} className="h-7"  unlock={`
+                    ${(listedStatus === "active" && true) 
+                    || (listedStatus !== "active" && false)}
+                `}  forceStatus={listedStatus} onChange={handleVisibility} />
+                <EmbloyToolbox superClassName="h-7 border-2 dark:border-nebbiolo dark:bg-nebbiolo" >
+                  <EmbloyV className="max-w-fit">
+                    <button
+                      onClick={() => {toggleShareDropdown(); }}
+                      className="bg-transparent p-0 text-black hover:text-capri dark:text-amarone dark:hover:text-barbera"
+                    >
+                      <EmbloyChildrenAdvanced tooltip="Share">
+                        <Share2 className="w-[12px] h-[12px] p-0 m-0" />
+                      </EmbloyChildrenAdvanced>
+                    </button>
+                  </EmbloyV>
+                  {shareDropdownOpen && job && (
+                    <div ref={dropdownRef} className="absolute right-0 z-50 mt-2 min-w-48 rounded-md border border-etna dark:border-amarone bg-white p-2 shadow-lg dark:bg-nebbiolo">
+                        <button onClick={() => {setShareDropdownOpen(false); }} disabled={true} className="block w-full px-4 py-2 text-left text-sm text-etna dark:text-vesuvio cursor-not-allowed ">
+                          <EmbloyP className="text-inherit dark:text-inherit">Share via email</EmbloyP>
+                        </button>
+                        <button onClick={() => {setShareDropdownOpen(false); }} disabled={true} className="block w-full px-4 py-2 text-left text-sm text-etna dark:text-vesuvio cursor-not-allowed">
+                          <EmbloyP className="text-inherit dark:text-inherit">Share on LinkedIn</EmbloyP>
+                        </button>
+                        <button onClick={() => {
+                            navigator.clipboard.writeText(`${board_url}`);
+                            alert("Link copied to clipboard!"); 
+                            setShareDropdownOpen(false); 
+                            }} className="cursor-copy w-full px-4 py-2 text-left text-sm text-black dark:text-white hover:text-capri hover:dark:text-barbera">
+                            <EmbloyP className="text-inherit dark:text-inherit">Copy Post Link</EmbloyP>
+                        </button>
+                    </div>
+                  )}
+                  <GenerateQRButton jobId={job.id} />
+                  <GenerateGQButton jobId={job.id} position={job.position} jobSlug={job.job_slug}/>
+                  <DuplicateJobButton disabled={true} jobId={job.id} external={!editable} ats={ats}/>
+                  {editable && <RemovePosting jobId={job.id} onChange={(type, id) => handleAdd(type, id)}/> }
+                  
+                </EmbloyToolbox> 
+              </EmbloyH> :
               <EmbloyToolbox superClassName="h-7 border-2 dark:border-nebbiolo dark:bg-nebbiolo" >
                 <EmbloyV className="max-w-fit">
                   <button
