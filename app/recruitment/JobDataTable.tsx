@@ -257,6 +257,10 @@ export function JobDataTable<TData extends Job, TValue>({columns, data, handleDa
                                     }}
                                     onUploadSuccess={() => handleUploadSuccess()}
                                     onClose={() => setOpenRow(null)}
+                                    onRemove={() => {
+                                        invalidateRowModel();
+                           
+                                    }}
                                     onExtending={() => table.getAllColumns().filter((column) => column.getIsVisible()).length}
                                 >
                                     {row.getVisibleCells().map((cell) => (

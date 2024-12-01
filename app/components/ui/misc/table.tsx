@@ -145,6 +145,7 @@ const JobTableRowExtendable = React.forwardRef<
     onUploadSuccess: () => void;
     onClose: () => void;
     onExtending: () => number;
+    onRemove: () => void;
   }
 >(
   (
@@ -155,6 +156,7 @@ const JobTableRowExtendable = React.forwardRef<
       onClose,
       extended,
       job,
+      onRemove,
       ...props
     },
     ref
@@ -180,6 +182,7 @@ const JobTableRowExtendable = React.forwardRef<
           <td colSpan={onExtending()}>
             <div className="h-full">
               <JobDetails
+                onRemove={onRemove()}
                 job={job}
                 onUploadSuccess={() => onUploadSuccess()}
                 onClose={() => onClose()}

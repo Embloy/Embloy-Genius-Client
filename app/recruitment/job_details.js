@@ -23,7 +23,7 @@ import { Spinner } from "@nextui-org/react";
 import { PlusIcon } from "lucide-react";
 import { Applications } from "./applications";
 
-export function JobDetails({ job, onUploadSuccess, onClose}) {
+export function JobDetails({ job, onUploadSuccess, onClose, onRemove }) {
   let { user, company } = useContext(UserContext);
   const router = useRouter();
   const [settingsIsHovered, setSettingsIsHovered] = useState(false);
@@ -127,7 +127,6 @@ export function JobDetails({ job, onUploadSuccess, onClose}) {
 
   const relOn = () => {
     if (!rel) {
-    console.log("rel on");
     setRel(true);}
   }
 
@@ -231,6 +230,12 @@ export function JobDetails({ job, onUploadSuccess, onClose}) {
     } 
   }, []);
 
+  const handleAdd = (type, id) => {
+    if (type === "remove") {
+      onUploadSuccess();
+      onClose();
+    }
+  }
 
   return (
     <EmbloyV className={"justify-between cursor-default p-2 bg-ferrara dark:bg-transparent"}>
@@ -290,7 +295,7 @@ export function JobDetails({ job, onUploadSuccess, onClose}) {
                 <GenerateQRButton jobId={job.id} />
                 <GenerateGQButton jobId={job.id} position={job.position} jobSlug={job.job_slug}/>
                 <DuplicateJobButton disabled={true} jobId={job.id} external={!editable} ats={ats}/>
-                {editable && <RemovePosting jobId={job.id} /> }
+                {editable && <RemovePosting jobId={job.id} onChange={(type, id) => handleAdd(type, id)}/> }
                 
               </EmbloyToolbox> :
               <EmbloyToolbox superClassName="h-7 border-2 dark:border-nebbiolo dark:bg-nebbiolo" >
