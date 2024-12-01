@@ -174,8 +174,16 @@ export function JobDetails({ job, onUploadSuccess, onClose}) {
         try {
           const res = await core_get(`/jobs/${job.id}/applications`);
           if (res && res.applications) {
-            setApplications(res.applications);
-            await handleApplicants(res.applications);
+            let applications = res.applications;
+            applications.map((application) => {
+              if (application.applicant) {
+                application["first_name"] = application.applicant.first_name;
+                application["last_name"] = application.applicant.last_name;
+              }
+              
+            });
+            setApplications(applications);
+            await handleApplicants(applications);
             setApplicationsStatus(null);
             setShowApplications(true);
           } else {

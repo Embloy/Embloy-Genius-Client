@@ -8,6 +8,26 @@ export type Application = {
   created_at: string;
   updated_at: string;
   deleted_at: string | null;
+  first_name: string;
+  last_name: string;
+  applicant: Applicant
+};
+
+export type Applicant = {
+  id: number;
+  first_name: string;
+  last_name: string;
+  activity_status: number; // Assuming 1 is active, other values for different statuses
+  user_role: "admin" | "user" | "editor" | "viewer"; // Define possible roles
+  date_of_birth: string | null; // Nullable ISO date string
+  linkedin_url: string | null; // Nullable URL
+  instagram_url: string | null; // Nullable URL
+  twitter_url: string | null; // Nullable URL
+  facebook_url: string | null; // Nullable URL
+  github_url: string | null; // Nullable URL
+  portfolio_url: string | null; // Nullable URL
+  image_url: string; // Presumably required
+  created_at: string; // ISO date string
 };
 
 export type ApplicationAttachment = {

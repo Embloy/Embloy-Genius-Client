@@ -64,6 +64,28 @@ export const applicationColumns: ColumnDef<Application>[] = [
     },
   },
   {
+    accessorKey: "last_name",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Last Name" />
+    ),
+    enableSorting: true,
+    enableHiding: true,
+    cell: ({ row }) => {
+      return <EmbloyP className={"text-xs"}>{row.getValue('last_name')}</EmbloyP>
+    },
+  },
+  {
+    accessorKey: "first_name",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="First Name" />
+    ),
+    enableSorting: true,
+    enableHiding: true,
+    cell: ({ row }) => {
+      return <EmbloyP className={"text-xs"}>{row.getValue('first_name')}</EmbloyP>
+    },
+  },
+  {
     accessorKey: "created_at",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Submitted On" />
