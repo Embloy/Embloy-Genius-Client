@@ -474,6 +474,9 @@ export function ApplicationPreview({data, handleDataReload, editable=false, onCh
                 return true;
             } else {
                 for (let i = 0; i < ref.length; i++) {
+                    if (can[i].question === undefined || can[i].question === null) {
+                        return true;
+                    }
                     if (ref[i].question.trim() !== can[i].question.trim()) {
                         return true;
                     }
@@ -684,7 +687,7 @@ export function ApplicationPreview({data, handleDataReload, editable=false, onCh
                 "application_options_attributes": ao
             }
             try {
-                const res = await not_core_get("PATCH", `/jobs?id=${original.id}`, body);
+                const res = await not_core_get("PATCH", `/jobs/${original.id}`, body);
                 setOriginal(locData);
                 setAltered(false);
                 handleDataReload();
