@@ -94,23 +94,9 @@ export const EmbloyH1Editable = ({ initialText,placeholder="", className, onUpda
   useEffect(() => {
     setText(initialText);
   }, [initialText]);
-  if (text === null || text === "") {
-    return (
-    <input
-          type="text"
-          value={text}
-          onChange={handleChange}
-          onBlur={handleBlur}
-          onKeyDown={handleKeyDown}
-          placeholder={placeholder}
-          autoFocus
-          className={`page-header border-none focus:outline-none bg-transparent ${className}`}
-        />
-    );
-  }
+
   return (
-    <>
-      {isEditing ? (
+
         <input
           type="text"
           value={text}
@@ -121,12 +107,8 @@ export const EmbloyH1Editable = ({ initialText,placeholder="", className, onUpda
           autoFocus
           className={`page-header border-none focus:outline-none bg-transparent ${className}`}
         />
-      ) : (
-        <EmbloyH1 onClick={handleClick} className={`hover:cursor-pointer ${className}`}>
-          {text}
-        </EmbloyH1>
-      )}
-    </>
+      
+
   );
 };
 

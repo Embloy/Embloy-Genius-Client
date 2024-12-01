@@ -15,7 +15,8 @@ import { EllipsisVerticalIcon } from "@heroicons/react/20/solid";
 import { not_core_get } from "@/lib/api/core";
 const EditorBlock = dynamic(() => import("@/app/components/dom/main/misc/application_editor"), {ssr: false});
 
-function EditorTool({ editable = false, onChange, index, children, title, required = false, options=[], hasOptions=false, formats=[], ...props }) {
+function EditorTool({dummy=false, id=null, job_id,  editable = false, onChange, index, children, title, required = false, options=[], hasOptions=false, formats=[], ...props }) {
+  
     const [label, setLabel] = useState(title);
     useEffect(() => {
         setLabel(title);
@@ -42,8 +43,16 @@ function EditorTool({ editable = false, onChange, index, children, title, requir
         onChange("label", index, body);
     }
 
-    const handleRemove = () => {
-        onChange("remove", index);
+    const handleRemove = async () => {
+        if (editable && id !== null && id !== undefined && job_id !== null && job_id !== undefined) {
+            try {
+                await not_core_get("DELETE", `/jobs/${job_id}/options/${id}`, {}, true);
+                onChange("remove", index);
+            } catch (error) {
+            };
+        } else { 
+            onChange("remove", index);
+        }
     }
 
     const handleRequire = () => {
@@ -151,7 +160,7 @@ function EditorTool({ editable = false, onChange, index, children, title, requir
             >
                 <EmbloyV className={`w-95%`}>
                     <EmbloyH className="justify-between">
-                        {editable ? <legend><EmbloyH1Editable onUpdate={(a) => {handleLabel(a)}} initialText={label} placeholder="Enter Question" className="font-heading text-base text-black dark:text-white w-full" /></legend> : <legend><EmbloyH1 className="font-heading text-base text-black dark:text-white">{title}</EmbloyH1></legend>}
+                        {editable && !dummy ? <legend className="w-10/12"><EmbloyH1Editable onUpdate={(a) => {handleLabel(a)}} initialText={label} placeholder="Enter Question" className="font-heading text-base text-black dark:text-white w-full" /></legend> : <legend><EmbloyH1 className="font-heading text-base text-black dark:text-white">{title}</EmbloyH1></legend>}
                         {required && <EmbloyP className={"text-xs italic text-primitivo dark:text-primitivo"}>* Required</EmbloyP>}
                     </EmbloyH>
                     {children}
@@ -289,7 +298,7 @@ function EditorTool({ editable = false, onChange, index, children, title, requir
                 <EmbloyV className="justify-center w-5%">
                     <div
                         className={`w-full flex flex-col items-center justify-center transition-all duration-300 ease-in-out ${
-                            hovered ? ' block h-fit' : 'hidden h-0'
+                            hovered && !dummy ? ' block h-fit' : 'hidden h-0'
                         }`}
                     ><EmbloyChildrenAdvanced tooltip="Edit Question" className={undefined}>
                         <button
@@ -302,7 +311,7 @@ function EditorTool({ editable = false, onChange, index, children, title, requir
                         </button>
                         </EmbloyChildrenAdvanced>
                     </div>
-                    {shareDropdownOpen && (
+                    {shareDropdownOpen && !dummy && (
                         <div
                             ref={dropdown2Ref}
                             className="absolute right-0 transform -translate-x-1/2 z-50 mt-2 min-w-48 rounded-md border border-etna dark:border-amarone bg-white p-2 shadow-lg dark:bg-nebbiolo"
@@ -450,9 +459,11 @@ export function ApplicationPreview({data, handleDataReload, editable=false, onCh
             data &&
             Object.keys(locData).length === 1 && 
             locData.application_options.length === 0 
-        ) {
-            setLocData(data);
-            setOriginal(data)
+        ) { 
+            let bin = data;
+            bin.application_options.sort((a, b) => a.id - b.id);
+            setLocData(bin);
+            setOriginal(bin);
         } else {
         }
     }, []);
@@ -463,7 +474,7 @@ export function ApplicationPreview({data, handleDataReload, editable=false, onCh
                 return true;
             } else {
                 for (let i = 0; i < ref.length; i++) {
-                    if (ref[i].question !== can[i].question) {
+                    if (ref[i].question.trim() !== can[i].question.trim()) {
                         return true;
                     }
                     if (ref[i].required !== can[i].required) {
@@ -630,7 +641,6 @@ export function ApplicationPreview({data, handleDataReload, editable=false, onCh
                 updatedOptions[key] = updatedItem;
             } else if (type !== "up" && type !== "down" && type !== "remove" && type !== "require") {
                 const newElement = {
-                    id: null,
                     question_type: type,
                     question: null,
                     required: false,
@@ -644,32 +654,75 @@ export function ApplicationPreview({data, handleDataReload, editable=false, onCh
     };
     const handleSave = async () => {
         if (altered) {
+            let ao = [];
+            const ids = locData.application_options.map((option) => option.id);
+            let filterd_ids = ids.filter((id) => id !== undefined);
+            filterd_ids = filterd_ids.sort((a, b) => a - b);
+            locData.application_options.forEach((option, index) => {
+                let newOption = {};
+                
+                if (filterd_ids[index] !== undefined) {
+                    newOption["id"] = filterd_ids[index];
+                    newOption["job_id"] = original.id;
+                    newOption["ext_id"] = original.job_slug;
+                    newOption["question"] = option.question.trim();
+                    newOption["question_type"] = option.question_type;
+                    newOption["required"] = option.required;
+                    newOption["options"] = option.options;
+                } else {
+                    newOption["question"] = option.question.trim();
+                    newOption["question_type"] = option.question_type;
+                    newOption["required"] = option.required;
+                    newOption["options"] = option.options;
+                }
+                ao.push(newOption);
+                
+            });
+            
+                
+            const body = {
+                "application_options_attributes": ao
+            }
             try {
-                const res = await not_core_get('PATCH', `/jobs?id=${original.id}`, {application_option: locData.application_options},true)
-                console.log("res", res);
-
+                const res = await not_core_get("PATCH", `/jobs?id=${original.id}`, body);
                 setOriginal(locData);
                 setAltered(false);
                 handleDataReload();
                 
             } catch (error) {
-                console.log("Error", error);
                 setLocData(original);
             }
         }
     }
 
-
+    const handleDelete = async () => {
+        try {
+            const res = await not_core_get("DELETE", `/jobs/${original.id}/options`, {}, true);
+            handleDataReload();
+            setOriginal({ application_options: [] });
+            setLocData({ application_options: [] });
+        } catch (error) {
+        }
+    }
 
     
    return (
     <EmbloyV className={"items-center "}>
         <EmbloyH className="justify-between ">
-            <EmbloyP className="text-xs text-testaccio dark:text-nebbiolo">Preview</EmbloyP>
-            {altered && <button onClick={handleSave}><EmbloyP className="text-xs text-capri dark:text-capri underline">{"Save changes"}</EmbloyP></button>}
+            <EmbloyP className="text-xs text-testaccio dark:text-nebbiolo">
+                {locData.application_options.length} Items 
+                {locData.application_options.length !== original.application_options.length &&
+                    ` - a difference of ${
+                    locData.application_options.length > original.application_options.length ? '+' : '-'
+                    }${Math.abs(
+                    ((locData.application_options.length - original.application_options.length) / original.application_options.length) * 100
+                    ).toFixed(2)}%`}
+            </EmbloyP>
+            {locData.application_options.length > 0 && <EmbloyH className={"gap-1.5 max-w-fit"}>{altered && <button onClick={handleSave}><EmbloyP className="text-xs text-capri dark:text-capri underline">{"Save changes"}</EmbloyP></button>}<button onClick={handleDelete}><EmbloyP className="text-xs text-primitivo dark:text-primitivo underline">{"Delete all items"}</EmbloyP></button></EmbloyH>}
+            
         </EmbloyH>
         <div className="min-h-[250px] w-9/12 flex flex-col items-center justify-start gap-4 px-4 py-2 ">
-            <EditorTool title={undefined} editable={editable} index={-1} onChange={(type, id) => { handleAdd(type, id); }}>
+            <EditorTool dummy={true} job_id={original.id} title={undefined} editable={editable} index={-1} onChange={(type, id) => { handleAdd(type, id); }}>
                 <div className="w-full flex flex-col text-center">
                     <EmbloyH1 className="text-lg font-heading tracking-tight">
                         Apply for {locData.title ?? "this job"}
@@ -682,6 +735,8 @@ export function ApplicationPreview({data, handleDataReload, editable=false, onCh
             {locData.application_options.map((option, index) => {
                 return (
                     <EditorTool
+                        id={option.id} 
+                        job_id={original.id}
                         key={index}
                         required={option.required}
                         title={option.question}
@@ -887,12 +942,21 @@ export function ApplicationPreview({data, handleDataReload, editable=false, onCh
                 );
             })}
         </div>
+        {locData.application_options.length > 0 && <>
         <EmbloySpacer className={"h-8"} />
         <EmbloyButton className="py-0 px-8" name={"Apply"} onStatus={undefined} onClick={() => { }} onMessage={undefined} />
         <EmbloyH className="justify-between ">
-            <EmbloyP className="text-xs text-testaccio dark:text-nebbiolo">End of Preview</EmbloyP>
-            {altered && <button onClick={handleSave}><EmbloyP className="text-xs text-capri dark:text-capri underline">{"Save changes"}</EmbloyP></button>}
-        </EmbloyH>
+            <EmbloyP className="text-xs text-testaccio dark:text-nebbiolo">
+                {locData.application_options.length} Items 
+                {locData.application_options.length !== original.application_options.length &&
+                    ` - a difference of ${
+                    locData.application_options.length > original.application_options.length ? '+' : '-'
+                    }${Math.abs(
+                    ((locData.application_options.length - original.application_options.length) / original.application_options.length) * 100
+                    ).toFixed(2)}%`}
+            </EmbloyP>
+        {altered && <button onClick={handleSave}><EmbloyP className="text-xs text-capri dark:text-capri underline">{"Save changes"}</EmbloyP></button>}
+        </EmbloyH></>}
     </EmbloyV>
 );
 }
