@@ -15,10 +15,10 @@ import { cast_date_no_null, job_slug_to_host, slug_to_host } from "@/lib/utils/c
 import Link from "next/link";
 import { siteConfig } from "@/config/site";
 import { UserContext } from "@/app/components/dom/main/wrappers/UserContext";
-import { Share2, XIcon } from "lucide-react";
+import { SaveIcon, Share2, XIcon } from "lucide-react";
 import { EmbloySelectOption } from "../components/ui/misc/input";
 import { ChevronDoubleDownIcon, ChevronDoubleUpIcon } from "@heroicons/react/20/solid";
-import { core_get } from "@/lib/api/core";
+import { core_get, not_core_get } from "@/lib/api/core";
 import { Spinner } from "@nextui-org/react";
 import { PlusIcon } from "lucide-react";
 import { Applications } from "./applications";
@@ -237,6 +237,21 @@ export function JobDetails({ job, onUploadSuccess, onClose, onRemove }) {
     }
   }
 
+  const handleSave = async () => {
+    if (draft.position !== null) {
+      const body = {
+        "position": draft.position
+      }
+      try {
+        const res = await not_core_get("POST", `/jobs`, body);
+        console.log("success", res); 
+        onUploadSuccess();
+      } catch (e) {
+        console.log(e);
+      }
+    }
+  }
+
   return (
     <EmbloyV className={"justify-between cursor-default p-2 bg-ferrara dark:bg-transparent"}>
       <EmbloyV className="border border-palatinio bg-white rounded-md dark:bg-aglianico dark:border-biferno items-center gap-2 p-4">
@@ -260,7 +275,7 @@ export function JobDetails({ job, onUploadSuccess, onClose, onRemove }) {
                 <EmbloyH1 className="page-header text-lg">{job.position}</EmbloyH1>
               )
             ) : (
-              <EmbloyH1Editable placeholder="Enter Position Title" className="page-header text-lg" initialText={draft.position} />
+              <EmbloyH1Editable placeholder="Enter Position Title" className="page-header text-lg" initialText={draft.position} onUpdate={(value) => {setDraft({...draft, "position": value})}} />
           )}
 
             {!new_job ?
@@ -299,6 +314,16 @@ export function JobDetails({ job, onUploadSuccess, onClose, onRemove }) {
                 
               </EmbloyToolbox> :
               <EmbloyToolbox superClassName="h-7 border-2 dark:border-nebbiolo dark:bg-nebbiolo" >
+                <EmbloyV className="max-w-fit">
+                  <button
+                    onClick={() => {handleSave()}}
+                    className="bg-transparent p-0 text-black hover:text-capri dark:text-amarone dark:hover:text-barbera"
+                  >
+                    <EmbloyChildrenAdvanced tooltip="Close">
+                      <SaveIcon className="w-[12px] h-[12px] p-0 m-0 text-inherit dark:text-inherit" strokeWidth={3} />
+                    </EmbloyChildrenAdvanced>
+                  </button>
+                </EmbloyV>  
                 <EmbloyV className="max-w-fit">
                   <button
                     onClick={() => {onClose()}}

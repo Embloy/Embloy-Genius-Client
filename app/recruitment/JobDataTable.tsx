@@ -113,9 +113,11 @@ export function JobDataTable<TData extends Job, TValue>({columns, data, handleDa
         setOpenRow(new_row)
     }
     const invalidateRowModel = () => {
+        console.log("invalidateRowModel")
         handleDataReload()
     }
     const handleUploadSuccess = () => {
+        console.log("handleUploadSuccess")
         setRowSelection({});
         invalidateRowModel();
     }

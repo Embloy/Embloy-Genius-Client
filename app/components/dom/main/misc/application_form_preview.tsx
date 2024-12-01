@@ -340,8 +340,10 @@ function EditorTool({dummy=false, id=null, job_id, tag="", editable = false, onC
                                             <input
                                                 type="text"
                                                 value={opt}
-                                                onChange={(e) =>
+                                                onChange={(e) =>{
+                                                    if (e.target.value.trim() !== "") {
                                                     handleOptionChange(optIndex, e.target.value)
+                                                    }}
                                                 }
                                                 className="text-black bg-palatinio dark:bg-transparent dark:text-white  border border-etna dark:border-amarone w-full rounded-md text-xs pl-1.5"
                                             />
