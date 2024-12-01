@@ -10,15 +10,21 @@ import {OutputData} from "@editorjs/editorjs";
 import {editor_to_json, json_to_editor} from "@/lib/utils/formats";
 import { EmbloyButton, EmbloyChildrenAdvanced, EmbloyH, EmbloySeperator, EmbloySpacer, EmbloyV } from "@/app/components/ui/misc/stuff";
 import { EmbloyH1, EmbloyH1Editable, EmbloyP } from "@/app/components/ui/misc/text";
-import { ChevronDownIcon, ChevronUpIcon, DeleteIcon, EditIcon, MinusIcon, Plus, PlusIcon, Share2, Trash, TrashIcon } from "lucide-react";
+import { CheckIcon, ChevronDownIcon, ChevronUpIcon, DeleteIcon, EditIcon, MinusIcon, Plus, PlusIcon, Share2, Trash, TrashIcon, XIcon } from "lucide-react";
 import { EllipsisVerticalIcon } from "@heroicons/react/20/solid";
+import { not_core_get } from "@/lib/api/core";
 const EditorBlock = dynamic(() => import("@/app/components/dom/main/misc/application_editor"), {ssr: false});
 
-function EditorTool({ editable = false, onChange, index, children, title, required = false, ...props }) {
-    console.log("Required", index ,required);
+function EditorTool({ editable = false, onChange, index, children, title, required = false, options=[], hasOptions=false, formats=[], ...props }) {
     const [label, setLabel] = useState(title);
+    useEffect(() => {
+        setLabel(title);
+    } , [title])       
     
     const [essential, setEssential] = useState(required);
+    useEffect(() => {
+        setEssential(required);
+    }, [required])
 
     const [shareDropdownOpen, setShareDropdownOpen] = useState(false);
     const dropdown2Ref = useRef(null)
@@ -30,6 +36,10 @@ function EditorTool({ editable = false, onChange, index, children, title, requir
 
     const handleAdd = (type) => {
         onChange(type, index);
+    }
+
+    const handleLabel = (body) => {
+        onChange("label", index, body);
     }
 
     const handleRemove = () => {
@@ -72,6 +82,7 @@ function EditorTool({ editable = false, onChange, index, children, title, requir
         const handleClickOutside = (event) => {
             if (dropdown2Ref.current && !dropdown2Ref.current.contains(event.target)) {
                 setShareDropdownOpen(false);
+                setOptionsOpen(false);
             }
         };
     
@@ -85,11 +96,47 @@ function EditorTool({ editable = false, onChange, index, children, title, requir
             document.removeEventListener("mousedown", handleClickOutside);
         };
     }, [shareDropdownOpen])
+    const [localOptions, setLocalOptions] = useState([...options]);
+    const [optionsOpen, setOptionsOpen] = useState(false);
 
+    const handleAddOption = () => {
+        const newOption = `Option ${localOptions.length + 1}`;
+        setLocalOptions((prev) => [...prev, newOption]);
+        onChange("update_options", index, [...localOptions, newOption]);
+    };
+
+    const handleRemoveOption = (optIndex) => {
+        const updatedOptions = localOptions.filter((_, i) => i !== optIndex);
+        setLocalOptions(updatedOptions);
+        onChange("update_options", index, updatedOptions);
+    };
+
+    const handleOptionChange = (optIndex, value) => {
+        const updatedOptions = [...localOptions];
+        updatedOptions[optIndex] = value;
+        setLocalOptions(updatedOptions);
+        onChange("update_options", index, updatedOptions);
+    };
+    const handleMultiSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        const selectedOptions = Array.from(event.target.selectedOptions).map((option) => option.value);
+        selectedOptions.forEach((option) => {
+            if (!localOptions.includes(option)) {
+                localOptions.push(option);
+            } else {
+                localOptions.splice(localOptions.indexOf(option), 1);
+            }
+        }
+        );
+        setLocalOptions(localOptions);
+        onChange("update_options", index, localOptions);
+    }
+
+    
+     
     if (!editable) {
         return <EmbloyV className="">
             <EmbloyH className="justify-between">
-                <EmbloyH1 className="font-heading text-base text-black dark:text-white">{title}</EmbloyH1>
+                <EmbloyH1 className="font-heading text-base text-black dark:text-white">{label}</EmbloyH1>
                 {required && <EmbloyP className={"text-xs italic text-primitivo dark:text-primitivo"}>* Required</EmbloyP>}
             </EmbloyH>
         {children}
@@ -104,7 +151,7 @@ function EditorTool({ editable = false, onChange, index, children, title, requir
             >
                 <EmbloyV className={`w-95%`}>
                     <EmbloyH className="justify-between">
-                        {editable ? <legend><EmbloyH1Editable initialText={title} placeholder="Enter Question" className="font-heading text-base text-black dark:text-white" /></legend> : <legend><EmbloyH1 className="font-heading text-base text-black dark:text-white">{title}</EmbloyH1></legend>}
+                        {editable ? <legend><EmbloyH1Editable onUpdate={(a) => {handleLabel(a)}} initialText={label} placeholder="Enter Question" className="font-heading text-base text-black dark:text-white w-full" /></legend> : <legend><EmbloyH1 className="font-heading text-base text-black dark:text-white">{title}</EmbloyH1></legend>}
                         {required && <EmbloyP className={"text-xs italic text-primitivo dark:text-primitivo"}>* Required</EmbloyP>}
                     </EmbloyH>
                     {children}
@@ -244,21 +291,90 @@ function EditorTool({ editable = false, onChange, index, children, title, requir
                         className={`w-full flex flex-col items-center justify-center transition-all duration-300 ease-in-out ${
                             hovered ? ' block h-fit' : 'hidden h-0'
                         }`}
-                    >
+                    ><EmbloyChildrenAdvanced tooltip="Edit Question" className={undefined}>
                         <button
                         onClick={() => {toggleShareDropdown(); }}
-                        className="bg-transparent p-0 text-black hover:text-capri dark:text-amarone dark:hover:text-barbera"
+                        className="bg-transparent p-1.5 hover:bg-capri/10 dark:hover:bg-amarone/10 rounded-md text-black hover:text-capri dark:text-amarone dark:hover:text-barbera transition-all duration-200 ease-in-out"
                         >
-                            <EmbloyChildrenAdvanced tooltip="Edit Question" className={undefined}>
+                            
                             <EllipsisVerticalIcon className="w-[12px] h-[12px] p-0 m-0" />
-                            </EmbloyChildrenAdvanced>
+                            
                         </button>
+                        </EmbloyChildrenAdvanced>
                     </div>
                     {shareDropdownOpen && (
                         <div
                             ref={dropdown2Ref}
                             className="absolute right-0 transform -translate-x-1/2 z-50 mt-2 min-w-48 rounded-md border border-etna dark:border-amarone bg-white p-2 shadow-lg dark:bg-nebbiolo"
                         >
+                            {hasOptions && <button
+                                onClick={() => {
+                                   setOptionsOpen(!optionsOpen)
+                                }}
+                                disabled={false}
+                                className="block w-full px-4 py-2 text-left text-sm text-black dark:text-white hover:text-capri hover:dark:text-barbera flex flex-row gap-2"
+                            >   
+                                <EmbloyP className="text-inherit dark:text-inherit text-xs">Options</EmbloyP>
+                               {optionsOpen && <ChevronUpIcon size={16} className="text-inherit dark:text-inherit"/>}
+                               {!optionsOpen && <ChevronDownIcon size={16} className="text-inherit dark:text-inherit"/>}
+                            </button>}
+                            {optionsOpen && formats.length === 0 && (
+                        
+                                <EmbloyV className="bg-transparnet border dark:border-none border-etna dark:bg-rubeno rounded-md p-2 gap-1.5">
+                                    {localOptions.map((opt, optIndex) => (
+                                        <EmbloyH
+                                            key={optIndex}
+                                            className="gap-1.5"
+                                        >
+                                            <input
+                                                type="text"
+                                                value={opt}
+                                                onChange={(e) =>
+                                                    handleOptionChange(optIndex, e.target.value)
+                                                }
+                                                className="text-black bg-palatinio dark:bg-transparent dark:text-white  border border-etna dark:border-amarone w-full rounded-md text-xs pl-1.5"
+                                            />
+                                            <button
+                                                onClick={() => handleRemoveOption(optIndex)}
+                                                className="text-primitivo dark:text-primitivo hover:bg-primitivo/10 dark:hover:bg-primitivo/10 p-px rounded-md"
+                                            >
+                                                <XIcon size={16} className="text-inherit dark:text-inherit"/>
+                                            </button>
+                                        </EmbloyH>
+                                    ))}
+                                    <button
+                                        onClick={handleAddOption}
+                                        className="mt-2 text-sm text-capri dark:text-barbera hover:bg-capri/10 dark:hover:bg-barbera/10 p-1.5 rounded-md"
+                                    >
+                                        <PlusIcon size={16} className="text-inherit dark:text-inherit"/>
+                                    </button>
+                                </EmbloyV>
+                                
+                            )}
+                            {optionsOpen && formats.length > 0 && (
+                        
+                                <EmbloyV className="bg-transparnet border dark:border-none border-etna dark:bg-rubeno rounded-md p-2 gap-1.5">
+                                <EmbloyH
+                                
+                                    className="gap-1.5"
+                                >
+                                        <select
+                                            multiple
+                                            value={localOptions}
+                                            onChange={handleMultiSelectChange}
+                                            className="w-full text-black dark:text-white dark:text-inherit bg-transparent dark:bg-transparent"
+                                        >
+                                            {formats.map((format, idx) => (
+                                                <option key={idx} value={format} className="relative flex items-center gap-2">
+                                                    <span className="ml-6">{format}</span>
+                                                </option>
+                                            ))}
+                                        </select>
+
+                                    </EmbloyH>
+                                </EmbloyV>
+                                
+                            )}
                             <button
                                 onClick={() => {
                                     setShareDropdownOpen(false)
@@ -315,25 +431,78 @@ function EditorTool({ editable = false, onChange, index, children, title, requir
     }
 }
 
-
+const fileFormats = {
+    text: ["pdf", "doc", "docx", "txt", "rtf", "odt", "xml"],
+    image: ["jpg", "jpeg", "png", "gif", "bmp", "tiff", "tif", "svg"],
+    video: ["mp4", "avi", "mov", "wmv", "flv", "mkv", "webm"],
+    audio: ["ogg", "mp3", "wav", "wma", "aac", "m4a"],
+    compressed: ["zip", "rar", "tar", "7z", "gz", "bz2"],
+    spreadsheet: ["xls", "xlsx", "ods"],
+    presentation: ["ppt", "pptx"],
+};
+const allFormats = Object.values(fileFormats).flat();
 export function ApplicationPreview({data, handleDataReload, editable=false, onChange}) {
     const [locData, setLocData] = useState<{ application_options: any[] } | any>({ application_options: [] });
-    const [original, setOriginal] = useState(null)
+    const [original, setOriginal] = useState(data)
 
     useEffect(() => {
         if (
             data &&
-            Object.keys(locData).length === 1 && // Corrected to use `.length` instead of `.length()`
-            locData.application_options.length === 0 // Correctly checking if the array is empty
+            Object.keys(locData).length === 1 && 
+            locData.application_options.length === 0 
         ) {
             setLocData(data);
             setOriginal(data)
         } else {
         }
     }, []);
+    const [altered, setAltered] = useState(false);
+    useEffect(() => {
+        const checkApplicationOptions = (ref, can) => {
+            if (ref.length !== can.length) {
+                return true;
+            } else {
+                for (let i = 0; i < ref.length; i++) {
+                    if (ref[i].question !== can[i].question) {
+                        return true;
+                    }
+                    if (ref[i].required !== can[i].required) {
+                        return true;
+                    } 
+                    if (ref[i].question_type !== can[i].question_type) {
+                        return true;
+                    } 
+                    if (ref[i].options.length > 0 && can[i].options.length > 0) {
+                        if (ref[i].options.length !== can[i].options.length) {
+                            return true;
+                        } else {
+                            if (ref[i].question_type === "file" && can[i].question_type === "file") { 
+                                for (let j = 0; j < ref[i].options.length; j++) {
+                                   if (!can[i].options.includes(ref[i].options[j])) {
+                                       return true;
+                                   }
+                                }
+                            } else {
+                                for (let j = 0; j < ref[i].options.length; j++) {
+                                    if (ref[i].options[j] !== can[i].options[j]) {
+                                        return true;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                return false;
+            }
+        }
+        const result = checkApplicationOptions(original.application_options, locData.application_options);
+        if (result && !altered) {
+            setAltered(true);
+        } else if (!result && altered) {
+            setAltered(false);
+        }
+    }, [locData])
 
-
-        
     
     const [errorMessages, setErrorMessages] = useState({});
     const textSchema = z.string().nonempty({message: 'Input cannot be empty'});
@@ -403,7 +572,6 @@ export function ApplicationPreview({data, handleDataReload, editable=false, onCh
         }
     };
 
-    // Update function for multiple_choice question type
     const handleMultipleChoiceChange = (
         id: number,
         value: string,
@@ -442,7 +610,7 @@ export function ApplicationPreview({data, handleDataReload, editable=false, onCh
 
 
 
-    const handleAdd = (type, key) => {
+    const handleAdd = (type, key, body="") => {
         setLocData((prevData) => {
             let updatedOptions = [...prevData.application_options];
             if (type === "up" && key > 0) {
@@ -453,6 +621,12 @@ export function ApplicationPreview({data, handleDataReload, editable=false, onCh
                 updatedOptions.splice(key, 1);
             } else if (type === "require") {
                 const updatedItem = { ...updatedOptions[key], required: !updatedOptions[key].required };
+                updatedOptions[key] = updatedItem;
+            } else if (type === "label") {
+                const updatedItem = { ...updatedOptions[key], question: body };
+                updatedOptions[key] = updatedItem;
+            } else if (type === "update_options") {
+                const updatedItem = { ...updatedOptions[key], options: body };
                 updatedOptions[key] = updatedItem;
             } else if (type !== "up" && type !== "down" && type !== "remove" && type !== "require") {
                 const newElement = {
@@ -468,15 +642,32 @@ export function ApplicationPreview({data, handleDataReload, editable=false, onCh
             return { ...prevData, application_options: updatedOptions };
         });
     };
-    useEffect(() => {
-        console.log("data",locData);
+    const handleSave = async () => {
+        if (altered) {
+            try {
+                const res = await not_core_get('PATCH', `/jobs?id=${original.id}`, {application_option: locData.application_options},true)
+                console.log("res", res);
 
-    }, [locData])
+                setOriginal(locData);
+                setAltered(false);
+                handleDataReload();
+                
+            } catch (error) {
+                console.log("Error", error);
+                setLocData(original);
+            }
+        }
+    }
+
 
 
     
    return (
     <EmbloyV className={"items-center "}>
+        <EmbloyH className="justify-between ">
+            <EmbloyP className="text-xs text-testaccio dark:text-nebbiolo">Preview</EmbloyP>
+            {altered && <button onClick={handleSave}><EmbloyP className="text-xs text-capri dark:text-capri underline">{"Save changes"}</EmbloyP></button>}
+        </EmbloyH>
         <div className="min-h-[250px] w-9/12 flex flex-col items-center justify-start gap-4 px-4 py-2 ">
             <EditorTool title={undefined} editable={editable} index={-1} onChange={(type, id) => { handleAdd(type, id); }}>
                 <div className="w-full flex flex-col text-center">
@@ -489,8 +680,6 @@ export function ApplicationPreview({data, handleDataReload, editable=false, onCh
                 </div>
             </EditorTool>
             {locData.application_options.map((option, index) => {
-                //console.log("Option", option.question_type, option.question, index);
-
                 return (
                     <EditorTool
                         key={index}
@@ -498,7 +687,10 @@ export function ApplicationPreview({data, handleDataReload, editable=false, onCh
                         title={option.question}
                         editable={editable}
                         index={index}
-                        onChange={(type, id) => { handleAdd(type, id); }}
+                        onChange={(type, id, body="") => { handleAdd(type, id, body); }}
+                        options={option.options}
+                        hasOptions={option.question_type === "single_choice" || option.question_type === "multiple_choice" || option.question_type === "file"}
+                        formats={option.question_type === "file" ? allFormats : []}
                         >
                         {(() => {
                             switch (option.question_type) {
@@ -597,7 +789,7 @@ export function ApplicationPreview({data, handleDataReload, editable=false, onCh
                                             <input
                                                 type="date"
                                                 required={option.required}
-                                                className="c0 p-2 border border-etna dark:border-biferno bg-palatinio dark:bg-nebbiolo text-inherit dark:text-inherit rounded-md outline-none focus:ring-2 focus:ring-white"
+                                                className="c0 p-2 border border-etna dark:border-biferno bg-palatinio dark:bg-nebbiolo text-inherit dark:text-inherit rounded-md outline-none focus:ring-2 focus:ring-white w-full"
                                                 onChange={(event) =>
                                                     handleTextChange(option.id, event.target.value, option.required)
                                                 }
@@ -697,6 +889,10 @@ export function ApplicationPreview({data, handleDataReload, editable=false, onCh
         </div>
         <EmbloySpacer className={"h-8"} />
         <EmbloyButton className="py-0 px-8" name={"Apply"} onStatus={undefined} onClick={() => { }} onMessage={undefined} />
+        <EmbloyH className="justify-between ">
+            <EmbloyP className="text-xs text-testaccio dark:text-nebbiolo">End of Preview</EmbloyP>
+            {altered && <button onClick={handleSave}><EmbloyP className="text-xs text-capri dark:text-capri underline">{"Save changes"}</EmbloyP></button>}
+        </EmbloyH>
     </EmbloyV>
 );
 }

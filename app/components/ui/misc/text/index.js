@@ -69,7 +69,7 @@ export const EmbloyH1 = ({className, children, ...props}) => {
         </h1>
     )
 }
-export const EmbloyH1Editable = ({ initialText,placeholder="", className }) => {
+export const EmbloyH1Editable = ({ initialText,placeholder="", className, onUpdate }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [text, setText] = useState(initialText);
 
@@ -83,6 +83,7 @@ export const EmbloyH1Editable = ({ initialText,placeholder="", className }) => {
 
   const handleChange = (e) => {
     setText(e.target.value);
+    onUpdate(e.target.value);
   };
 
   const handleKeyDown = (e) => {

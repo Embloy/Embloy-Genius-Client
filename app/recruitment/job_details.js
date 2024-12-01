@@ -134,7 +134,7 @@ export function JobDetails({ job, onUploadSuccess, onClose}) {
           if (res && res.job.application_options) {
             setApplicationOptions(res.job);
             setApplicationOptionsStatus(null);
-            if (job_slug_to_host(res.job.job_slug) === "Embloy") {
+            if (job_slug_to_host(res.job.job_slug) === "Embloy" && res.job.activity_status === 1) {
               setEditApplicationOptions(true)
             }
             setShowApplicationOptions(true);
