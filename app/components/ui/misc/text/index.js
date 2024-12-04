@@ -78,12 +78,12 @@ export const EmbloyH1Editable = ({ initialText,placeholder="", className, onUpda
   };
 
   const handleBlur = () => {
+    onUpdate(text);
     setIsEditing(false);
   };
 
   const handleChange = (e) => {
     setText(e.target.value);
-    onUpdate(e.target.value);
   };
 
   const handleKeyDown = (e) => {
@@ -92,25 +92,16 @@ export const EmbloyH1Editable = ({ initialText,placeholder="", className, onUpda
     }
   };
   useEffect(() => {
+    if (initialText === null) {
+      setIsEditing(true);
+    }
     setText(initialText);
   }, [initialText]);
-  if (text === null || text === "") {
-    return (
-    <input
-          type="text"
-          value={text}
-          onChange={handleChange}
-          onBlur={handleBlur}
-          onKeyDown={handleKeyDown}
-          placeholder={placeholder}
-          autoFocus
-          className={`page-header border-none focus:outline-none bg-transparent ${className}`}
-        />
-    );
-  }
+
+
   return (
     <>
-      {isEditing ? (
+      {isEditing || text === null || (text.trim() === "") ? (
         <input
           type="text"
           value={text}
