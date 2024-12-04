@@ -160,7 +160,7 @@ function EditorTool({dummy=false, id=null, job_id, tag="", editable = false, onC
                 onMouseLeave={() => setHovered(false)}
                 className="w-full cursor-pointer items-center justify-between"
             >
-                <EmbloyV className="w-[97%]">
+                <EmbloyV className="w-11/12">
                     <EmbloyH className="justify-between">
                         {editable && !dummy ? <legend className="w-10/12 "><EmbloyH1Editable onUpdate={(a) => {handleLabel(a)}} initialText={label} placeholder="Enter Question" className="font-heading text-base text-black dark:text-white w-full" /></legend> : <legend><EmbloyH1 className="font-heading text-base text-black dark:text-white">{title}</EmbloyH1></legend>}
                         {required && <EmbloyP className={"text-xs italic text-primitivo dark:text-primitivo"}>* Required</EmbloyP>}
@@ -297,20 +297,32 @@ function EditorTool({dummy=false, id=null, job_id, tag="", editable = false, onC
                         </div>
                     )}
                 </EmbloyV>
-                <EmbloyV className="justify-center w-[2%]">
+                <EmbloyV className="justify-center w-1/12">
                     <div
                         className={`w-full flex flex-col items-center justify-center transition-all duration-300 ease-in-out ${
                             hovered && !dummy ? ' block h-fit' : 'hidden h-0'
                         }`}
-                    ><EmbloyChildrenAdvanced tooltip="Edit Question" className={undefined}>
-                        <button
-                        onClick={() => {toggleShareDropdown(); }}
-                        className="bg-transparent p-1.5 hover:bg-capri/10 dark:hover:bg-amarone/10 rounded-md text-black hover:text-capri dark:text-amarone dark:hover:text-barbera transition-all duration-200 ease-in-out"
-                        >
-                            
-                            <EllipsisVerticalIcon className="w-[12px] h-[12px] p-0 m-0" />
-                            
-                        </button>
+                    >   
+    
+                        <EmbloyChildrenAdvanced tooltip="Edit Question" className={"flex flex-col items-center justify-between"}>
+                            <button
+                                onClick={() => {handleMove("up"); }}
+                                className="bg-transparent p-0.5 hover:bg-capri/10 dark:hover:bg-amarone/10 rounded-md text-black hover:text-capri dark:text-amarone dark:hover:text-barbera transition-all duration-200 ease-in-out"
+                            >
+                                <ChevronUpIcon className="w-[12px] h-[12px] p-0 m-0" />
+                            </button>
+                            <button
+                                onClick={() => {toggleShareDropdown(); }}
+                                className="bg-transparent p-0.5 hover:bg-capri/10 dark:hover:bg-amarone/10 rounded-md text-black hover:text-capri dark:text-amarone dark:hover:text-barbera transition-all duration-200 ease-in-out"
+                            >
+                                <EllipsisVerticalIcon className="w-[12px] h-[12px] p-0 m-0" />
+                            </button>
+                            <button
+                                onClick={() => {handleMove("down"); }}
+                                className="bg-transparent p-0.5 hover:bg-capri/10 dark:hover:bg-amarone/10 rounded-md text-black hover:text-capri dark:text-amarone dark:hover:text-barbera transition-all duration-200 ease-in-out"
+                            >
+                                <ChevronDownIcon className="w-[12px] h-[12px] p-0 m-0" />
+                            </button>
                         </EmbloyChildrenAdvanced>
                     </div>
                     {shareDropdownOpen && !dummy && (
