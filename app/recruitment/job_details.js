@@ -394,8 +394,7 @@ export function JobDetails({ job, onUploadSuccess, onClose, onRemove }) {
                   <GenerateQRButton jobId={job.id} />
                   <GenerateGQButton jobId={job.id} position={job.position} jobSlug={job.job_slug}/>
                   <DuplicateJobButton disabled={true} jobId={job.id} external={!editable} ats={ats}/>
-                  {editable && <RemovePosting jobId={job.id} onChange={(type, id) => handleAdd(type, id)}/> }
-                  
+                  {editable && <RemovePosting disabled={job.job_status === "listed"} jobId={job.id} onChange={(type, id) => handleAdd(type, id)}/> }
                 </EmbloyToolbox> 
               </EmbloyH> :
               <EmbloyToolbox superClassName="h-7 border-2 dark:border-nebbiolo dark:bg-nebbiolo" >
@@ -485,7 +484,6 @@ export function JobDetails({ job, onUploadSuccess, onClose, onRemove }) {
             </EmbloyV>
           )}
 
-
           {showBoard=== true && (
             <EmbloyV className="gap-2">
               <div className={headerClass}>
@@ -496,7 +494,6 @@ export function JobDetails({ job, onUploadSuccess, onClose, onRemove }) {
               <EmbloySeperator className="bg-etna dark:bg-nebbiolo h-px"/> 
             </EmbloyV>
           )}
-
 
           {showApplicationOptions === true && (
             <EmbloyV className="gap-2">
@@ -512,8 +509,6 @@ export function JobDetails({ job, onUploadSuccess, onClose, onRemove }) {
             </EmbloyV>
         )}
         </EmbloyV>
-      
-        
       </EmbloyV>
     </EmbloyV>
   );

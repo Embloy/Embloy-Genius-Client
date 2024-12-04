@@ -240,18 +240,15 @@ export function ApplicationDataTable<TData extends Application, TValue>({
           </TableBody>
         </Table>
       </div>
-      <div className="p-4 flex flex-row items-center justify-between">
+      <EmbloyH className="bg-body dark:bg-chianti gap-1.5 items-center rounded-lg max-w-fit pb-2">
+        <DataTablePagination table={table}/>
         <div className="flex items-center justify-start space-x-2">
-          {table.getFilteredSelectedRowModel().rows.length > 0 && (
-            // If the condition is true
-            <p className="text-sm font-normal text-gray-700">
-              {table.getFilteredSelectedRowModel().rows.length} of{" "}
-              {table.getFilteredRowModel().rows.length} row(s) selected.
-            </p>
-          )}
+            {table.getFilteredSelectedRowModel().rows.length > 0 && (
+                <EmbloyP className="text-xs">{table.getFilteredSelectedRowModel().rows.length} of{" "}
+                    {table.getFilteredRowModel().rows.length} row(s) selected.</EmbloyP>
+            )}
         </div>
-        <DataTablePagination table={table} />
-      </div>
+      </EmbloyH>
     </EmbloyV>
   );
 }

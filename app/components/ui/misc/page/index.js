@@ -40,7 +40,6 @@ export const EmbloyPageNoAccess = ({className, variant}) => {
 }
 export const EmbloyPage = ({children, className, sandboxed=true}) => {
     let {user, company} = useContext(UserContext)
-    
 
     return (
         <EmbloyH className={`justify-between`}>

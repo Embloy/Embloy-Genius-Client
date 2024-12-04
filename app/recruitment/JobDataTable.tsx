@@ -28,8 +28,6 @@ import {
     DropdownMenuContent, DropdownMenuLabel,
     DropdownMenuTrigger,
 } from "@/app/components/ui/misc/dropdown-menu"
-import {cn} from "@/lib/utils";
-import Image from "next/image";
 import React, {useEffect, useState} from "react";
 import {DataTablePagination} from "@/app/components/dom/main/datatable/DataTablePagination";
 import {extractContent} from "@/lib/utils/helpers";
@@ -43,7 +41,6 @@ import { EmbloyToolbox, EmbloyToolboxImgA, EmbloyToolboxImgAdvanced } from "@/ap
 import '@/app/globals.css'
 import { IntegrationSync } from "../components/dom/main/misc/IntegrationSync";
 import { EmbloyH1, EmbloyP } from "../components/ui/misc/text";
-import { PlusIcon } from "lucide-react";
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
@@ -97,8 +94,8 @@ export function JobDataTable<TData extends Job, TValue>({columns, data, handleDa
     })
     const default_hides = () => {
         table.getColumn("id").toggleVisibility(false)
-        table.getColumn("job_type").toggleVisibility(false)
         table.getColumn("job_slug").toggleVisibility(false)
+        table.getColumn("start_slot").toggleVisibility(false)
     }
     useEffect(() => {
         default_hides()
@@ -113,11 +110,9 @@ export function JobDataTable<TData extends Job, TValue>({columns, data, handleDa
         setOpenRow(new_row)
     }
     const invalidateRowModel = () => {
-        console.log("invalidateRowModel")
         handleDataReload()
     }
     const handleUploadSuccess = () => {
-        console.log("handleUploadSuccess")
         setRowSelection({});
         invalidateRowModel();
     }
@@ -128,7 +123,6 @@ export function JobDataTable<TData extends Job, TValue>({columns, data, handleDa
     const getJob = (row_id) => {
         return data.at(Number(row_id))
     }
-
 
     if (!data) {
         return <LoadingScreen />
@@ -285,16 +279,14 @@ export function JobDataTable<TData extends Job, TValue>({columns, data, handleDa
                 </Table>
             </div>
             <EmbloyH className="bg-body dark:bg-chianti gap-1.5 items-center rounded-lg border border-etna dark:border-biferno p-2 max-w-fit">
+                <DataTablePagination table={table}/>
                 <div className="flex items-center justify-start space-x-2">
                     {table.getFilteredSelectedRowModel().rows.length > 0 && (
-                        // If the condition is true
                         <EmbloyP className="text-xs">{table.getFilteredSelectedRowModel().rows.length} of{" "}
                             {table.getFilteredRowModel().rows.length} row(s) selected.</EmbloyP>
                     )}
                 </div>
-                <DataTablePagination table={table}/>
             </EmbloyH>
-
         </EmbloyV>
     )
 }

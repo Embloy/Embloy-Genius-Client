@@ -12,6 +12,8 @@ import { EmbloyPageMount, EmbloyPage, EmbloyPageBody, EmbloyPageBodySection, Emb
 import { EmbloyBox, EmbloyBoxContent } from "@/app/components/ui/misc/box";
 import { EmbloyLHPV, EmbloyV, EmbloyH, EmbloySpacer} from "@/app/components/ui/misc/stuff";
 import { EmbloyToolbox, EmbloyToolboxImgA} from "@/app/components/ui/misc/toolbox";
+import { siteConfig } from "@/config/site";
+import { getCookie } from "cookies-next";
 
 export default function Jobs() {
   // subpages
@@ -38,12 +40,51 @@ export default function Jobs() {
   };
 
   const router = useRouter();
+  const [integratios, setIntegrations] = useState([])
+  const setIntegrationToken = () => {
+    const res = getCookie("active_integrations", {path: "/", domain: `${siteConfig.core_domain}`});
+    if (res !== undefined) {
+        if (typeof res === 'string') {
+          let partners = [];
+          const is = JSON.parse(res);
+          is.map((element) => {
+            if (element.issuer) {
+              partners.push(element.issuer);
+            }
+          });
+          partners = [...new Set(partners)];
+          setIntegrations(partners);
+          return partners;
+        }
+        return [];
+    } else {
+        setIntegrations([]);
+        return [];
+    }
+  };
+
+
+
+  const verify_external_slug = (slug) => {
+    const integrations = setIntegrationToken();
+    console.log("Slug: ", slug, "Integrations: ", integrations);
+    if (slug.startsWith("lever") && !integrations.includes("lever")) {
+      return false;
+    } else if (slug.startsWith("greenhouse") && !integrations.includes("greenhouse")) {
+      return false;
+    } else if (slug.startsWith("ashby") && !integrations.includes("ashby")) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
   const [jobs, setJobs] = useState(null);
   useEffect(() => {
     get_core("/user/jobs", router)
       .then((data) => {
         if (data.jobs) {
-          setJobs(data.jobs.filter((job) => job.job_status !== "archived"));
+          setJobs(data.jobs.filter((job) => job.job_status !== "archived" && verify_external_slug(job.job_slug)));
         } else {
           setJobs([]);
         }
@@ -77,10 +118,12 @@ export default function Jobs() {
     };
     setJobs([new_job, ...jobs]);
   }
+  
+
 
   return (
     <EmbloyPageMount className="overflow-hidden">
-      <EmbloyPage sandboxed={false}>
+      <EmbloyPage sandboxed={true}>
         <EmbloyPageBody >
           <EmbloyPageBodySection>
             <EmbloyV>
