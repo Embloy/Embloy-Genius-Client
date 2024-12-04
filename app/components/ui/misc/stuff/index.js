@@ -55,7 +55,7 @@ export const EmbloyChildrenAdvanced = ({className, children, tooltip, disabled=f
                 title={`${tooltip}`}
                 placement="top"
                 content={
-                    <EmbloyP className="text-xs">
+                    <EmbloyP className="bg-white dark:bg-ciliegiolo px-2 py-px rounded-md border border-etna dark:border-nebbiolo text-xs">
                         {tooltip}
                     </EmbloyP>
                     }
