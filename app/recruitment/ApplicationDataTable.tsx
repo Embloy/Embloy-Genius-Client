@@ -231,7 +231,7 @@ export function ApplicationDataTable<TData extends Application, TValue>({
               <TableRow>
                 <TableCell
                   colSpan={columns.length}
-                  className="h-24 text-center"
+                  className="h-fit text-center"
                 >
                   <EmbloyP className={"text-xs"}>No applications</EmbloyP>
                 </TableCell>

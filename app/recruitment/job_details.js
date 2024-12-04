@@ -423,26 +423,61 @@ export function JobDetails({ job, onUploadSuccess, onClose, onRemove }) {
             }
           </EmbloyH>
           
-          {!new_job && <EmbloyH className="justify-start items-center gap-1.5 text-black dark:text-amarone">
-            <button onClick={() => {
-              if (applicationsStatus !== "loading") {
-                handleApplications();
-              }}} className={`px-2 py-px border border-etna dark:border-nebbiolo rounded-md max-w-fit flex flex-row gap-1.5 ${applicationsStatus === "loading" ? 'cursor-wait' : "cursor-pointer hover:text-capri hover:dark:text-barbera"} transition-colors duration-200`}>
-                <EmbloyP className="max-w-fit text-xs text-inherit dark:text-inherit">{applicationsStatus === "error" ? "Try again" : "Applications"}</EmbloyP>
-                {applicationsStatus !== "loading" ? (
-                  showApplications ? (
-                    <ChevronDoubleUpIcon className="w-4 h-4 p-0 m-0" />
+          {!new_job && 
+          <EmbloyV className="gap-1.5">
+            <EmbloyH className="justify-start items-center gap-1.5 text-black dark:text-amarone">
+              <button onClick={() => {
+                if (applicationsStatus !== "loading") {
+                  handleApplications();
+                }}} className={`px-2 py-px border border-etna dark:border-nebbiolo rounded-md max-w-fit flex flex-row gap-1.5 ${applicationsStatus === "loading" ? 'cursor-wait' : "cursor-pointer hover:text-capri hover:dark:text-barbera"} transition-colors duration-200`}>
+                  <EmbloyP className="max-w-fit text-xs text-inherit dark:text-inherit">{applicationsStatus === "error" ? "Try again" : "Applications"}</EmbloyP>
+                  {applicationsStatus !== "loading" ? (
+                    showApplications ? (
+                      <ChevronDoubleUpIcon className="w-4 h-4 p-0 m-0" />
+                    ) : (
+                      <PlusIcon className="w-4 h-4 p-0 m-0" />
+                    )
                   ) : (
-                    <PlusIcon className="w-4 h-4 p-0 m-0" />
-                  )
-                ) : (
-                  <Spinner size="sm" color="current" className="w-4 h-4 p-0 m-0" />
-                )}
-            </button>
-          </EmbloyH>}
+                    <Spinner size="sm" color="current" className="w-4 h-4 p-0 m-0" />
+                  )}
+              </button>
+
+              <button onClick={() => {
+                if (boardStatus !== "loading") {
+                  handleApplicationForm("p");
+                }}} className={`px-2 py-px border border-etna dark:border-nebbiolo rounded-md max-w-fit flex flex-row gap-1.5 ${boardStatus === "loading" ? 'cursor-wait' : "cursor-pointer hover:text-capri hover:dark:text-barbera"} transition-colors duration-200`}>
+                  <EmbloyP className="max-w-fit text-xs text-inherit dark:text-inherit">{boardStatus === "error" ? "Try again" : "Board Post"}</EmbloyP>
+                  {boardStatus !== "loading" ? (
+                    showBoard ? (
+                      <ChevronDoubleUpIcon className="w-4 h-4 p-0 m-0" />
+                    ) : (
+                      <PlusIcon className="w-4 h-4 p-0 m-0" />
+                    )
+                  ) : (
+                    <Spinner size="sm" color="current" className="w-4 h-4 p-0 m-0" />
+                  )}
+              </button>
+
+              <button onClick={() => {
+                if (applicationOptionsStatus !== "loading") {
+                  handleApplicationForm();
+                }}} className={`px-2 py-px border border-etna dark:border-nebbiolo rounded-md max-w-fit flex flex-row gap-1.5 ${applicationOptionsStatus === "loading" ? 'cursor-wait' : "cursor-pointer hover:text-capri hover:dark:text-barbera"} transition-colors duration-200`}>
+                  <EmbloyP className="max-w-fit text-xs text-inherit dark:text-inherit">{applicationOptionsStatus === "error" ? "Try again" : "Application Form"}</EmbloyP>
+                  {applicationOptionsStatus !== "loading" ? (
+                    showApplicationOptions ? (
+                      <ChevronDoubleUpIcon className="w-4 h-4 p-0 m-0" />
+                    ) : (
+                      <PlusIcon className="w-4 h-4 p-0 m-0" />
+                    )
+                  ) : (
+                    <Spinner size="sm" color="current" className="w-4 h-4 p-0 m-0" />
+                  )}
+              </button>
+            </EmbloyH>
+            <EmbloySeperator className="bg-etna dark:bg-nebbiolo h-px"/> 
+          </EmbloyV>}
           {showApplications === true && (
             <EmbloyV className="gap-2">
-              <EmbloySeperator className="bg-etna dark:bg-nebbiolo h-px" />
               <div className={headerClass}>
                 {applications === null ? <EmbloyP className="text-xs text-center w-full text-testaccio dark:text-nebbiolo">No Applications</EmbloyP> : <Applications applications={applications} />}
               </div>
@@ -451,31 +486,8 @@ export function JobDetails({ job, onUploadSuccess, onClose, onRemove }) {
           )}
 
 
-
-
-
-
-          {!new_job && <EmbloyH className="justify-start items-center gap-1.5 text-black dark:text-amarone">
-            <button onClick={() => {
-              if (boardStatus !== "loading") {
-                handleApplicationForm("p");
-              }}} className={`px-2 py-px border border-etna dark:border-nebbiolo rounded-md max-w-fit flex flex-row gap-1.5 ${boardStatus === "loading" ? 'cursor-wait' : "cursor-pointer hover:text-capri hover:dark:text-barbera"} transition-colors duration-200`}>
-                <EmbloyP className="max-w-fit text-xs text-inherit dark:text-inherit">{boardStatus === "error" ? "Try again" : "Board Post"}</EmbloyP>
-                {boardStatus !== "loading" ? (
-                  showBoard ? (
-                    <ChevronDoubleUpIcon className="w-4 h-4 p-0 m-0" />
-                  ) : (
-                    <PlusIcon className="w-4 h-4 p-0 m-0" />
-                  )
-                ) : (
-                  <Spinner size="sm" color="current" className="w-4 h-4 p-0 m-0" />
-                )}
-            </button>
-          </EmbloyH>}
-
           {showBoard=== true && (
             <EmbloyV className="gap-2">
-              <EmbloySeperator className="bg-etna dark:bg-nebbiolo h-px"/> 
               <div className={headerClass}>
                 <PostDetails job={board} handleDataReload={() => {relOn()}}
                   onChange={() => {}}
@@ -483,30 +495,11 @@ export function JobDetails({ job, onUploadSuccess, onClose, onRemove }) {
               </div>
               <EmbloySeperator className="bg-etna dark:bg-nebbiolo h-px"/> 
             </EmbloyV>
-        )}
+          )}
 
-{!new_job && <EmbloyH className="justify-start items-center gap-1.5 text-black dark:text-amarone">
-            <button onClick={() => {
-              if (applicationOptionsStatus !== "loading") {
-                handleApplicationForm();
-              }}} className={`px-2 py-px border border-etna dark:border-nebbiolo rounded-md max-w-fit flex flex-row gap-1.5 ${applicationOptionsStatus === "loading" ? 'cursor-wait' : "cursor-pointer hover:text-capri hover:dark:text-barbera"} transition-colors duration-200`}>
-                <EmbloyP className="max-w-fit text-xs text-inherit dark:text-inherit">{applicationOptionsStatus === "error" ? "Try again" : "Application Form"}</EmbloyP>
-                {applicationOptionsStatus !== "loading" ? (
-                  showApplicationOptions ? (
-                    <ChevronDoubleUpIcon className="w-4 h-4 p-0 m-0" />
-                  ) : (
-                    <PlusIcon className="w-4 h-4 p-0 m-0" />
-                  )
-                ) : (
-                  <Spinner size="sm" color="current" className="w-4 h-4 p-0 m-0" />
-                )}
-            </button>
-          </EmbloyH>
-          }
 
           {showApplicationOptions === true && (
             <EmbloyV className="gap-2">
-              <EmbloySeperator className="bg-etna dark:bg-nebbiolo h-px"/> 
               <div className={headerClass}>
                 <ApplicationPreview
                   data={applicationOptions}

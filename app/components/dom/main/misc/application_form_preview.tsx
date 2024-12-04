@@ -163,7 +163,16 @@ function EditorTool({dummy=false, id=null, job_id, tag="", editable = false, onC
                 <EmbloyV className="w-11/12">
                     <EmbloyH className="justify-between">
                         {editable && !dummy ? <legend className="w-10/12 "><EmbloyH1Editable onUpdate={(a) => {handleLabel(a)}} initialText={label} placeholder="Enter Question" className="font-heading text-base text-black dark:text-white w-full" /></legend> : <legend><EmbloyH1 className="font-heading text-base text-black dark:text-white">{title}</EmbloyH1></legend>}
-                        {required && <EmbloyP className={"text-xs italic text-primitivo dark:text-primitivo"}>* Required</EmbloyP>}
+                        <EmbloyH className={"max-w-fit gap-2"}>
+                            {required && <EmbloyP className={"text-xs italic text-primitivo dark:text-primitivo"}>* Required</EmbloyP>}
+                            {editable && !dummy && <input 
+                                type="checkbox" 
+                                checked={essential} 
+                                onChange={handleRequire} 
+                                className="form-checkbox h-4 w-4 rounded-md text-white dark:text-white focus:ring focus:ring-opacity-50 checked:bg-capri"
+                            />
+                            }
+                        </EmbloyH>
                     </EmbloyH>
                     {children}
                     

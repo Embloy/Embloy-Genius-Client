@@ -21,7 +21,9 @@ export const Applications = ({applications}) => {
 
     const [showMetric, setShowMetric] = useState(false);
     const [metric, setMetric] = useState(null);
-    const handle_metric = (applications) => {
+    const [name, setName] = useState("");
+    const handle_metric = (applications, name) => {
+        setName(name);
         if (showMetric) {
             if (metric !== applications) {
                 setMetric(applications);
@@ -38,9 +40,12 @@ export const Applications = ({applications}) => {
     }
 
     useEffect(() => {
-        handle_metric(get_by_status("pending"));
+        handle_metric(get_by_status("pending"), "pending");
     }, [applications])
 
+    useEffect(() => {
+        console.log("NAME", name)
+    }, [name])
     
     return (
         <EmbloyV>
@@ -52,8 +57,8 @@ export const Applications = ({applications}) => {
                     </EmbloyP>
                     <EmbloyH className={"justify-center"}>
                         <button 
-                        onClick={() => {handle_metric(applications)}}
-                        className="text-black hover:text-capri dark:text-white dark:hover:text-barbera bg-white hover:bg-capri/10 dark:bg-aglianico dark:hover:bg-barbera/10 rounded-lg px-2 flex items-center justify-center transition-colors duration-200"
+                            onClick={() => {handle_metric(applications, "total")}}
+                            className={`rounded-lg px-2 flex items-center justify-center transition-colors duration-200 ${name === "total" ? "bg-capri/10 text-capri dark:text-capri dark:bg-capri/10" : "text-black hover:text-capri dark:text-white dark:hover:text-capri bg-white hover:bg-capri/10 dark:bg-aglianico dark:hover:bg-capri/10"}`}
                         >
                             <EmbloyP className="font-heading text-lg text-center text-inherit dark:text-inherit">
                                 {total_candidates}
@@ -80,8 +85,8 @@ export const Applications = ({applications}) => {
                     </EmbloyH>
                     <EmbloyH className={"justify-center items-center gap-px"}>
                         <button 
-                        onClick={() => {handle_metric(get_by_status("rejected"))}}
-                        className="text-black hover:text-primitivo dark:text-white dark:hover:text-primitivo bg-white hover:bg-primitivo/10 dark:bg-aglianico dark:hover:bg-primitivo/10 rounded-lg px-2 flex items-center justify-center transition-colors duration-200"
+                            onClick={() => {handle_metric(get_by_status("rejected"), "rejected")}}
+                            className={`rounded-lg px-2 flex items-center justify-center transition-colors duration-200 ${name === "rejected" ? "bg-primitivo/10 text-primitivo dark:text-primitivo dark:bg-primitivo/10" : "text-black hover:text-primitivo dark:text-white dark:hover:text-primitivo bg-white hover:bg-primitivo/10 dark:bg-aglianico dark:hover:bg-primitivo/10"}`}
                         >
                             <EmbloyP className="font-heading text-lg text-center text-inherit dark:text-inherit">
                                 {rejected_candidates}
@@ -89,8 +94,8 @@ export const Applications = ({applications}) => {
                         </button>
                         <div className="h-3 w-px bg-etna dark:bg-nebbiolo rounded-full"/>
                         <button 
-                        onClick={() => {handle_metric(get_by_status("pending"))}}
-                        className="text-black hover:text-capri dark:text-white dark:hover:text-barbera bg-white hover:bg-capri/10 dark:bg-aglianico dark:hover:bg-barbera/10 rounded-lg px-2 flex items-center justify-center transition-colors duration-200"
+                            onClick={() => {handle_metric(get_by_status("pending"), "pending")}}
+                            className={`rounded-lg px-2 flex items-center justify-center transition-colors duration-200 ${name === "pending" ? "bg-capri/10 text-capri dark:text-capri dark:bg-capri/10" : "text-black hover:text-capri dark:text-white dark:hover:text-capri bg-white hover:bg-capri/10 dark:bg-aglianico dark:hover:bg-capri/10"}`}
                         >
                             <EmbloyP className="font-heading text-lg text-center text-inherit dark:text-inherit">
                                 {pending_candidates}
@@ -98,8 +103,8 @@ export const Applications = ({applications}) => {
                         </button>
                         <div className="h-3 w-px bg-etna dark:bg-nebbiolo rounded-full"/>
                         <button 
-                        onClick={() => {handle_metric(get_by_status("accepted"))}}
-                        className="text-black hover:text-lugana dark:text-white dark:hover:text-lugana bg-white hover:bg-lugana/10 dark:bg-aglianico dark:hover:bg-lugana/10 rounded-lg px-2 flex items-center justify-center transition-colors duration-200"
+                            onClick={() => {handle_metric(get_by_status("accepted"), "accepted")}}
+                            className={`rounded-lg px-2 flex items-center justify-center transition-colors duration-200 ${name === "accepted" ? "bg-lugana/10 text-lugana dark:text-lugana" : "text-black hover:text-lugana dark:text-white dark:hover:text-lugana bg-white hover:bg-lugana/10 dark:bg-aglianico dark:hover:bg-lugana/10"}`}
                         >
                             <EmbloyP className="font-heading text-lg text-center text-inherit dark:text-inherit">
                                 {accepted_candidates}
