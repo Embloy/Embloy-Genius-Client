@@ -40,51 +40,14 @@ export default function Jobs() {
   };
 
   const router = useRouter();
-  const [integratios, setIntegrations] = useState([])
-  const setIntegrationToken = () => {
-    const res = getCookie("active_integrations", {path: "/", domain: `${siteConfig.core_domain}`});
-    if (res !== undefined) {
-        if (typeof res === 'string') {
-          let partners = [];
-          const is = JSON.parse(res);
-          is.map((element) => {
-            if (element.issuer) {
-              partners.push(element.issuer);
-            }
-          });
-          partners = [...new Set(partners)];
-          setIntegrations(partners);
-          return partners;
-        }
-        return [];
-    } else {
-        setIntegrations([]);
-        return [];
-    }
-  };
-
-
-
-  const verify_external_slug = (slug) => {
-    const integrations = setIntegrationToken();
-    console.log("Slug: ", slug, "Integrations: ", integrations);
-    if (slug.startsWith("lever") && !integrations.includes("lever")) {
-      return false;
-    } else if (slug.startsWith("greenhouse") && !integrations.includes("greenhouse")) {
-      return false;
-    } else if (slug.startsWith("ashby") && !integrations.includes("ashby")) {
-      return false;
-    } else {
-      return true;
-    }
-  }
+  
 
   const [jobs, setJobs] = useState(null);
   useEffect(() => {
     get_core("/user/jobs", router)
       .then((data) => {
         if (data.jobs) {
-          setJobs(data.jobs.filter((job) => job.job_status !== "archived" && verify_external_slug(job.job_slug)));
+          setJobs(data.jobs.filter((job) => job.job_status !== "archived" ));
         } else {
           setJobs([]);
         }

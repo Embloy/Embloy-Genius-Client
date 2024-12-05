@@ -73,8 +73,6 @@ function SettingsPanel() {
 
     if (!user) return (<LoadingScreen />);
 
-
-
     return (
         <EmbloyPageMount className="overflow-hidden">
             <EmbloyPage>

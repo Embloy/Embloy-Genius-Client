@@ -158,9 +158,9 @@ function EditorTool({dummy=false, id=null, job_id, tag="", editable = false, onC
             <EmbloyH
                 onMouseEnter={() => setHovered(true)}
                 onMouseLeave={() => setHovered(false)}
-                className="w-full cursor-pointer items-center justify-between"
+                className="w-full cursor-pointer items-center justify-between "
             >
-                <EmbloyV className="w-11/12">
+                <div className="flex flex-col items-start justify-start w-[97%]">
                     <EmbloyH className="justify-between">
                         {editable && !dummy ? <legend className="w-10/12 "><EmbloyH1Editable onUpdate={(a) => {handleLabel(a)}} initialText={label} placeholder="Enter Question" className="font-heading text-base text-black dark:text-white w-full" /></legend> : <legend><EmbloyH1 className="font-heading text-base text-black dark:text-white">{title}</EmbloyH1></legend>}
                         <EmbloyH className={"max-w-fit gap-2"}>
@@ -305,8 +305,8 @@ function EditorTool({dummy=false, id=null, job_id, tag="", editable = false, onC
                             </button>
                         </div>
                     )}
-                </EmbloyV>
-                <EmbloyV className="justify-center w-1/12">
+                </div>
+                <div className="flex flex-col items-start justify-center w-[2%]">
                     <div
                         className={`w-full flex flex-col items-center justify-center transition-all duration-300 ease-in-out ${
                             hovered && !dummy ? ' block h-fit' : 'hidden h-0'
@@ -460,7 +460,7 @@ function EditorTool({dummy=false, id=null, job_id, tag="", editable = false, onC
                             
                         </div>
                     )}
-                </EmbloyV>
+                </div>
             </EmbloyH>
         );
     }
