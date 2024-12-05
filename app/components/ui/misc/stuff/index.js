@@ -1,5 +1,5 @@
 "use client";
-import React, {useState, useEffect, use} from "react";
+import React, {useState, useEffect} from "react";
 import '@/app/globals.css'
 import { Tooltip } from "@nextui-org/react";
 import {EmbloyP} from '@/app/components/ui/misc/text'
@@ -49,13 +49,29 @@ export const EmbloySpacer = ({className}) => {
     );
 }
 export const EmbloyChildrenAdvanced = ({className, children, tooltip, disabled=false, ...props}) => {
+    const [os, setOs] = useState("Unknown");
+    useEffect(() => {
+        const userAgent = navigator.userAgent;
+        if (userAgent.includes('Win')) {
+            setOs('Windows');
+          } else if (userAgent.includes('Mac')) {
+            setOs('MacOS');
+          } else if (userAgent.includes('Linux')) {
+            setOs('Linux');
+          } else if (userAgent.includes('Android')) {
+            setOs('Android');
+          } else if (/iPad|iPhone|iPod/.test(userAgent)) {
+            setOs('iOS');
+          }
+    }, []);
+
     if (disabled === false && tooltip) {
         return (
             <Tooltip
                 title={`${tooltip}`}
                 placement="top"
                 content={
-                    <EmbloyP className="text-xs">
+                    <EmbloyP className={`text-xs ${os === 'Windows' && 'px-2 bg-white border border-etna rounded-md dark:bg-ciliegiolo dark:border-biferno'}`}>
                         {tooltip}
                     </EmbloyP>
                     }
