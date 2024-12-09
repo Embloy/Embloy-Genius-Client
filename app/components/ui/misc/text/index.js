@@ -69,7 +69,7 @@ export const EmbloyH1 = ({className, children, ...props}) => {
         </h1>
     )
 }
-export const EmbloyH1Editable = ({ initialText,placeholder="", className, onUpdate }) => {
+export const EmbloyH1Editable = ({ initialText,placeholder="", className, onUpdate}) => {
   const [isEditing, setIsEditing] = useState(false);
   const [text, setText] = useState(initialText);
 

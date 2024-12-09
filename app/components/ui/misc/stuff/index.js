@@ -65,13 +65,26 @@ export const EmbloyChildrenAdvanced = ({className, children, tooltip, disabled=f
           }
     }, []);
 
-    if (disabled === false && tooltip) {
+    if (disabled === false && tooltip && props.html === true) {
+        return (
+            <Tooltip
+                title={`${tooltip}`}
+                placement="top"
+                content={tooltip}
+            >
+                <div className={`${className}`}>
+                    {children}
+                </div>
+            </Tooltip>
+        )
+
+    } else if (disabled === false && tooltip && !props.html) {
         return (
             <Tooltip
                 title={`${tooltip}`}
                 placement="top"
                 content={
-                    <EmbloyP className={`text-xs ${os === 'Windows' && 'px-2 bg-white border border-etna rounded-md dark:bg-ciliegiolo dark:border-biferno'}`}>
+                    <EmbloyP className={`text-xs ${os === 'Windows' && 'px-2 bg-white border border-etna rounded-md dark:bg-ciliegiolo dark:border-biferno'} ${props.box === true && 'w-44'}`}>
                         {tooltip}
                     </EmbloyP>
                     }
