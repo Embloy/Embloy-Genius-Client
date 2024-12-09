@@ -37,12 +37,12 @@ export const JobDetails2 = ({job, handleDataReload, onChange, editable}) => {
                             <EmbloyV className="w-52 gap-1.5 p-2 bg-white border border-etna rounded-md dark:bg-ciliegiolo dark:border-biferno">
                                 <EmbloyH className="gap-1.5 items-center">
                                     <InfoCircledIcon className="w-4 h-4 text-capri dark:text-capri" />
-                                    <EmbloyP className={"text-xs font-semibold"}>Job Post Title</EmbloyP> 
+                                    <EmbloyP className={"text-xs font-semibold underline"}>Job Post Title</EmbloyP> 
                                 </EmbloyH>
-                                <EmbloyP className={"max-w-52 italic text-xs text-testaccio dark:text-nebbiolo"}>May differ from the Job Position e.g.</EmbloyP> 
+                                <EmbloyP className={"max-w-52 italic text-xs"}>Heading of the Job Post. May differ from the Job Position e.g.</EmbloyP> 
                                 <ul className="list-disc ml-4 max-w-52">
-                                    <li className="text-testaccio dark:text-nebbiolo marker:text-testaccio marker:dark:text-nebbiolo"><EmbloyP className={"italic text-xs text-inherit dark:text-inherit"}>Title: Lead Developer for iOS Team</EmbloyP></li>
-                                    <li className="text-testaccio dark:text-nebbiolo marker:text-testaccio marker:dark:text-nebbiolo"><EmbloyP className={"italic text-xs text-inherit dark:text-inherit"}>Position: Senior Software Engineer</EmbloyP></li>
+                                    <li className="marker:text-black marker:dark:text-white"><EmbloyP className={"italic text-xs"}>Title: Lead Developer for iOS Team</EmbloyP></li>
+                                    <li className="marker:text-black marker:dark:text-white"><EmbloyP className={"italic text-xs"}>Position: Senior Software Engineer</EmbloyP></li>
                                 </ul>
                             </EmbloyV>
                         }>
@@ -55,14 +55,13 @@ export const JobDetails2 = ({job, handleDataReload, onChange, editable}) => {
                             <EmbloyV className="w-52 gap-1.5 p-2 bg-white border border-etna rounded-md dark:bg-ciliegiolo dark:border-biferno">
                                 <EmbloyH className="gap-1.5 items-center">
                                     <InfoCircledIcon className="w-4 h-4 text-capri dark:text-capri" />
-                                    <EmbloyP className={"text-xs font-semibold"}>Job Area</EmbloyP> 
+                                    <EmbloyP className={"text-xs font-semibold underline"}>Job Area</EmbloyP> 
                                 </EmbloyH>
-                                <EmbloyP className={"max-w-52 italic text-xs text-testaccio dark:text-nebbiolo break-words"}>A broad category or specialization of work, it could also be the Department, Team, or Branch e.g.</EmbloyP> 
+                                <EmbloyP className={"max-w-52 italic text-xs break-words"}>A broad category or specialization of work, it could also be the Department, Team, or Branch e.g.</EmbloyP> 
                                 <ul className="list-disc ml-4 max-w-52">
-                                    <li className="text-testaccio dark:text-nebbiolo marker:text-testaccio marker:dark:text-nebbiolo"><EmbloyP className={"italic text-xs text-inherit dark:text-inherit"}>Software Development</EmbloyP></li>
-                                    <li className="text-testaccio dark:text-nebbiolo marker:text-testaccio marker:dark:text-nebbiolo"><EmbloyP className={"italic text-xs text-inherit dark:text-inherit"}>Accounting</EmbloyP></li>
-                                    <li className="text-testaccio dark:text-nebbiolo marker:text-testaccio marker:dark:text-nebbiolo"><EmbloyP className={"italic text-xs text-inherit dark:text-inherit"}>Presales</EmbloyP></li>
-                                    <li className="text-testaccio dark:text-nebbiolo marker:text-testaccio marker:dark:text-nebbiolo"><EmbloyP className={"italic text-xs text-inherit dark:text-inherit"}>...</EmbloyP></li>
+                                    <li className="marker:text-black marker:dark:text-white"><EmbloyP className={"italic text-xs"}>Software Development</EmbloyP></li>
+                                    <li className="marker:text-black marker:dark:text-white"><EmbloyP className={"italic text-xs"}>Accounting</EmbloyP></li>
+                                    <li className="marker:text-black marker:dark:text-white"><EmbloyP className={"italic text-xs"}>Presales</EmbloyP></li>
                                 </ul>
                             </EmbloyV>
                         }>
