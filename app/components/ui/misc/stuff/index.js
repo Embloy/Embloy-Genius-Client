@@ -72,7 +72,7 @@ export const EmbloyChildrenAdvanced = ({className, children, tooltip, disabled=f
                 placement="top"
                 content={tooltip}
             >
-                <div className={`${className}`}>
+                <div className={`${os === 'Windows' && 'bg-white border border-etna rounded-md dark:bg-ciliegiolo dark:border-biferno'} ${className}`}>
                     {children}
                 </div>
             </Tooltip>
