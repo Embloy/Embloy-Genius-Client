@@ -218,6 +218,10 @@ export function JobDetails({ job, onUploadSuccess, onClose, onRemove }) {
   const [detailStatus, setDetailStatus] = useState(null);
   const [showDetails, setShowDetails] = useState(false);
 
+  const [algo, setDAlgo] = useState(null);
+  const [algoStatus, setAlgoStatus] = useState(null);
+  const [showAlgo, setShowAlgo] = useState(false);
+
 
   const [applications, setApplications] = useState(null);
   const [applicationsStatus, setApplicationsStatus] = useState(null);
@@ -356,7 +360,7 @@ export function JobDetails({ job, onUploadSuccess, onClose, onRemove }) {
                 <EmbloyH1 className="page-header text-lg whitespace-nowrap overflow-hidden text-ellipsis">{job.position}</EmbloyH1>
               )
             ) : (
-              <EmbloyH1Editable placeholder="Enter Position Title" className="page-header text-lg" initialText={draft.position} onUpdate={(value) => {setDraft({...draft, "position": value})}} />
+              <EmbloyH1Editable placeholder="Enter Position Title" className="page-header text-lg w-full" maxlength="100" initialText={draft.position} onUpdate={(value) => {setDraft({...draft, "position": value})}} />
           )}
 
             {!new_job ?
@@ -410,17 +414,21 @@ export function JobDetails({ job, onUploadSuccess, onClose, onRemove }) {
                     onClick={() => {handleSave()}}
                     className="bg-transparent p-0 text-black hover:text-capri dark:text-amarone dark:hover:text-barbera"
                   >
-                    <EmbloyChildrenAdvanced tooltip="Save">
+                    <EmbloyChildrenAdvanced tooltip="Create New Job">
                       <SaveIcon className="w-[12px] h-[12px] p-0 m-0 text-inherit dark:text-inherit" strokeWidth={3} />
                     </EmbloyChildrenAdvanced>
                   </button>
                 </EmbloyV>  
                 <EmbloyV className="max-w-fit">
                   <button
-                    onClick={() => {onClose()}}
+                    onClick={() => {
+                        onClose()
+                        onRemove()
+                      }
+                    }
                     className="bg-transparent p-0 text-black hover:text-capri dark:text-amarone dark:hover:text-barbera"
                   >
-                    <EmbloyChildrenAdvanced tooltip="Close">
+                    <EmbloyChildrenAdvanced tooltip="Dismiss">
                       <XIcon className="w-[12px] h-[12px] p-0 m-0 text-inherit dark:text-inherit" strokeWidth={3} />
                     </EmbloyChildrenAdvanced>
                   </button>
@@ -487,6 +495,21 @@ export function JobDetails({ job, onUploadSuccess, onClose, onRemove }) {
                     <EmbloyP className="max-w-fit text-xs text-inherit dark:text-inherit">{applicationOptionsStatus === "error" ? "Try again" : "Application Form"}</EmbloyP>
                     {applicationOptionsStatus !== "loading" ? (
                       showApplicationOptions ? (
+                        <ChevronDoubleUpIcon className="w-4 h-4 p-0 m-0" />
+                      ) : (
+                        <PlusIcon className="w-4 h-4 p-0 m-0" />
+                      )
+                    ) : (
+                      <Spinner size="sm" color="current" className="w-4 h-4 p-0 m-0" />
+                    )}
+                </button>
+                <button disabled onClick={() => {
+                  if (algoStatus !== "loading") {
+                    //handleAlgo();
+                  }}} className={`px-2 py-px border border-etna dark:border-nebbiolo rounded-md max-w-fit flex flex-row gap-1.5 ${algoStatus === "loading" ? 'cursor-wait' : "cursor-not-allowed text-testaccio dark:text-nebbiolo"} transition-colors duration-200`}>
+                    <EmbloyP className="max-w-fit text-xs text-inherit dark:text-inherit">{algoStatus === "error" ? "Try again" : "Algorithm"}</EmbloyP>
+                    {algoStatus !== "loading" ? (
+                      showAlgo ? (
                         <ChevronDoubleUpIcon className="w-4 h-4 p-0 m-0" />
                       ) : (
                         <PlusIcon className="w-4 h-4 p-0 m-0" />

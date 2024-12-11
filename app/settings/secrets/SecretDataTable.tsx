@@ -307,20 +307,21 @@ export function SecretDataTable<TData extends Secret, TValue>({columns, data, on
                         {table.getRowModel().rows?.length ? (
                             table.getRowModel().rows
                                 .map((row) => (
-                                <JobTableRowExtendable className={`cursor-copy active:cursor-progress border-etna dark:border-biferno hover:bg-ferrara dark:hover:bg-biferno ${(data.at(Number(row.id)).issuer.toString()  !== "embloy") && 'bg-leidoveneta dark:bg-lagunaveneta'}`}
+                                <JobTableRowExtendable className={`cursor-copy active:cursor-progress border-etna dark:border-biferno hover:bg-ferrara dark:hover:bg-biferno ${(data.at(Number(row.id)).issuer.toString() !== "embloy") && 'bg-leidoveneta dark:bg-lagunaveneta'}`}
                                     key={row.id}
                                     extended={false}
                                     onClick={() => {
-                                        const thisRow = data.at(Number(row.id))
-                                        navigator.clipboard.writeText(thisRow.token)
-                                    }}
+                                        const thisRow = data.at(Number(row.id));
+                                        navigator.clipboard.writeText(thisRow.token);
+                                    } }
                                     data-state={row.getIsSelected() && "selected"}
                                     onUploadSuccess={() => handleUploadSuccess()} onClose={function (): void {
                                         throw new Error("Function not implemented.");
                                     } } onExtending={function (): number {
                                         throw new Error("Function not implemented.");
-                                    } }        
-                                >
+                                    } } onRemove={function (): void {
+                                        throw new Error("Function not implemented.");
+                                    } }                                >
                                     {row.getVisibleCells().map((cell) => (
                                         <TableCell key={cell.id}>
                                             {flexRender(cell.column.columnDef.cell, cell.getContext())}

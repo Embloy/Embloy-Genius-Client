@@ -88,7 +88,12 @@ export const JobDetails2 = ({job, handleDataReload, onChange, editable}) => {
         {value: "Miscellaneous", label: "Miscellaneous"},
         {value: "Mobile_and_IoT_Solutions", label: "Mobile & IoT Solutions"},
         {value: "Product_Development", label: "Product Development"},
-        {value: "Manufacturing", label: "Manufacturing"}
+        {value: "Manufacturing", label: "Manufacturing"},
+        {value: "Administration", label: "Administration"},
+        {value: "Management", label: "Management"},
+        {value: "Back_Office", label: "Back Office"},
+        {value: "Front_Office", label: "Front Office"},
+        {value: "Executive", label: "Executive"},
     ];
 
     const country_codes = [
