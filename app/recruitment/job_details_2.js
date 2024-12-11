@@ -366,7 +366,7 @@ export const JobDetails2 = ({job, handleDataReload, onChange, editable}) => {
                                 <EmbloyP className="cursor-pointer font-semibold text-xs hover:underline decoration-dotted">Title:</EmbloyP>
                             </EmbloyChildrenAdvanced>
                             {editable ? 
-                                <EmbloyH1Editable className="text-xs font-normal w-36" initialText={details.title} placeholder="Job Title" onUpdate={(value) => {setDetails({...details, "title": value})}} /> 
+                                <EmbloyH1Editable className="text-xs font-normal w-36" maxLength="100" initialText={details.title} placeholder="Job Title" onUpdate={(value) => {setDetails({...details, "title": value})}} /> 
                                 : 
                                 <EmbloyH1 className="text-xs font-normal max-w-fit">{details.title}</EmbloyH1>
                             }
@@ -437,11 +437,11 @@ export const JobDetails2 = ({job, handleDataReload, onChange, editable}) => {
                                         {locationStatus && 
                                             <EmbloyH className="gap-4 justify-between items-center w-full">
                                                 <EmbloyH className="gap-0.5 items-center max-w-fit">
-                                                    <input maxLength="50" className="w-24 h-4 text-xs text-black dark:text-white" placeholder="Address" value={location.address} onChange={(e) => setLocation({...location, "address": e.target.value})} />
+                                                    <input maxLength="150" className="w-24 h-4 text-xs text-black dark:text-white" placeholder="Address" value={location.address} onChange={(e) => setLocation({...location, "address": e.target.value})} />
                                                     <div className="w-[1px] h-4 bg-etna dark:bg-nebbiolo" />
-                                                    <input maxLength="50" className="w-24 h-4 text-xs text-black dark:text-white" placeholder="Postal Code" value={location.postal_code} onChange={(e) => setLocation({...location, "postal_code": e.target.value})} />
+                                                    <input maxLength="45" className="w-24 h-4 text-xs text-black dark:text-white" placeholder="Postal Code" value={location.postal_code} onChange={(e) => setLocation({...location, "postal_code": e.target.value})} />
                                                     <div className="w-[1px] h-4 bg-etna dark:bg-nebbiolo" />
-                                                    <input maxLength="50" className="w-24 h-4 text-xs text-black dark:text-white" placeholder="City" value={location.city} onChange={(e) => setLocation({...location, "city": e.target.value})} />
+                                                    <input maxLength="45" className="w-24 h-4 text-xs text-black dark:text-white" placeholder="City" value={location.city} onChange={(e) => setLocation({...location, "city": e.target.value})} />
                                                     <div className="w-[1px] h-4 bg-etna dark:bg-nebbiolo" />
                                                     <EmbloyH className="max-w-28 gap-1.5">
                                                         <EmbloyInput

@@ -130,7 +130,7 @@ export const EmbloyH1Editable = ({ initialText,placeholder="", className, onUpda
           {...props}
         />
       ) : (
-        <EmbloyH1 onClick={handleClick} className={`hover:cursor-pointer whitespace-nowrap overflow-hidden text-ellipsis ${className}`}>
+        <EmbloyH1 onClick={handleClick} className={`hover:cursor-pointer whitespace-nowrap overflow-hidden text-ellipsis  ${className}`}>
           {text}
         </EmbloyH1>
       )}

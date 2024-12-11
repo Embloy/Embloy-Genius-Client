@@ -348,12 +348,12 @@ export function JobDetails({ job, onUploadSuccess, onClose, onRemove }) {
             </EmbloyH>
             <EmbloySeperator className="bg-etna dark:bg-nebbiolo h-px"/>
           </EmbloyV>
-          <EmbloyH className="justify-between ">
+          <EmbloyH className="justify-between gap-2">
           {!new_job ? (
             editable ? (
                 <EmbloyH1Editable className="page-header text-lg w-full" maxlength="100" initialText={job.position} onUpdate={(e) => {console.log("POS UPDETD", e)}} />
               ) : (
-                <EmbloyH1 className="page-header text-lg whitespace-nowrap overflow-hidden text-ellipsis max-w-80">{job.position}</EmbloyH1>
+                <EmbloyH1 className="page-header text-lg whitespace-nowrap overflow-hidden text-ellipsis">{job.position}</EmbloyH1>
               )
             ) : (
               <EmbloyH1Editable placeholder="Enter Position Title" className="page-header text-lg" initialText={draft.position} onUpdate={(value) => {setDraft({...draft, "position": value})}} />
