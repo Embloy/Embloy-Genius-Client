@@ -72,8 +72,10 @@ export const EmbloyChildrenAdvanced = ({className, children, tooltip, disabled=f
                 placement="top"
                 content={tooltip}
             >
-                <div className={`${os === 'Windows' && 'bg-white border border-etna rounded-md dark:bg-ciliegiolo dark:border-biferno'} ${className}`}>
-                    {children}
+                <div>
+                    {React.cloneElement(children, {
+                        className: `${os === 'Windows' ? 'bg-white border border-etna rounded-md dark:bg-ciliegiolo dark:border-biferno' : ''} ${className} ${children.props.className || ''}`
+                    })}
                 </div>
             </Tooltip>
         )

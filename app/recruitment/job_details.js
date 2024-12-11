@@ -503,7 +503,7 @@ export function JobDetails({ job, onUploadSuccess, onClose, onRemove }) {
               <div className={headerClass}>
                 <JobDetails2 job={job} handleDataReload={() => {relOn()}}
                   onChange={() => {}}
-                  editable={editApplicationOptions} />
+                  editable={editable} />
               </div>
               <EmbloySeperator className="bg-etna dark:bg-nebbiolo h-px" />
             </EmbloyV>

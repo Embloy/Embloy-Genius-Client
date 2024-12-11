@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState, useContext, useRef} from "react";
-import { EmbloyH1Editable, EmbloyP } from "@/app/components/ui/misc/text"
+import { EmbloyH1Editable, EmbloyP, EmbloyH1 } from "@/app/components/ui/misc/text"
 import { EmbloyChildrenAdvanced, EmbloyH, EmbloyV } from "@/app/components/ui/misc/stuff";
 import { CheckIcon, XIcon } from "lucide-react";
 import { applicationColumns } from "@/app/recruitment/application_columns";
@@ -9,9 +9,16 @@ import { InfoCircledIcon } from "@radix-ui/react-icons";
 import { EmbloyInput, EmbloySelectOption } from "@/app/components/ui/misc/input";
 
 export const JobDetails2 = ({job, handleDataReload, onChange, editable}) => {
+    console.log("EDITABLE TRUUUMP", editable)
     const [details, setDetails] = useState(job);
     const [locationStatus, setLocationStatus] = useState(false);
     const [location, setLocation] = useState({city: job.city, address: job.address, postal_code: job.postal_code, country_code: job.country_code});
+    const location_not_null = location.city || location.address || location.postal_code || location.country_code;
+    useEffect(() => {
+        if (location.country_code === "XX") {
+            setLocation({...location, "city": null, "address": null, "postal_code": null});
+        }
+    }, [location.country_code]);
 
     const handle_change = (e, field) => {
         setDetails({...details, [field]: e.target.value});
@@ -22,14 +29,18 @@ export const JobDetails2 = ({job, handleDataReload, onChange, editable}) => {
         if (location.address && location.address !== "") {
             string += location.address + ", ";
         }
-        if (location.city && location.city !== "") {
-            string += location.city + ", ";
-        }
         if (location.postal_code && location.postal_code !== "") {
             string += location.postal_code + ", ";
         }
+        if (location.city && location.city !== "") {
+            string += location.city + ", ";
+        }
         if (location.country_code && location.country_code !== "") {
-            string += location.country_code;
+            if (location.country_code === "XX") {
+                string += "Remote";
+            } else {
+                string += location.country_code;
+            }
         }
         if (string.endsWith(", ")) {
             string = string.slice(0, -2);
@@ -81,374 +92,393 @@ export const JobDetails2 = ({job, handleDataReload, onChange, editable}) => {
     ];
 
     const country_codes = [
-        {value: "AD", label: "Andorra"},
-        {value: "AE", label: "United Arab Emirates"},
+        {value: "XX", label: "Remote"},
         {value: "AF", label: "Afghanistan"},
-        {value: "AG", label: "Antigua and Barbuda"},
-        {value: "AI", label: "Anguilla"},
         {value: "AL", label: "Albania"},
-        {value: "AM", label: "Armenia"},
-        {value: "AO", label: "Angola"},
-        {value: "AQ", label: "Antarctica"},
-        {value: "AR", label: "Argentina"},
+        {value: "DZ", label: "Algeria"},
         {value: "AS", label: "American Samoa"},
-        {value: "AT", label: "Austria"},
-        {value: "AU", label: "Australia"},
+        {value: "AD", label: "Andorra"},
+        {value: "AO", label: "Angola"},
+        {value: "AI", label: "Anguilla"},
+        {value: "AQ", label: "Antarctica"},
+        {value: "AG", label: "Antigua and Barbuda"},
+        {value: "AR", label: "Argentina"},
+        {value: "AM", label: "Armenia"},
         {value: "AW", label: "Aruba"},
-        {value: "AX", label: "Åland Islands"},
+        {value: "AU", label: "Australia"},
+        {value: "AT", label: "Austria"},
         {value: "AZ", label: "Azerbaijan"},
-        {value: "BA", label: "Bosnia and Herzegovina"},
-        {value: "BB", label: "Barbados"},
-        {value: "BD", label: "Bangladesh"},
-        {value: "BE", label: "Belgium"},
-        {value: "BF", label: "Burkina Faso"},
-        {value: "BG", label: "Bulgaria"},
+        {value: "BS", label: "Bahamas"},
         {value: "BH", label: "Bahrain"},
-        {value: "BI", label: "Burundi"},
+        {value: "BD", label: "Bangladesh"},
+        {value: "BB", label: "Barbados"},
+        {value: "BY", label: "Belarus"},
+        {value: "BE", label: "Belgium"},
+        {value: "BZ", label: "Belize"},
         {value: "BJ", label: "Benin"},
-        {value: "BL", label: "Saint Barthélemy"},
         {value: "BM", label: "Bermuda"},
-        {value: "BN", label: "Brunei Darussalam"},
+        {value: "BT", label: "Bhutan"},
         {value: "BO", label: "Bolivia"},
         {value: "BQ", label: "Bonaire, Sint Eustatius and Saba"},
-        {value: "BR", label: "Brazil"},
-        {value: "BS", label: "Bahamas"},
-        {value: "BT", label: "Bhutan"},
-        {value: "BV", label: "Bouvet Island"},
+        {value: "BA", label: "Bosnia and Herzegovina"},
         {value: "BW", label: "Botswana"},
-        {value: "BY", label: "Belarus"},
-        {value: "BZ", label: "Belize"},
-        {value: "CA", label: "Canada"},
-        {value: "CC", label: "Cocos (Keeling) Islands"},
-        {value: "CD", label: "Congo (Democratic Republic)"},
-        {value: "CF", label: "Central African Republic"},
-        {value: "CG", label: "Congo"},
-        {value: "CH", label: "Switzerland"},
-        {value: "CI", label: "Côte d'Ivoire"},
-        {value: "CK", label: "Cook Islands"},
-        {value: "CL", label: "Chile"},
-        {value: "CM", label: "Cameroon"},
-        {value: "CN", label: "China"},
-        {value: "CO", label: "Colombia"},
-        {value: "CR", label: "Costa Rica"},
-        {value: "CU", label: "Cuba"},
+        {value: "BV", label: "Bouvet Island"},
+        {value: "BR", label: "Brazil"},
+        {value: "IO", label: "British Indian Ocean Territory"},
+        {value: "VG", label: "British Virgin Islands"},
+        {value: "BN", label: "Brunei Darussalam"},
+        {value: "BG", label: "Bulgaria"},
+        {value: "BF", label: "Burkina Faso"},
+        {value: "BI", label: "Burundi"},
         {value: "CV", label: "Cabo Verde"},
-        {value: "CW", label: "Curaçao"},
+        {value: "KH", label: "Cambodia"},
+        {value: "CM", label: "Cameroon"},
+        {value: "CA", label: "Canada"},
+        {value: "KY", label: "Cayman Islands"},
+        {value: "CF", label: "Central African Republic"},
+        {value: "TD", label: "Chad"},
+        {value: "CL", label: "Chile"},
+        {value: "CN", label: "China"},
         {value: "CX", label: "Christmas Island"},
+        {value: "CC", label: "Cocos (Keeling) Islands"},
+        {value: "CO", label: "Colombia"},
+        {value: "KM", label: "Comoros"},
+        {value: "CG", label: "Congo"},
+        {value: "CD", label: "Congo (Democratic Republic)"},
+        {value: "CK", label: "Cook Islands"},
+        {value: "CR", label: "Costa Rica"},
+        {value: "HR", label: "Croatia"},
+        {value: "CU", label: "Cuba"},
+        {value: "CW", label: "Curaçao"},
         {value: "CY", label: "Cyprus"},
         {value: "CZ", label: "Czechia"},
-        {value: "DE", label: "Germany"},
-        {value: "DJ", label: "Djibouti"},
+        {value: "CI", label: "Côte d'Ivoire"},
         {value: "DK", label: "Denmark"},
+        {value: "DJ", label: "Djibouti"},
         {value: "DM", label: "Dominica"},
         {value: "DO", label: "Dominican Republic"},
-        {value: "DZ", label: "Algeria"},
         {value: "EC", label: "Ecuador"},
-        {value: "EE", label: "Estonia"},
         {value: "EG", label: "Egypt"},
-        {value: "EH", label: "Western Sahara"},
+        {value: "SV", label: "El Salvador"},
+        {value: "GQ", label: "Equatorial Guinea"},
         {value: "ER", label: "Eritrea"},
-        {value: "ES", label: "Spain"},
+        {value: "EE", label: "Estonia"},
+        {value: "SZ", label: "Eswatini"},
         {value: "ET", label: "Ethiopia"},
-        {value: "FI", label: "Finland"},
-        {value: "FJ", label: "Fiji"},
         {value: "FK", label: "Falkland Islands"},
-        {value: "FM", label: "Micronesia"},
         {value: "FO", label: "Faroe Islands"},
+        {value: "FJ", label: "Fiji"},
+        {value: "FI", label: "Finland"},
         {value: "FR", label: "France"},
-        {value: "GA", label: "Gabon"},
-        {value: "GB", label: "United Kingdom"},
-        {value: "GD", label: "Grenada"},
-        {value: "GE", label: "Georgia"},
         {value: "GF", label: "French Guiana"},
-        {value: "GG", label: "Guernsey"},
+        {value: "PF", label: "French Polynesia"},
+        {value: "TF", label: "French Southern Territories"},
+        {value: "GA", label: "Gabon"},
+        {value: "GM", label: "Gambia"},
+        {value: "GE", label: "Georgia"},
+        {value: "DE", label: "Germany"},
         {value: "GH", label: "Ghana"},
         {value: "GI", label: "Gibraltar"},
-        {value: "GL", label: "Greenland"},
-        {value: "GM", label: "Gambia"},
-        {value: "GN", label: "Guinea"},
-        {value: "GP", label: "Guadeloupe"},
-        {value: "GQ", label: "Equatorial Guinea"},
         {value: "GR", label: "Greece"},
-        {value: "GT", label: "Guatemala"},
+        {value: "GL", label: "Greenland"},
+        {value: "GD", label: "Grenada"},
+        {value: "GP", label: "Guadeloupe"},
         {value: "GU", label: "Guam"},
+        {value: "GT", label: "Guatemala"},
+        {value: "GG", label: "Guernsey"},
+        {value: "GN", label: "Guinea"},
         {value: "GW", label: "Guinea-Bissau"},
         {value: "GY", label: "Guyana"},
-        {value: "HK", label: "Hong Kong"},
+        {value: "HT", label: "Haiti"},
         {value: "HM", label: "Heard and McDonald Islands"},
         {value: "HN", label: "Honduras"},
-        {value: "HR", label: "Croatia"},
-        {value: "HT", label: "Haiti"},
+        {value: "HK", label: "Hong Kong"},
         {value: "HU", label: "Hungary"},
-        {value: "ID", label: "Indonesia"},
-        {value: "IE", label: "Ireland"},
-        {value: "IL", label: "Israel"},
-        {value: "IM", label: "Isle of Man"},
-        {value: "IN", label: "India"},
-        {value: "IO", label: "British Indian Ocean Territory"},
-        {value: "IQ", label: "Iraq"},
-        {value: "IR", label: "Iran"},
         {value: "IS", label: "Iceland"},
+        {value: "IN", label: "India"},
+        {value: "ID", label: "Indonesia"},
+        {value: "IR", label: "Iran"},
+        {value: "IQ", label: "Iraq"},
+        {value: "IE", label: "Ireland"},
+        {value: "IM", label: "Isle of Man"},
+        {value: "IL", label: "Israel"},
         {value: "IT", label: "Italy"},
-        {value: "JE", label: "Jersey"},
         {value: "JM", label: "Jamaica"},
-        {value: "JO", label: "Jordan"},
         {value: "JP", label: "Japan"},
-        {value: "KE", label: "Kenya"},
-        {value: "KG", label: "Kyrgyzstan"},
-        {value: "KH", label: "Cambodia"},
-        {value: "KI", label: "Kiribati"},
-        {value: "KM", label: "Comoros"},
-        {value: "KN", label: "Saint Kitts and Nevis"},
-        {value: "KP", label: "North Korea"},
-        {value: "KR", label: "South Korea"},
-        {value: "KW", label: "Kuwait"},
-        {value: "KY", label: "Cayman Islands"},
+        {value: "JE", label: "Jersey"},
+        {value: "JO", label: "Jordan"},
         {value: "KZ", label: "Kazakhstan"},
+        {value: "KE", label: "Kenya"},
+        {value: "KI", label: "Kiribati"},
+        {value: "KW", label: "Kuwait"},
+        {value: "KG", label: "Kyrgyzstan"},
         {value: "LA", label: "Laos"},
+        {value: "LV", label: "Latvia"},
         {value: "LB", label: "Lebanon"},
-        {value: "LC", label: "Saint Lucia"},
-        {value: "LI", label: "Liechtenstein"},
-        {value: "LK", label: "Sri Lanka"},
-        {value: "LR", label: "Liberia"},
         {value: "LS", label: "Lesotho"},
+        {value: "LR", label: "Liberia"},
+        {value: "LY", label: "Libya"},
+        {value: "LI", label: "Liechtenstein"},
         {value: "LT", label: "Lithuania"},
         {value: "LU", label: "Luxembourg"},
-        {value: "LV", label: "Latvia"},
-        {value: "LY", label: "Libya"},
-        {value: "MA", label: "Morocco"},
-        {value: "MC", label: "Monaco"},
-        {value: "MD", label: "Moldova"},
-        {value: "ME", label: "Montenegro"},
-        {value: "MF", label: "Saint Martin"},
-        {value: "MG", label: "Madagascar"},
-        {value: "MH", label: "Marshall Islands"},
-        {value: "MK", label: "North Macedonia"},
-        {value: "ML", label: "Mali"},
-        {value: "MM", label: "Myanmar"},
-        {value: "MN", label: "Mongolia"},
         {value: "MO", label: "Macao"},
-        {value: "MP", label: "Northern Mariana Islands"},
+        {value: "MG", label: "Madagascar"},
+        {value: "MW", label: "Malawi"},
+        {value: "MY", label: "Malaysia"},
+        {value: "MV", label: "Maldives"},
+        {value: "ML", label: "Mali"},
+        {value: "MT", label: "Malta"},
+        {value: "MH", label: "Marshall Islands"},
         {value: "MQ", label: "Martinique"},
         {value: "MR", label: "Mauritania"},
-        {value: "MS", label: "Montserrat"},
-        {value: "MT", label: "Malta"},
         {value: "MU", label: "Mauritius"},
-        {value: "MV", label: "Maldives"},
-        {value: "MW", label: "Malawi"},
+        {value: "YT", label: "Mayotte"},
         {value: "MX", label: "Mexico"},
-        {value: "MY", label: "Malaysia"},
+        {value: "FM", label: "Micronesia"},
+        {value: "MD", label: "Moldova"},
+        {value: "MC", label: "Monaco"},
+        {value: "MN", label: "Mongolia"},
+        {value: "ME", label: "Montenegro"},
+        {value: "MS", label: "Montserrat"},
+        {value: "MA", label: "Morocco"},
         {value: "MZ", label: "Mozambique"},
+        {value: "MM", label: "Myanmar"},
         {value: "NA", label: "Namibia"},
-        {value: "NC", label: "New Caledonia"},
-        {value: "NE", label: "Niger"},
-        {value: "NF", label: "Norfolk Island"},
-        {value: "NG", label: "Nigeria"},
-        {value: "NI", label: "Nicaragua"},
-        {value: "NL", label: "Netherlands"},
-        {value: "NO", label: "Norway"},
-        {value: "NP", label: "Nepal"},
         {value: "NR", label: "Nauru"},
-        {value: "NU", label: "Niue"},
+        {value: "NP", label: "Nepal"},
+        {value: "NL", label: "Netherlands"},
+        {value: "NC", label: "New Caledonia"},
         {value: "NZ", label: "New Zealand"},
+        {value: "NI", label: "Nicaragua"},
+        {value: "NE", label: "Niger"},
+        {value: "NG", label: "Nigeria"},
+        {value: "NU", label: "Niue"},
+        {value: "NF", label: "Norfolk Island"},
+        {value: "KP", label: "North Korea"},
+        {value: "MK", label: "North Macedonia"},
+        {value: "MP", label: "Northern Mariana Islands"},
+        {value: "NO", label: "Norway"},
         {value: "OM", label: "Oman"},
-        {value: "PA", label: "Panama"},
-        {value: "PE", label: "Peru"},
-        {value: "PF", label: "French Polynesia"},
-        {value: "PG", label: "Papua New Guinea"},
-        {value: "PH", label: "Philippines"},
         {value: "PK", label: "Pakistan"},
-        {value: "PL", label: "Poland"},
-        {value: "PM", label: "Saint Pierre and Miquelon"},
-        {value: "PN", label: "Pitcairn"},
-        {value: "PR", label: "Puerto Rico"},
-        {value: "PS", label: "Palestine"},
-        {value: "PT", label: "Portugal"},
         {value: "PW", label: "Palau"},
+        {value: "PS", label: "Palestine"},
+        {value: "PA", label: "Panama"},
+        {value: "PG", label: "Papua New Guinea"},
         {value: "PY", label: "Paraguay"},
+        {value: "PE", label: "Peru"},
+        {value: "PH", label: "Philippines"},
+        {value: "PN", label: "Pitcairn"},
+        {value: "PL", label: "Poland"},
+        {value: "PT", label: "Portugal"},
+        {value: "PR", label: "Puerto Rico"},
         {value: "QA", label: "Qatar"},
-        {value: "RE", label: "Réunion"},
         {value: "RO", label: "Romania"},
-        {value: "RS", label: "Serbia"},
         {value: "RU", label: "Russia"},
         {value: "RW", label: "Rwanda"},
-        {value: "SA", label: "Saudi Arabia"},
-        {value: "SB", label: "Solomon Islands"},
-        {value: "SC", label: "Seychelles"},
-        {value: "SD", label: "Sudan"},
-        {value: "SE", label: "Sweden"},
-        {value: "SG", label: "Singapore"},
+        {value: "RE", label: "Réunion"},
+        {value: "BL", label: "Saint Barthélemy"},
         {value: "SH", label: "Saint Helena"},
-        {value: "SI", label: "Slovenia"},
-        {value: "SJ", label: "Svalbard and Jan Mayen"},
-        {value: "SK", label: "Slovakia"},
-        {value: "SL", label: "Sierra Leone"},
+        {value: "KN", label: "Saint Kitts and Nevis"},
+        {value: "LC", label: "Saint Lucia"},
+        {value: "MF", label: "Saint Martin"},
+        {value: "PM", label: "Saint Pierre and Miquelon"},
+        {value: "VC", label: "Saint Vincent and the Grenadines"},
+        {value: "WS", label: "Samoa"},
         {value: "SM", label: "San Marino"},
-        {value: "SN", label: "Senegal"},
-        {value: "SO", label: "Somalia"},
-        {value: "SR", label: "Suriname"},
-        {value: "SS", label: "South Sudan"},
         {value: "ST", label: "Sao Tome and Principe"},
-        {value: "SV", label: "El Salvador"},
+        {value: "SA", label: "Saudi Arabia"},
+        {value: "SN", label: "Senegal"},
+        {value: "RS", label: "Serbia"},
+        {value: "SC", label: "Seychelles"},
+        {value: "SL", label: "Sierra Leone"},
+        {value: "SG", label: "Singapore"},
         {value: "SX", label: "Sint Maarten"},
+        {value: "SK", label: "Slovakia"},
+        {value: "SI", label: "Slovenia"},
+        {value: "SB", label: "Solomon Islands"},
+        {value: "SO", label: "Somalia"},
+        {value: "ZA", label: "South Africa"},
+        {value: "KR", label: "South Korea"},
+        {value: "SS", label: "South Sudan"},
+        {value: "ES", label: "Spain"},
+        {value: "LK", label: "Sri Lanka"},
+        {value: "SD", label: "Sudan"},
+        {value: "SR", label: "Suriname"},
+        {value: "SJ", label: "Svalbard and Jan Mayen"},
+        {value: "SE", label: "Sweden"},
+        {value: "CH", label: "Switzerland"},
         {value: "SY", label: "Syria"},
-        {value: "SZ", label: "Eswatini"},
-        {value: "TC", label: "Turks and Caicos Islands"},
-        {value: "TD", label: "Chad"},
-        {value: "TF", label: "French Southern Territories"},
-        {value: "TG", label: "Togo"},
-        {value: "TH", label: "Thailand"},
-        {value: "TJ", label: "Tajikistan"},
-        {value: "TK", label: "Tokelau"},
-        {value: "TL", label: "Timor-Leste"},
-        {value: "TM", label: "Turkmenistan"},
-        {value: "TN", label: "Tunisia"},
-        {value: "TO", label: "Tonga"},
-        {value: "TR", label: "Turkey"},
-        {value: "TT", label: "Trinidad and Tobago"},
-        {value: "TV", label: "Tuvalu"},
         {value: "TW", label: "Taiwan"},
+        {value: "TJ", label: "Tajikistan"},
         {value: "TZ", label: "Tanzania"},
-        {value: "UA", label: "Ukraine"},
+        {value: "TH", label: "Thailand"},
+        {value: "TL", label: "Timor-Leste"},
+        {value: "TG", label: "Togo"},
+        {value: "TK", label: "Tokelau"},
+        {value: "TO", label: "Tonga"},
+        {value: "TT", label: "Trinidad and Tobago"},
+        {value: "TN", label: "Tunisia"},
+        {value: "TR", label: "Turkey"},
+        {value: "TM", label: "Turkmenistan"},
+        {value: "TC", label: "Turks and Caicos Islands"},
+        {value: "TV", label: "Tuvalu"},
+        {value: "VI", label: "U.S. Virgin Islands"},
         {value: "UG", label: "Uganda"},
-        {value: "UM", label: "United States Minor Outlying Islands"},
+        {value: "UA", label: "Ukraine"},
+        {value: "AE", label: "United Arab Emirates"},
+        {value: "GB", label: "United Kingdom"},
         {value: "US", label: "United States"},
+        {value: "UM", label: "United States Minor Outlying Islands"},
         {value: "UY", label: "Uruguay"},
         {value: "UZ", label: "Uzbekistan"},
-        {value: "VA", label: "Vatican City"},
-        {value: "VC", label: "Saint Vincent and the Grenadines"},
-        {value: "VE", label: "Venezuela"},
-        {value: "VG", label: "British Virgin Islands"},
-        {value: "VI", label: "U.S. Virgin Islands"},
-        {value: "VN", label: "Vietnam"},
         {value: "VU", label: "Vanuatu"},
+        {value: "VA", label: "Vatican City"},
+        {value: "VE", label: "Venezuela"},
+        {value: "VN", label: "Vietnam"},
         {value: "WF", label: "Wallis and Futuna"},
-        {value: "WS", label: "Samoa"},
+        {value: "EH", label: "Western Sahara"},
         {value: "YE", label: "Yemen"},
-        {value: "YT", label: "Mayotte"},
-        {value: "ZA", label: "South Africa"},
         {value: "ZM", label: "Zambia"},
-        {value: "ZW", label: "Zimbabwe"}
-    ];
+        {value: "ZW", label: "Zimbabwe"},
+        {value: "AX", label: "Åland Islands"}
+    ];  
     
     
     return (
         <EmbloyV>
             <EmbloyV className="border border-etna dark:border-nebbiolo p-1.5 gap-px rounded-md ">
                 <EmbloyH className={"gap-2"}>
-                    <EmbloyH className={"gap-1.5 max-w-fit"}>
-                        <EmbloyChildrenAdvanced html={true} tooltip={
-                            <EmbloyV className="w-52 gap-1.5 p-2">
-                                <EmbloyH className="gap-1.5 items-center">
-                                    <InfoCircledIcon className="w-4 h-4 text-capri dark:text-capri" />
-                                    <EmbloyP className={"text-xs font-semibold underline"}>Job Post Title</EmbloyP> 
-                                </EmbloyH>
-                                <EmbloyP className={"max-w-52 italic text-xs"}>Heading of the Job Post. May differ from the Job Position e.g.</EmbloyP> 
-                                <ul className="list-disc ml-4 max-w-52">
-                                    <li className="marker:text-black marker:dark:text-white"><EmbloyP className={"italic text-xs"}>Title: Lead Developer for iOS Team</EmbloyP></li>
-                                    <li className="marker:text-black marker:dark:text-white"><EmbloyP className={"italic text-xs"}>Position: Senior Software Engineer</EmbloyP></li>
-                                </ul>
-                            </EmbloyV>
-                        }>
-                            <EmbloyP className="cursor-pointer font-semibold text-xs hover:underline decoration-dotted">Title:</EmbloyP>
-                        </EmbloyChildrenAdvanced>
-                        <EmbloyH1Editable className="text-xs font-normal w-36" initialText={details.title} placeholder="Job Title" onUpdate={(value) => {setDetails({...details, "title": value})}} />
-                    </EmbloyH>
-                    <EmbloyH className={"gap-1.5 max-w-60"}>
-                        <EmbloyChildrenAdvanced html={true} tooltip={
-                            <EmbloyV className="w-52 gap-1.5 p-2">
-                                <EmbloyH className="gap-1.5 items-center">
-                                    <InfoCircledIcon className="w-4 h-4 text-capri dark:text-capri" />
-                                    <EmbloyP className={"text-xs font-semibold underline"}>Job Area</EmbloyP> 
-                                </EmbloyH>
-                                <EmbloyP className={"max-w-52 italic text-xs break-words"}>A broad category or specialization of work, it could also be the Department, Team, or Branch e.g.</EmbloyP> 
-                                <ul className="list-disc ml-4 max-w-52">
-                                    <li className="marker:text-black marker:dark:text-white"><EmbloyP className={"italic text-xs"}>Software Development</EmbloyP></li>
-                                    <li className="marker:text-black marker:dark:text-white"><EmbloyP className={"italic text-xs"}>Accounting</EmbloyP></li>
-                                    <li className="marker:text-black marker:dark:text-white"><EmbloyP className={"italic text-xs"}>Presales</EmbloyP></li>
-                                </ul>
-                            </EmbloyV>
-                        }>
-                            <EmbloyP className="cursor-pointer font-semibold text-xs hover:underline decoration-dotted">Area:</EmbloyP>
-                        </EmbloyChildrenAdvanced>
-                        
-                        <EmbloyInput
-                            variant="select-light"
-                            onChange={(e) => setDetails({...details, "job_type": e.target.value})}
-                            value={details.job_type || ""}
-                            className={`w-52 text-xs ${(details.job_type && details.job_type !== "") ? "text-black dark:text-white" : "text-testaccio dark:text-nebbiolo"}`}
-                        >
-                            <EmbloySelectOption placeholder={true} className="text-xs text-black dark:text-white">
-                                Select Job Area
-                            </EmbloySelectOption>
-                            {areas.map((area, index) => {
-                                return <EmbloySelectOption key={index} value={area.value} className={"max-w-52 text-xs text-black dark:text-white"} >
-                                            {area.label}
-                                        </EmbloySelectOption>
-                                    })}
-                        </EmbloyInput>
-                        {details.job_type !== job.job_type && 
-                            <button className="hover:bg-primitivo/10 dark:hover:bg-primitivo/10 rounded-sm transition-colors duration-200" onClick={() => {setDetails({...details, "job_type": null})}}>
-                                <XIcon className="w-4 h-4 text-primitivo dark:text-primitivo" />
-                            </button>
-                        }
-                    </EmbloyH>
-                    <EmbloyH className={"gap-1.5 max-w-fit"}>
-                        <EmbloyChildrenAdvanced html={true} tooltip={
-                            <EmbloyV className="w-52 gap-1.5 p-2">
-                                <EmbloyH className="gap-1.5 items-center">
-                                    <InfoCircledIcon className="w-4 h-4 text-capri dark:text-capri" />
-                                    <EmbloyP className={"text-xs font-semibold underline"}>Location</EmbloyP> 
-                                </EmbloyH>
-                                <EmbloyP className={"max-w-52 italic text-xs"}>Heading of the Job Post. May differ from the Job Position e.g.</EmbloyP> 
-                                <ul className="list-disc ml-4 max-w-52">
-                                    <li className="marker:text-black marker:dark:text-white"><EmbloyP className={"italic text-xs"}>Title: Lead Developer for iOS Team</EmbloyP></li>
-                                    <li className="marker:text-black marker:dark:text-white"><EmbloyP className={"italic text-xs"}>Position: Senior Software Engineer</EmbloyP></li>
-                                </ul>
-                            </EmbloyV>
-                        }>
-                            <EmbloyP className="cursor-pointer font-semibold text-xs hover:underline decoration-dotted">Location:</EmbloyP>
-                        </EmbloyChildrenAdvanced>
-                        {!locationStatus && <EmbloyH1Editable block={true} onBlur={() => {setLocationStatus(!locationStatus)}} className="text-xs font-normal w-36" initialText={location_text} placeholder="Add Location" onUpdate={(value) => {setDetails({...details, "title": value})}} />}
-                        {locationStatus && 
-                            <EmbloyH className="gap-4 items-center max-w-fit">
-                                <EmbloyH className="gap-0.5 items-center max-w-fit">
-                                    <input className="w-24 h-4 text-xs text-black dark:text-white" placeholder="City" value={location.city} onChange={(e) => setLocation({...location, "city": e.target.value})} />
-                                    <div className="w-[1px] h-4 bg-etna dark:bg-nebbiolo" />
-                                    <input className="w-24 h-4 text-xs text-black dark:text-white" placeholder="Address" value={location.address} onChange={(e) => setLocation({...location, "address": e.target.value})} />
-                                    <div className="w-[1px] h-4 bg-etna dark:bg-nebbiolo" />
-                                    <input className="w-24 h-4 text-xs text-black dark:text-white" placeholder="Postal Code" value={location.postal_code} onChange={(e) => setLocation({...location, "postal_code": e.target.value})} />
-                                    <div className="w-[1px] h-4 bg-etna dark:bg-nebbiolo" />
-                                    <EmbloyH className="max-w-28 gap-1.5">
-                                        <EmbloyInput
-                                            variant="select-light"
-                                            onChange={(e) => setLocation({...location, "country_code": e.target.value})}
-                                            value={location.country_code || ""}
-                                            className={`w-52 text-xs ${(location.country_code && location.country_code !== "") ? "text-black dark:text-white" : "text-testaccio dark:text-nebbiolo"}`}
-                                        >
-                                            <EmbloySelectOption placeholder={true} className="text-xs text-black dark:text-white">
-                                                Country
-                                            </EmbloySelectOption>
-                                            {country_codes.map((area, index) => {
-                                                return <EmbloySelectOption key={index} value={area.value} className={"max-w-52 text-xs text-black dark:text-white"} >
-                                                            {area.label}
-                                                        </EmbloySelectOption>
-                                                    })}
-                                        </EmbloyInput>
-                                        {location.country_code && 
-                                            <button className="hover:bg-primitivo/10 dark:hover:bg-primitivo/10 rounded-sm transition-colors duration-200" onClick={() => {setLocation({...location, "country_code": null})}}>
-                                                <XIcon className="w-4 h-4 text-primitivo dark:text-primitivo" />
-                                            </button>
-                                        }
+                    
+                    { (editable || (!editable && job.title && job.tile !== "")) &&
+                        <EmbloyH className={"gap-1.5 max-w-fit"}>
+                            <EmbloyChildrenAdvanced html={true} tooltip={
+                                <EmbloyV className="w-52 gap-1.5 p-2">
+                                    <EmbloyH className="gap-1.5 items-center">
+                                        <InfoCircledIcon className="w-4 h-4 text-capri dark:text-capri" />
+                                        <EmbloyP className={"text-xs font-semibold underline"}>Job Post Title</EmbloyP> 
                                     </EmbloyH>
-                                    <div className="w-[1px] h-4 bg-etna dark:bg-nebbiolo" />
-                                </EmbloyH>
-                                <button className="hover:bg-capri/10 dark:hover:bg-capri/10 rounded-md px-1 transition-colors duration-200" onClick={() => {setLocationStatus(!locationStatus)}}>
-                                    <EmbloyP className="text-xs text-capri dark:text-capri">Save Location</EmbloyP>
-                                </button>
-                            </EmbloyH>
-                        }
+                                    <EmbloyP className={"max-w-52 italic text-xs"}>Heading of the Job Post. May differ from the Job Position e.g.</EmbloyP> 
+                                    <ul className="list-disc ml-4 max-w-52">
+                                        <li className="marker:text-black marker:dark:text-white"><EmbloyP className={"italic text-xs"}>Title: Lead Developer for iOS Team</EmbloyP></li>
+                                        <li className="marker:text-black marker:dark:text-white"><EmbloyP className={"italic text-xs"}>Position: Senior Software Engineer</EmbloyP></li>
+                                    </ul>
+                                </EmbloyV>
+                            }>
+                                <EmbloyP className="cursor-pointer font-semibold text-xs hover:underline decoration-dotted">Title:</EmbloyP>
+                            </EmbloyChildrenAdvanced>
+                            {editable ? 
+                                <EmbloyH1Editable className="text-xs font-normal w-36" initialText={details.title} placeholder="Job Title" onUpdate={(value) => {setDetails({...details, "title": value})}} /> 
+                                : 
+                                <EmbloyH1 className="text-xs font-normal w-36">{details.title}</EmbloyH1>
+                            }
                     </EmbloyH>
+                    }
+                    { (editable || (!editable && job.job_type && job.job_type !== "")) &&
+                        <EmbloyH className={"gap-1.5 max-w-60"}>
+                            <EmbloyChildrenAdvanced html={true} tooltip={
+                                <EmbloyV className="w-52 gap-1.5 p-2">
+                                    <EmbloyH className="gap-1.5 items-center">
+                                        <InfoCircledIcon className="w-4 h-4 text-capri dark:text-capri" />
+                                        <EmbloyP className={"text-xs font-semibold underline"}>Job Area</EmbloyP> 
+                                    </EmbloyH>
+                                    <EmbloyP className={"max-w-52 italic text-xs break-words"}>A broad category or specialization of work, it could also be the Department, Team, or Branch e.g.</EmbloyP> 
+                                    <ul className="list-disc ml-4 max-w-52">
+                                        <li className="marker:text-black marker:dark:text-white"><EmbloyP className={"italic text-xs"}>Software Development</EmbloyP></li>
+                                        <li className="marker:text-black marker:dark:text-white"><EmbloyP className={"italic text-xs"}>Accounting</EmbloyP></li>
+                                        <li className="marker:text-black marker:dark:text-white"><EmbloyP className={"italic text-xs"}>Presales</EmbloyP></li>
+                                    </ul>
+                                </EmbloyV>
+                            }>
+                                <EmbloyP className="cursor-pointer font-semibold text-xs hover:underline decoration-dotted">Area:</EmbloyP>
+                            </EmbloyChildrenAdvanced>
+                            { editable ?
+                                <>
+                                    <EmbloyInput
+                                        variant="select-light"
+                                        onChange={(e) => setDetails({...details, "job_type": e.target.value})}
+                                        value={details.job_type || ""}
+                                        className={`w-52 text-xs ${(details.job_type && details.job_type !== "") ? "text-black dark:text-white" : "text-testaccio dark:text-nebbiolo"}`}
+                                    >
+                                        <EmbloySelectOption placeholder={true} className="text-xs text-black dark:text-white">
+                                            Select Job Area
+                                        </EmbloySelectOption>
+                                        {areas.map((area, index) => {
+                                            return <EmbloySelectOption key={index} value={area.value} className={"max-w-52 text-xs text-black dark:text-white"} >
+                                                        {area.label}
+                                                    </EmbloySelectOption>
+                                                })}
+                                    </EmbloyInput>
+                                    {details.job_type !== job.job_type && 
+                                        <button className="hover:bg-primitivo/10 dark:hover:bg-primitivo/10 rounded-sm transition-colors duration-200" onClick={() => {setDetails({...details, "job_type": null})}}>
+                                            <XIcon className="w-4 h-4 text-primitivo dark:text-primitivo" />
+                                        </button>
+                                    }
+                                </>
+                                :
+                                <EmbloyH1 className="text-xs font-normal w-36">{areas.find(area => area.value === details.job_type).label}</EmbloyH1>
+                            }
+                        </EmbloyH>
+                    }
+                    { (editable || (!editable && location_not_null)) &&
+                        <EmbloyH className={"gap-1.5"}>
+                            <EmbloyChildrenAdvanced html={true} tooltip={
+                                <EmbloyV className="w-52 gap-1.5 p-2">
+                                    <EmbloyH className="gap-1.5 items-center">
+                                        <InfoCircledIcon className="w-4 h-4 text-capri dark:text-capri" />
+                                        <EmbloyP className={"text-xs font-semibold underline"}>Job Location</EmbloyP> 
+                                    </EmbloyH>
+                                    <EmbloyP className={"max-w-52 italic text-xs"}>Geographical location of the Job Position. Remote, Hybrid, or On-Site options available.</EmbloyP> 
+                                </EmbloyV>
+                            }>
+                                <EmbloyP className="cursor-pointer font-semibold text-xs hover:underline decoration-dotted">Location:</EmbloyP>
+                            </EmbloyChildrenAdvanced>
+                                { editable ?
+                                    <>
+                                        {!locationStatus && <EmbloyH1Editable block={true} onClick={() => {setLocationStatus(!locationStatus)}} className="text-xs font-normal" initialText={location_text} placeholder="Add Location" onUpdate={(value) => {setDetails({...details, "title": value})}} />}
+                                        {locationStatus && 
+                                            <EmbloyH className="gap-4 justify-between items-center w-full">
+                                                <EmbloyH className="gap-0.5 items-center max-w-fit">
+                                                    <input maxLength="50" className="w-24 h-4 text-xs text-black dark:text-white" placeholder="Address" value={location.address} onChange={(e) => setLocation({...location, "address": e.target.value})} />
+                                                    <div className="w-[1px] h-4 bg-etna dark:bg-nebbiolo" />
+                                                    <input maxLength="50" className="w-24 h-4 text-xs text-black dark:text-white" placeholder="Postal Code" value={location.postal_code} onChange={(e) => setLocation({...location, "postal_code": e.target.value})} />
+                                                    <div className="w-[1px] h-4 bg-etna dark:bg-nebbiolo" />
+                                                    <input maxLength="50" className="w-24 h-4 text-xs text-black dark:text-white" placeholder="City" value={location.city} onChange={(e) => setLocation({...location, "city": e.target.value})} />
+                                                    <div className="w-[1px] h-4 bg-etna dark:bg-nebbiolo" />
+                                                    <EmbloyH className="max-w-28 gap-1.5">
+                                                        <EmbloyInput
+                                                            variant="select-light"
+                                                            onChange={(e) => setLocation({...location, "country_code": e.target.value})}
+                                                            value={location.country_code || ""}
+                                                            className={`w-52 text-xs ${(location.country_code && location.country_code !== "") ? "text-black dark:text-white" : "text-testaccio dark:text-nebbiolo"}`}
+                                                        >
+                                                            <EmbloySelectOption placeholder={true} className="text-xs text-black dark:text-white">
+                                                                Country
+                                                            </EmbloySelectOption>
+                                                            {country_codes.map((area, index) => {
+                                                                return <EmbloySelectOption key={index} value={area.value} className={"max-w-52 text-xs text-black dark:text-white"} >
+                                                                            {area.label}
+                                                                        </EmbloySelectOption>
+                                                                    })}
+                                                        </EmbloyInput>
+                                                        {location.country_code && 
+                                                            <button className="hover:bg-primitivo/10 dark:hover:bg-primitivo/10 rounded-sm transition-colors duration-200" onClick={() => {setLocation({...location, "country_code": null})}}>
+                                                                <XIcon className="w-4 h-4 text-primitivo dark:text-primitivo" />
+                                                            </button>
+                                                        }
+                                                    </EmbloyH>
+                                                    <div className="w-[1px] h-4 bg-etna dark:bg-nebbiolo" />
+                                                </EmbloyH>
+                                                <button className="hover:bg-capri/10 dark:hover:bg-capri/10 rounded-md px-1 transition-colors duration-200" onClick={() => {setLocationStatus(!locationStatus)}}>
+                                                    <EmbloyP className="text-xs text-capri dark:text-capri">Save Location</EmbloyP>
+                                                </button>
+                                            </EmbloyH>
+                                        }
+                                    </>
+                                    :
+                                    <EmbloyH1 className="text-xs font-normal w-36">{location_text()}</EmbloyH1>
+                                }
+                        </EmbloyH>
+                    }
                 </EmbloyH>
             </EmbloyV>
         </EmbloyV>
