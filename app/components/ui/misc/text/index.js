@@ -69,7 +69,7 @@ export const EmbloyH1 = ({className, children, ...props}) => {
         </h1>
     )
 }
-export const EmbloyH1Editable = ({ initialText,placeholder="", className, onUpdate, block=false, onClick, keydown=undefined}) => {
+export const EmbloyH1Editable = ({ initialText,placeholder="", className, onUpdate, block=false, onClick, keydown=undefined, ...props}) => {
   const [isEditing, setIsEditing] = useState(false);
   const [text, setText] = useState(initialText);
 
@@ -127,9 +127,10 @@ export const EmbloyH1Editable = ({ initialText,placeholder="", className, onUpda
           placeholder={placeholder}
           autoFocus
           className={`page-header border-none focus:outline-none bg-transparent ${className}`}
+          {...props}
         />
       ) : (
-        <EmbloyH1 onClick={handleClick} className={`hover:cursor-pointer  ${className}`}>
+        <EmbloyH1 onClick={handleClick} className={`hover:cursor-pointer whitespace-nowrap overflow-hidden text-ellipsis ${className}`}>
           {text}
         </EmbloyH1>
       )}

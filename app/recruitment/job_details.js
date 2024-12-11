@@ -351,9 +351,9 @@ export function JobDetails({ job, onUploadSuccess, onClose, onRemove }) {
           <EmbloyH className="justify-between ">
           {!new_job ? (
             editable ? (
-                <EmbloyH1Editable className="page-header text-lg" initialText={job.position} />
+                <EmbloyH1Editable className="page-header text-lg w-full" maxlength="100" initialText={job.position} onUpdate={(e) => {console.log("POS UPDETD", e)}} />
               ) : (
-                <EmbloyH1 className="page-header text-lg">{job.position}</EmbloyH1>
+                <EmbloyH1 className="page-header text-lg whitespace-nowrap overflow-hidden text-ellipsis max-w-80">{job.position}</EmbloyH1>
               )
             ) : (
               <EmbloyH1Editable placeholder="Enter Position Title" className="page-header text-lg" initialText={draft.position} onUpdate={(value) => {setDraft({...draft, "position": value})}} />

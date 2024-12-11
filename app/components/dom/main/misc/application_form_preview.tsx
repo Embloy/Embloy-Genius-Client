@@ -746,7 +746,7 @@ export function ApplicationPreview({data, handleDataReload, editable=false, onCh
                     ((locData.application_options.length - original.application_options.length) / original.application_options.length) * 100
                     ).toFixed(2)}%`}
             </EmbloyP>
-            {locData.application_options.length > 0 && <EmbloyH className={"gap-1.5 max-w-fit"}>{altered && <button onClick={handleSave}><EmbloyP className="text-xs text-capri dark:text-capri underline">{"Save changes"}</EmbloyP></button>}<button onClick={handleDelete}><EmbloyP className="text-xs text-primitivo dark:text-primitivo underline">{"Delete all items"}</EmbloyP></button></EmbloyH>}
+            {(locData.application_options.length > 0 && editable) && <EmbloyH className={"gap-1.5 max-w-fit"}>{altered && <button onClick={handleSave}><EmbloyP className="text-xs text-capri dark:text-capri underline">{"Save changes"}</EmbloyP></button>}<button onClick={handleDelete}><EmbloyP className="text-xs text-primitivo dark:text-primitivo underline">{"Delete all items"}</EmbloyP></button></EmbloyH>}
             
         </EmbloyH>
         <div className="min-h-[250px] w-9/12 flex flex-col items-center justify-start gap-4 px-4 py-2 ">

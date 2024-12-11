@@ -348,7 +348,6 @@ export const JobDetails2 = ({job, handleDataReload, onChange, editable}) => {
         <EmbloyV>
             <EmbloyV className="border border-etna dark:border-nebbiolo p-1.5 gap-px rounded-md ">
                 <EmbloyH className={"gap-2"}>
-                    
                     { (editable || (!editable && job.title && job.tile !== "")) &&
                         <EmbloyH className={"gap-1.5 max-w-fit"}>
                             <EmbloyChildrenAdvanced html={true} tooltip={
@@ -369,7 +368,7 @@ export const JobDetails2 = ({job, handleDataReload, onChange, editable}) => {
                             {editable ? 
                                 <EmbloyH1Editable className="text-xs font-normal w-36" initialText={details.title} placeholder="Job Title" onUpdate={(value) => {setDetails({...details, "title": value})}} /> 
                                 : 
-                                <EmbloyH1 className="text-xs font-normal w-36">{details.title}</EmbloyH1>
+                                <EmbloyH1 className="text-xs font-normal max-w-fit">{details.title}</EmbloyH1>
                             }
                     </EmbloyH>
                     }
@@ -415,7 +414,7 @@ export const JobDetails2 = ({job, handleDataReload, onChange, editable}) => {
                                     }
                                 </>
                                 :
-                                <EmbloyH1 className="text-xs font-normal w-36">{areas.find(area => area.value === details.job_type).label}</EmbloyH1>
+                                <EmbloyH1 className="text-xs font-normal max-w-fit">{areas.find(area => area.value === details.job_type).label}</EmbloyH1>
                             }
                         </EmbloyH>
                     }
@@ -475,7 +474,7 @@ export const JobDetails2 = ({job, handleDataReload, onChange, editable}) => {
                                         }
                                     </>
                                     :
-                                    <EmbloyH1 className="text-xs font-normal w-36">{location_text()}</EmbloyH1>
+                                    <EmbloyH1 className="text-xs font-normal max-w-fit">{location_text()}</EmbloyH1>
                                 }
                         </EmbloyH>
                     }
