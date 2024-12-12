@@ -10,7 +10,6 @@ import { EmbloyInput, EmbloySelectOption } from "@/app/components/ui/misc/input"
 import { not_core_get } from "@/lib/api/core";
 
 export const JobDetails2 = ({job, handleDataReload, onChange, editable}) => {
-    //console.log("EDITABLE TRUUUMP", editable)
     const [details, setDetails] = useState(job);
     const [locationStatus, setLocationStatus] = useState(false);
     const [location, setLocation] = useState({city: job.city, address: job.address, postal_code: job.postal_code, country_code: job.country_code});
@@ -426,29 +425,29 @@ export const JobDetails2 = ({job, handleDataReload, onChange, editable}) => {
         <EmbloyV>
             <EmbloyV className="border border-etna dark:border-nebbiolo p-1.5 gap-px rounded-md ">
                 <EmbloyH className={"gap-2"}>
-                    { (editable || (!editable && job.title && job.tile !== "")) &&
+                    { (editable || (!editable && job.position && job.position !== "")) &&
                         <EmbloyH className={"gap-1.5 max-w-fit"}>
                             <EmbloyChildrenAdvanced html={true} tooltip={
                                 <EmbloyV className="w-52 gap-1.5 p-2">
                                     <EmbloyH className="gap-1.5 items-center">
                                         <InfoCircledIcon className="w-4 h-4 text-capri dark:text-capri" />
-                                        <EmbloyP className={"text-xs font-semibold underline"}>Job Post Title</EmbloyP> 
+                                        <EmbloyP className={"text-xs font-semibold underline"}>Job Position</EmbloyP> 
                                     </EmbloyH>
-                                    <EmbloyP className={"max-w-52 italic text-xs"}>Heading of the Job Post. May differ from the Job Position e.g.</EmbloyP> 
+                                    <EmbloyP className={"max-w-52 italic text-xs"}>Level of the Job. May differ from the Job Title e.g.</EmbloyP> 
                                     <ul className="list-disc ml-4 max-w-52">
                                         <li className="marker:text-black marker:dark:text-white"><EmbloyP className={"italic text-xs"}>Title: Lead Developer for iOS Team</EmbloyP></li>
                                         <li className="marker:text-black marker:dark:text-white"><EmbloyP className={"italic text-xs"}>Position: Senior Software Engineer</EmbloyP></li>
                                     </ul>
                                 </EmbloyV>
                             }>
-                                <EmbloyP className="cursor-pointer font-semibold text-xs hover:underline decoration-dotted">Title:</EmbloyP>
+                                <EmbloyP className="cursor-pointer font-semibold text-xs hover:underline decoration-dotted">Position:</EmbloyP>
                             </EmbloyChildrenAdvanced>
                             {editable ? 
-                                <EmbloyH1Editable className="text-xs font-normal w-36" maxLength="100" initialText={details.title !== null ? details.title : ""} placeholder="Job Title" onUpdate={(value) => {
-                                    handleSave("title", value)
-                                }} keydown={(e) => {handleSave("title", e)}} /> 
+                                <EmbloyH1Editable className="text-xs font-normal w-36" maxLength="100" initialText={details.position !== null ? details.position : ""} placeholder="Job Position" onUpdate={(value) => {
+                                    handleSave("position", value)
+                                }} keydown={(e) => {handleSave("position", e)}} /> 
                                 : 
-                                <EmbloyH1 className="text-xs font-normal max-w-fit">{details.title}</EmbloyH1>
+                                <EmbloyH1 className="text-xs font-normal max-w-fit">{details.position}</EmbloyH1>
                             }
                     </EmbloyH>
                     }

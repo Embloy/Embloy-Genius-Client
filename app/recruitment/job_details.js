@@ -41,7 +41,7 @@ export function JobDetails({ job, onUploadSuccess, onClose, onRemove }) {
   const headerClass = "w-full flex flex-row items-center justify-between";
   const textClass = "cursor-text";
   const set_data = () => {
-    setPosition(job["position"]);
+    setPosition(job["title"]);
   };
   const [listIsHovered, setListIsHovered] = useState(false);
   const handleListHover = () => {
@@ -111,7 +111,7 @@ export function JobDetails({ job, onUploadSuccess, onClose, onRemove }) {
 }, [shareDropdownOpen]);
   const new_job = job.job_slug === "new"
   const [draft, setDraft] = useState({
-    "position": null,
+    "title": null,
   });
   const created_at = cast_date_no_null(job.created_at, "us");
   const updated_at = cast_date_no_null(job.updated_at, "us");
@@ -291,11 +291,11 @@ export function JobDetails({ job, onUploadSuccess, onClose, onRemove }) {
   }
 
   const handleSave = async () => {
-    if (draft.position !== null) {
+    if (draft.title !== null) {
       const body = {
-        "position": draft.position,
+        "position": draft.title,
         "job_status": "unlisted",
-        "title": draft.position,
+        "title": draft.title,
       }
       try {
         const res = await not_core_get("POST", `/jobs`, body);
@@ -336,9 +336,9 @@ export function JobDetails({ job, onUploadSuccess, onClose, onRemove }) {
   }
 
   const handlePositionSave = async (pos) => {
-    if (pos !== null && pos !== undefined && pos !== job.position && pos.trim() !== "" ) {
+    if (pos !== null && pos !== undefined && pos !== job.title && pos.trim() !== "" ) {
       try {
-        await not_core_get("PATCH", `/jobs/${job.id}`, {position: pos.trim()});
+        await not_core_get("PATCH", `/jobs/${job.id}`, {title: pos.trim()});
         onUploadSuccess();
         
       } catch (e) {
@@ -365,12 +365,12 @@ export function JobDetails({ job, onUploadSuccess, onClose, onRemove }) {
           <EmbloyH className="justify-between gap-2">
           {!new_job ? (
             editable ? (
-                <EmbloyH1Editable className="page-header text-lg w-full" maxLength="100" initialText={job.position} keydown={(e) => {handlePositionSave(e)}} onUpdate={(e) => {handlePositionSave(e)}} />
+                <EmbloyH1Editable className="page-header text-lg w-full" maxLength="100" initialText={job.title} keydown={(e) => {handlePositionSave(e)}} onUpdate={(e) => {handlePositionSave(e)}} />
               ) : (
-                <EmbloyH1 className="page-header text-lg whitespace-nowrap overflow-hidden text-ellipsis">{job.position}</EmbloyH1>
+                <EmbloyH1 className="page-header text-lg whitespace-nowrap overflow-hidden text-ellipsis">{job.title}</EmbloyH1>
               )
             ) : (
-              <EmbloyH1Editable placeholder="Enter Position Title" className="page-header text-lg w-full" maxLength="100" initialText={draft.position} onUpdate={(value) => {setDraft({...draft, "position": value})}} />
+              <EmbloyH1Editable placeholder="Enter Job Title" className="page-header text-lg w-full" maxLength="100" initialText={draft.title} onUpdate={(value) => {setDraft({...draft, "title": value})}} />
           )}
 
             {!new_job ?

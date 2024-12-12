@@ -30,6 +30,21 @@ export const jobColumns: ColumnDef<Job>[] = [
         enableHiding: false,
     },
     {
+        accessorKey: "title",
+        header: ({column}) => (
+            <DataTableColumnHeader column={column} title="Title"/>
+        ),
+        cell: ({row}) => {
+            let value = row.getValue('title')
+            if (!value && row.getValue('job_slug') === "new") {
+                value = "Draft"
+            } 
+            return <EmbloyP className="text-xs" >{value}</EmbloyP>
+        },
+        enableSorting: false,
+        enableHiding: true,
+    },
+    {
         accessorKey: "position",
         header: ({column}) => (
             <DataTableColumnHeader column={column} title="Position"/>
