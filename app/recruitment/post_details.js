@@ -1,147 +1,209 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import SimpleMDE from "react-simplemde-editor";
 import "easymde/dist/easymde.min.css";
 import { EmbloyP } from "@/app/components/ui/misc/text";
-import { EmbloyH, EmbloyV } from "@/app/components/ui/misc/stuff";
+import { EmbloyH, EmbloySeperator, EmbloyV } from "@/app/components/ui/misc/stuff";
 import parse, { domToReact } from 'html-react-parser';
 import { JobTitle, JobParagraph, JobUl, JobLi, JobStrong } from "@/lib/types/html_parts.tsx";
 import {marked} from "marked";
 import { not_core_get } from "@/lib/api/core";
+import TurndownService from 'turndown';
 
-export function PostDetails({ job, handleDataReload, onChange, editable }) {
-  const [markdown, setMarkdown] = useState(job?.description?.body || "");
-  const handleMarkdownChange = (value) => {
-    setMarkdown(value);
-    if (onChange) {
-      onChange(value);
-      
-    }
-  };
-  const [altered, setAltered] = useState(false);
-  useEffect(() => {
-    const checkBody = (original_body, new_body) => {
-      console.log("original_body", original_body !== undefined, original_body !== null, original_body !== "", original_body);
-      console.log("new_body", new_body !== undefined, new_body !== null, new_body !== "", new_body);
-      if (original_body !== undefined && new_body !== undefined && original_body !== null && new_body !== null && original_body !== "" && new_body !== "") {
-        console.log("original_body", original_body, "new_body", new_body);
-        const parser = new DOMParser();
-        const original = parser.parseFromString(original_body, 'text/html');
-        const other = parser.parseFromString(new_body, 'text/html');
 
-        const original_serialized = original.body.innerHTML.trim();
-        const other_serialized = other.body.innerHTML.trim();
-        
-        if (original_serialized !== other_serialized) {
-          console.log("both not null - altered")
-          return true; 
-        } else {
-          console.log("both not null - not altered")
-          return false;
-        }
-
-      } else if ((original_body === undefined || original_body === null || original_body === "") && new_body !== undefined && new_body !== null && new_body !== "") {
-        console.log("original_body empty new body not empty - altered")
-        return true;
-      } else if (original_body !== undefined && original_body !== null && original_body !== "" && (new_body === undefined || new_body === null || new_body === "")) {
-        console.log("original_body not empty new body empty - altered")
-        return true;
+const options = {
+  replace: (domNode) => {
+      if (domNode.name === 'h1') {
+          return (
+              <JobTitle>
+                  {domToReact(domNode.children, options)}
+              </JobTitle>
+          );
       }
-      console.log("both empty - not altered")
+      if (domNode.name === 'p') {
+          return (
+              <JobParagraph>
+                  {domToReact(domNode.children, options)}
+              </JobParagraph>
+          );
+      }
+      if (domNode.name === 'ul') {
+          return <JobUl>{domToReact(domNode.children, options)}</JobUl>;
+      }
+      if (domNode.name === 'li') {
+          return <JobLi>{domToReact(domNode.children, options)}</JobLi>;
+      }
+      if (domNode.name === 'strong') {
+          return <JobStrong>{domToReact(domNode.children, options)}</JobStrong>;
+      }
+      if (domNode.name === 'a') {
+          return (
+              <a
+                  href={domNode.attribs.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-500 underline"
+              >
+                  {domToReact(domNode.children)}
+              </a>
+          );
+      }
+  },
+};
+const checkBody = (original_body, new_body) => {
+  if (original_body !== undefined && new_body !== undefined && original_body !== null && new_body !== null && original_body !== "" && new_body !== "") {
+    const parser = new DOMParser();
+    const original = parser.parseFromString(original_body, 'text/html');
+    const other = parser.parseFromString(new_body, 'text/html');
+
+    const original_serialized = original.body.innerHTML.trim();
+    const other_serialized = other.body.innerHTML.trim();
+    
+    if (original_serialized !== other_serialized) {
+      return true; 
+    } else {
       return false;
     }
-    console.log("markdown", marked(markdown));  
-    console.log("job.description.body", job.description.body);
-    const result = checkBody(job.description.body, marked(markdown));
-    if (result && !altered) {
-        setAltered(true);
-    } else if (!result && altered) {
-        setAltered(false);
+
+  } else if ((original_body === undefined || original_body === null || original_body === "") && new_body !== undefined && new_body !== null && new_body !== "") {
+    return true;
+  } else if (original_body !== undefined && original_body !== null && original_body !== "" && (new_body === undefined || new_body === null || new_body === "")) {
+    return true;
+  }
+  return false;
+}
+
+const html_to_markdown = (html) => {
+  if (!html) {
+    return null;
+  }
+  var turndownService = new TurndownService()
+  turndownService.addRule('header', {
+    filter: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'],
+    replacement: function (content, node) {
+      var hLevel = node.tagName.charAt(1);
+      var hPrefix = '';
+      for (var i = 0; i < hLevel; i++) {
+        hPrefix += '#';
+      }
+      return '\n\n' + hPrefix + ' ' + content + '\n\n';
     }
-  }, [markdown]);
+  });
+  var markdown = turndownService.turndown(html);
+  return markdown;
+}
+  
+export function PostDetails({ job, handleDataReload, onChange, editable }) {
+  let bin = job?.description?.body;
+  if (editable) {
+    bin = html_to_markdown(bin);
+  }
+  const [markdown, setMarkdown] = useState({md:bin || "", cs:{line:0, ch:0}});
+  const [previewStatus, setPreviewStatus] = useState(false);
 
   const handleSave = async () => {
-    if (altered) {
+    if (checkBody(job.description.body, markdown.md)) {
         let desc = { ...job.description };
-        desc.body = marked(markdown);
-        console.log("desc", desc);
+        desc.body = marked(markdown.md);
+        if (desc.body === "") {
+            desc.body = null;
+        }
         const body = {
-            "description": desc
+            "description": desc.body
         }
         try {
             const res = await not_core_get("PATCH", `/jobs/${job.id}`, body);
-            setAltered(false);
-            handleDataReload();
-            
         } catch (error) {
-            console.log("error", error);
-            setMarkdown(job.description.body);
+            setMarkdown(job.description.body); // Roll back on error
         }
     }
-}
+  }
 
-
-  const options = {
-    replace: (domNode) => {
-        if (domNode.name === 'h1') {
-            return (
-                <JobTitle>
-                    {domToReact(domNode.children, options)}
-                </JobTitle>
-            );
-        }
-        if (domNode.name === 'p') {
-            return (
-                <JobParagraph>
-                    {domToReact(domNode.children, options)}
-                </JobParagraph>
-            );
-        }
-        if (domNode.name === 'ul') {
-            return <JobUl>{domToReact(domNode.children, options)}</JobUl>;
-        }
-        if (domNode.name === 'li') {
-            return <JobLi>{domToReact(domNode.children, options)}</JobLi>;
-        }
-        if (domNode.name === 'strong') {
-            return <JobStrong>{domToReact(domNode.children, options)}</JobStrong>;
-        }
-        if (domNode.name === 'a') {
-            return (
-                <a
-                    href={domNode.attribs.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-blue-500 underline"
-                >
-                    {domToReact(domNode.children)}
-                </a>
-            );
-        }
-    },
-};
+  
+  
+  const handlePreview = () => {
+    setPreviewStatus(!previewStatus);
+  }
 
   return (
     <EmbloyV>
       {editable ? (
-        <EmbloyV>
-          <EmbloyH className={"justify-end"}>
-            <EmbloyH className={"gap-1.5 max-w-fit"}>{altered && <button onClick={handleSave}><EmbloyP className="text-xs text-capri dark:text-capri underline">{"Save changes"}</EmbloyP></button>}<button onClick={() => {console.log("MAGA")}}><EmbloyP className="text-xs text-primitivo dark:text-primitivo underline">{"Delete all items"}</EmbloyP></button></EmbloyH>
-          </EmbloyH>
-          <SimpleMDE
-            value={markdown}
-            onChange={handleMarkdownChange}
-            options={{
-              autofocus: true,
-              spellChecker: false,
-              placeholder: "Write job description in Markdown...",
-            }}
-            className="w-full text-black dark:text-white"
-          />
-        </EmbloyV>
+        <EmbloyH className="gap-2 justify-between">
+          {!previewStatus &&
+            <EmbloyV>
+              <EmbloyH className={"justify-end"}>
+                <EmbloyH className={"gap-1.5 max-w-fit"}>
+                  <button onClick={handleSave}>
+                    <EmbloyP className="text-xs text-capri dark:text-capri underline">{"Save changes"}</EmbloyP>
+                  </button>
+                  <button onClick={() => { console.log("MAGA") }}>
+                    <EmbloyP className="text-xs text-primitivo dark:text-primitivo underline">{"Delete all items"}</EmbloyP>
+                  </button>
+                </EmbloyH>
+              </EmbloyH>
+              <SimpleMDE
+                value={markdown.md}
+                getCodemirrorInstance={(instance) => { 
+                  instance.on('change', (editor) => {
+                    const cursorPosition = editor.getCursor(); 
+                    console.log("cursorPosition", cursorPosition);
+                    const value = editor.getValue(); 
+                    setMarkdown({md:value, cs:cursorPosition}); 
+                  });
+                  if (markdown.cs) {
+                    instance.setCursor(markdown.cs);
+                  }
+                }}
+                className="w-full text-black dark:text-white"
+                options={{
+                  autofocus: true,
+                  hideIcons: ["guide", "side-by-side", "fullscreen", "quote", "preview"],
+                  toolbar: [
+                    {
+                      name: "custom",
+                      action: function customFunction(editor){
+                        handlePreview();
+                      },
+                      className: "fa fa-eye",
+                      title: "Custom Button",
+                    },
+                    "|",
+                    "bold",
+                    "italic",
+                    "heading",
+                    "unordered-list",
+                    "ordered-list",
+                    "link",
+                    "image",
+                    "|",
+                    {
+                      name: "custom_save",
+                      action: function customFunction(editor){
+                        handleSave();
+                      },
+                      className: "fa fa-save",
+                      title: "Save Button",
+                    },
+                  ],
+                }}
+              />
+            </EmbloyV>
+          }
+          {previewStatus && <EmbloyV className="border border-etna dark:border-nebbiolo rounded-md ">
+            <EmbloyH className={"justify-start gap-2 px-4 py-2"}>
+              <button onClick={handlePreview}>
+                <EmbloyP className="text-xs text-capri dark:text-capri underline">{"Return to Editor"}</EmbloyP>
+              </button>
+            </EmbloyH>
+            <EmbloySeperator className="h-px w-full bg-etna dark:bg-nebbiolo" />
+            <EmbloyV className="px-4 py-2">
+              {markdown && parse(job?.description?.body || '', options)}
+            </EmbloyV>
+          </EmbloyV>}
+        </EmbloyH>
       ) : (
-        <EmbloyV className="gap-2">
-            {markdown && parse(markdown|| '', options)}
+        <EmbloyV className="border border-etna dark:border-nebbiolo rounded-md p-4">
+            {markdown && parse(markdown.md || '', options)}
         </EmbloyV>
       )}
     </EmbloyV>

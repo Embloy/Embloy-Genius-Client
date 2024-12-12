@@ -89,7 +89,11 @@ export const EmbloyH1Editable = ({ initialText,placeholder="", className, onUpda
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
       setIsEditing(false);
+      if (keydown) {
+        keydown(text);
+      }
     }
+    
   };
   useEffect(() => {
     if (initialText === null) {

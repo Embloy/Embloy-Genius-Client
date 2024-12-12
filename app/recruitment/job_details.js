@@ -128,6 +128,7 @@ export function JobDetails({ job, onUploadSuccess, onClose, onRemove }) {
   const [rel, setRel] = useState(false);
 
   const relOn = () => {
+    onUploadSuccess();
     if (!rel) {
     setRel(true);}
   }
@@ -298,10 +299,8 @@ export function JobDetails({ job, onUploadSuccess, onClose, onRemove }) {
       }
       try {
         const res = await not_core_get("POST", `/jobs`, body);
-        console.log("success", res); 
         onUploadSuccess();
       } catch (e) {
-        console.log(e);
       }
     }
   }
@@ -336,6 +335,17 @@ export function JobDetails({ job, onUploadSuccess, onClose, onRemove }) {
     }
   }
 
+  const handlePositionSave = async (pos) => {
+    if (pos !== null && pos !== undefined && pos !== job.position && pos.trim() !== "" ) {
+      try {
+        await not_core_get("PATCH", `/jobs/${job.id}`, {position: pos.trim()});
+        onUploadSuccess();
+        
+      } catch (e) {
+      }
+    } 
+  }
+
 
   return (
     <EmbloyV className={"justify-between cursor-default p-2 bg-ferrara dark:bg-transparent"}>
@@ -355,12 +365,12 @@ export function JobDetails({ job, onUploadSuccess, onClose, onRemove }) {
           <EmbloyH className="justify-between gap-2">
           {!new_job ? (
             editable ? (
-                <EmbloyH1Editable className="page-header text-lg w-full" maxlength="100" initialText={job.position} onUpdate={(e) => {console.log("POS UPDETD", e)}} />
+                <EmbloyH1Editable className="page-header text-lg w-full" maxLength="100" initialText={job.position} keydown={(e) => {handlePositionSave(e)}} onUpdate={(e) => {handlePositionSave(e)}} />
               ) : (
                 <EmbloyH1 className="page-header text-lg whitespace-nowrap overflow-hidden text-ellipsis">{job.position}</EmbloyH1>
               )
             ) : (
-              <EmbloyH1Editable placeholder="Enter Position Title" className="page-header text-lg w-full" maxlength="100" initialText={draft.position} onUpdate={(value) => {setDraft({...draft, "position": value})}} />
+              <EmbloyH1Editable placeholder="Enter Position Title" className="page-header text-lg w-full" maxLength="100" initialText={draft.position} onUpdate={(value) => {setDraft({...draft, "position": value})}} />
           )}
 
             {!new_job ?

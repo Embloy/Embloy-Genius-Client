@@ -7,9 +7,10 @@ import { applicationColumns } from "@/app/recruitment/application_columns";
 import { ApplicationDataTable } from "@/app/recruitment/ApplicationDataTable";
 import { InfoCircledIcon } from "@radix-ui/react-icons";
 import { EmbloyInput, EmbloySelectOption } from "@/app/components/ui/misc/input";
+import { not_core_get } from "@/lib/api/core";
 
 export const JobDetails2 = ({job, handleDataReload, onChange, editable}) => {
-    console.log("EDITABLE TRUUUMP", editable)
+    //console.log("EDITABLE TRUUUMP", editable)
     const [details, setDetails] = useState(job);
     const [locationStatus, setLocationStatus] = useState(false);
     const [location, setLocation] = useState({city: job.city, address: job.address, postal_code: job.postal_code, country_code: job.country_code});
@@ -53,7 +54,7 @@ export const JobDetails2 = ({job, handleDataReload, onChange, editable}) => {
 
 
     useEffect (() => {
-        console.log("DETAILS", details.job_type)
+        //console.log("DETAILS", details.job_type)
     }, [details])
 
 
@@ -346,8 +347,80 @@ export const JobDetails2 = ({job, handleDataReload, onChange, editable}) => {
         {value: "ZM", label: "Zambia"},
         {value: "ZW", label: "Zimbabwe"},
         {value: "AX", label: "Åland Islands"}
-    ];  
-    
+    ]; 
+
+
+    const handleSave = async (key, value) => {
+        //console.log("KEY", key, "VALUE", value, value === null)
+        if (key !== null && key !== undefined && key.trim() !== "" && job[key] !== undefined && value !== undefined && value !== details[key]) {
+            try {
+                //console.log("MAGAKING", value, details[key])
+                await not_core_get("PATCH", `/jobs/${job.id}`, {[key]: value});
+                handleDataReload();
+                setDetails({...details, [key]: value});
+            } catch (e) {
+                setDetails({...details, [key]: job[key]});
+                //console.log("DOUBT")
+            }
+        } else {
+            //console.log("NOPE")
+        }
+    }
+
+    const handleLocationSave = async () => {
+        if (location.city !== details.city) {
+            try {
+                //console.log("PATCHING CITY", location.city)
+                await not_core_get("PATCH", `/jobs/${job.id}`, {"city": location.city});
+                handleDataReload();
+                setDetails({...details, "city": location.city});
+            } catch (e) {
+                //console.log("ERROR CITY", e)
+                setDetails({...details, "city": job.city});
+                setLocation({...location, "city": job.city});
+            }
+        }
+
+        if (location.address !== details.address) {
+            try {
+                //console.log("PATCHING ADDRESS", location.address)
+                await not_core_get("PATCH", `/jobs/${job.id}`, {"address": location.address});
+                handleDataReload();
+                setDetails({...details, "address": location.address});
+            } catch (e) {
+                //console.log("ERROR ADDRESS", e)
+                setDetails({...details, "address": job.address});
+                setLocation({...location, "address": job.address});
+            }
+        }
+
+        if (location.postal_code !== details.postal_code) {
+            try {
+                //console.log("PATCHING POSTAL CODE", location.postal_code)
+                await not_core_get("PATCH", `/jobs/${job.id}`, {"postal_code": location.postal_code});
+                handleDataReload();
+                setDetails({...details, "postal_code": location.postal_code});
+            } catch (e) {
+                //console.log("ERROR POSTAL CODE", e)
+                setDetails({...details, "postal_code": job.postal_code});
+                setLocation({...location, "postal_code": job.postal_code});
+            }
+        }
+        if (location.country_code !== details.country_code) {
+            try {
+                //console.log("PATCHING COUNTRY CODE", location.country_code)
+                await not_core_get("PATCH", `/jobs/${job.id}`, {"country_code": location.country_code});
+                handleDataReload();
+                setDetails({...details, "country_code": location.country_code});
+            } catch (e) {
+                //console.log("ERROR COUNTRY CODE", e)
+                setDetails({...details, "country_code": job.country_code});
+                setLocation({...location, "country_code": job.country_code});
+            }
+        }
+        setLocationStatus(false);
+        
+    }
     
     return (
         <EmbloyV>
@@ -371,7 +444,9 @@ export const JobDetails2 = ({job, handleDataReload, onChange, editable}) => {
                                 <EmbloyP className="cursor-pointer font-semibold text-xs hover:underline decoration-dotted">Title:</EmbloyP>
                             </EmbloyChildrenAdvanced>
                             {editable ? 
-                                <EmbloyH1Editable className="text-xs font-normal w-36" maxLength="100" initialText={details.title} placeholder="Job Title" onUpdate={(value) => {setDetails({...details, "title": value})}} /> 
+                                <EmbloyH1Editable className="text-xs font-normal w-36" maxLength="100" initialText={details.title !== null ? details.title : ""} placeholder="Job Title" onUpdate={(value) => {
+                                    handleSave("title", value)
+                                }} keydown={(e) => {handleSave("title", e)}} /> 
                                 : 
                                 <EmbloyH1 className="text-xs font-normal max-w-fit">{details.title}</EmbloyH1>
                             }
@@ -388,8 +463,8 @@ export const JobDetails2 = ({job, handleDataReload, onChange, editable}) => {
                                     <EmbloyP className={"max-w-52 italic text-xs break-words"}>A broad category or specialization of work, it could also be the Department, Team, or Branch e.g.</EmbloyP> 
                                     <ul className="list-disc ml-4 max-w-52">
                                         <li className="marker:text-black marker:dark:text-white"><EmbloyP className={"italic text-xs"}>Software Development</EmbloyP></li>
-                                        <li className="marker:text-black marker:dark:text-white"><EmbloyP className={"italic text-xs"}>Accounting</EmbloyP></li>
-                                        <li className="marker:text-black marker:dark:text-white"><EmbloyP className={"italic text-xs"}>Presales</EmbloyP></li>
+                                        <li className="marker:text-black marker:dark:text-white"><EmbloyP className={"italic text-xs"}>Back Office</EmbloyP></li>
+                                        <li className="marker:text-black marker:dark:text-white"><EmbloyP className={"italic text-xs"}>Gaming & Entertainment</EmbloyP></li>
                                     </ul>
                                 </EmbloyV>
                             }>
@@ -399,8 +474,8 @@ export const JobDetails2 = ({job, handleDataReload, onChange, editable}) => {
                                 <>
                                     <EmbloyInput
                                         variant="select-light"
-                                        onChange={(e) => setDetails({...details, "job_type": e.target.value})}
-                                        value={details.job_type || ""}
+                                        onChange={(e) => handleSave("job_type", e.target.value)}
+                                        value={details.job_type !== null ? details.job_type : ""}
                                         className={`w-52 text-xs ${(details.job_type && details.job_type !== "") ? "text-black dark:text-white" : "text-testaccio dark:text-nebbiolo"}`}
                                     >
                                         <EmbloySelectOption placeholder={true} className="text-xs text-black dark:text-white">
@@ -412,8 +487,8 @@ export const JobDetails2 = ({job, handleDataReload, onChange, editable}) => {
                                                     </EmbloySelectOption>
                                                 })}
                                     </EmbloyInput>
-                                    {details.job_type !== job.job_type && 
-                                        <button className="hover:bg-primitivo/10 dark:hover:bg-primitivo/10 rounded-sm transition-colors duration-200" onClick={() => {setDetails({...details, "job_type": null})}}>
+                                    {details.job_type !== null && 
+                                        <button className="hover:bg-primitivo/10 dark:hover:bg-primitivo/10 rounded-sm transition-colors duration-200" onClick={() => {handleSave("job_type", null)}}>
                                             <XIcon className="w-4 h-4 text-primitivo dark:text-primitivo" />
                                         </button>
                                     }
@@ -438,15 +513,15 @@ export const JobDetails2 = ({job, handleDataReload, onChange, editable}) => {
                             </EmbloyChildrenAdvanced>
                                 { editable ?
                                     <>
-                                        {!locationStatus && <EmbloyH1Editable block={true} onClick={() => {setLocationStatus(!locationStatus)}} className="text-xs font-normal" initialText={location_text} placeholder="Add Location" onUpdate={(value) => {setDetails({...details, "title": value})}} />}
+                                        {!locationStatus && <EmbloyH1Editable block={true} onClick={() => {setLocationStatus(!locationStatus)}} className="text-xs font-normal" initialText={location_text || ""} placeholder="Add Location" onUpdate={() => {}} />}
                                         {locationStatus && 
                                             <EmbloyH className="gap-4 justify-between items-center w-full">
                                                 <EmbloyH className="gap-0.5 items-center max-w-fit">
-                                                    <input maxLength="150" className="w-24 h-4 text-xs text-black dark:text-white" placeholder="Address" value={location.address} onChange={(e) => setLocation({...location, "address": e.target.value})} />
+                                                    <input maxLength="150" className="w-24 h-4 text-xs text-black dark:text-white" placeholder="Address" value={location.address || ""} onChange={(e) => setLocation({...location, "address": e.target.value})} />
                                                     <div className="w-[1px] h-4 bg-etna dark:bg-nebbiolo" />
-                                                    <input maxLength="45" className="w-24 h-4 text-xs text-black dark:text-white" placeholder="Postal Code" value={location.postal_code} onChange={(e) => setLocation({...location, "postal_code": e.target.value})} />
+                                                    <input maxLength="45" className="w-24 h-4 text-xs text-black dark:text-white" placeholder="Postal Code" value={location.postal_code || ""} onChange={(e) => setLocation({...location, "postal_code": e.target.value})} />
                                                     <div className="w-[1px] h-4 bg-etna dark:bg-nebbiolo" />
-                                                    <input maxLength="45" className="w-24 h-4 text-xs text-black dark:text-white" placeholder="City" value={location.city} onChange={(e) => setLocation({...location, "city": e.target.value})} />
+                                                    <input maxLength="45" className="w-24 h-4 text-xs text-black dark:text-white" placeholder="City" value={location.city || ""} onChange={(e) => setLocation({...location, "city": e.target.value})} />
                                                     <div className="w-[1px] h-4 bg-etna dark:bg-nebbiolo" />
                                                     <EmbloyH className="max-w-28 gap-1.5">
                                                         <EmbloyInput
@@ -472,7 +547,7 @@ export const JobDetails2 = ({job, handleDataReload, onChange, editable}) => {
                                                     </EmbloyH>
                                                     <div className="w-[1px] h-4 bg-etna dark:bg-nebbiolo" />
                                                 </EmbloyH>
-                                                <button className="hover:bg-capri/10 dark:hover:bg-capri/10 rounded-md px-1 transition-colors duration-200" onClick={() => {setLocationStatus(!locationStatus)}}>
+                                                <button className="hover:bg-capri/10 dark:hover:bg-capri/10 rounded-md px-1 transition-colors duration-200" onClick={() => {handleLocationSave()}}>
                                                     <EmbloyP className="text-xs text-capri dark:text-capri">Save Location</EmbloyP>
                                                 </button>
                                             </EmbloyH>
