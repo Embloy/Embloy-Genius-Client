@@ -2,7 +2,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import SimpleMDE from "react-simplemde-editor";
 import "easymde/dist/easymde.min.css";
-import { EmbloyP } from "@/app/components/ui/misc/text";
+import { EmbloyP, EmbloyH1 } from "@/app/components/ui/misc/text";
 import { EmbloyH, EmbloySeperator, EmbloyV } from "@/app/components/ui/misc/stuff";
 import parse, { domToReact } from 'html-react-parser';
 import { JobTitle, JobParagraph, JobUl, JobLi, JobStrong } from "@/lib/types/html_parts.tsx";
@@ -131,15 +131,8 @@ export function PostDetails({ job, handleDataReload, onChange, editable }) {
         <EmbloyH className="gap-2 justify-between">
           {!previewStatus &&
             <EmbloyV>
-              <EmbloyH className={"justify-end"}>
-                <EmbloyH className={"gap-1.5 max-w-fit"}>
-                  <button onClick={handleSave}>
-                    <EmbloyP className="text-xs text-capri dark:text-capri underline">{"Save changes"}</EmbloyP>
-                  </button>
-                  <button onClick={() => { console.log("MAGA") }}>
-                    <EmbloyP className="text-xs text-primitivo dark:text-primitivo underline">{"Delete all items"}</EmbloyP>
-                  </button>
-                </EmbloyH>
+              <EmbloyH className={"justify-start"}>
+                <EmbloyH1 className="text-sm">Board Post - Job Description</EmbloyH1>
               </EmbloyH>
               <SimpleMDE
                 value={markdown.md}

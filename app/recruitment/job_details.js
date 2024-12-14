@@ -363,15 +363,15 @@ export function JobDetails({ job, onUploadSuccess, onClose, onRemove }) {
             <EmbloySeperator className="bg-etna dark:bg-nebbiolo h-px"/>
           </EmbloyV>
           <EmbloyH className="justify-between gap-2">
-          {!new_job ? (
-            editable ? (
-                <EmbloyH1Editable className="page-header text-lg w-full" maxLength="100" initialText={job.title} keydown={(e) => {handlePositionSave(e)}} onUpdate={(e) => {handlePositionSave(e)}} />
+            {!new_job ? (
+              editable ? (
+                  <EmbloyH1Editable className="page-header text-lg w-full" maxLength="100" initialText={job.title} keydown={(e) => {handlePositionSave(e)}} onUpdate={(e) => {handlePositionSave(e)}} />
+                ) : (
+                  <EmbloyH1 className="page-header text-lg whitespace-nowrap overflow-hidden text-ellipsis">{job.title}</EmbloyH1>
+                )
               ) : (
-                <EmbloyH1 className="page-header text-lg whitespace-nowrap overflow-hidden text-ellipsis">{job.title}</EmbloyH1>
-              )
-            ) : (
-              <EmbloyH1Editable placeholder="Enter Job Title" className="page-header text-lg w-full" maxLength="100" initialText={draft.title} onUpdate={(value) => {setDraft({...draft, "title": value})}} />
-          )}
+                <EmbloyH1Editable placeholder="Enter Job Title" className="page-header text-lg w-full" maxLength="100" initialText={draft.title} onUpdate={(value) => {setDraft({...draft, "title": value})}} />
+            )}
 
             {!new_job ?
               <EmbloyH className="max-w-fit items-center gap-2">
@@ -448,31 +448,15 @@ export function JobDetails({ job, onUploadSuccess, onClose, onRemove }) {
           </EmbloyH>
           
           {!new_job && 
-          <EmbloyV className="gap-1.5">
-            <EmbloyH className="justify-start items-center gap-1.5 text-black dark:text-amarone">
-              <button onClick={() => {
-                if (detailStatus !== "loading") {
-                  setShowDetails(!showDetails);
-                }}} className={`px-2 py-px border border-etna dark:border-nebbiolo rounded-md max-w-fit flex flex-row gap-1.5 ${detailStatus === "loading" ? 'cursor-wait' : "cursor-pointer hover:text-capri hover:dark:text-barbera"} transition-colors duration-200`}>
-                  <EmbloyP className="max-w-fit text-xs text-inherit dark:text-inherit">{detailStatus === "error" ? "Try again" : "Details"}</EmbloyP>
-                  {detailStatus !== "loading" ? (
-                    showDetails ? (
-                      <ChevronDoubleUpIcon className="w-4 h-4 p-0 m-0" />
-                    ) : (
-                      <PlusIcon className="w-4 h-4 p-0 m-0" />
-                    )
-                  ) : (
-                    <Spinner size="sm" color="current" className="w-4 h-4 p-0 m-0" />
-                  )}
-                </button>
-
+            <EmbloyV className="gap-1.5">
+              <EmbloyH className="justify-start items-center gap-1.5 text-black dark:text-amarone">
                 <button onClick={() => {
-                  if (applicationsStatus !== "loading") {
-                    handleApplications();
-                  }}} className={`px-2 py-px border border-etna dark:border-nebbiolo rounded-md max-w-fit flex flex-row gap-1.5 ${applicationsStatus === "loading" ? 'cursor-wait' : "cursor-pointer hover:text-capri hover:dark:text-barbera"} transition-colors duration-200`}>
-                    <EmbloyP className="max-w-fit text-xs text-inherit dark:text-inherit">{applicationsStatus === "error" ? "Try again" : "Applications"}</EmbloyP>
-                    {applicationsStatus !== "loading" ? (
-                      showApplications ? (
+                  if (detailStatus !== "loading") {
+                    setShowDetails(!showDetails);
+                  }}} className={`px-2 py-px border border-etna dark:border-nebbiolo rounded-md max-w-fit flex flex-row gap-1.5 ${detailStatus === "loading" ? 'cursor-wait' : "cursor-pointer hover:text-capri hover:dark:text-barbera"} transition-colors duration-200`}>
+                    <EmbloyP className="max-w-fit text-xs text-inherit dark:text-inherit">{detailStatus === "error" ? "Try again" : "Details"}</EmbloyP>
+                    {detailStatus !== "loading" ? (
+                      showDetails ? (
                         <ChevronDoubleUpIcon className="w-4 h-4 p-0 m-0" />
                       ) : (
                         <PlusIcon className="w-4 h-4 p-0 m-0" />
@@ -480,57 +464,74 @@ export function JobDetails({ job, onUploadSuccess, onClose, onRemove }) {
                     ) : (
                       <Spinner size="sm" color="current" className="w-4 h-4 p-0 m-0" />
                     )}
-                </button>
+                  </button>
 
-                <button onClick={() => {
-                  if (boardStatus !== "loading") {
-                    handleApplicationForm("p");
-                  }}} className={`px-2 py-px border border-etna dark:border-nebbiolo rounded-md max-w-fit flex flex-row gap-1.5 ${boardStatus === "loading" ? 'cursor-wait' : "cursor-pointer hover:text-capri hover:dark:text-barbera"} transition-colors duration-200`}>
-                    <EmbloyP className="max-w-fit text-xs text-inherit dark:text-inherit">{boardStatus === "error" ? "Try again" : "Board Post"}</EmbloyP>
-                    {boardStatus !== "loading" ? (
-                      showBoard ? (
-                        <ChevronDoubleUpIcon className="w-4 h-4 p-0 m-0" />
+                  <button onClick={() => {
+                    if (applicationsStatus !== "loading") {
+                      handleApplications();
+                    }}} className={`px-2 py-px border border-etna dark:border-nebbiolo rounded-md max-w-fit flex flex-row gap-1.5 ${applicationsStatus === "loading" ? 'cursor-wait' : "cursor-pointer hover:text-capri hover:dark:text-barbera"} transition-colors duration-200`}>
+                      <EmbloyP className="max-w-fit text-xs text-inherit dark:text-inherit">{applicationsStatus === "error" ? "Try again" : "Applications"}</EmbloyP>
+                      {applicationsStatus !== "loading" ? (
+                        showApplications ? (
+                          <ChevronDoubleUpIcon className="w-4 h-4 p-0 m-0" />
+                        ) : (
+                          <PlusIcon className="w-4 h-4 p-0 m-0" />
+                        )
                       ) : (
-                        <PlusIcon className="w-4 h-4 p-0 m-0" />
-                      )
-                    ) : (
-                      <Spinner size="sm" color="current" className="w-4 h-4 p-0 m-0" />
-                    )}
-                </button>
+                        <Spinner size="sm" color="current" className="w-4 h-4 p-0 m-0" />
+                      )}
+                  </button>
 
-                <button onClick={() => {
-                  if (applicationOptionsStatus !== "loading") {
-                    handleApplicationForm();
-                  }}} className={`px-2 py-px border border-etna dark:border-nebbiolo rounded-md max-w-fit flex flex-row gap-1.5 ${applicationOptionsStatus === "loading" ? 'cursor-wait' : "cursor-pointer hover:text-capri hover:dark:text-barbera"} transition-colors duration-200`}>
-                    <EmbloyP className="max-w-fit text-xs text-inherit dark:text-inherit">{applicationOptionsStatus === "error" ? "Try again" : "Application Form"}</EmbloyP>
-                    {applicationOptionsStatus !== "loading" ? (
-                      showApplicationOptions ? (
-                        <ChevronDoubleUpIcon className="w-4 h-4 p-0 m-0" />
+                  <button onClick={() => {
+                    if (boardStatus !== "loading") {
+                      handleApplicationForm("p");
+                    }}} className={`px-2 py-px border border-etna dark:border-nebbiolo rounded-md max-w-fit flex flex-row gap-1.5 ${boardStatus === "loading" ? 'cursor-wait' : "cursor-pointer hover:text-capri hover:dark:text-barbera"} transition-colors duration-200`}>
+                      <EmbloyP className="max-w-fit text-xs text-inherit dark:text-inherit">{boardStatus === "error" ? "Try again" : "Board Post"}</EmbloyP>
+                      {boardStatus !== "loading" ? (
+                        showBoard ? (
+                          <ChevronDoubleUpIcon className="w-4 h-4 p-0 m-0" />
+                        ) : (
+                          <PlusIcon className="w-4 h-4 p-0 m-0" />
+                        )
                       ) : (
-                        <PlusIcon className="w-4 h-4 p-0 m-0" />
-                      )
-                    ) : (
-                      <Spinner size="sm" color="current" className="w-4 h-4 p-0 m-0" />
-                    )}
-                </button>
-                <button disabled onClick={() => {
-                  if (algoStatus !== "loading") {
-                    //handleAlgo();
-                  }}} className={`px-2 py-px border border-etna dark:border-nebbiolo rounded-md max-w-fit flex flex-row gap-1.5 ${algoStatus === "loading" ? 'cursor-wait' : "cursor-not-allowed text-testaccio dark:text-nebbiolo"} transition-colors duration-200`}>
-                    <EmbloyP className="max-w-fit text-xs text-inherit dark:text-inherit">{algoStatus === "error" ? "Try again" : "Algorithm"}</EmbloyP>
-                    {algoStatus !== "loading" ? (
-                      showAlgo ? (
-                        <ChevronDoubleUpIcon className="w-4 h-4 p-0 m-0" />
+                        <Spinner size="sm" color="current" className="w-4 h-4 p-0 m-0" />
+                      )}
+                  </button>
+
+                  <button onClick={() => {
+                    if (applicationOptionsStatus !== "loading") {
+                      handleApplicationForm();
+                    }}} className={`px-2 py-px border border-etna dark:border-nebbiolo rounded-md max-w-fit flex flex-row gap-1.5 ${applicationOptionsStatus === "loading" ? 'cursor-wait' : "cursor-pointer hover:text-capri hover:dark:text-barbera"} transition-colors duration-200`}>
+                      <EmbloyP className="max-w-fit text-xs text-inherit dark:text-inherit">{applicationOptionsStatus === "error" ? "Try again" : "Application Form"}</EmbloyP>
+                      {applicationOptionsStatus !== "loading" ? (
+                        showApplicationOptions ? (
+                          <ChevronDoubleUpIcon className="w-4 h-4 p-0 m-0" />
+                        ) : (
+                          <PlusIcon className="w-4 h-4 p-0 m-0" />
+                        )
                       ) : (
-                        <PlusIcon className="w-4 h-4 p-0 m-0" />
-                      )
-                    ) : (
-                      <Spinner size="sm" color="current" className="w-4 h-4 p-0 m-0" />
-                    )}
-                </button>
-            </EmbloyH>
-            <EmbloySeperator className="bg-etna dark:bg-nebbiolo h-px"/> 
-          </EmbloyV>}
+                        <Spinner size="sm" color="current" className="w-4 h-4 p-0 m-0" />
+                      )}
+                  </button>
+                  <button disabled onClick={() => {
+                    if (algoStatus !== "loading") {
+                      //handleAlgo();
+                    }}} className={`px-2 py-px border border-etna dark:border-nebbiolo rounded-md max-w-fit flex flex-row gap-1.5 ${algoStatus === "loading" ? 'cursor-wait' : "cursor-not-allowed text-testaccio dark:text-nebbiolo"} transition-colors duration-200`}>
+                      <EmbloyP className="max-w-fit text-xs text-inherit dark:text-inherit">{algoStatus === "error" ? "Try again" : "Algorithm"}</EmbloyP>
+                      {algoStatus !== "loading" ? (
+                        showAlgo ? (
+                          <ChevronDoubleUpIcon className="w-4 h-4 p-0 m-0" />
+                        ) : (
+                          <PlusIcon className="w-4 h-4 p-0 m-0" />
+                        )
+                      ) : (
+                        <Spinner size="sm" color="current" className="w-4 h-4 p-0 m-0" />
+                      )}
+                  </button>
+              </EmbloyH>
+              <EmbloySeperator className="bg-etna dark:bg-nebbiolo h-px"/> 
+            </EmbloyV>
+          }
           {showDetails === true && (
             <EmbloyV className="gap-2">
               <div className={headerClass}>

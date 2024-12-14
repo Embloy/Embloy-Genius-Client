@@ -736,6 +736,9 @@ export function ApplicationPreview({data, handleDataReload, editable=false, onCh
     
    return (
     <EmbloyV className={"items-center "}>
+        <EmbloyH className={"justify-start"}>
+            <EmbloyH1 className="text-sm">Application Form</EmbloyH1>
+        </EmbloyH>
         <EmbloyH className="justify-between ">
             <EmbloyP className="text-xs text-testaccio dark:text-nebbiolo">
                 {locData.application_options.length} Items 

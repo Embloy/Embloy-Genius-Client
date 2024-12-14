@@ -423,6 +423,9 @@ export const JobDetails2 = ({job, handleDataReload, onChange, editable}) => {
     
     return (
         <EmbloyV>
+            <EmbloyH className={"justify-start"}>
+                <EmbloyH1 className="text-sm">Details</EmbloyH1>
+            </EmbloyH>
             <EmbloyV className="border border-etna dark:border-nebbiolo p-1.5 gap-px rounded-md ">
                 <EmbloyH className={"gap-2"}>
                     { (editable || (!editable && job.position && job.position !== "")) &&

@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState, useContext, useRef} from "react";
-import { EmbloyP } from "@/app/components/ui/misc/text"
+import { EmbloyP, EmbloyH1 } from "@/app/components/ui/misc/text"
 import { EmbloyH, EmbloyV } from "@/app/components/ui/misc/stuff";
 import { XIcon } from "lucide-react";
 import { applicationColumns } from "@/app/recruitment/application_columns";
@@ -49,6 +49,9 @@ export const Applications = ({applications}) => {
     
     return (
         <EmbloyV>
+            <EmbloyH className={"justify-start"}>
+                <EmbloyH1 className="text-sm">Application Overview</EmbloyH1>
+              </EmbloyH>
             <EmbloyH className={"gap-2"}>
                 
                 <EmbloyV className="border border-etna dark:border-nebbiolo p-1.5 gap-px rounded-md max-w-fit">
