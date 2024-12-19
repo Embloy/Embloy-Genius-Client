@@ -18,6 +18,10 @@ const nextConfig =  {
                     protocol: 'https',
                     hostname: 'embloy2.blob.core.windows.net',
                 },
+                {
+                    protocol: 'https',
+                    hostname: 'embloy.s3.eu-central-1.amazonaws.com',
+                },
             ],
         },
         output: "standalone",

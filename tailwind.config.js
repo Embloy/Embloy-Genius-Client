@@ -17,6 +17,20 @@ module.exports = {
       '2xl': '1536px',
     },
     extend: {
+      keyframes: {
+        'fade-slide': {
+          '0%': { opacity: '0', transform: 'translateY(20px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
+        },
+        'fade-out': {
+          '0%': { opacity: '1', transform: 'translateY(0)' },
+          '100%': { opacity: '0', transform: 'translateY(20px)' },
+        },
+      },
+      animation: {
+        'fade-slide': 'fade-slide 0.4s ease-out',
+        'fade-out': 'fade-out 0.4s ease-in',
+      },
       zIndex: {
         '100': '100',
       },
