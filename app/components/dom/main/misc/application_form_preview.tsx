@@ -476,6 +476,245 @@ const fileFormats = {
     presentation: ["ppt", "pptx"],
 };
 const allFormats = Object.values(fileFormats).flat();
+
+export function AnswerPreview({data, handleDataReload, editable=false, onChange}) { 
+    const [locData, setLocData] = useState<{ application_answers: any[] } | any>({ application_answers: [] });
+    const [original, setOriginal] = useState(data)
+    useEffect(() => {
+        if (
+            data &&
+            Object.keys(locData).length === 1 && 
+            locData.application_answers.length === 0 
+        ) { 
+            let bin = data;
+            bin.application_answers.sort((a, b) => a.application_option_id - b.application_option_id);
+            setLocData(bin);
+            setOriginal(bin);
+        } else {
+        }
+    }, []);
+    return (
+        <EmbloyV className={"items-center "}>
+            {((original.application_answers === undefined || original.application_answers === null) || true === true) ? (
+                <EmbloyP className="text-xs text-center w-full text-testaccio dark:text-nebbiolo">No Answers provided</EmbloyP>
+            ) : (
+                <EmbloyV className="gap-2">
+                    {locData.application_answers.map((option, index) => {
+                        return (
+                            <EditorTool
+                            id={option.application_option_id} 
+                            job_id={original.job_id}
+                            key={index}
+                            required={false}
+                            title={option.question}
+                            editable={editable}
+                            index={index}
+                            onChange={(type, id, body="") => { }}
+                            options={option.options}
+                            hasOptions={option.question_type === "single_choice" || option.question_type === "multiple_choice" || option.question_type === "file"}
+                            formats={option.question_type === "file" ? allFormats : []}
+                            defaultOptions={option.options.length === 0 ? false : true}
+                            tag={option.question_type.split("_").map((word) => word.charAt(0).toUpperCase() + word.slice(1)).join(" ")}
+                            >
+                            {(() => {
+                                switch (option.question_type) {
+                                    case "link":
+                                        return (
+                                            <div className="w-full text-black dark:text-white">
+                                                <input
+                                                    type="text"
+                                                    required={option.required}
+                                                    placeholder="https://example.com"
+                                                    value={option.answer}
+                                                    className="c0 p-2 border border-etna dark:border-biferno bg-palatinio dark:bg-nebbiolo rounded-md text-inherit dark:text-inherit outline-none w-full focus:ring-2 focus:ring-white"
+                                                />
+                                                {errorMessages[option.id] &&
+                                                    <div className="text-sm text-red-500">{errorMessages[option.id]}</div>}
+                                            </div>
+                                        );
+                                        case "short_text":
+                                        return (
+                                            <div className="w-full text-black dark:text-white">
+                                                <input
+                                                    type="text"
+                                                    required={option.required}
+                                                    className="c0 p-2 w-full border border-etna dark:border-biferno bg-palatinio dark:bg-nebbiolo rounded-md text-inherit dark:text-inherit outline-none focus:ring-2 focus:ring-white"
+                                                    onChange={(event) =>
+                                                        handleTextChange(option.id, event.target.value, option.required)
+                                                    }
+                                                />
+                                                {errorMessages[option.id] &&
+                                                    <div className="text-sm text-red-500">{errorMessages[option.id]}</div>}
+                                            </div>
+                                        );
+                                    case "long_text":
+                                        
+                                        return (
+                                            <div className="w-full text-black dark:text-white">
+                                                <textarea
+                                                    required={option.required}
+                                                    onChange={(event) =>
+                                                        handleTextChange(option.id, event.target.value, option.required)
+                                                    }
+                                                    maxLength={200}
+                                                    style={{ resize: 'none', overflow: 'auto' }}
+                                                    className="h-20 w-full rounded-md border border-etna dark:border-biferno bg-palatinio dark:bg-nebbiolo text-inherit dark:text-inherit p-2 text-sm focus:outline-none focus:ring-2 focus:ring-white"
+                                                    placeholder="Enter your response (max. 200 characters)"
+                                                />
+                                                {errorMessages[option.id] &&
+                                                    <div className="text-sm text-red-500">{errorMessages[option.id]}</div>}
+                                            </div>
+                                        );
+                                    case "yes_no":
+                                        return (
+                                            <div className="w-full text-black dark:text-white">
+                                                <Select
+                                                    required={option.required}
+                                                    onValueChange={(value) => {
+                                                        handleSingleChoiceChange(option.id, value);
+                                                    }}
+                                                >
+                                                    <SelectTrigger className="border-etna dark:border-biferno bg-white dark:bg-biferno"><EmbloyP className="text-vesuvio dark:text-etna">{option.question}</EmbloyP></SelectTrigger>
+                                                    <SelectContent className="border-etna dark:border-biferno bg-white dark:bg-biferno">
+                                                        <SelectItem key="1" value={"Yes"}>
+                                                            <EmbloyP className="text-inherit dark:text-inherit">Yes</EmbloyP>
+                                                        </SelectItem>
+                                                        <SelectItem key="2" value={"No"}>
+                                                            <EmbloyP className="text-inherit dark:text-inherit">No</EmbloyP>
+                                                        </SelectItem>
+                                                    </SelectContent>
+                                                </Select>
+                                                {errorMessages[option.id] &&
+                                                    <div className="text-sm text-red-500">{errorMessages[option.id]}</div>}
+                                            </div>
+                                        );
+                                    case "number":
+                                        return (
+                                            <div className="w-full text-black dark:text-white">
+                                                
+                                                <input
+                                                    type="number"
+                                                    required={option.required}
+                                                    className="c0 p-2 w-full border border-etna dark:border-biferno bg-palatinio dark:bg-nebbiolo rounded-md text-inherit dark:text-inherit outline-none focus:ring-2 focus:ring-white"
+                                                    onChange={(event) =>
+                                                        handleTextChange(option.id, event.target.value, option.required)
+                                                    }
+                                                />
+                                                {errorMessages[option.id] &&
+                                                    <div className="text-sm text-red-500">{errorMessages[option.id]}</div>}
+                                            </div>
+                                        );
+                                    case "date":
+                                        return (
+                                            <div className="w-full text-black dark:text-white">
+                                                
+                                                <input
+                                                    type="date"
+                                                    required={option.required}
+                                                    className="c0 p-2 border border-etna dark:border-biferno bg-palatinio dark:bg-nebbiolo text-inherit dark:text-inherit rounded-md outline-none focus:ring-2 focus:ring-white w-full"
+                                                    onChange={(event) =>
+                                                        handleTextChange(option.id, event.target.value, option.required)
+                                                    }
+                                                />
+                                                {errorMessages[option.id] &&
+                                                    <div className="text-sm text-red-500">{errorMessages[option.id]}</div>}
+                                            </div>
+                                        );
+                                    case "file":
+                                        return (
+                                            <div className="w-full text-black dark:text-white">
+                                                
+                                                <input
+                                                    type="file"
+                                                    required={option.required}
+                                                    className="c0 p-2 border border-etna dark:border-biferno bg-white dark:bg-biferno text-inherit dark:text-inherit rounded-md outline-none w-full"
+                                                    onChange={(event) => handleFileChange(option.id)}
+                                                />
+                                                {errorMessages[option.id] &&
+                                                    <div className="text-sm text-red-500">{errorMessages[option.id]}</div>}
+                                            </div>
+                                        );
+                                    case "location":
+                                        return (
+                                            <div className="w-full text-black dark:text-white">
+                                                
+                                                <input
+                                                    type="text"
+                                                    required={option.required}
+                                                    placeholder="Enter a location"
+                                                    className="c0 p-2 w-full border border-etna dark:border-biferno bg-palatinio dark:bg-nebbiolo rounded-md text-inherit dark:text-inherit outline-none focus:ring-2 focus:ring-white"
+                                                    onChange={(event) =>
+                                                        handleTextChange(option.id, event.target.value, option.required)
+                                                    }
+                                                />
+                                                {errorMessages[option.id] &&
+                                                    <div className="text-sm text-red-500">{errorMessages[option.id]}</div>}
+                                            </div>
+                                        );
+                                    case "single_choice":
+                                        return (
+                                            <div className="w-full text-black dark:text-white">
+                                                
+                                                <Select
+                                                    required={option.required}
+                                                    onValueChange={(value) => {
+                                                        handleSingleChoiceChange(option.id, value);
+                                                    }}
+                                                >
+                                                    <SelectTrigger className="border-etna dark:border-biferno bg-white dark:bg-biferno"><EmbloyP className="text-vesuvio dark:text-etna">{option.question}</EmbloyP></SelectTrigger>
+                                                    <SelectContent className="border-etna dark:border-biferno bg-white dark:bg-biferno">
+                                                        {option.options.map((opt, optIndex) => (
+                                                            <SelectItem key={optIndex} value={opt}>
+                                                                <EmbloyP className="text-inherit dark:text-inherit">{opt}</EmbloyP>
+                                                            </SelectItem>
+                                                        ))}
+                                                    </SelectContent>
+                                                </Select>
+                                                {errorMessages[option.id] &&
+                                                    <div className="text-sm text-red-500">{errorMessages[option.id]}</div>}
+                                            </div>
+                                        );
+                                    case "multiple_choice":
+                                        return (
+                                            <fieldset className="flex flex-col space-y-2 w-full text-black dark:text-white">
+                                                
+                                                {option.options.map((opt, optIndex) => (
+                                                    <label
+                                                        key={optIndex}
+                                                        className="flex items-center space-x-2"
+                                                    >
+                                                        <Checkbox
+                                                            value={opt}
+                                                            className="rounded-full border-etna dark:border-biferno"
+                                                            onCheckedChange={(isChecked) => {
+                                                                handleMultipleChoiceChange(
+                                                                    option.id,
+                                                                    opt,
+                                                                    !!isChecked,
+                                                                );
+                                                            }}
+                                                        />{" "}
+                                                        <span>{opt}</span>
+                                                    </label>
+                                                ))}
+                                                {errorMessages[option.id] &&
+                                                    <div className="text-sm text-red-500">{errorMessages[option.id]}</div>}
+                                            </fieldset>
+                                        );
+                                    default:
+                                        return null;
+                                }
+                        })()}
+                    </EditorTool>
+                );
+            })}
+                </EmbloyV>
+            )}
+        </EmbloyV>
+    )
+
+}
+
 export function ApplicationPreview({data, handleDataReload, editable=false, onChange}) {
     const [locData, setLocData] = useState<{ application_options: any[] } | any>({ application_options: [] });
     const [original, setOriginal] = useState(data)

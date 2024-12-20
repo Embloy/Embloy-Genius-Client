@@ -2,7 +2,7 @@
 import React, { useEffect, useState, useContext, useRef} from "react";
 import { EmbloyH1Editable, EmbloyP, EmbloyH1 } from "@/app/components/ui/misc/text"
 import { EmbloyChildrenAdvanced, EmbloyH, EmbloyV } from "@/app/components/ui/misc/stuff";
-import { CheckIcon, XIcon } from "lucide-react";
+import { XIcon } from "lucide-react";
 import { applicationColumns } from "@/app/recruitment/application_columns";
 import { ApplicationDataTable } from "@/app/recruitment/ApplicationDataTable";
 import { InfoCircledIcon } from "@radix-ui/react-icons";

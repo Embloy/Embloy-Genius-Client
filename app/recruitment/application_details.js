@@ -8,8 +8,11 @@ import Image from "next/image";
 import {cast_date_no_null} from "@/lib/utils/cast"
 import { FaAt, FaFacebook, FaGithub, FaInstagram, FaLink, FaLinkedin, FaPhone, FaTwitter } from "react-icons/fa";
 import { toast } from "@/app/components/ui/use-toast";
-import { CheckIcon, ClockIcon, XIcon } from "lucide-react";
+import { CheckIcon, ClockIcon, XIcon, PlusIcon } from "lucide-react";
 import { not_core_get } from "@/lib/api/core";
+import { ChevronDoubleDownIcon, ChevronDoubleUpIcon } from "@heroicons/react/20/solid";
+import { Applications } from "./applications";
+import { AnswerPreview } from "../components/dom/main/misc/application_form_preview";
 
 export const Socials = ({ applicant }) => {
   const facebookRegex = /^(https?:\/\/)?(www\.)?facebook\.com\/[A-Za-z0-9_.-]+\/?$/;
@@ -200,6 +203,11 @@ const ApplicationDetails = ({
     
   }
 
+  const [formStatus, setFormStatus] = useState(null);
+  const [showForm, setShowForm] = useState(false);
+  
+
+
   return (
     <EmbloyV className={"justify-between cursor-default p-2 bg-ferrara dark:bg-transparent"}>
       <EmbloyV className="border border-palatinio bg-white rounded-md dark:bg-aglianico dark:border-biferno items-center gap-2 p-4">
@@ -211,6 +219,11 @@ const ApplicationDetails = ({
             </EmbloyH> 
             :
             <EmbloyV className="gap-1.5">
+              <EmbloyH className="gap-2">
+                <EmbloyP className="text-xs text-testaccio dark:text-nebbiolo">Submitted: {cast_date_no_null(details.application.created_at, "us")}</EmbloyP>
+                {details.application.created_at !== details.application.updated_at && <EmbloyP className="text-xs text-testaccio dark:text-nebbiolo">Last Update: {cast_date_no_null(details.application.updated_at, "us")}</EmbloyP>}
+              </EmbloyH>
+              <EmbloySeperator className="bg-etna dark:bg-nebbiolo h-px" />
               <EmbloyH className="gap-2">
                 {details.application.applicant.image_url && (
                   <Image src={details.application.applicant.image_url} width={80} height={80} className="rounded-full"/>
@@ -225,6 +238,35 @@ const ApplicationDetails = ({
                   </EmbloyH>
                 </EmbloyV>
               </EmbloyH>
+              <EmbloySpacer className="h-px" />
+              <EmbloyH className="justify-start items-center gap-1.5 text-black dark:text-amarone">
+                { (details.application_answers !== null && details.application_answers.length > 0) &&
+                  <button onClick={() => {
+                    if (formStatus !== "loading") {
+                      setShowForm(!showForm);
+                    }}} className={`px-2 py-px border border-etna dark:border-nebbiolo rounded-md max-w-fit flex flex-row gap-1.5 ${formStatus === "loading" ? 'cursor-wait' : "cursor-pointer hover:text-capri hover:dark:text-barbera"} transition-colors duration-200`}>
+                      <EmbloyP className="max-w-fit text-xs text-inherit dark:text-inherit">{formStatus === "error" ? "Try again" : "Form Answers"}</EmbloyP>
+                      {formStatus !== "loading" ? (
+                        showForm ? (
+                          <ChevronDoubleUpIcon className="w-4 h-4 p-0 m-0" />
+                        ) : (
+                          <PlusIcon className="w-4 h-4 p-0 m-0" />
+                        )
+                      ) : (
+                        <Spinner size="sm" color="current" className="w-4 h-4 p-0 m-0" />
+                      )}
+                  </button>
+                }
+              </EmbloyH>
+              {(showForm === true && details.application_answers !== undefined && details.application_answers !== null && details.application_answers.length > 0) && (
+                <EmbloyV className="gap-2">
+                  <EmbloyH className="items-center justify-between">
+                    {(details.application_answers === undefined || details.application_answers === null) ? <EmbloyP className="text-xs text-center w-full text-testaccio dark:text-nebbiolo">No Answers provided</EmbloyP> : <AnswerPreview data={details} handleDataReload={onUpdateSuccess} editable={false} onChange={() => {}} />}
+                  </EmbloyH >
+                  <EmbloySeperator className="bg-etna dark:bg-nebbiolo h-px" />
+                </EmbloyV>
+              )}
+              <EmbloySpacer className="h-2" />
               {
                 (details.application.status !== "accepted" && details.application.status !== "rejected") ?
                   <EmbloyH className="gap-2 justify-center">

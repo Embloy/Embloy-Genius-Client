@@ -50,7 +50,7 @@ const options = {
       }
   },
 };
-const checkBody = (original_body, new_body) => {
+export const checkBody = (original_body, new_body) => {
   if (original_body !== undefined && new_body !== undefined && original_body !== null && new_body !== null && original_body !== "" && new_body !== "") {
     const parser = new DOMParser();
     const original = parser.parseFromString(original_body, 'text/html');
@@ -73,7 +73,7 @@ const checkBody = (original_body, new_body) => {
   return false;
 }
 
-const html_to_markdown = (html) => {
+export const html_to_markdown = (html) => {
   if (!html) {
     return null;
   }
