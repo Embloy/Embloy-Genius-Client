@@ -379,16 +379,16 @@ export function CompanyInfo(reload) {
 
                                 <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-800/75">
                                     <div className="w-11/12 rounded-md bg-white px-6 py-3 shadow-md dark:bg-gray-900 md:w-1/2">
-                                        <div className="flex flex-row items-start justify-between">
-                                            <EmbloyH1 className="mb-4 font-heading">Company URLs:</EmbloyH1>
+                                        <div className="flex flex-row items-start justify-end">
                                             <button
-                                            onClick={() => setShowUrl(false)}
-                                            className="font-heading text-xl text-gray-800 dark:text-gray-200"
+                                                onClick={() => setShowUrl(false)}
+                                                className="font-heading text-xl text-gray-800 dark:text-gray-200"
                                             >
-                                            &times;
+                                                &times;
                                             </button>
                                         </div>
-                                        <EmbloyH className="justify-end">
+                                        <EmbloyH className="justify-between items-end">
+                                            <EmbloyH1 className="font-heading text-base">Company URLs:</EmbloyH1>
                                             <EmbloyP className={`text-xs ${urls.length >= 10 && 'text-primitivo dark:text-primitivo'}`}>{"("+ urls.length + " | 10)" }</EmbloyP>
                                         </EmbloyH>
                                         <EmbloySeperator className="mt-0.5 mb-2 h-px" />
