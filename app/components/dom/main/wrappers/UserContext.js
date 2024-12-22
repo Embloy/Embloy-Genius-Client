@@ -13,7 +13,7 @@ const UserWrapper = ({children}) => {
     const pathname = usePathname();
 
     useEffect(() => {
-        if(pathname!=="/signin" && getCookie("refresh_token", {path: "/", domain: `${siteConfig.core_domain}`})) {
+        if(pathname!=="/signin" && getCookie("ep_refresh_token", {path: "/", domain: `${siteConfig.core_domain}`})) {
             core_get("/user")
                 .then(data => {
                     setUser(data.user)
