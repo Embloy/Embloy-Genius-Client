@@ -16,10 +16,10 @@ export const verify = (activeIntegrations) => {
 
 export const disconnect = async (active_integrations) => {
     const delete_ids_from_cookie = (ids) => {
-        const active_integrations = JSON.parse(getCookie("active_integrations", {path: "/", domain: `${siteConfig.core_domain}`}));
+        const active_integrations = JSON.parse(getCookie("ep_active_integrations", {path: "/", domain: `${siteConfig.core_domain}`}));
         const integrations_without_ids = active_integrations.filter((integration) => !ids.includes(integration.id));
-        deleteCookie("active_integrations", {path: "/", domain: `${siteConfig.core_domain}`});
-        setCookie("active_integrations", JSON.stringify(integrations_without_ids), {path: "/", domain: `${siteConfig.core_domain}`});
+        deleteCookie("ep_active_integrations", {path: "/", domain: `${siteConfig.core_domain}`});
+        setCookie("ep_active_integrations", JSON.stringify(integrations_without_ids), {path: "/", domain: `${siteConfig.core_domain}`});
         return integrations_without_ids;
     };
     const invalidateToken = async (token_id) => {

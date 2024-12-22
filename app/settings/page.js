@@ -58,7 +58,7 @@ function SettingsPanel() {
     const subPages = [{name:'Profile', id:0}, {name:'Access', id:1}, {name:'Billing', id:2}, {name:'Secrets', id:3}, {name:'Integrations', id:4}, {name:'Archive', id:5}]
     const [integrations, setIntegrations] = useState([]);
     const setIntegrationToken = () => {
-        const res = getCookie("active_integrations", {path: "/", domain: `${siteConfig.core_domain}`});
+        const res = getCookie("ep_active_integrations", {path: "/", domain: `${siteConfig.core_domain}`});
         if (res !== undefined) {
            setIntegrations(JSON.parse(res));
         } else {
