@@ -101,8 +101,8 @@ export function JobDetails({ job, onUploadSuccess, onClose }) {
           <EmbloyH className="justify-between ">
             <EmbloyH1Editable className="page-header text-lg" initialText={job.position} />
             <EmbloyToolbox superClassName="h-7 border-2 dark:border-nebbiolo dark:bg-nebbiolo" >
-              <GenerateQRButton jobId={job.job_id} />
-              <GenerateGQButton jobId={job.job_id} position={job.position} jobSlug={job.job_slug}/>
+              <GenerateQRButton jobId={job.id} />
+              <GenerateGQButton jobId={job.id} position={job.position} jobSlug={job.job_slug}/>
               <RemovePosting />
             </EmbloyToolbox>
           </EmbloyH>
@@ -172,7 +172,7 @@ export function JobDetails({ job, onUploadSuccess, onClose }) {
                     key="0"
                     className="capitalize c2 hover:c0 cursor-pointer py-1.5 pl-4 pr-8 text-xs outline-none flex flex-row items-center "
                     onSelect={(e) => {
-                      updateStatus(e, job.job_id, "listed");
+                      updateStatus(e, job.id, "listed");
                     }}
                     onMouseEnter={handleListHover}
                     onMouseLeave={handleListNotHover}
@@ -196,7 +196,7 @@ export function JobDetails({ job, onUploadSuccess, onClose }) {
                     key="1"
                     className="capitalize c2 hover:c0 cursor-pointer py-1.5 pl-4 pr-8 text-xs outline-none flex flex-row items-center"
                     onSelect={(e) => {
-                      updateStatus(e, job.job_id, "unlisted");
+                      updateStatus(e, job.id, "unlisted");
                     }}
                     onMouseEnter={handleUnlistHover}
                     onMouseLeave={handleUnlistNotHover}
@@ -220,7 +220,7 @@ export function JobDetails({ job, onUploadSuccess, onClose }) {
                     key="3"
                     className="capitalize c2 hover:c0 cursor-pointer py-1.5 pl-4 pr-8 text-xs outline-none flex flex-row items-center"
                     onSelect={(e) => {
-                      updateStatus(e, job.job_id, "unlisted");
+                      updateStatus(e, job.id, "unlisted");
                     }}
                   >
                     {"Retrieve"}
@@ -230,7 +230,7 @@ export function JobDetails({ job, onUploadSuccess, onClose }) {
                     key="2"
                     className="capitalize c2 hover:c0 cursor-pointer py-1.5 pl-4 pr-8 text-xs outline-none flex flex-row items-center"
                     onSelect={(e) => {
-                      updateStatus(e, job.job_id, "archived");
+                      updateStatus(e, job.id, "archived");
                     }}
                     onMouseEnter={handleRemoveHover}
                     onMouseLeave={handleRemoveNotHover}

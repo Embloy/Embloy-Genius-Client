@@ -46,10 +46,11 @@ export type Job = {
   application_count: number;
   employer_rating: number;
   job_notifications: number; // 0 or 1 <=> inactive or active
-  boost: number;
-  cv_required: boolean;
-  allowed_cv_format: Format;
-  refferer_url: string;
-  deleted_at: string;
+  employer: {
+    employer_email: string | null;
+    employer_name: string | null;
+    employer_phone: string | null;
+    employer_image_url: string | null;
+  } | null;
   application_options: ApplicationOptions;
 };
