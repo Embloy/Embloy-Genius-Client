@@ -243,7 +243,7 @@ export function CompanyInfo(reload) {
         }
     }
 
-    const [name, setName] = useState(company.company_name || null)
+    const [name, setName] = useState(company.company_name)
     const [phone, setPhone] = useState(company.company_phone || null)
     const [email, setEmail] = useState(company.company_email || null)
     const [urls, setUrls] = useState(company.company_urls || [])
@@ -297,6 +297,7 @@ export function CompanyInfo(reload) {
             <EmbloyInputbox>
                 <EmbloyInputboxElement head="Company Information" description="Name & Unique Identfier of the company">
                     <EmbloyInput
+                        max={100}
                         name="Company Name"
                         value={name}
                         required={true}
@@ -304,6 +305,7 @@ export function CompanyInfo(reload) {
                         placeholder="Acme Inc."
                         onKeyPress={(e) => {
                             if (e.key === 'Enter') {
+                                console.log("ENTER PRESSED CIOMPANY NAME")
                                 handleNameChange(e);
                             }
                         }}
@@ -311,6 +313,7 @@ export function CompanyInfo(reload) {
                     />
                     <EmbloyInput
                         name="Slug"
+                        max={120}
                         value={slug}
                         required={true}
                         onChange={(e) => setSlug(e.target.value)}
@@ -328,6 +331,7 @@ export function CompanyInfo(reload) {
                 <EmbloyInputboxElement head="Public Contact Details" description="Company email address & phone number">
                     <EmbloyInput
                         name="Company Email"
+                        max={150}
                         value={email}
                         required={true}
                         onChange={(e) => setEmail(e.target.value)}
@@ -340,6 +344,7 @@ export function CompanyInfo(reload) {
                         onBlur={handleEmailChange}
                     />
                     <EmbloyInput
+                        max={20}
                         name="Company Phone"
                         value={phone}
                         required={true}
@@ -418,6 +423,7 @@ export function CompanyInfo(reload) {
                                                 <EmbloyP className="cursor-pointer font-semibold text-xs hover:underline decoration-dotted">Add URL:</EmbloyP>
                                             </EmbloyH>
                                             <EmbloyInput
+                                                max={100}
                                                 name="URL"
                                                 disabled={urls.length >= 10}
                                                 placeholder="https://acme.inc"
