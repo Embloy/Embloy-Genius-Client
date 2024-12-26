@@ -34,7 +34,7 @@ const HeaderItem = ({name, link, default_path}) => {
 const Navbar = () => {
     const pathname = usePathname()
     let app = useContext(AppContext)
-    let {user, company} = useContext(UserContext)
+    let {user, company, subscription} = useContext(UserContext)
     let store = useContext(StoreContext)
 
     const headerPages = [{name:'Home', link:'/'}, {name:'Jobs', link:'/recruitment'}, {name:'Analytics', link:'/analytics'}]

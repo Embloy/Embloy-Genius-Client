@@ -8,7 +8,7 @@ import { EmbloyH1, EmbloyP } from "@/app/components/ui/misc/text";
 import { EmbloyPageNoAccess } from "@/app/components/ui/misc/page";
 
 export const SettingsPage = ({children, sandboxed=true}) => {
-    let {user, company} = useContext(UserContext)
+    let {user, company, subscription} = useContext(UserContext)
     return (
     <EmbloyV className={"gap-2 "}>
        {sandboxed ? (

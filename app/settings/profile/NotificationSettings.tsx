@@ -9,7 +9,7 @@ import {
 import '@/app/globals.css'
 export function NotificationSettings() {
 
-    let {user, company} = useContext(UserContext)
+    let {user, company, subscription} = useContext(UserContext)
     const [notificationEmails, setNotificationEmails] = useState({});
     const [newEmail, setNewEmail] = useState('');
 

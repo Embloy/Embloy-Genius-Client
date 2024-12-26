@@ -11,6 +11,7 @@ export const UserContext = createContext();
 const UserWrapper = ({children}) => {
     const [user, setUser] = useState(null);
     const [company, setCompany] = useState(null);
+    const [subscription, setSubscription] = useState(null);
     const pathname = usePathname();
 
     useEffect(() => {
@@ -20,6 +21,9 @@ const UserWrapper = ({children}) => {
                     setUser(data.user)
                     if (data.company) {
                         setCompany(data.company)
+                    }
+                    if (data.subscription) {
+                        setSubscription(data.subscription)
                     }
                 })  
                 .catch(e => {
@@ -33,7 +37,7 @@ const UserWrapper = ({children}) => {
 
 
     return (
-        <UserContext.Provider value={{ user, company }}>
+        <UserContext.Provider value={{ user, company, subscription }}>
             {children}
         </UserContext.Provider>
     );

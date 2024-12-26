@@ -4,7 +4,7 @@ import {UserContext} from "@/app/components/dom/main/wrappers/UserContext";
 import { login, update_password } from "@/lib/api/auth";
 
 export function ChangePassword() {
-    let {user, company} = useContext(UserContext)
+    let {user, company, subscription} = useContext(UserContext)
     const [disableRequest, setDisableRequest] = useState(false);
     const [timeOutID, setTimeOutID] = useState(null);
 

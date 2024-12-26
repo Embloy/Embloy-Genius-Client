@@ -26,7 +26,7 @@ import { PostDetails } from "./post_details";
 import { JobDetails2 } from "./job_details_2";
 
 export function JobDetails({ job, onUploadSuccess, onClose, onRemove }) {
-  let { user, company } = useContext(UserContext);
+  let {user, company, subscription} = useContext(UserContext);
   const router = useRouter();
   const [settingsIsHovered, setSettingsIsHovered] = useState(false);
   const handleSettingsHover = () => {

@@ -11,7 +11,7 @@ import { force_login } from "@/lib/api/auth";
 import { useRouter } from "next/navigation";
 import { EmbloyP } from "@/app/components/ui/misc/text";
 export function TwoFaInfo(reload) {
-    let {user, company} = useContext(UserContext)
+    let {user, company, subscription} = useContext(UserContext)
     let router = useRouter();
     const [password, set_password] = useState('');
     const [newPassword, set_new_password] = useState('');

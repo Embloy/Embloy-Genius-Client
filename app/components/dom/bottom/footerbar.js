@@ -17,7 +17,7 @@ const Footerbar = () => {
     }
 
 
-    let {user, company} = useContext(UserContext)
+    let {user, company, subscription} = useContext(UserContext)
     let store = useContext(StoreContext)
 
 

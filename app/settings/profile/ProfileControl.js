@@ -8,13 +8,13 @@ import {UserContext} from "@/app/components/dom/main/wrappers/UserContext";
 import { CompanyInfo } from "@/app/settings/profile/CompanyInfo.js";
 
 export function ProfileControl() {
-    let {user, company} = useContext(UserContext)
+    let {user, company, subscription} = useContext(UserContext)
     return (
         <SettingsPage>
             <SettingsSection head="Account Details">
                 <ProfileInfo />
             </SettingsSection>
-            { user  &&
+            { user  && subscription && subscription.status === "active" && (subscription.name === "default" || subscription.name === "enterprise_1" || subscription.name === "enterprise_2") &&
                 <SettingsSection head="Company Details">
                     <CompanyInfo />
                 </SettingsSection>
