@@ -6,14 +6,11 @@ import { cn } from "@/lib/utils";
 import Image from "next/image";
 import {patch_core, post_core} from "@/lib/misc_requests";
 import {EmbloyToolboxImgAdvanced } from "@/app/components/ui/misc/toolbox";
-interface UploadError {
-    job: any; // Adjust the type based on your job structure
-    error: any; // Adjust the type based on the error structure
-}
+import { EmbloyH1, EmbloyP } from "@/app/components/ui/misc/text";
+import { not_core_get } from "@/lib/api/core";
+
 export function RemoveJobButton({ formats = ['*'], router, img, style, getSelectedRows,onUploadSuccess, getJob}) {
     const consentModal = useDisclosure()
-    const errorModal = useDisclosure()
-    const [fileContent, setFileContent] = useState<string>('');
 
     const handleDivClick = () => {
         if (!consentModal.isOpen && Object.keys(getSelectedRows()).length > 0) {
@@ -21,48 +18,41 @@ export function RemoveJobButton({ formats = ['*'], router, img, style, getSelect
         }
     };
 
-    const [uploading, setUploading] = useState(false);
-    const [uploadErrors, setUploadErrors] = useState<UploadError[]>([]); // [{job: job, error: error}
+    const [status, setStatus] = useState(null);
+
     const handleRemoval = async () => {
         const selectedRows = getSelectedRows();
         if (selectedRows) {
-            setUploading(true);
+            setStatus("loading");
             let accumulatedErrors = [];
             for (const job in selectedRows) {
                 const job_id = getJob(job).job_id;
                 try {
-                    const res = await patch_core(`/jobs?id=${job_id}`, router, {job_status: 'archived'})
+                    //const res = await patch_core(`/jobs?id=${job_id}`, router, {job_status: 'archived'})
+                    const res = await not_core_get("PATCH", `/jobs?id=${job_id}`, {job_status: 'archived'})
+                    console.log("Job removed: ", res);
                 } catch (e) {
                     console.log("Error occurred during removing job: ", e);
-                    accumulatedErrors.push({ job, error: e });
+                    accumulatedErrors.push(e);
                 }
             }
-            setUploading(false);
-            consentModal.onClose();
-            if (accumulatedErrors.length > 0) {
-                setUploadErrors(accumulatedErrors);
-                errorModal.onOpen();
-            } else {
+            if (accumulatedErrors.length === 0) {
                 onUploadSuccess();
+                setStatus(null);
+            } else {
+                setStatus("error");
             }
+            consentModal.onClose();
         }
     }
 
-    const [uploadsIsHovered, setUploadsIsHovered] = useState(false);
-
-    const handleUploadsHover = () => {
-        setUploadsIsHovered(true);
-    };
-
-    const handleUploadsNotHover = () => {
-        setUploadsIsHovered(false);
-    };
 
     return (
         <div onClick={handleDivClick} className={cn(Object.keys(getSelectedRows()).length > 0 ? "relative inline-block" : "relative inline-block" + " cursor-not-allowed")}>
             <div className={cn(Object.keys(getSelectedRows()).length > 0 ? "cursor-pointer" : "" + "pointer-events-none")}>
                 <EmbloyToolboxImgAdvanced tooltip="Remove Active Posting(s)" path="/icons/svg/black/bin.svg" path_hovered="/icons/svg/capri/bin.svg" dark_path="/icons/svg/amarone/bin.svg" dark_path_hovered="/icons/svg/barbera/bin.svg" height="12" width="12" disabled={Object.keys(getSelectedRows()).length === 0} path_disabled={"/icons/svg/etna/bin.svg"} dark_path_disabled={"/icons/svg/nebbiolo/bin.svg"} failure={undefined} path_failure={undefined} path_failure_hovered={undefined} success={undefined} action={undefined} path_success={undefined} path_success_hovered={undefined} path_action={undefined} path_hovered_action={undefined} dark_path_action={undefined} dark_path_hovered_action={undefined} />
             </div>
+            
             <Modal
                 isOpen={consentModal.isOpen}
                 scrollBehavior="inside"
@@ -70,16 +60,17 @@ export function RemoveJobButton({ formats = ['*'], router, img, style, getSelect
                 className="select-text cursor-auto"
                 onOpenChange={consentModal.onOpenChange}
             >
-                <ModalContent>
+                <ModalContent className="pt-4">
 
                     <>
-                        <ModalHeader className="flex flex-col gap-1">Confirmation</ModalHeader>
-                        <ModalBody className={cn(uploading ?  "opacity-25 " : "opacity-100")}>
-                            <p className="c0">{`Are you sure you want to remove ${Object.keys(getSelectedRows()).length} job(s)?`}</p>
+                        <ModalBody className={cn(status === "loading" ? "opacity-25" : "opacity-100")}>
+                            <EmbloyP className="text-sm">
+                                {`Remove ${Object.keys(getSelectedRows()).length} job${Object.keys(getSelectedRows()).length > 1 ? 's' : ''}?`}
+                            </EmbloyP>
                         </ModalBody>
                         <ModalFooter>
-                            {uploading && (
-                                <button className="rounded-full c2-5 hover:underline text-xs bgneg" disabled={uploading}>
+                            {status === "loading" && (
+                                <button className="rounded-full c2-5 hover:underline text-xs bgneg" disabled={status === "loading"}>
                                     <div role="status">
                                         <svg aria-hidden="true"
                                              className="inline w-4 h-4 mr-2 text-gray-500 animate-spin fill-white"
@@ -98,47 +89,17 @@ export function RemoveJobButton({ formats = ['*'], router, img, style, getSelect
                             )}
                             <button onClick={() => {
                                 consentModal.onClose();
-                            }} className={cn(uploading ? "rounded-full c3 cursor-not-allowed text-xs bgneg" : "rounded-full c2-5 hover:underline text-xs bgneg")} disabled={uploading}>
-                                <p>Cancel</p>
+                            }} className={cn(status === "loading" ? "cursor-not-allowed py-0.5 px-1.5" : "rounded-md py-0.5 px-1.5")} disabled={status === "loading"}>
+                                <EmbloyP className="text-xs text-capri dark:text-capri hover:underline">Cancel</EmbloyP>
                             </button>
                             <button onClick={() => {
                                 handleRemoval().then(r => { });
-                            }} className={cn(uploading ? "rounded-full c3 cursor-not-allowed text-xs bgneg" : "rounded-full c2-5 hover:underline text-xs bgneg")} disabled={uploading}>
-                                <p>Ok</p>
+                            }} className={cn(status === "loading" ? "cursor-not-allowed py-0.5 px-1.5" : "rounded-sm py-0.5 px-1.5 transition-colors duration-200")} disabled={status === "loading"}>
+                                <EmbloyP className="text-xs text-primitivo dark:text-primitivo hover:underline">Remove</EmbloyP>
                             </button>
                         </ModalFooter>
                     </>
 
-                </ModalContent>
-            </Modal>
-            <Modal
-                isOpen={errorModal.isOpen}
-                scrollBehavior="inside"
-                size="xs"
-                className="select-text cursor-auto"
-                onOpenChange={errorModal.onOpenChange}
-            >
-                <ModalContent>
-                    <>
-                        <ModalHeader className="flex flex-col gap-1">Error</ModalHeader>
-                        <ModalBody>
-                            <p className="c0">{`${uploadErrors.length} Error(s) occurred during removal.`}</p>
-                            {uploadErrors.map((error, index) => (
-                                <div key={index} className="flex flex-col gap-1">
-                                    <p className="c0">{`Error ${index + 1}:`}</p>
-                                    <p className="c0">{`Job: ${JSON.stringify(error.job)}`}</p>
-                                    <p className="c0">{`Error: ${error.error}`}</p>
-                                </div>
-                            ))
-                            }
-
-                        </ModalBody>
-                        <ModalFooter>
-                            <a href={"https://about.embloy.com/en/contact"} className="rounded-full c2-5 hover:underline text-xs bgneg">
-                                <p>Help</p>
-                            </a>
-                        </ModalFooter>
-                    </>
                 </ModalContent>
             </Modal>
         </div>

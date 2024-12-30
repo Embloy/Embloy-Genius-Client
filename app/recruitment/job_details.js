@@ -1,8 +1,7 @@
 "use client";
 import React, { useEffect, useState, useContext, useRef} from "react";
 import "@/app/globals.css";
-import { patch_core } from "@/lib/misc_requests";
-import { useRouter } from "next/navigation";
+
 import { ApplicationPreview } from "@/app/components/dom/main/misc/application_form_preview";
 import { GenerateQRButton } from "@/app/components/dom/main/misc/QRGenerator";
 import { GenerateGQButton } from "@/app/components/dom/main/misc/GQGenerator";
@@ -27,66 +26,9 @@ import { JobDetails2 } from "./job_details_2";
 
 export function JobDetails({ job, onUploadSuccess, onClose, onRemove }) {
   let {user, company, subscription} = useContext(UserContext);
-  const router = useRouter();
-  const [settingsIsHovered, setSettingsIsHovered] = useState(false);
-  const handleSettingsHover = () => {
-    setSettingsIsHovered(true);
-  };
-  const handleSettingsNotHover = () => {
-    setSettingsIsHovered(false);
-  };
 
-  const [position, setPosition] = useState(null); // todo: make it like in calendar
+  const headerClass = "w-full flex flex-row items-center justify-between";  
 
-  const headerClass = "w-full flex flex-row items-center justify-between";
-  const textClass = "cursor-text";
-  const set_data = () => {
-    setPosition(job["title"]);
-  };
-  const [listIsHovered, setListIsHovered] = useState(false);
-  const handleListHover = () => {
-    setListIsHovered(true);
-  };
-  const handleListNotHover = () => {
-    setListIsHovered(false);
-  };
-  const [unlistIsHovered, setUnlistIsHovered] = useState(false);
-  const handleUnlistHover = () => {
-    setUnlistIsHovered(true);
-  };
-  const handleUnlistNotHover = () => {
-    setUnlistIsHovered(false);
-  };
-  const [removeIsHovered, setRemoveIsHovered] = useState(false);
-  const handleRemoveHover = () => {
-    setRemoveIsHovered(true);
-  };
-  const handleRemoveNotHover = () => {
-    setRemoveIsHovered(false);
-  };
-
-  const [uploading, setUploading] = useState(false);
-  const updateStatus = async (e, job_id, status) => {
-    if (job_id && status) {
-      setUploading(true);
-      try {
-        const result = await patch_core(`/jobs?id=${job_id}`, router, {
-          job_status: status,
-        });
-        onUploadSuccess();
-        if (status === "archived") {
-          onClose();
-        }
-      } catch (e) {
-
-      }
-    }
-    setUploading(false);
-  };
-
-  useEffect(() => {
-    set_data();
-  }, []);
 
   const [shareDropdownOpen, setShareDropdownOpen] = useState(false);
   const dropdownRef = useRef(null)
@@ -215,11 +157,9 @@ export function JobDetails({ job, onUploadSuccess, onClose, onRemove }) {
   }
 
 
-  const [details, setDetails] = useState(null);
   const [detailStatus, setDetailStatus] = useState(null);
   const [showDetails, setShowDetails] = useState(false);
 
-  const [algo, setDAlgo] = useState(null);
   const [algoStatus, setAlgoStatus] = useState(null);
   const [showAlgo, setShowAlgo] = useState(false);
 

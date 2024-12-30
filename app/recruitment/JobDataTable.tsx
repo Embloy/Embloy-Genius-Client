@@ -35,12 +35,12 @@ import {UploadJobFileButton} from "@/app/components/dom/main/misc/FileUploads";
 import { Job } from "../../lib/types/job";
 import {useRouter} from "next/navigation";
 import LoadingScreen from "@/app/components/dom/main/screens/LoadingScreen";
-import {RemoveJobButton} from "@/app/components/dom/main/datatable/job_remove_button";
 import { EmbloyLHPV, EmbloyV, EmbloyH, EmbloySpacer, EmbloyChildrenAdvanced} from "@/app/components/ui/misc/stuff";
 import { EmbloyToolbox, EmbloyToolboxImgA, EmbloyToolboxImgAdvanced } from "@/app/components/ui/misc/toolbox";
 import '@/app/globals.css'
 import { IntegrationSync } from "../components/dom/main/misc/IntegrationSync";
 import { EmbloyH1, EmbloyP } from "../components/ui/misc/text";
+import { RemoveJobButton } from "../components/dom/main/datatable/job_remove_button";
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
