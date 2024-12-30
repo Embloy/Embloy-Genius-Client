@@ -54,22 +54,8 @@ export function ApplicationDataTable<TData extends Application, TValue>({
   handleDataReload,
 }: DataTableProps<TData, TValue>) {
   const router = useRouter();
-  const [filterIsHovered, setFilterIsHovered] = useState(false);
-  const [columnsIsHovered, setColumnsIsHovered] = useState(false);
 
-  const handleFilterHover = () => {
-    setFilterIsHovered(true);
-  };
-  const handleFilterNotHover = () => {
-    setFilterIsHovered(false);
-  };
 
-  const handleColumnsHover = () => {
-    setColumnsIsHovered(true);
-  };
-  const handleColumnsNotHover = () => {
-    setColumnsIsHovered(false);
-  };
 
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);

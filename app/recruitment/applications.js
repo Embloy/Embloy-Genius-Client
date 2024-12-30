@@ -43,9 +43,6 @@ export const Applications = ({applications}) => {
         handle_metric(get_by_status("pending"), "pending");
     }, [applications])
 
-    useEffect(() => {
-        console.log("NAME", name)
-    }, [name])
     
     return (
         <EmbloyV>

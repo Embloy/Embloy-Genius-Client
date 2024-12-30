@@ -49,7 +49,7 @@ interface DataTableProps<TData, TValue> {
     onNewJob: () => void;
 }
 
-export function JobDataTable<TData extends Job, TValue>({columns, data, handleDataReload, onNewJob}: DataTableProps<TData, TValue>) {
+export function ApplicantsTable<TData extends Job, TValue>({columns, data, handleDataReload, onNewJob}: DataTableProps<TData, TValue>) {
     const router = useRouter();
     const [sorting, setSorting] = useState<SortingState>([])
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
@@ -75,9 +75,7 @@ export function JobDataTable<TData extends Job, TValue>({columns, data, handleDa
         },
     })
     const default_hides = () => {
-        table.getColumn("id").toggleVisibility(false)
-        table.getColumn("job_slug").toggleVisibility(false)
-        table.getColumn("start_slot").toggleVisibility(false)
+        table.getColumn("updated_at").toggleVisibility(false);
     }
     useEffect(() => {
         default_hides()

@@ -103,7 +103,8 @@ export function CompanyInfo(reload) {
     const [removeError, setRemoveError] = useState(null);
 
     const handleImageReset = async () => {
-        /*
+        //TODO: Implement when endpoint is available. Issue #187 for Core-Server https://github.com/Embloy/Embloy-Core-Server/issues/187
+        /* 
         try {
             setRemoveError(null);
             setRemoving(true);
@@ -131,11 +132,9 @@ export function CompanyInfo(reload) {
                 }
                 setUploadError(null);
                 setUploading(true);
-                console.log("FILE", file)
                 const formData = new FormData();
                 formData.append("company_logo", file);
                 const res = await not_core_get("PATCH", `/company/${company.id}`, formData, true);
-                console.log(res)
                 if (res.company.company_logo) {
                     setNewImageUrl(res.company.company_logo);
                 }
@@ -144,7 +143,6 @@ export function CompanyInfo(reload) {
                 set_avatar(true);
 
             } catch (error) {
-                console.log("IMAGE ERROR", error)
                 setUploading(false);
                 setUploadError('error');
             }
@@ -154,15 +152,12 @@ export function CompanyInfo(reload) {
 
     const handleNameChange = async (e) => {
         if (company.company_name !== name) {
-            console.log("NAME CHANGE", name)
             try {
                 const res = await not_core_get("PATCH", `/company/${company.id}`,{company_name:name})
-                console.log("NAME RESULT", res)
                 company.company_name = name;
                 setName(name);
             } catch (e) {
                 setName(company.company_name)
-                console.log("NAME ERROR", e)
             }
         }
     }
@@ -175,7 +170,6 @@ export function CompanyInfo(reload) {
                 setPhone(phone);
             } catch (e) {
                 setPhone(company.company_phone)
-                console.log("PHONE ERROR", e)
             }
         }
     }
@@ -189,7 +183,6 @@ export function CompanyInfo(reload) {
                 setEmail(email);
             } catch (e) {
                 setEmail(company.company_email)
-                console.log("EMAIL ERROR", e)
             }
         }
     }
@@ -203,7 +196,6 @@ export function CompanyInfo(reload) {
                 setIndustry(indus);
             } catch (e) {
                 setIndustry(company.company_industry)
-                console.log("INDUSTRY ERROR", e)
             }
         }
     }
@@ -216,7 +208,6 @@ export function CompanyInfo(reload) {
                 setIndustry(null);
             } catch (e) {
                 setIndustry(company.company_industry)
-                console.log("INDUSTRY NULL ERROR", e)
             }
         }
     }
@@ -231,7 +222,6 @@ export function CompanyInfo(reload) {
             } catch (e) {
                 setSlug(company.company_slug)
                 setSlugError(true);
-                console.log("SLUG ERROR", e)
             }
         }
     }
@@ -255,7 +245,6 @@ export function CompanyInfo(reload) {
                 company.company_urls = urls.filter(u => u !== url);
                 setUrls(urls.filter(u => u !== url));
             } catch (e) {
-                console.log("URL REMOVE ERROR", e)
             }
         }
     }
@@ -331,7 +320,6 @@ export function CompanyInfo(reload) {
 
     const handleDescriptionSave = async () => {
         if (checkBody(body, marked(markdown.md))) {
-            console.log("DESCRIPTION SAVE", body, marked(markdown.md))
             let desc = { ...company.company_description };
             desc.body = marked(markdown.md);
             if (desc.body === "") {
@@ -344,15 +332,11 @@ export function CompanyInfo(reload) {
             setPreviewStatus(false);
             try {
                 const res = await not_core_get("PATCH", `/company/${company.id}`, req_body);
-                console.log("BEFORE",checkBody(body, marked(markdown.md)))
                 setBody(marked(markdown.md))
-                console.log("AFTER",checkBody(body, marked(markdown.md)))
                 setMarkdown({ md: markdown.md, cs: cs});
-                console.log("DESCRIPTION SAVE", res)
 
             } catch (error) {
-                setMarkdown(body, cs); // Roll back on error
-                console.log("DESCRIPTION SAVE ERROR", error)    
+                setMarkdown(body, cs); 
             }
         } 
     };
@@ -389,7 +373,6 @@ export function CompanyInfo(reload) {
                                 placeholder="Acme Inc."
                                 onKeyPress={(e) => {
                                     if (e.key === 'Enter') {
-                                        console.log("ENTER PRESSED CIOMPANY NAME")
                                         handleNameChange(e);
                                     }
                                 }}

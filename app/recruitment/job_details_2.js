@@ -52,10 +52,6 @@ export const JobDetails2 = ({job, handleDataReload, onChange, editable}) => {
     }
 
 
-    useEffect (() => {
-        //console.log("DETAILS", details.job_type)
-    }, [details])
-
 
     const areas = [
         {value: "Software_Development", label: "Software Development"},
@@ -350,31 +346,24 @@ export const JobDetails2 = ({job, handleDataReload, onChange, editable}) => {
 
 
     const handleSave = async (key, value) => {
-        //console.log("KEY", key, "VALUE", value, value === null)
         if (key !== null && key !== undefined && key.trim() !== "" && job[key] !== undefined && value !== undefined && value !== details[key]) {
             try {
-                //console.log("MAGAKING", value, details[key])
                 await not_core_get("PATCH", `/jobs/${job.id}`, {[key]: value});
                 handleDataReload();
                 setDetails({...details, [key]: value});
             } catch (e) {
                 setDetails({...details, [key]: job[key]});
-                //console.log("DOUBT")
             }
-        } else {
-            //console.log("NOPE")
-        }
+        } 
     }
 
     const handleLocationSave = async () => {
         if (location.city !== details.city) {
             try {
-                //console.log("PATCHING CITY", location.city)
                 await not_core_get("PATCH", `/jobs/${job.id}`, {"city": location.city});
                 handleDataReload();
                 setDetails({...details, "city": location.city});
             } catch (e) {
-                //console.log("ERROR CITY", e)
                 setDetails({...details, "city": job.city});
                 setLocation({...location, "city": job.city});
             }
@@ -382,12 +371,10 @@ export const JobDetails2 = ({job, handleDataReload, onChange, editable}) => {
 
         if (location.address !== details.address) {
             try {
-                //console.log("PATCHING ADDRESS", location.address)
                 await not_core_get("PATCH", `/jobs/${job.id}`, {"address": location.address});
                 handleDataReload();
                 setDetails({...details, "address": location.address});
             } catch (e) {
-                //console.log("ERROR ADDRESS", e)
                 setDetails({...details, "address": job.address});
                 setLocation({...location, "address": job.address});
             }
@@ -395,24 +382,20 @@ export const JobDetails2 = ({job, handleDataReload, onChange, editable}) => {
 
         if (location.postal_code !== details.postal_code) {
             try {
-                //console.log("PATCHING POSTAL CODE", location.postal_code)
                 await not_core_get("PATCH", `/jobs/${job.id}`, {"postal_code": location.postal_code});
                 handleDataReload();
                 setDetails({...details, "postal_code": location.postal_code});
             } catch (e) {
-                //console.log("ERROR POSTAL CODE", e)
                 setDetails({...details, "postal_code": job.postal_code});
                 setLocation({...location, "postal_code": job.postal_code});
             }
         }
         if (location.country_code !== details.country_code) {
             try {
-                //console.log("PATCHING COUNTRY CODE", location.country_code)
                 await not_core_get("PATCH", `/jobs/${job.id}`, {"country_code": location.country_code});
                 handleDataReload();
                 setDetails({...details, "country_code": location.country_code});
             } catch (e) {
-                //console.log("ERROR COUNTRY CODE", e)
                 setDetails({...details, "country_code": job.country_code});
                 setLocation({...location, "country_code": job.country_code});
             }

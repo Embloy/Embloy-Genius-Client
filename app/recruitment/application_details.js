@@ -128,10 +128,8 @@ const ApplicationDetails = ({
         `/jobs/${application.job_id}/applications/${application.user_id}`,
         router
       );
-      console.log("Response: ", data);
       setDetails(data);
     } catch (e) {
-      console.log(e);
     }
   };
 
@@ -160,7 +158,6 @@ const ApplicationDetails = ({
       }
       onUpdateSuccess();
     } catch (e) {
-      console.log("MAGA 20224", e);
     }
   };
 
@@ -174,7 +171,6 @@ const ApplicationDetails = ({
       }
       onUpdateSuccess();
     } catch (e) {
-      console.log("MAGA 20224", e);
     }
   };
 
@@ -188,14 +184,12 @@ const ApplicationDetails = ({
         }
         onUpdateSuccess();
     } catch (e) {
-      console.log("MAGA 2024", e);
     }
   };
 
   const handleUpdate = (who) => {
 
     if (status !== "update" && who === "update") {
-      console.log("MAGA 2024", who);
       setStatus("update");
     } else if (status === "update" && who === "done_update") {
       setStatus(null);
@@ -205,8 +199,6 @@ const ApplicationDetails = ({
 
   const [formStatus, setFormStatus] = useState(null);
   const [showForm, setShowForm] = useState(false);
-  
-
 
   return (
     <EmbloyV className={"justify-between cursor-default p-2 bg-ferrara dark:bg-transparent"}>
@@ -225,8 +217,16 @@ const ApplicationDetails = ({
               </EmbloyH>
               <EmbloySeperator className="bg-etna dark:bg-nebbiolo h-px" />
               <EmbloyH className="gap-2">
-                {details.application.applicant.image_url && (
-                  <Image src={details.application.applicant.image_url} width={80} height={80} className="rounded-full"/>
+              {details.application.applicant.image_url && (
+                  <div className="rounded-full" style={{
+                    backgroundImage: `url(${details.application.applicant.image_url})`,
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
+                    borderRadius: "50%",
+                    width: `${Math.min(80, 80)}px`,
+                    height: `${Math.min(80, 75)}px`,
+                  }} />
+                    
                 )}
                 <EmbloyV>
                   <EmbloyH>
@@ -342,53 +342,6 @@ const ApplicationDetails = ({
             </EmbloyV>
         }
       </EmbloyV>
-      <h2>Application Details</h2>
-      <p>Job ID: {application.job_id}</p>
-      <p>User ID: {application.user_id}</p>
-      <p>Application Text: {application.application_text}</p>
-      <p>Status: {application.status}</p>
-      <p>Created At: {application.created_at}</p>
-      <p>Updated At: {application.updated_at}</p>
-      <button
-        onClick={handleAccept}
-        style={{
-          backgroundColor: "green",
-          color: "white",
-          padding: "10px 20px",
-          fontSize: "16px",
-          margin: "10px",
-          cursor: "pointer",
-        }}
-      >
-        Accept
-      </button>
-      <button
-        onClick={handleReject}
-        style={{
-          backgroundColor: "red",
-          color: "white",
-          padding: "10px 20px",
-          fontSize: "16px",
-          margin: "10px",
-          cursor: "pointer",
-        }}
-      >
-        Reject
-      </button>
-      <button
-        onClick={handleMoreInfoClick}
-        style={{
-          backgroundColor: "blue",
-          color: "white",
-          padding: "10px 20px",
-          fontSize: "16px",
-          margin: "10px",
-          cursor: "pointer",
-        }}
-      >
-        More Info
-      </button>
-     
     </EmbloyV>
   );
 };

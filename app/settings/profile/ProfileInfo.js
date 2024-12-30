@@ -65,7 +65,6 @@ export function ProfileInfo(reload) {
     };
 
     const handleFirstNameChange = async (e) => {
-        console.log('first name change')
         if (user.first_name !== first_name) {
             const res = await patch_user({first_name: first_name});
             if (res.type === 'success') {

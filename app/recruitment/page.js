@@ -1,19 +1,19 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { cn } from "@/lib/utils";
 import { jobColumns } from "@/app/recruitment/job_columns";
 import { JobDataTable } from "@/app/recruitment/JobDataTable";
 import { applicationColumns } from "@/app/recruitment/application_columns";
-import { ApplicationDataTable } from "@/app/recruitment/ApplicationDataTable";
 import "./locals.css";
 import { get_core } from "@/lib/misc_requests";
 import { useRouter } from "next/navigation";
 import { EmbloyPageMount, EmbloyPage, EmbloyPageBody, EmbloyPageBodySection, EmbloySubPage } from "@/app/components/ui/misc/page";
-import { EmbloyBox, EmbloyBoxContent } from "@/app/components/ui/misc/box";
+
 import { EmbloyLHPV, EmbloyV, EmbloyH, EmbloySpacer} from "@/app/components/ui/misc/stuff";
 import { EmbloyToolbox, EmbloyToolboxImgA} from "@/app/components/ui/misc/toolbox";
-import { siteConfig } from "@/config/site";
-import { getCookie } from "cookies-next";
+
+
+import { ApplicantsTable } from "./ApplicantsTable";
+import { useSearchParams } from 'next/navigation'
 
 export default function Jobs() {
   // subpages
@@ -54,7 +54,6 @@ export default function Jobs() {
         setReloadJobs(false);
       })
       .catch((e) => {
-        console.log(e);
       });
   }, [reloadJobs]);
 
@@ -63,7 +62,6 @@ export default function Jobs() {
     get_core("/applications", router)
       .then((data) => {
         if (data.applications) {
-          console.log("Applications: " + data.applications);
           setApplications(data.applications);
         } else {
           setApplications([]);
@@ -71,7 +69,6 @@ export default function Jobs() {
         setReloadApplications(false);
       })
       .catch((e) => {
-        console.log(e);
       });
   }, [reloadApplications]);
 
@@ -81,7 +78,30 @@ export default function Jobs() {
     };
     setJobs([new_job, ...jobs]);
   }
-  
+    
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    if (searchParams && searchParams.has("tab")) {
+        const tabToSubPageID = {
+            postings: 0,
+            applicants: 1,
+        };
+        const subPageID = tabToSubPageID[searchParams.get("tab")];
+
+        if (subPageID !== undefined) {
+            setcurrentSubPageID(subPageID);
+        }
+    } else {
+        handlePageChange(currentSubPageID);
+    }
+}, [searchParams]);
+  const subPages = [{name:'Postings', id:0}, {name:'Applicants', id:1}];
+  const handlePageChange = (id) => {
+    setcurrentSubPageID(id);
+    const tabName = subPages.find(page => page.id === id).name.toLowerCase();
+    router.push(`?tab=${tabName}`);
+}
 
 
   return (
@@ -97,8 +117,12 @@ export default function Jobs() {
                 </EmbloyToolbox>
               </EmbloyH>
               <EmbloySpacer />
-              <EmbloySubPage pages={[{name:'Postings', id:1}, {name:'Applications', id:2}]} >
-                <EmbloyV id={1} className="gap-3 ">
+              <EmbloySubPage 
+                pages={subPages} 
+                onPageChange={handlePageChange}
+                externalSetActivePage={currentSubPageID}
+              >
+                <EmbloyV id={0} className="gap-3 ">
                   <JobDataTable
                       columns={jobColumns}
                       data={jobs}
@@ -106,8 +130,8 @@ export default function Jobs() {
                       onNewJob={() => {new_job()}}
                   />
                 </EmbloyV>
-                <EmbloyV id={2} className="gap-3">
-                  <ApplicationDataTable
+                <EmbloyV id={1} className="gap-3">
+                  <ApplicantsTable
                     columns={applicationColumns}
                     data={applications}
                     handleDataReload={() => setReloadApplications(true)}
@@ -118,29 +142,6 @@ export default function Jobs() {
           </EmbloyPageBodySection>
         </EmbloyPageBody >
       </EmbloyPage>
-
-    
-    {/* 
-
-          
-
-        <div className="w-full flex flex-col items-center justify-start">
-          {currentSubPageID === jobsSubPageID && (
-            <div className="container mx-auto">
-              <JobDataTable
-                columns={jobColumns}
-                data={jobs}
-                handleDataReload={() => setReloadJobs(true)}
-              />
-            </div>
-          )}
-          {currentSubPageID === applicationsSubPageID && (
-            
-          )}
-        </div>
-      </div>
-    </main>
-    */}
     </EmbloyPageMount>
   );
 }
