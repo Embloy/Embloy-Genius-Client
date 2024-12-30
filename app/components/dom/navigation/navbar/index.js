@@ -19,7 +19,14 @@ import listIcon from "@/public/icons/list.svg"
 import lightListIcon from "@/public/icons/listblack.svg"
 
 
-const HeaderItem = ({name, link, default_path}) => {
+const HeaderItem = ({name, link, default_path, disabled=false}) => {
+    if (disabled) {
+        return (
+            <li className="stylish-header-disabled stylish-header-text-disabled">
+                <p>{name}</p>
+            </li>
+        );
+    }
     return (
         <li className={cn(
             default_path === link ? "stylish-header-default stylish-header-text-default" : "stylish-header stylish-header-text"
@@ -37,7 +44,7 @@ const Navbar = () => {
     let {user, company, subscription} = useContext(UserContext)
     let store = useContext(StoreContext)
 
-    const headerPages = [{name:'Home', link:'/'}, {name:'Jobs', link:'/recruitment'}, {name:'Analytics', link:'/analytics'}]
+    const headerPages = [{name:'Home', link:'/'}, {name:'Jobs', link:'/recruitment'}, {name:'Analytics', link:'/analytics', disabled: true}]
     const {isUserbarVisible, toggleUserbar} = app;
 
     useEffect(() => {
@@ -56,7 +63,7 @@ const Navbar = () => {
                                 <div className=" h-3/5 w-[1px] rounded-full"/>
                                 <ul className="hidden md:flex gap-x-6 font-normal">
                                     {headerPages.map((page, index)=>(
-                                       <HeaderItem name={page.name} link={page.link} default_path={pathname} key={index} /> 
+                                       <HeaderItem name={page.name} link={page.link} default_path={pathname} key={index} disabled={page.disabled || false} /> 
                                     ))}
                                 </ul>
 

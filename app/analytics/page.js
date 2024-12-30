@@ -1,18 +1,20 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { EmbloyPageMount, EmbloyPage, EmbloyPageBody } from "@/app/components/ui/misc/page";
 
-import { EmbloyPageMount, EmbloyPage, EmbloyPageBody, EmbloyPageBodySection, EmbloySubPage } from "@/app/components/ui/misc/page";
+export default function Analytics() {
+  const router = useRouter();
 
-export default function Analytics() {  return (
+  useEffect(() => {
+    router.back(); // Redirects to the previous page
+  }, [router]);
+
+  return (
     <EmbloyPageMount className="overflow-hidden">
       <EmbloyPage sandboxed={false}>
-        <EmbloyPageBody >
-          
-        </EmbloyPageBody >
+        <EmbloyPageBody />
       </EmbloyPage>
-
-    
-    
     </EmbloyPageMount>
   );
 }

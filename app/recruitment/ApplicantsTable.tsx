@@ -111,7 +111,7 @@ export function ApplicantsTable<TData extends Job, TValue>({columns, data, handl
         <EmbloyV className={"gap-2 border-t border-etna dark:border-biferno pt-2"}>
             <EmbloyH className={"items-center justify-between"}>
                 <EmbloyH className={"w-4/12 gap-3 justify-start"}>
-                    <EmbloyH1 className={"text-lg"}>Active Postings</EmbloyH1>
+                    <EmbloyH1 className={"text-lg"}>Candidate Directory</EmbloyH1>
                 </EmbloyH>
                 <EmbloyH className={"w-8/12 gap-3 justify-end"}>
                     <EmbloyToolbox superClassName="h-7 border-2 dark:border-chianti" className={undefined} name={undefined} >

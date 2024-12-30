@@ -30,6 +30,13 @@
     .stylish-header-text-default {
         @apply text-black dark:text-barbera bg-ferrara dark:bg-chianti
     }
+    .stylish-header-disabled {
+        @apply rounded-lg p-5px cursor-not-allowed
+    }
+
+    .stylish-header-text-disabled {
+        @apply dark:text-nebbiolo text-testaccio 
+    }
     
     .bg-na {@apply bg-transparent}
 

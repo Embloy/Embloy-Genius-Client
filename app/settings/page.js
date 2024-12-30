@@ -53,7 +53,7 @@ function SettingsPanel() {
     let {user, company, subscription} = useContext(UserContext)
     let store = useContext(StoreContext);
 
-    const subPages = [{name:'Profile', id:0}, {name:'Access', id:1}, {name:'Billing', id:2}, {name:'Secrets', id:3}, {name:'Integrations', id:4}, {name:'Archive', id:5}]
+    const subPages = [{name:'Profile', id:0}, {name:'Access', id:1}, {name:'Billing', id:2}, {name:'Secrets', id:3}, {name:'Integrations', id:4}]
     const [integrations, setIntegrations] = useState([]);
     const setIntegrationToken = () => {
         const res = getCookie("active_integrations", {path: "/", domain: `${siteConfig.core_domain}`});

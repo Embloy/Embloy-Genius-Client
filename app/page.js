@@ -1,7 +1,6 @@
 "use client";
 import Image from "next/image";
 import React, { useState } from "react";
-import IntegrationStatus from "@/app/components/ui/dashboard/integration-status";
 import { EmbloyPageMount, EmbloyPage, EmbloyPageBody, EmbloyPageBodySection } from "@/app/components/ui/misc/page";
 import { EmbloyBox, EmbloyBoxContent } from "@/app/components/ui/misc/box";
 import { EmbloyLHPV, EmbloyV, EmbloyH, EmbloySpacer} from "@/app/components/ui/misc/stuff";
@@ -33,22 +32,6 @@ const newsItems = [
   },
 ];
 
-const jobItems = [
-  {
-    id: 1,
-    imageUrl: "/img/openpositions.jpg",
-    title: "Secretary",
-    description: "Should have good taste in coffee, cocktails and music.",
-    job_slug: "123456789",
-  },
-  {
-    id: 2,
-    imageUrl: "/img/openpositions.jpg",
-    title: "Chauffeur",
-    description: "Only 7-series allowed.",
-    job_slug: "123456789",
-  },
-];
 
 export default function Home() {
   //news box
@@ -69,7 +52,7 @@ export default function Home() {
 
 
   const news_notes = [
-    { message: 'Last update: 2024/07/02' }
+    { message: 'Last update: 2024/12/30' }
   ]
 
   const ana_notes = [
@@ -85,27 +68,12 @@ export default function Home() {
                 <EmbloyH className="justify-between">
                   <h1 className="page-header">Genius Dashboard</h1>
                   <EmbloyToolbox superClassName="portrait:hidden">
-                    <EmbloyToolboxImgA href="/recruitment" height="12" width="12" path="/icons/svg/black/plus.svg" path_hovered="/icons/svg/leidoveneta/plus.svg" dark_path="/icons/svg/amarone/plus.svg" dark_path_hovered="/icons/svg/barbera/plus.svg"  />
                     <EmbloyToolboxImgA href="https://developers.embloy.com/docs/category/genius" height="12" width="12" path="/icons/svg/black/ask.svg" path_hovered="/icons/svg/leidoveneta/ask.svg" dark_path="/icons/svg/amarone/ask.svg" dark_path_hovered="/icons/svg/barbera/ask.svg" target="_blank" />
                   </EmbloyToolbox>
                 </EmbloyH>
                 <EmbloySpacer/>
                 <EmbloyLHPV>
                   <EmbloyV className="gap-6">
-                    <EmbloyLHPV className="gap-6">
-                      <EmbloyBox variant="chilled" className="max-w-fit portrait:max-w-full">
-                        <EmbloyBoxContent boxhead="Traffic report" notes={ana_notes} >
-                          <div className="flex flex-col items-start justify-start gap-1.5 ">
-                          </div>
-                        </ EmbloyBoxContent>
-                      </EmbloyBox>
-                      <EmbloyBox variant="chilled" className="max-w-fit portrait:max-w-full">
-                        <EmbloyBoxContent boxhead="Integration status">
-                          <IntegrationStatus/>
-                        </EmbloyBoxContent>
-                      </EmbloyBox>
-                      
-                    </EmbloyLHPV>
                     <EmbloyLHPV className="gap-6">
                       <EmbloyBox variant="chilled" className="max-w-fit portrait:max-w-full"> 
                         <EmbloyBoxContent boxhead="News" notes={news_notes} >
@@ -205,9 +173,7 @@ export default function Home() {
                           </li>
                           <li>
                             <a
-                              href="https://embloy.com/dashboard/billing"
-                              target="_blank"
-                              rel="noopener noreferrer"
+                              href="/settings?tab=billing"
                               className="hover:text-embloy-gray flex items-center gap-2"
                             >
                               Billing

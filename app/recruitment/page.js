@@ -16,28 +16,14 @@ import { ApplicantsTable } from "./ApplicantsTable";
 import { useSearchParams } from 'next/navigation'
 
 export default function Jobs() {
-  // subpages
+
   const [currentSubPageID, setcurrentSubPageID] = useState(0);
   const [reloadJobs, setReloadJobs] = useState(false);
   const [reloadApplications, setReloadApplications] = useState(false);
 
-  const switchSubPage = (id) => {
-    if (currentSubPageID != id) {
-      setcurrentSubPageID(id);
-    }
-  };
-  const jobsSubPageID = 0;
-  const jobsSubPage = () => {
-    switchSubPage(jobsSubPageID);
-  };
-  const applicationsSubPageID = 1;
-  const applicationsSubPage = () => {
-    switchSubPage(applicationsSubPageID);
-  };
-  const promosSubPageID = 2;
-  const promosSubPage = () => {
-    switchSubPage(promosSubPageID);
-  };
+
+
+  
 
   const router = useRouter();
   
@@ -85,7 +71,7 @@ export default function Jobs() {
     if (searchParams && searchParams.has("tab")) {
         const tabToSubPageID = {
             postings: 0,
-            applicants: 1,
+            candidates: 1,
         };
         const subPageID = tabToSubPageID[searchParams.get("tab")];
 
@@ -96,7 +82,7 @@ export default function Jobs() {
         handlePageChange(currentSubPageID);
     }
 }, [searchParams]);
-  const subPages = [{name:'Postings', id:0}, {name:'Applicants', id:1}];
+  const subPages = [{name:'Postings', id:0}, {name:'Candidates', id:1}];
   const handlePageChange = (id) => {
     setcurrentSubPageID(id);
     const tabName = subPages.find(page => page.id === id).name.toLowerCase();
