@@ -98,7 +98,7 @@ function SubscriptionItem(subscription) {
             if (res) {
                 setCncStatus("success");
                 setCncMessage("Redirected to Stripe");
-                window.location.href = res.url;
+                window.location.href = res.portal_session.url;
             } else {
                 setCncStatus("error");
                 setCncMessage("Failed to redirect");
