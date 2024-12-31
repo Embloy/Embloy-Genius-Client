@@ -5,6 +5,7 @@ import {DataTableColumnHeader} from "@/app/components/dom/main/datatable/DataTab
 import {Job} from "@/lib/types/job";
 import {cast_date_no_null, job_slug_to_host} from "@/lib/utils/cast";
 import { EmbloyP } from "../components/ui/misc/text";
+import { job_areas } from "@/lib/types/stuff";
 
 export const jobColumns: ColumnDef<Job>[] = [
     {
@@ -39,7 +40,7 @@ export const jobColumns: ColumnDef<Job>[] = [
             if (!value && row.getValue('job_slug') === "new") {
                 value = "Draft"
             } 
-            return <EmbloyP className="text-xs" >{value}</EmbloyP>
+            return <EmbloyP className={`text-xs ${!value && 'text-testaccio dark:text-nebbiolo italic'}`} >{value || "N/A"}</EmbloyP>
         },
         enableSorting: false,
         enableHiding: true,
@@ -54,7 +55,7 @@ export const jobColumns: ColumnDef<Job>[] = [
             if (!value && row.getValue('job_slug') === "new") {
                 value = "Draft"
             } 
-            return <EmbloyP className="text-xs" >{value}</EmbloyP>
+            return <EmbloyP className={`text-xs ${!value && 'text-testaccio dark:text-nebbiolo italic'}`} >{value || "N/A"}</EmbloyP>
         },
         enableSorting: false,
         enableHiding: true,
@@ -69,7 +70,7 @@ export const jobColumns: ColumnDef<Job>[] = [
             if (!value && row.getValue('job_slug') === "new") {
                 value = "Draft"
             } 
-            return <EmbloyP className="text-xs" >{value}</EmbloyP>
+            return <EmbloyP className={`text-xs ${!value && 'text-testaccio dark:text-nebbiolo italic'}`} >{value || "N/A"}</EmbloyP>
         },
         enableSorting: true,
         enableHiding: true,
@@ -112,7 +113,7 @@ export const jobColumns: ColumnDef<Job>[] = [
             if (!value && row.getValue('job_slug') === "new") {
                 value = "Draft"
             } 
-            return <EmbloyP className="text-xs" >{value}</EmbloyP>
+            return <EmbloyP className="text-xs" >{job_areas.find(area => area.value === value)?.label}</EmbloyP>
         },
         enableSorting: false,
         enableHiding: true,
@@ -154,9 +155,10 @@ export const jobColumns: ColumnDef<Job>[] = [
             } else {
                 value = cast_date_no_null(value)
             }
-            return <EmbloyP className="text-xs" >{value}</EmbloyP>
+            return <EmbloyP className={`text-xs ${!value && 'text-testaccio dark:text-nebbiolo italic'}`} >{value || "N/A"}</EmbloyP>
         },
     },
+    /*
     {
         accessorKey: "view_count",
         header: ({column}) => (
@@ -167,11 +169,12 @@ export const jobColumns: ColumnDef<Job>[] = [
             if (!value) {
                 value = 0
             }
-            return <EmbloyP className="text-xs" >{value}</EmbloyP>
+            return <EmbloyP className={`text-xs ${!value && 'text-testaccio dark:text-nebbiolo italic'}`} >{value || "N/A"}</EmbloyP>
         },
         enableSorting: true,
         enableHiding: true,
     },
+    */
     {
         accessorKey: "applications_count",
         header: ({column}) => (
@@ -182,7 +185,7 @@ export const jobColumns: ColumnDef<Job>[] = [
             if (!value) {
                 value = 0
             }
-            return <EmbloyP className="text-xs" >{value}</EmbloyP>
+            return <EmbloyP className={`text-xs`} >{value || "0"}</EmbloyP>
         },
         enableSorting: true,
         enableHiding: true,
@@ -201,7 +204,7 @@ export const jobColumns: ColumnDef<Job>[] = [
             } else {
                 value = cast_date_no_null(value)
             }
-            return <EmbloyP className="text-xs" >{value}</EmbloyP>
+            return <EmbloyP className={`text-xs ${!value && 'text-testaccio dark:text-nebbiolo italic'}`} >{value || "N/A"}</EmbloyP>
         },
     },
 
