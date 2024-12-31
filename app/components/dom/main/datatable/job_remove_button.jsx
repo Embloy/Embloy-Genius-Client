@@ -29,9 +29,7 @@ export function RemoveJobButton({ getSelectedRows,onUploadSuccess, getJob}) {
                 const job_id = getJob(job).id;
                 try {
                     const res = await not_core_get("PATCH", `/jobs?id=${job_id}`, {job_status: 'archived'})
-                    console.log("Job removed: ", res);
                 } catch (e) {
-                    console.log("Error occurred during removing job: ", e);
                     accumulatedErrors.push(e);
                 }
             }

@@ -99,38 +99,22 @@ export function CompanyInfo(reload) {
     const [showReload, setShowReload] = useState(false);
     const [uploading, setUploading] = useState(false);
     const [uploadError, setUploadError] = useState(null);
-    const [removing, setRemoving] = useState(false);
-    const [removeError, setRemoveError] = useState(null);
+    const [errorType, setErrorType] = useState(null);
 
-    const handleImageReset = async () => {
-        //TODO: Implement when endpoint is available. Issue #187 for Core-Server https://github.com/Embloy/Embloy-Core-Server/issues/187
-        /* 
-        try {
-            setRemoveError(null);
-            setRemoving(true);
-            const formData = new FormData();
-            formData.append("company_logo", null);
-            const res = await not_core_get("PATCH", `/company/${company.id}`, formData, true);
-            setNewImageUrl("default");
-            setRemoving(false);
-            setShowReload(true);
-            set_avatar(false);
-        } catch (error) {
-            setRemoving(false);
-            setRemoveError('error');
-            console.log("IMAGE RESET ERROR", error)
-        }
-            */
-    };
+
+  
+       
 
     const handleImageChange = async (e) => {
         const file = e.target.files[0];
         if (file) {
             try {
                 if (file.size > 2000000) {
+                    setErrorType("size");
                     throw new Error('File too large');
                 }
                 setUploadError(null);
+                setErrorType(null);
                 setUploading(true);
                 const formData = new FormData();
                 formData.append("company_logo", file);
@@ -233,7 +217,6 @@ export function CompanyInfo(reload) {
                 company.company_urls = [...urls, url];
                 setUrls([...urls, url]);
             } catch (e) {
-                console.log("URL ADD ERROR", e)
             }
         }
     }
@@ -261,9 +244,7 @@ export function CompanyInfo(reload) {
     const fileInputRef = useRef(null);
 
     const handleAvatarChange = (value) => {
-        if (value === 'initials') {
-            handleImageReset();       
-        } else if (value === 'image' && fileInputRef.current) {
+        if (value === 'image' && fileInputRef.current) {
             fileInputRef.current.click();
         }
     };
@@ -527,20 +508,11 @@ export function CompanyInfo(reload) {
                             <EmbloyH>
                                 <EmbloyInput variant="single-choice">
                                     <EmbloyRadioOption
-                                        value="initials"
-                                        head="Use initials"
-                                        checked={!avatar}
-                                        onChange={() => handleAvatarChange('initials')}
-                                        note = {removing ? 'Removing...' : removeError && 'Error removing'}
-                                        note_state = {removeError ? 'error' : 'default'}
-                                        
-                                    />
-                                    <EmbloyRadioOption
                                         value="image"
                                         head="Upload an image"
                                         checked={avatar}
                                         onChange={() => handleAvatarChange('image')}
-                                        note={uploading ? 'Uploading...' : uploadError && 'Error uploading'}
+                                        note={uploading ? 'Uploading...' : uploadError && (errorType === 'size' ? 'Too large (2mb max.)' : 'Error uploading')}
                                         note_state={uploadError ? 'error' : 'default'}
                                     />
                                 </EmbloyInput>
