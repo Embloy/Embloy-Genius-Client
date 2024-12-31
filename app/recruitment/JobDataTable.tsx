@@ -122,7 +122,7 @@ export function JobDataTable<TData extends Job, TValue>({columns, data, handleDa
                         </button>
                         <IntegrationSync disabled={true} key="Sync" name={""} />
                         {/*<UploadJobFileButton key="Upload" router={router}  formats={['.json']} head="Upload jobs" img="sm-upload" style="relative cursor-pointer" onUploadSuccess={() => handleUploadSuccess()}/>*/}
-                        <RemoveJobButton key="Remove" router={router} getJob={(row_id) => getJob(row_id)} formats={['.json']} img="sm-delete" style="relative px-0.5 bg0-r-full cursor-pointer" getSelectedRows={() => getSelectedRows()} onUploadSuccess={() => handleUploadSuccess()}/>
+                        <RemoveJobButton key="Remove" getJob={(row_id) => getJob(row_id)} formats={['.json']} img="sm-delete" style="relative px-0.5 bg0-r-full cursor-pointer" getSelectedRows={() => getSelectedRows()} onUploadSuccess={() => handleUploadSuccess()}/>
                         <DropdownMenu>
                             <DropdownMenuTrigger asChild className="outline-none">
                                 <button className="">

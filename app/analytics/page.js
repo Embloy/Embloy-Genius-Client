@@ -7,7 +7,7 @@ export default function Analytics() {
   const router = useRouter();
 
   useEffect(() => {
-    router.back(); // Redirects to the previous page
+    router.back();
   }, [router]);
 
   return (

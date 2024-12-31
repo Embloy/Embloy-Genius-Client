@@ -9,7 +9,7 @@ import {EmbloyToolboxImgAdvanced } from "@/app/components/ui/misc/toolbox";
 import { EmbloyH1, EmbloyP } from "@/app/components/ui/misc/text";
 import { not_core_get } from "@/lib/api/core";
 
-export function RemoveJobButton({ formats = ['*'], router, img, style, getSelectedRows,onUploadSuccess, getJob}) {
+export function RemoveJobButton({ getSelectedRows,onUploadSuccess, getJob}) {
     const consentModal = useDisclosure()
 
     const handleDivClick = () => {
@@ -26,9 +26,8 @@ export function RemoveJobButton({ formats = ['*'], router, img, style, getSelect
             setStatus("loading");
             let accumulatedErrors = [];
             for (const job in selectedRows) {
-                const job_id = getJob(job).job_id;
+                const job_id = getJob(job).id;
                 try {
-                    //const res = await patch_core(`/jobs?id=${job_id}`, router, {job_status: 'archived'})
                     const res = await not_core_get("PATCH", `/jobs?id=${job_id}`, {job_status: 'archived'})
                     console.log("Job removed: ", res);
                 } catch (e) {
@@ -46,6 +45,13 @@ export function RemoveJobButton({ formats = ['*'], router, img, style, getSelect
         }
     }
 
+    const [isWindows, setIsWindows] = useState(false);
+
+    useEffect(() => {
+        if (typeof navigator !== "undefined") {
+            setIsWindows(navigator.userAgent.includes("Windows"));
+        }
+    }, []);
 
     return (
         <div onClick={handleDivClick} className={cn(Object.keys(getSelectedRows()).length > 0 ? "relative inline-block" : "relative inline-block" + " cursor-not-allowed")}>
@@ -57,18 +63,18 @@ export function RemoveJobButton({ formats = ['*'], router, img, style, getSelect
                 isOpen={consentModal.isOpen}
                 scrollBehavior="inside"
                 size="xs"
-                className="select-text cursor-auto"
+                className={`${isWindows && "w-64 rounded-md bg-white dark:bg-chianti border-[1px] border-etna dark:border-nebbiolo" } "select-text cursor-auto"`}
                 onOpenChange={consentModal.onOpenChange}
             >
-                <ModalContent className="pt-4">
+                <ModalContent className={`${!isWindows && "pt-4 "}`}>
 
                     <>
-                        <ModalBody className={cn(status === "loading" ? "opacity-25" : "opacity-100")}>
-                            <EmbloyP className="text-sm">
+                        <ModalBody className={`${isWindows && "w-full flex flex-col items-end"} ${cn(status === "loading" ? "opacity-25" : "opacity-100")}`}>
+                            <EmbloyP className="text-sm w-full text-left">
                                 {`Remove ${Object.keys(getSelectedRows()).length} job${Object.keys(getSelectedRows()).length > 1 ? 's' : ''}?`}
                             </EmbloyP>
                         </ModalBody>
-                        <ModalFooter>
+                        <ModalFooter className={undefined}>
                             {status === "loading" && (
                                 <button className="rounded-full c2-5 hover:underline text-xs bgneg" disabled={status === "loading"}>
                                     <div role="status">
