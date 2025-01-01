@@ -362,7 +362,7 @@ function EditorTool({dummy=false, id=null, job_id, tag="", editable = false, onC
                                                 type="text"
                                                 value={opt}
                                                 onChange={(e) =>{
-                                                    if (e.target.value.trim() !== "") {
+                                                    if (e.target.value?.trim() !== "") {
                                                     handleOptionChange(optIndex, e.target.value)
                                                     }}
                                                 }
@@ -706,7 +706,7 @@ export function ApplicationPreview({data, handleDataReload, editable=false, onCh
                 return true;
             } else {
                 for (let i = 0; i < ref?.length; i++) {
-                    if (ref[i].question.trim() !== can[i].question.trim()) {
+                    if (ref[i].question?.trim() !== can[i].question?.trim()) {
                         return true;
                     }
                     if (ref[i].required !== can[i].required) {
@@ -771,7 +771,7 @@ export function ApplicationPreview({data, handleDataReload, editable=false, onCh
 
             if (required) {
                 idSchema.parse(id);
-                if (required && value.trim() === '') {
+                if (required && value?.trim() === '') {
                     throw new Error('This field is required');
                 }
                 textSchema.parse(value);
@@ -892,15 +892,18 @@ export function ApplicationPreview({data, handleDataReload, editable=false, onCh
             filterd_ids = filterd_ids.sort((a, b) => a - b);
             locData.application_options.forEach((option, index) => {
                 let newOption = {};
-                if (option.question === null || option.question === undefined || option.question.trim() === "") {
+                if (option.question === null || option.question === undefined || option.question?.trim() === "") {
                     newOption["question"] = "Null";
                 } else {
-                    newOption["question"] = option.question.trim();
+                    newOption["question"] = option.question?.trim();
                 }
                 newOption["question_type"] = option.question_type;
                 newOption["required"] = option.required;
                 if ((option.question_type === "single_choice" || option.question_type === "multiple_choice" || option.question_type === "file") && option.options?.length === 0) {
                     newOption["options"] = ["Null"];
+                    if (option.question_type === "file" && option.options?.length === 0) {
+                        newOption["options"] = ["pdf"];
+                    }
                 } else {
                     newOption["options"] = option.options;
                 }
@@ -912,7 +915,6 @@ export function ApplicationPreview({data, handleDataReload, editable=false, onCh
                 ao.push(newOption);
                 
             });
-            
                 
             const body = {
                 "application_options_attributes": ao
