@@ -114,45 +114,8 @@ export function ApplicantsTable<TData extends Job, TValue>({columns, data, handl
                     <EmbloyH1 className={"text-lg"}>Candidate Directory</EmbloyH1>
                 </EmbloyH>
                 <EmbloyH className={"w-8/12 gap-3 justify-end"}>
-                    <EmbloyToolbox superClassName="h-7 border-2 dark:border-chianti" className={undefined} name={undefined} >
-                        <button className="" onClick={onNewJob}>
-                            <EmbloyToolboxImgAdvanced tooltip="New Job" path="/icons/svg/black/plus.svg" path_hovered="/icons/svg/capri/plus.svg" dark_path="/icons/svg/amarone/plus.svg" dark_path_hovered="/icons/svg/barbera/plus.svg" height="11" width="11" disabled={undefined} path_disabled={undefined} dark_path_disabled={undefined} failure={undefined} path_failure={undefined} path_failure_hovered={undefined} success={undefined} action={undefined} path_success={undefined} path_success_hovered={undefined} path_action={undefined} path_hovered_action={undefined} dark_path_action={undefined} dark_path_hovered_action={undefined} />
-                        </button>
-                        <IntegrationSync disabled={true} key="Sync" name={""} />
-                        {/*<UploadJobFileButton key="Upload" router={router}  formats={['.json']} head="Upload jobs" img="sm-upload" style="relative cursor-pointer" onUploadSuccess={() => handleUploadSuccess()}/>*/}
-                        <RemoveJobButton key="Remove" router={router} getJob={(row_id) => getJob(row_id)} formats={['.json']} img="sm-delete" style="relative px-0.5 bg0-r-full cursor-pointer" getSelectedRows={() => getSelectedRows()} onUploadSuccess={() => handleUploadSuccess()}/>
-                        <DropdownMenu>
-                            <DropdownMenuTrigger asChild className="outline-none">
-                                <button className="">
-                                    <EmbloyToolboxImgAdvanced tooltip="Show/Hide Columns" path="/icons/svg/black/cols.svg" path_hovered="/icons/svg/capri/cols.svg" dark_path="/icons/svg/amarone/cols.svg" dark_path_hovered="/icons/svg/barbera/cols.svg" height="11" width="11" disabled={undefined} path_disabled={undefined} dark_path_disabled={undefined} failure={undefined} path_failure={undefined} path_failure_hovered={undefined} success={undefined} action={undefined} path_success={undefined} path_success_hovered={undefined} path_action={undefined} path_hovered_action={undefined} dark_path_action={undefined} dark_path_hovered_action={undefined} />
-                                </button>
-                            </DropdownMenuTrigger>
-                            <DropdownMenuContent align="end">
-                                <DropdownMenuLabel>Column selection:</DropdownMenuLabel>
-                                {table
-                                    .getAllColumns()
-                                    .filter(
-                                        (column) => column.getCanHide()
-                                    )
-                                    .map((column) => {
-                                        const column_title = extractContent(column.columnDef.header.toString(), 'title')
-                                        return (
-                                            <DropdownMenuCheckboxItem
-                                                key={column.id}
-                                                className="capitalize text-page-text hover:text-capri dark:hover:text-barbera cursor-pointer"
-                                                checked={column.getIsVisible()}
-                                                onCheckedChange={(value) =>
-                                                    column.toggleVisibility(!!value)
-                                                }
-                                            >
-                                                {column_title}
-                                            </DropdownMenuCheckboxItem>
-                                        )
-                                    })}
-                            </DropdownMenuContent>
-                        </DropdownMenu>
-                        <EmbloyToolboxImgA tooltip="Help" href="https://developers.embloy.com/docs/category/genius" height="12" width="12" path="/icons/svg/black/ask.svg" path_hovered="/icons/svg/capri/ask.svg" dark_path="/icons/svg/amarone/ask.svg" dark_path_hovered="/icons/svg/barbera/ask.svg" target="_blank" disabled={undefined} path_disabled={undefined} dark_path_disabled={undefined} />
-                    </EmbloyToolbox>
+                    <EmbloyToolbox superClassName="h-7 border-2 dark:border-chianti" className={undefined} name={undefined} children={undefined} / >
+                        
                     <input
                         className={"rounded-lg text-sm bg-white dark:bg-chianti dark:border-chianti text-black dark:text-white h-7 w-48 px-2 placeholder-etna dark:placeholder-amarone border-[1px] border-etna dark:border-none outline-none focus:outline-none focus:ring-2 focus:ring-golfotrieste dark:focus:ring-amarone select-all"}
                         type="text"

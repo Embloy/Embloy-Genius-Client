@@ -111,7 +111,7 @@ function EditorTool({dummy=false, id=null, job_id, tag="", editable = false, onC
     const [optionsOpen, setOptionsOpen] = useState(false);
 
     const handleAddOption = () => {
-        const newOption = `Option ${localOptions.length + 1}`;
+        const newOption = `Option ${localOptions?.length + 1}`;
         setLocalOptions((prev) => [...prev, newOption]);
         onChange("update_options", index, [...localOptions, newOption]);
     };
@@ -350,7 +350,7 @@ function EditorTool({dummy=false, id=null, job_id, tag="", editable = false, onC
                                {optionsOpen && <ChevronUpIcon size={16} className="text-inherit dark:text-inherit"/>}
                                {!optionsOpen && <ChevronDownIcon size={16} className="text-inherit dark:text-inherit"/>}
                             </button>}
-                            {optionsOpen && formats.length === 0 && (
+                            {optionsOpen && formats?.length === 0 && (
                         
                                 <EmbloyV className="bg-transparnet border dark:border-none border-etna dark:bg-rubeno rounded-md p-2 gap-1.5">
                                     {localOptions.map((opt, optIndex) => (
@@ -385,7 +385,7 @@ function EditorTool({dummy=false, id=null, job_id, tag="", editable = false, onC
                                 </EmbloyV>
                                 
                             )}
-                            {optionsOpen && formats.length > 0 && (
+                            {optionsOpen && formats?.length > 0 && (
                         
                                 <EmbloyV className="bg-transparnet border dark:border-none border-etna dark:bg-rubeno rounded-md p-2 gap-1.5">
                                 <EmbloyH
@@ -478,43 +478,47 @@ const fileFormats = {
 const allFormats = Object.values(fileFormats).flat();
 
 export function AnswerPreview({data, handleDataReload, editable=false, onChange}) { 
+    console.log("Data", data);
     const [locData, setLocData] = useState<{ application_answers: any[] } | any>({ application_answers: [] });
     const [original, setOriginal] = useState(data)
     useEffect(() => {
         if (
             data &&
-            Object.keys(locData).length === 1 && 
-            locData.application_answers.length === 0 
+            Object.keys(locData)?.length === 1 && 
+            locData.application_answers?.length === 0 
         ) { 
             let bin = data;
             bin.application_answers.sort((a, b) => a.application_option_id - b.application_option_id);
             setLocData(bin);
             setOriginal(bin);
         } else {
+            
         }
     }, []);
     return (
         <EmbloyV className={"items-center "}>
-            {((original.application_answers === undefined || original.application_answers === null) || true === true) ? (
+            {((original.application_answers === undefined || original.application_answers === null)) ? (
                 <EmbloyP className="text-xs text-center w-full text-testaccio dark:text-nebbiolo">No Answers provided</EmbloyP>
             ) : (
                 <EmbloyV className="gap-2">
                     {locData.application_answers.map((option, index) => {
                         return (
+                            <>
+                            <EmbloyP className={undefined}>{JSON.stringify(option, null, 2)}</EmbloyP>
                             <EditorTool
-                            id={option.application_option_id} 
-                            job_id={original.job_id}
-                            key={index}
-                            required={false}
-                            title={option.question}
-                            editable={editable}
-                            index={index}
-                            onChange={(type, id, body="") => { }}
-                            options={option.options}
-                            hasOptions={option.question_type === "single_choice" || option.question_type === "multiple_choice" || option.question_type === "file"}
-                            formats={option.question_type === "file" ? allFormats : []}
-                            defaultOptions={option.options.length === 0 ? false : true}
-                            tag={option.question_type.split("_").map((word) => word.charAt(0).toUpperCase() + word.slice(1)).join(" ")}
+                                id={option.application_option_id} 
+                                job_id={original.job_id}
+                                key={index}
+                                required={false}
+                                title={option.question}
+                                editable={editable}
+                                index={index}
+                                onChange={(type, id, body="") => { }}
+                                options={option.options}
+                                hasOptions={option.question_type === "single_choice" || option.question_type === "multiple_choice" || option.question_type === "file"}
+                                formats={option.question_type === "file" ? allFormats : []}
+                                defaultOptions={option.options?.length === 0 ? false : true}
+                                tag={option.question_type?.split("_").map((word) => word.charAt(0).toUpperCase() + word.slice(1)).join(" ")}
                             >
                             {(() => {
                                 switch (option.question_type) {
@@ -528,8 +532,6 @@ export function AnswerPreview({data, handleDataReload, editable=false, onChange}
                                                     value={option.answer}
                                                     className="c0 p-2 border border-etna dark:border-biferno bg-palatinio dark:bg-nebbiolo rounded-md text-inherit dark:text-inherit outline-none w-full focus:ring-2 focus:ring-white"
                                                 />
-                                                {errorMessages[option.id] &&
-                                                    <div className="text-sm text-red-500">{errorMessages[option.id]}</div>}
                                             </div>
                                         );
                                         case "short_text":
@@ -539,12 +541,9 @@ export function AnswerPreview({data, handleDataReload, editable=false, onChange}
                                                     type="text"
                                                     required={option.required}
                                                     className="c0 p-2 w-full border border-etna dark:border-biferno bg-palatinio dark:bg-nebbiolo rounded-md text-inherit dark:text-inherit outline-none focus:ring-2 focus:ring-white"
-                                                    onChange={(event) =>
-                                                        handleTextChange(option.id, event.target.value, option.required)
-                                                    }
+                                                    onChange={() =>
+                                                    {}}
                                                 />
-                                                {errorMessages[option.id] &&
-                                                    <div className="text-sm text-red-500">{errorMessages[option.id]}</div>}
                                             </div>
                                         );
                                     case "long_text":
@@ -553,16 +552,12 @@ export function AnswerPreview({data, handleDataReload, editable=false, onChange}
                                             <div className="w-full text-black dark:text-white">
                                                 <textarea
                                                     required={option.required}
-                                                    onChange={(event) =>
-                                                        handleTextChange(option.id, event.target.value, option.required)
-                                                    }
+                                                    onChange={() => {}}
                                                     maxLength={200}
                                                     style={{ resize: 'none', overflow: 'auto' }}
                                                     className="h-20 w-full rounded-md border border-etna dark:border-biferno bg-palatinio dark:bg-nebbiolo text-inherit dark:text-inherit p-2 text-sm focus:outline-none focus:ring-2 focus:ring-white"
                                                     placeholder="Enter your response (max. 200 characters)"
                                                 />
-                                                {errorMessages[option.id] &&
-                                                    <div className="text-sm text-red-500">{errorMessages[option.id]}</div>}
                                             </div>
                                         );
                                     case "yes_no":
@@ -570,9 +565,7 @@ export function AnswerPreview({data, handleDataReload, editable=false, onChange}
                                             <div className="w-full text-black dark:text-white">
                                                 <Select
                                                     required={option.required}
-                                                    onValueChange={(value) => {
-                                                        handleSingleChoiceChange(option.id, value);
-                                                    }}
+                                                    onValueChange={() => {}}
                                                 >
                                                     <SelectTrigger className="border-etna dark:border-biferno bg-white dark:bg-biferno"><EmbloyP className="text-vesuvio dark:text-etna">{option.question}</EmbloyP></SelectTrigger>
                                                     <SelectContent className="border-etna dark:border-biferno bg-white dark:bg-biferno">
@@ -584,8 +577,6 @@ export function AnswerPreview({data, handleDataReload, editable=false, onChange}
                                                         </SelectItem>
                                                     </SelectContent>
                                                 </Select>
-                                                {errorMessages[option.id] &&
-                                                    <div className="text-sm text-red-500">{errorMessages[option.id]}</div>}
                                             </div>
                                         );
                                     case "number":
@@ -596,12 +587,8 @@ export function AnswerPreview({data, handleDataReload, editable=false, onChange}
                                                     type="number"
                                                     required={option.required}
                                                     className="c0 p-2 w-full border border-etna dark:border-biferno bg-palatinio dark:bg-nebbiolo rounded-md text-inherit dark:text-inherit outline-none focus:ring-2 focus:ring-white"
-                                                    onChange={(event) =>
-                                                        handleTextChange(option.id, event.target.value, option.required)
-                                                    }
+                                                    onChange={() => {}}
                                                 />
-                                                {errorMessages[option.id] &&
-                                                    <div className="text-sm text-red-500">{errorMessages[option.id]}</div>}
                                             </div>
                                         );
                                     case "date":
@@ -612,12 +599,8 @@ export function AnswerPreview({data, handleDataReload, editable=false, onChange}
                                                     type="date"
                                                     required={option.required}
                                                     className="c0 p-2 border border-etna dark:border-biferno bg-palatinio dark:bg-nebbiolo text-inherit dark:text-inherit rounded-md outline-none focus:ring-2 focus:ring-white w-full"
-                                                    onChange={(event) =>
-                                                        handleTextChange(option.id, event.target.value, option.required)
-                                                    }
+                                                    onChange={() => {}}
                                                 />
-                                                {errorMessages[option.id] &&
-                                                    <div className="text-sm text-red-500">{errorMessages[option.id]}</div>}
                                             </div>
                                         );
                                     case "file":
@@ -628,10 +611,8 @@ export function AnswerPreview({data, handleDataReload, editable=false, onChange}
                                                     type="file"
                                                     required={option.required}
                                                     className="c0 p-2 border border-etna dark:border-biferno bg-white dark:bg-biferno text-inherit dark:text-inherit rounded-md outline-none w-full"
-                                                    onChange={(event) => handleFileChange(option.id)}
+                                                    onChange={() => {}}
                                                 />
-                                                {errorMessages[option.id] &&
-                                                    <div className="text-sm text-red-500">{errorMessages[option.id]}</div>}
                                             </div>
                                         );
                                     case "location":
@@ -643,12 +624,8 @@ export function AnswerPreview({data, handleDataReload, editable=false, onChange}
                                                     required={option.required}
                                                     placeholder="Enter a location"
                                                     className="c0 p-2 w-full border border-etna dark:border-biferno bg-palatinio dark:bg-nebbiolo rounded-md text-inherit dark:text-inherit outline-none focus:ring-2 focus:ring-white"
-                                                    onChange={(event) =>
-                                                        handleTextChange(option.id, event.target.value, option.required)
-                                                    }
+                                                    onChange={() => {}}
                                                 />
-                                                {errorMessages[option.id] &&
-                                                    <div className="text-sm text-red-500">{errorMessages[option.id]}</div>}
                                             </div>
                                         );
                                     case "single_choice":
@@ -657,9 +634,7 @@ export function AnswerPreview({data, handleDataReload, editable=false, onChange}
                                                 
                                                 <Select
                                                     required={option.required}
-                                                    onValueChange={(value) => {
-                                                        handleSingleChoiceChange(option.id, value);
-                                                    }}
+                                                    onValueChange={() => {}}
                                                 >
                                                     <SelectTrigger className="border-etna dark:border-biferno bg-white dark:bg-biferno"><EmbloyP className="text-vesuvio dark:text-etna">{option.question}</EmbloyP></SelectTrigger>
                                                     <SelectContent className="border-etna dark:border-biferno bg-white dark:bg-biferno">
@@ -670,8 +645,6 @@ export function AnswerPreview({data, handleDataReload, editable=false, onChange}
                                                         ))}
                                                     </SelectContent>
                                                 </Select>
-                                                {errorMessages[option.id] &&
-                                                    <div className="text-sm text-red-500">{errorMessages[option.id]}</div>}
                                             </div>
                                         );
                                     case "multiple_choice":
@@ -686,19 +659,11 @@ export function AnswerPreview({data, handleDataReload, editable=false, onChange}
                                                         <Checkbox
                                                             value={opt}
                                                             className="rounded-full border-etna dark:border-biferno"
-                                                            onCheckedChange={(isChecked) => {
-                                                                handleMultipleChoiceChange(
-                                                                    option.id,
-                                                                    opt,
-                                                                    !!isChecked,
-                                                                );
-                                                            }}
+                                                            onCheckedChange={() => {}}
                                                         />{" "}
                                                         <span>{opt}</span>
                                                     </label>
                                                 ))}
-                                                {errorMessages[option.id] &&
-                                                    <div className="text-sm text-red-500">{errorMessages[option.id]}</div>}
                                             </fieldset>
                                         );
                                     default:
@@ -706,6 +671,7 @@ export function AnswerPreview({data, handleDataReload, editable=false, onChange}
                                 }
                         })()}
                     </EditorTool>
+                    </>
                 );
             })}
                 </EmbloyV>
@@ -720,10 +686,11 @@ export function ApplicationPreview({data, handleDataReload, editable=false, onCh
     const [original, setOriginal] = useState(data)
 
     useEffect(() => {
+        
         if (
             data &&
-            Object.keys(locData).length === 1 && 
-            locData.application_options.length === 0 
+            Object.keys(locData)?.length === 1 && 
+            locData.application_options?.length === 0 
         ) { 
             let bin = data;
             bin.application_options.sort((a, b) => a.id - b.id);
@@ -735,10 +702,10 @@ export function ApplicationPreview({data, handleDataReload, editable=false, onCh
     const [altered, setAltered] = useState(false);
     useEffect(() => {
         const checkApplicationOptions = (ref, can) => {
-            if (ref.length !== can.length) {
+            if (ref?.length !== can?.length) {
                 return true;
             } else {
-                for (let i = 0; i < ref.length; i++) {
+                for (let i = 0; i < ref?.length; i++) {
                     if (ref[i].question.trim() !== can[i].question.trim()) {
                         return true;
                     }
@@ -748,18 +715,18 @@ export function ApplicationPreview({data, handleDataReload, editable=false, onCh
                     if (ref[i].question_type !== can[i].question_type) {
                         return true;
                     } 
-                    if (ref[i].options.length > 0 && can[i].options.length > 0) {
-                        if (ref[i].options.length !== can[i].options.length) {
+                    if (ref[i].options?.length > 0 && can[i].options?.length > 0) {
+                        if (ref[i].options?.length !== can[i].options?.length) {
                             return true;
                         } else {
                             if (ref[i].question_type === "file" && can[i].question_type === "file") { 
-                                for (let j = 0; j < ref[i].options.length; j++) {
+                                for (let j = 0; j < ref[i].options?.length; j++) {
                                    if (!can[i].options.includes(ref[i].options[j])) {
                                        return true;
                                    }
                                 }
                             } else {
-                                for (let j = 0; j < ref[i].options.length; j++) {
+                                for (let j = 0; j < ref[i].options?.length; j++) {
                                     if (ref[i].options[j] !== can[i].options[j]) {
                                         return true;
                                     }
@@ -891,7 +858,7 @@ export function ApplicationPreview({data, handleDataReload, editable=false, onCh
             let updatedOptions = [...prevData.application_options];
             if (type === "up" && key > 0) {
                 [updatedOptions[key - 1], updatedOptions[key]] = [updatedOptions[key], updatedOptions[key - 1]];
-            } else if (type === "down" && key < updatedOptions.length - 1) {
+            } else if (type === "down" && key < updatedOptions?.length - 1) {
                 [updatedOptions[key], updatedOptions[key + 1]] = [updatedOptions[key + 1], updatedOptions[key]];
             } else if (type === "remove") {
                 updatedOptions.splice(key, 1);
@@ -932,7 +899,7 @@ export function ApplicationPreview({data, handleDataReload, editable=false, onCh
                 }
                 newOption["question_type"] = option.question_type;
                 newOption["required"] = option.required;
-                if ((option.question_type === "single_choice" || option.question_type === "multiple_choice" || option.question_type === "file") && option.options.length === 0) {
+                if ((option.question_type === "single_choice" || option.question_type === "multiple_choice" || option.question_type === "file") && option.options?.length === 0) {
                     newOption["options"] = ["Null"];
                 } else {
                     newOption["options"] = option.options;
@@ -980,15 +947,15 @@ export function ApplicationPreview({data, handleDataReload, editable=false, onCh
         </EmbloyH>
         <EmbloyH className="justify-between ">
             <EmbloyP className="text-xs text-testaccio dark:text-nebbiolo">
-                {locData.application_options.length} Items 
-                {locData.application_options.length !== original.application_options.length &&
+                {locData.application_options?.length} Items 
+                {locData.application_options?.length !== original.application_options?.length &&
                     ` - a difference of ${
-                    locData.application_options.length > original.application_options.length ? '+' : '-'
+                    locData.application_options?.length > original.application_options?.length ? '+' : '-'
                     }${Math.abs(
-                    ((locData.application_options.length - original.application_options.length) / original.application_options.length) * 100
+                    ((locData.application_options?.length - original.application_options?.length) / original.application_options?.length) * 100
                     ).toFixed(2)}%`}
             </EmbloyP>
-            {(locData.application_options.length > 0 && editable) && <EmbloyH className={"gap-1.5 max-w-fit"}>{altered && <button onClick={handleSave}><EmbloyP className="text-xs text-capri dark:text-capri underline">{"Save changes"}</EmbloyP></button>}<button onClick={handleDelete}><EmbloyP className="text-xs text-primitivo dark:text-primitivo underline">{"Delete all items"}</EmbloyP></button></EmbloyH>}
+            {(locData.application_options?.length > 0 && editable) && <EmbloyH className={"gap-1.5 max-w-fit"}>{altered && <button onClick={handleSave}><EmbloyP className="text-xs text-capri dark:text-capri underline">{"Save changes"}</EmbloyP></button>}<button onClick={handleDelete}><EmbloyP className="text-xs text-primitivo dark:text-primitivo underline">{"Delete all items"}</EmbloyP></button></EmbloyH>}
             
         </EmbloyH>
         <div className="min-h-[250px] w-9/12 flex flex-col items-center justify-start gap-4 px-4 py-2 ">
@@ -1016,8 +983,8 @@ export function ApplicationPreview({data, handleDataReload, editable=false, onCh
                         options={option.options}
                         hasOptions={option.question_type === "single_choice" || option.question_type === "multiple_choice" || option.question_type === "file"}
                         formats={option.question_type === "file" ? allFormats : []}
-                        defaultOptions={option.options.length === 0 ? false : true}
-                        tag={option.question_type.split("_").map((word) => word.charAt(0).toUpperCase() + word.slice(1)).join(" ")}
+                        defaultOptions={option.options?.length === 0 ? false : true}
+                        tag={option.question_type?.split("_").map((word) => word.charAt(0).toUpperCase() + word.slice(1)).join(" ")}
                         >
                         {(() => {
                             switch (option.question_type) {
@@ -1214,17 +1181,17 @@ export function ApplicationPreview({data, handleDataReload, editable=false, onCh
                 );
             })}
         </div>
-        {locData.application_options.length > 0 && <>
+        {locData.application_options?.length > 0 && <>
         <EmbloySpacer className={"h-8"} />
         <EmbloyButton className="py-0 px-8" name={"Apply"} onStatus={undefined} onClick={() => { }} onMessage={undefined} />
         <EmbloyH className="justify-between ">
             <EmbloyP className="text-xs text-testaccio dark:text-nebbiolo">
-                {locData.application_options.length} Items 
-                {locData.application_options.length !== original.application_options.length &&
+                {locData.application_options?.length} Items 
+                {locData.application_options?.length !== original.application_options?.length &&
                     ` - a difference of ${
-                    locData.application_options.length > original.application_options.length ? '+' : '-'
+                    locData.application_options?.length > original.application_options?.length ? '+' : '-'
                     }${Math.abs(
-                    ((locData.application_options.length - original.application_options.length) / original.application_options.length) * 100
+                    ((locData.application_options?.length - original.application_options?.length) / original.application_options?.length) * 100
                     ).toFixed(2)}%`}
             </EmbloyP>
         {altered && <button onClick={handleSave}><EmbloyP className="text-xs text-capri dark:text-capri underline">{"Save changes"}</EmbloyP></button>}
