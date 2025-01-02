@@ -7,9 +7,7 @@ import { useEffect } from 'react';
 import { useSearchParams } from 'next/navigation'
 import '@/app/globals.css'
 import { useRouter } from 'next/navigation';
-import { BillingSettings } from "./billing/billing";
 import { EmbloyPageMount, EmbloyPage, EmbloyPageBody, EmbloyPageBodySection, EmbloySubPage } from "@/app/components/ui/misc/page";
-import { EmbloyBox, EmbloyBoxContent } from "@/app/components/ui/misc/box";
 import { EmbloyLHPV, EmbloyV, EmbloyH, EmbloySpacer} from "@/app/components/ui/misc/stuff";
 import { EmbloyToolbox, EmbloyToolboxImgA} from "@/app/components/ui/misc/toolbox";
 import { IntegrationControl } from "./integrations/IntegrationControl";
@@ -52,10 +50,10 @@ function SettingsPanel() {
     }, [searchParams]);
 
  
-    let user = useContext(UserContext);
+    let {user, company, subscription} = useContext(UserContext)
     let store = useContext(StoreContext);
 
-    const subPages = [{name:'Profile', id:0}, {name:'Access', id:1}, {name:'Billing', id:2}, {name:'Secrets', id:3}, {name:'Integrations', id:4}, {name:'Archive', id:5}]
+    const subPages = [{name:'Profile', id:0}, {name:'Access', id:1}, {name:'Billing', id:2}, {name:'Secrets', id:3}, {name:'Integrations', id:4}]
     const [integrations, setIntegrations] = useState([]);
     const setIntegrationToken = () => {
         const res = getCookie("ep_active_integrations", {path: "/", domain: `${siteConfig.core_domain}`});
@@ -75,8 +73,6 @@ function SettingsPanel() {
 
     if (!user) return (<LoadingScreen />);
 
-
-
     return (
         <EmbloyPageMount className="overflow-hidden">
             <EmbloyPage>
@@ -86,7 +82,7 @@ function SettingsPanel() {
                         <EmbloyH className="justify-between">
                             <h1 className="page-header">Settings</h1>
                             <EmbloyToolbox superClassName="portrait:hidden">
-                            <EmbloyToolboxImgA href="https://developers.embloy.com/docs/category/genius" height="12" width="12" path="/icons/svg/black/ask.svg" path_hovered="/icons/svg/leidoveneta/ask.svg" dark_path="/icons/svg/amarone/ask.svg" dark_path_hovered="/icons/svg/barbera/ask.svg" target="_blank" />
+                            <EmbloyToolboxImgA href="https://developers.embloy.com/docs/category/genius" height="12" width="12" path="/icons/svg/black/ask.svg" path_hovered="/icons/svg/capri/ask.svg" dark_path="/icons/svg/amarone/ask.svg" dark_path_hovered="/icons/svg/barbera/ask.svg" target="_blank" />
                             </EmbloyToolbox>
                         </EmbloyH>
                         <EmbloySpacer />

@@ -74,15 +74,13 @@ export default function RootLayout({ children }) {
                 <AppProvider >
                     <AuthWrapper>
                         <UserWrapper>
-                            <StoreWrapper>
-                                <AppWrapper>
-                                    <Navigation />
-                                    <div className="flex flex-col items-center justify-center w-full" >
-                                        {children}
-                                    </div>
-                                    <Bottom />
-                                </AppWrapper>
-                            </StoreWrapper>
+                            <AppWrapper>
+                                <Navigation />
+                                <div className="flex flex-col items-center justify-center w-full" >
+                                    {children}
+                                </div>
+                                <Bottom />
+                            </AppWrapper>
                         </UserWrapper>
                     </AuthWrapper>
                 </AppProvider>

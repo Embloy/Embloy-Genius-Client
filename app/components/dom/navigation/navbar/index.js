@@ -17,14 +17,22 @@ import {AvatarButton} from "@/app/components/ui/misc/avatar";
 import Image from 'next/image';
 import listIcon from "@/public/icons/list.svg"
 import lightListIcon from "@/public/icons/listblack.svg"
+import { siteConfig } from '@/config/site';
 
 
-const HeaderItem = ({name, link, default_path}) => {
+const HeaderItem = ({name, link, default_path, disabled=false, target="_self"}) => {
+    if (disabled) {
+        return (
+            <li className="stylish-header-disabled stylish-header-text-disabled">
+                <p>{name}</p>
+            </li>
+        );
+    }
     return (
         <li className={cn(
             default_path === link ? "stylish-header-default stylish-header-text-default" : "stylish-header stylish-header-text"
         )}>
-            <Link href={link}>
+            <Link href={link} target={target}>
                 <p>{name}</p>
             </Link>
         </li>
@@ -34,10 +42,10 @@ const HeaderItem = ({name, link, default_path}) => {
 const Navbar = () => {
     const pathname = usePathname()
     let app = useContext(AppContext)
-    let user = useContext(UserContext)
+    let {user, company, subscription} = useContext(UserContext)
     let store = useContext(StoreContext)
 
-    const headerPages = [{name:'Home', link:'/'}, {name:'Jobs', link:'/recruitment'}, {name:'Analytics', link:'/analytics'}]
+    const headerPages = [{name:'Home', link:'/'}, {name:'Jobs', link:'/recruitment'}, {name:'Analytics', link:'/analytics', disabled: true}, {name:'Board', link:`${siteConfig.core_url}/board/${company?.company_slug }`, target: '_blank', disabled: (company?.company_slug === null || company?.company_slug === undefined)}]
     const {isUserbarVisible, toggleUserbar} = app;
 
     useEffect(() => {
@@ -49,14 +57,14 @@ const Navbar = () => {
             (
                 <>
                     <div
-                        className="bg-body z-30 w-full h-14 sticky top-0 border-b-[1px] border-gray-700 flex flex-row items-center justify-center">
+                        className="bg-body z-30 w-full h-14 sticky top-0 border-b-[1px] border-etna dark:border-biferno  flex flex-row items-center justify-center">
                         <div className="container h-full min-w-98% flex flex-row items-center justify-between">
                             <div className="flex horizontal start-0 items-center h-full gap-x-6">
                                 <Logo/>
                                 <div className=" h-3/5 w-[1px] rounded-full"/>
                                 <ul className="hidden md:flex gap-x-6 font-normal">
                                     {headerPages.map((page, index)=>(
-                                       <HeaderItem name={page.name} link={page.link} default_path={pathname} key={index} /> 
+                                       <HeaderItem name={page.name} link={page.link} default_path={pathname} key={index} disabled={page.disabled || false} target={page.target || "_self"}/>
                                     ))}
                                 </ul>
 
@@ -72,8 +80,8 @@ const Navbar = () => {
                                 <div onClick={toggleUserbar} className="flex items-center justify-center m-1">
                                     <AvatarButton updated_image={null} loading={false} user={user} w={40} h={40} styles="portrait:hidden w-10 h-10 rounded-full bg-transparent hover:bg-transparent"/>
                                     <div className='landscape:hidden w-10 h-10 flex items-center justify-center'>
-                                        <Image src={listIcon} className='w-8 h-8 hidden dark:block'/>
-                                        <Image src={lightListIcon} className='w-8 h-8 block dark:hidden'/>
+                                        <Image alt={"ind-mobile-1"} src={listIcon} className='w-8 h-8 hidden dark:block'/>
+                                        <Image alt={"ind-mobile-2"} src={lightListIcon} className='w-8 h-8 block dark:hidden'/>
                                     </div>
                                     
                                 </div>

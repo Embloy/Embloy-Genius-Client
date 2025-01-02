@@ -64,13 +64,14 @@ export function DataTablePagination<TData>({
                             onValueChange={(value) => {
                                 table.setPageSize(Number(value))
                             }}
+    
                         >
-                            <SelectTrigger className={undefined}>
+                            <SelectTrigger className={"border-[1px] border-etna dark:border-rubeno dark:bg-nebbiolo"}>
                                 <SelectValue placeholder={table.getState().pagination.pageSize} />
                             </SelectTrigger>
                             <SelectContent side="top">
                                 {[10, 20, 30, 40, 50].map((pageSize) => (
-                                    <SelectItem key={pageSize} value={`${pageSize}`}>
+                                    <SelectItem key={pageSize} className="cursor-pointer" value={`${pageSize}`}>
                                         {pageSize}
                                     </SelectItem>
                                 ))}
@@ -94,7 +95,6 @@ export function DataTablePagination<TData>({
                                 className="relative"
                             />
                         </button>
-                        <div className="w-1" />
                         <button
                             onMouseEnter={handlePreviousHover}
                             onMouseLeave={handlePreviousNotHover}
@@ -110,10 +110,12 @@ export function DataTablePagination<TData>({
                                 className="relative"
                             />
                         </button>
+                        <div className="w-1" />
                         <EmbloyP className="flex items-center justify-center text-xs ">
                             Page {table.getState().pagination.pageIndex + 1} of{" "}
                             {table.getPageCount()}
                         </EmbloyP >
+                        <div className="w-1" />
                         <button
                             onMouseEnter={handleNextHover}
                             onMouseLeave={handleNextNotHover}
@@ -129,7 +131,6 @@ export function DataTablePagination<TData>({
                                 className="relative"
                             />
                         </button>
-                        <div className="w-1" />
                         <button
                             onMouseEnter={handleDoubleNextHover}
                             onMouseLeave={handleDoubleNextNotHover}
@@ -146,7 +147,6 @@ export function DataTablePagination<TData>({
                             />
                         </button>
                     </div>
-
                 </div>
             </div>
         )
@@ -164,14 +164,14 @@ export function DataTablePagination<TData>({
         <div className="flex items-center justify-between px-2">
             <div className="flex items-center justify-end space-x-2 gap-4">
                 <div className="flex items-center space-x-2">
-                    <EmbloyP className="text-xs">Rows per page</EmbloyP>
+                    <EmbloyP className="text-xs">Rows/page</EmbloyP>
                     <Select
                         value={`${table.getRowModel().rows.length}`}
                         onValueChange={(value) => {
                             table.setPageSize(Number(value))
                         }}
                     >
-                        <SelectTrigger className="h-8 w-[70px]">
+                        <SelectTrigger className={"border-[1px] border-etna dark:border-rubeno dark:bg-nebbiolo"}>
                             <SelectValue placeholder={table.getState().pagination.pageSize} />
                         </SelectTrigger>
                         <SelectContent side="top">

@@ -16,7 +16,7 @@ export const EmbloyPageMount = ({children, className}) => {
 export const EmbloyPageLight = ({children, className}) => {
     return (
         <EmbloyH className={`justify-center`}>
-            <div className={`w-full min-h-screen landscape:max-w-80% portrait:max-w-93% flex flex-col items-center justify-start border-l-[1px] border-r-[1px] border-gray-700 p-4 ${className}`}>
+            <div className={`w-full min-h-screen landscape:max-w-80% portrait:max-w-93% flex flex-col items-center justify-start border-l-[1px] border-r-[1px] border-etna dark:border-biferno p-4 ${className}`}>
                 {children}
             </div>
         </EmbloyH>
@@ -39,8 +39,7 @@ export const EmbloyPageNoAccess = ({className, variant}) => {
     );
 }
 export const EmbloyPage = ({children, className, sandboxed=true}) => {
-    let user = useContext(UserContext)
-    
+    let {user, company, subscription} = useContext(UserContext)
 
     return (
         <EmbloyH className={`justify-between`}>
@@ -53,7 +52,7 @@ export const EmbloyPage = ({children, className, sandboxed=true}) => {
                 </EmbloyH>
                 ) }
             </EmbloyV>
-            <div className={`z-20 w-full min-h-screen landscape:max-w-80% portrait:max-w-93% flex flex-col items-center justify-start border-l-[1px] border-r-[1px] border-gray-700 p-4 ${className}`}>
+            <div className={`z-20 w-full min-h-screen landscape:max-w-80% portrait:max-w-93% flex flex-col items-center justify-start border-l-[1px] border-r-[1px] border-etna dark:border-biferno  p-4 ${className}`}>
                 {sandboxed ? (
                     children
                 ) : user && user.type === "SandboxUser" ? (

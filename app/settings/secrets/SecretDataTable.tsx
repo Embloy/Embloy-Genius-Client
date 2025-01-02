@@ -197,28 +197,27 @@ export function SecretDataTable<TData extends Secret, TValue>({columns, data, on
         <EmbloyV className={"gap-2"}>
             <EmbloyH className={"items-center justify-between"}>
                 <EmbloyH className={"w-4/12 gap-3 justify-start"}>
-                    <EmbloyH className="bg-body dark:bg-chianti gap-1.5 items-center rounded-lg border dark:border-biferno p-2 max-w-fit items-center gap-12">
+                    <EmbloyH className="bg-body dark:bg-chianti gap-1.5 items-center rounded-lg border border-etna dark:border-biferno p-2 max-w-fit items-center gap-12">
                         <EmbloyH1 className=" text-sm">All Account Secrets</EmbloyH1>
                         <EmbloyH className="max-w-fit gap-2">
-                            <EmbloyP className="text-xs dark:text-amarone text-etna">Note:</EmbloyP>
-                            <EmbloyP className="border dark:border-biferno border-vesuvio px-3 py rounded-lg text-xs italic">Internal issuer</EmbloyP>
+                            <EmbloyP className="text-xs">Note:</EmbloyP>
+                            <EmbloyP className="border dark:border-biferno border-etna px-3 py rounded-lg text-xs italic">Internal issuer</EmbloyP>
                             <EmbloyP className="border dark:border-lagunaveneta border-leidoveneta dark:bg-lagunaveneta bg-leidoveneta px-3 py rounded-lg text-xs italic">External issuer</EmbloyP>
                         </EmbloyH>
                     </EmbloyH>
-                    
                 </EmbloyH>
                 <EmbloyH className={"w-8/12 gap-3 justify-end"}>
                     <EmbloyToolbox superClassName="h-7 border-2 dark:border-chianti" className={undefined} name={undefined} >
-                        <EmbloyToolboxImgButton tooltip={"Copy Token(s) to Clipboard"} success={undefined} failure={undefined} action={undefined} onClick={handleTokenClipboard} path="/icons/svg/black/cp.svg" path_action={undefined} path_success={undefined} path_failure={undefined} path_success_hovered={undefined} path_failure_hovered={undefined} path_hovered="/icons/svg/leidoveneta/cp.svg" path_hovered_action={undefined} path_disabled={undefined} dark_path="/icons/svg/amarone/cp.svg" dark_path_action={undefined} dark_path_hovered="/icons/svg/barbera/cp.svg" dark_path_hovered_action={undefined} dark_path_disabled={undefined} height="13" width="13" />
-                        <EmbloyToolboxImgButton tooltip={"Activate Token(s)"} success={undefined} failure={undefined} action={undefined} onClick={handleTokenActivate} path="/icons/svg/black/success.svg" path_action={undefined} path_success={undefined} path_failure={undefined} path_success_hovered={undefined} path_failure_hovered={undefined} path_hovered="/icons/svg/leidoveneta/success.svg" path_hovered_action={undefined} path_disabled={undefined} dark_path="/icons/svg/amarone/success.svg" dark_path_action={undefined} dark_path_hovered="/icons/svg/barbera/success.svg" dark_path_hovered_action={undefined} dark_path_disabled={undefined} height="13" width="13" />
-                        <EmbloyToolboxImgButton tooltip={"Deactivate Token(s)"} success={undefined} failure={undefined} action={undefined} onClick={handleTokenDeactivate} path="/icons/svg/black/no.svg" path_action={undefined} path_success={undefined} path_failure={undefined} path_success_hovered={undefined} path_failure_hovered={undefined} path_hovered="/icons/svg/leidoveneta/no.svg" path_hovered_action={undefined} path_disabled={undefined} dark_path="/icons/svg/amarone/no.svg" dark_path_action={undefined} dark_path_hovered="/icons/svg/barbera/no.svg" dark_path_hovered_action={undefined} dark_path_disabled={undefined} height="13" width="13" />
-                        <EmbloyToolboxImgButton tooltip={"Delete Token(s)"} success={undefined} failure={undefined} action={undefined} onClick={handleTokenDelete} path="/icons/svg/black/bin.svg" path_action={undefined} path_success={undefined} path_failure={undefined} path_success_hovered={undefined} path_failure_hovered={undefined} path_hovered="/icons/svg/leidoveneta/bin.svg" path_hovered_action={undefined} path_disabled={undefined} dark_path="/icons/svg/amarone/bin.svg" dark_path_action={undefined} dark_path_hovered="/icons/svg/barbera/bin.svg" dark_path_hovered_action={undefined} dark_path_disabled={undefined} height="13" width="13" />
-                        <EmbloyToolboxImgButton tooltip={internal ? "Hide Internal Authentication Tokens" : "Show Internal Authentication Tokens"} success={undefined} failure={undefined} action={undefined} onClick={onInternal} path="/icons/svg/black/embloy.svg" path_action={undefined} path_success={undefined} path_failure={undefined} path_success_hovered={undefined} path_failure_hovered={undefined} path_hovered="/icons/svg/leidoveneta/embloy.svg" path_hovered_action={undefined} path_disabled={undefined} dark_path="/icons/svg/amarone/embloy.svg" dark_path_action={undefined} dark_path_hovered="/icons/svg/barbera/embloy.svg" dark_path_hovered_action={undefined} dark_path_disabled={undefined} height="13" width="13" />
-                        <EmbloyToolboxImgButton tooltip={expired ? "Hide Expired Tokens" : "Show Expired Tokens"} success={undefined} failure={undefined} action={undefined} onClick={onExpired} path="/icons/svg/black/exp.svg" path_action={undefined} path_success={undefined} path_failure={undefined} path_success_hovered={undefined} path_failure_hovered={undefined} path_hovered="/icons/svg/leidoveneta/exp.svg" path_hovered_action={undefined} path_disabled={undefined} dark_path="/icons/svg/amarone/exp.svg" dark_path_action={undefined} dark_path_hovered="/icons/svg/barbera/exp.svg" dark_path_hovered_action={undefined} dark_path_disabled={undefined} height="13" width="13" />
+                        <EmbloyToolboxImgButton tooltip={"Copy Token(s) to Clipboard"} success={undefined} failure={undefined} action={undefined} onClick={handleTokenClipboard} path="/icons/svg/black/cp.svg" path_action={undefined} path_success={undefined} path_failure={undefined} path_success_hovered={undefined} path_failure_hovered={undefined} path_hovered="/icons/svg/capri/cp.svg" path_hovered_action={undefined} path_disabled={undefined} dark_path="/icons/svg/amarone/cp.svg" dark_path_action={undefined} dark_path_hovered="/icons/svg/barbera/cp.svg" dark_path_hovered_action={undefined} dark_path_disabled={undefined} height="13" width="13" />
+                        <EmbloyToolboxImgButton tooltip={"Activate Token(s)"} success={undefined} failure={undefined} action={undefined} onClick={handleTokenActivate} path="/icons/svg/black/success.svg" path_action={undefined} path_success={undefined} path_failure={undefined} path_success_hovered={undefined} path_failure_hovered={undefined} path_hovered="/icons/svg/capri/success.svg" path_hovered_action={undefined} path_disabled={undefined} dark_path="/icons/svg/amarone/success.svg" dark_path_action={undefined} dark_path_hovered="/icons/svg/barbera/success.svg" dark_path_hovered_action={undefined} dark_path_disabled={undefined} height="13" width="13" />
+                        <EmbloyToolboxImgButton tooltip={"Deactivate Token(s)"} success={undefined} failure={undefined} action={undefined} onClick={handleTokenDeactivate} path="/icons/svg/black/no.svg" path_action={undefined} path_success={undefined} path_failure={undefined} path_success_hovered={undefined} path_failure_hovered={undefined} path_hovered="/icons/svg/capri/no.svg" path_hovered_action={undefined} path_disabled={undefined} dark_path="/icons/svg/amarone/no.svg" dark_path_action={undefined} dark_path_hovered="/icons/svg/barbera/no.svg" dark_path_hovered_action={undefined} dark_path_disabled={undefined} height="13" width="13" />
+                        <EmbloyToolboxImgButton tooltip={"Delete Token(s)"} success={undefined} failure={undefined} action={undefined} onClick={handleTokenDelete} path="/icons/svg/black/bin.svg" path_action={undefined} path_success={undefined} path_failure={undefined} path_success_hovered={undefined} path_failure_hovered={undefined} path_hovered="/icons/svg/capri/bin.svg" path_hovered_action={undefined} path_disabled={undefined} dark_path="/icons/svg/amarone/bin.svg" dark_path_action={undefined} dark_path_hovered="/icons/svg/barbera/bin.svg" dark_path_hovered_action={undefined} dark_path_disabled={undefined} height="13" width="13" />
+                        <EmbloyToolboxImgButton tooltip={internal ? "Hide Internal Authentication Tokens" : "Show Internal Authentication Tokens"} success={undefined} failure={undefined} action={undefined} onClick={onInternal} path="/icons/svg/black/embloy.svg" path_action={undefined} path_success={undefined} path_failure={undefined} path_success_hovered={undefined} path_failure_hovered={undefined} path_hovered="/icons/svg/capri/embloy.svg" path_hovered_action={undefined} path_disabled={undefined} dark_path="/icons/svg/amarone/embloy.svg" dark_path_action={undefined} dark_path_hovered="/icons/svg/barbera/embloy.svg" dark_path_hovered_action={undefined} dark_path_disabled={undefined} height="13" width="13" />
+                        <EmbloyToolboxImgButton tooltip={expired ? "Hide Expired Tokens" : "Show Expired Tokens"} success={undefined} failure={undefined} action={undefined} onClick={onExpired} path="/icons/svg/black/exp.svg" path_action={undefined} path_success={undefined} path_failure={undefined} path_success_hovered={undefined} path_failure_hovered={undefined} path_hovered="/icons/svg/capri/exp.svg" path_hovered_action={undefined} path_disabled={undefined} dark_path="/icons/svg/amarone/exp.svg" dark_path_action={undefined} dark_path_hovered="/icons/svg/barbera/exp.svg" dark_path_hovered_action={undefined} dark_path_disabled={undefined} height="13" width="13" />
                         <DropdownMenu>
                             <DropdownMenuTrigger asChild className="outline-none">
                                 <button className="">
-                                    <EmbloyToolboxImgAdvanced tooltip="Show/Hide Columns" path="/icons/svg/black/cols.svg" path_hovered="/icons/svg/leidoveneta/cols.svg" dark_path="/icons/svg/amarone/cols.svg" dark_path_hovered="/icons/svg/barbera/cols.svg" height="11" width="11" disabled={undefined} path_disabled={undefined} dark_path_disabled={undefined} failure={undefined} path_failure={undefined} path_failure_hovered={undefined} success={undefined} action={undefined} path_success={undefined} path_success_hovered={undefined} path_action={undefined} path_hovered_action={undefined} dark_path_action={undefined} dark_path_hovered_action={undefined} />
+                                    <EmbloyToolboxImgAdvanced tooltip="Show/Hide Columns" path="/icons/svg/black/cols.svg" path_hovered="/icons/svg/capri/cols.svg" dark_path="/icons/svg/amarone/cols.svg" dark_path_hovered="/icons/svg/barbera/cols.svg" height="11" width="11" disabled={undefined} path_disabled={undefined} dark_path_disabled={undefined} failure={undefined} path_failure={undefined} path_failure_hovered={undefined} success={undefined} action={undefined} path_success={undefined} path_success_hovered={undefined} path_action={undefined} path_hovered_action={undefined} dark_path_action={undefined} dark_path_hovered_action={undefined} />
                                 </button>
                             </DropdownMenuTrigger>
                             <DropdownMenuContent align="end">
@@ -233,7 +232,7 @@ export function SecretDataTable<TData extends Secret, TValue>({columns, data, on
                                         return (
                                             <DropdownMenuCheckboxItem
                                                 key={column.id}
-                                                className="capitalize page-text hover:text-leidoveneta dark:hover:text-barbera cursor-pointer"
+                                                className="capitalize page-text hover:text-capri dark:hover:text-barbera cursor-pointer"
                                                 checked={column.getIsVisible()}
                                                 onCheckedChange={(value) =>
                                                     column.toggleVisibility(!!value)
@@ -245,10 +244,10 @@ export function SecretDataTable<TData extends Secret, TValue>({columns, data, on
                                     })}
                             </DropdownMenuContent>
                         </DropdownMenu>
-                        <EmbloyToolboxImgA tooltip="Help" href="https://developers.embloy.com/docs/category/genius" height="12" width="12" path="/icons/svg/black/ask.svg" path_hovered="/icons/svg/leidoveneta/ask.svg" dark_path="/icons/svg/amarone/ask.svg" dark_path_hovered="/icons/svg/barbera/ask.svg" target="_blank" disabled={undefined} path_disabled={undefined} dark_path_disabled={undefined} />
+                        <EmbloyToolboxImgA tooltip="Help" href="https://developers.embloy.com/docs/category/genius" height="12" width="12" path="/icons/svg/black/ask.svg" path_hovered="/icons/svg/capri/ask.svg" dark_path="/icons/svg/amarone/ask.svg" dark_path_hovered="/icons/svg/barbera/ask.svg" target="_blank" disabled={undefined} path_disabled={undefined} dark_path_disabled={undefined} />
                     </EmbloyToolbox>
                     <input
-                        className={"rounded-lg text-sm bg-white dark:bg-chianti border-2 dark:border-chianti text-black dark:text-white h-7 w-48 px-2 placeholder-etna dark:placeholder-amarone border-none outline-none focus:outline-none focus:ring-2 focus:ring-golfotrieste dark:focus:ring-amarone select-all"}
+                        className={"rounded-lg text-sm bg-white dark:bg-chianti dark:border-chianti text-black dark:text-white h-7 w-48 px-2 placeholder-etna dark:placeholder-amarone border-[1px] border-etna dark:border-none outline-none focus:outline-none focus:ring-2 focus:ring-golfotrieste dark:focus:ring-amarone select-all"}
                         type="text"
                         name="name"
                         placeholder="Filter..."
@@ -271,11 +270,11 @@ export function SecretDataTable<TData extends Secret, TValue>({columns, data, on
                 </EmbloyH>
             </EmbloyH>
             
-            <div className="bg-white dark:bg-chianti border border-vesuvio dark:border-biferno text-black dark:text-white rounded-lg w-full">
+            <div className="bg-white dark:bg-chianti border border-etna dark:border-biferno text-black dark:text-white rounded-lg w-full">
                 <Table>
                     <TableHeader>
                         {table.getHeaderGroups().map((headerGroup) => (
-                            <TableRow className="border-vesuvio dark:border-biferno" key={headerGroup.id}>
+                            <TableRow className="border-etna dark:border-biferno" key={headerGroup.id}>
                                 {headerGroup.headers.map((header) => {
                                     if (typeof header.column.columnDef['accessorKey'] === "undefined") {
                                         return (
@@ -308,20 +307,21 @@ export function SecretDataTable<TData extends Secret, TValue>({columns, data, on
                         {table.getRowModel().rows?.length ? (
                             table.getRowModel().rows
                                 .map((row) => (
-                                <JobTableRowExtendable className={`cursor-copy active:cursor-progress border-vesuvio dark:border-biferno hover:bg-ferrara dark:hover:bg-biferno ${(data.at(Number(row.id)).issuer.toString()  !== "embloy") && 'bg-leidoveneta dark:bg-lagunaveneta'}`}
+                                <JobTableRowExtendable className={`cursor-copy active:cursor-progress border-etna dark:border-biferno hover:bg-ferrara dark:hover:bg-biferno ${(data.at(Number(row.id)).issuer.toString() !== "embloy") && 'bg-leidoveneta dark:bg-lagunaveneta'}`}
                                     key={row.id}
                                     extended={false}
                                     onClick={() => {
-                                        const thisRow = data.at(Number(row.id))
-                                        navigator.clipboard.writeText(thisRow.token)
-                                    }}
+                                        const thisRow = data.at(Number(row.id));
+                                        navigator.clipboard.writeText(thisRow.token);
+                                    } }
                                     data-state={row.getIsSelected() && "selected"}
                                     onUploadSuccess={() => handleUploadSuccess()} onClose={function (): void {
                                         throw new Error("Function not implemented.");
                                     } } onExtending={function (): number {
                                         throw new Error("Function not implemented.");
-                                    } }        
-                                >
+                                    } } onRemove={function (): void {
+                                        throw new Error("Function not implemented.");
+                                    } }                                >
                                     {row.getVisibleCells().map((cell) => (
                                         <TableCell key={cell.id}>
                                             {flexRender(cell.column.columnDef.cell, cell.getContext())}
@@ -343,7 +343,7 @@ export function SecretDataTable<TData extends Secret, TValue>({columns, data, on
             </div>
             
             
-            <EmbloyH className="bg-body dark:bg-chianti gap-1.5 items-center rounded-lg border dark:border-biferno p-2 max-w-fit">
+            <EmbloyH className="bg-body dark:bg-chianti gap-1.5 items-center rounded-lg border border-etna dark:border-biferno p-2 max-w-fit">
                 <div className="flex items-center justify-start space-x-2">
                     {table.getFilteredSelectedRowModel().rows.length > 0 && (
                         // If the condition is true

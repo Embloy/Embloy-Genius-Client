@@ -8,7 +8,7 @@ import { EmbloyH1, EmbloyP } from "@/app/components/ui/misc/text";
 import { EmbloyPageNoAccess } from "@/app/components/ui/misc/page";
 
 export const SettingsPage = ({children, sandboxed=true}) => {
-    let user = useContext(UserContext)
+    let {user, company, subscription} = useContext(UserContext)
     return (
     <EmbloyV className={"gap-2 "}>
        {sandboxed ? (
@@ -25,7 +25,7 @@ export const SettingsPage = ({children, sandboxed=true}) => {
 export const SettingsSection = ({children, head}) => {
     return (
         <>
-            <EmbloyH className={"items-center justify-between border-t dark:border-biferno border-etna pt-2"}>
+            <EmbloyH className={"items-center justify-between border-t border-etna dark:border-biferno border-etna pt-2"}>
                 <EmbloyH1 className={"text-lg"}>{head}</EmbloyH1>
             </EmbloyH>
             <EmbloyV className={"gap-2"}>

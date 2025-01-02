@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import '@/app/globals.css'
+
 
 export const EmbloyP = ({className, children, variant="default", ...props}) => {
     if (variant === "mini") {
@@ -68,7 +69,7 @@ export const EmbloyH1 = ({className, children, ...props}) => {
         </h1>
     )
 }
-export const EmbloyH1Editable = ({ initialText, className }) => {
+export const EmbloyH1Editable = ({ initialText,placeholder="", className, onUpdate, block=false, onClick, keydown=undefined, ...props}) => {
   const [isEditing, setIsEditing] = useState(false);
   const [text, setText] = useState(initialText);
 
@@ -77,6 +78,7 @@ export const EmbloyH1Editable = ({ initialText, className }) => {
   };
 
   const handleBlur = () => {
+    onUpdate(text);
     setIsEditing(false);
   };
 
@@ -87,23 +89,52 @@ export const EmbloyH1Editable = ({ initialText, className }) => {
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
       setIsEditing(false);
+      if (keydown) {
+        keydown(text);
+      }
     }
+    
   };
+  useEffect(() => {
+    if (initialText === null) {
+      setIsEditing(true);
+    }
+    setText(initialText);
+  }, [initialText]);
+
+  if (block) {
+    return (
+      <>
+        <input
+          type="text"
+          value={text}
+          onChange={() => {}}
+          onClick={() => onClick()}
+          placeholder={placeholder}
+          autoFocus
+          readOnly 
+          className={`page-header border-none focus:outline-none bg-transparent cursor-pointer w-full ${className}`}
+        />
+      </>
+    )
+  }
 
   return (
     <>
-      {isEditing ? (
+      {isEditing || text === null || (text.trim() === "") ? (
         <input
           type="text"
           value={text}
           onChange={handleChange}
           onBlur={handleBlur}
           onKeyDown={handleKeyDown}
+          placeholder={placeholder}
           autoFocus
           className={`page-header border-none focus:outline-none bg-transparent ${className}`}
+          {...props}
         />
       ) : (
-        <EmbloyH1 onClick={handleClick} className={`hover:cursor-pointer ${className}`}>
+        <EmbloyH1 onClick={handleClick} className={`hover:cursor-pointer whitespace-nowrap overflow-hidden text-ellipsis  ${className}`}>
           {text}
         </EmbloyH1>
       )}

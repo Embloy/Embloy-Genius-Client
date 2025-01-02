@@ -62,23 +62,15 @@ export const UserBar = ({ isVisible, onClose, userData, storeData }) => {
     }
 
 
-    const sidebarClass = `bg-body z-50 fixed top-0 right-0 h-full w-96 border-l-[1px] border-ischia dark:border-ischia transition-transform transform ${isVisible ? 'translate-x-0' : 'translate-x-full'}`;
-    const sidebarfieldClass = `w-full flex flex-row justify-start items-start c0 gap-2.5 dark:hover:bg-gray-700 hover:bg-gray-200 p-2.5 cursor-pointer`;
-    const sidebarfieldleftClass = `w-1/7 flex flex-col justify-start items-start c0 gap-2.5`;
-    const sidebarfieldrightClass = `w-6/7 flex flex-col justify-start items-start c0 gap-1.5`;
-
-
-
-
     return (
-        <div className={`bg-body z-50 fixed top-0 right-0 h-full transition-transform transform ${isVisible ? ' translate-x-0' : ' translate-x-full'} border-l-[1px] landscape:px-6 portrait:px-4 border-gray-700`}>
+        <div className={`bg-body z-50 fixed top-0 right-0 h-full transition-transform transform ${isVisible ? ' translate-x-0' : ' translate-x-full'} border-l-[1px] landscape:px-6 portrait:px-4 border-etna dark:border-biferno `}>
             <div className="flex h-full w-full">
                     {userData ? (
                         <EmbloyV className="h-full items-center landscape:py-2 portrait:py-2 gap-4">
                             <EmbloyV className="gap-2.5 pt-[5px]">
                                 <EmbloyH className='flex items-center justify-end'>
-                                    <Image src={xwIcon} className='w-8 h-8 hidden dark:block cursor-pointer' onClick={onClose} />
-                                    <Image src={xbIcon} className='w-8 h-8 block dark:hidden cursor-pointer' onClick={onClose}/>
+                                    <Image alt={"user-1"}  src={xwIcon} className='w-8 h-8 hidden dark:block cursor-pointer' onClick={onClose} />
+                                    <Image alt={"user-2"} src={xbIcon} className='w-8 h-8 block dark:hidden cursor-pointer' onClick={onClose}/>
                                 </EmbloyH>
                                 <EmbloySeperator className="dark:bg-biferno bg-etna h-[2px]" />
                             </EmbloyV>

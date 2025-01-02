@@ -17,6 +17,20 @@ module.exports = {
       '2xl': '1536px',
     },
     extend: {
+      keyframes: {
+        'fade-slide': {
+          '0%': { opacity: '0', transform: 'translateY(20px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
+        },
+        'fade-out': {
+          '0%': { opacity: '1', transform: 'translateY(0)' },
+          '100%': { opacity: '0', transform: 'translateY(20px)' },
+        },
+      },
+      animation: {
+        'fade-slide': 'fade-slide 0.4s ease-out',
+        'fade-out': 'fade-out 0.4s ease-in',
+      },
       zIndex: {
         '100': '100',
       },
@@ -59,19 +73,24 @@ module.exports = {
         'lagunaveneta': '#002f86',
         'golfotrieste': '#1a4590',
         'golfonapoli': '#5CA7FF',
+        'capri': '#3b82f7',
 
         'leidoveneta': '#FDE961',
 
         'etna': '#D1D1D1',
+        'palatinio': '#e2e9f1',
+        'testaccio': '#a9a9b1',
         'vesuvio': '#787878',
         'ischia': '#374151',
-        'ferrara': '#f1f5f9',
+        'ferrara': '#f0f5f8',
         'pompei': '#fbfafb',
 
         'lugana': '#43C265',
         'custoza': '#a3f5cc',
       },
       spacing : {
+        '2%': '2%',
+        '5%': '5%',
         '10%': '10%',
         '50%': '50%',
         '70%': '70%',
@@ -79,6 +98,8 @@ module.exports = {
         '80%': '80%',
         '90%': '90%',
         '93%': '93%',
+        '95%': '95%',
+        '96%': '96%',
         '98%': '98%',
         '2px': '2px',
         '3px': '3px',

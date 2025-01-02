@@ -1,9 +1,8 @@
 import React, { useState, useEffect} from "react";
 import '@/app/globals.css'
-import { EmbloyLHPV, EmbloyV, EmbloyH, EmbloySpacer, EmbloyToggle, EmbloyButton} from "@/app/components/ui/misc/stuff";
-import { EmbloyInput, EmbloyInputbox, EmbloyInputboxElement, EmbloyRadioOption, EmbloySelectOption } from "@/app/components/ui/misc/input";
+import { EmbloyV, EmbloyH, EmbloyButton} from "@/app/components/ui/misc/stuff";
+import { EmbloyInput, EmbloyInputbox, EmbloyInputboxElement } from "@/app/components/ui/misc/input";
 import { parseAbsoluteToLocal } from "@internationalized/date";
-import { claim_client_token } from "@/lib/api/auth";
 import { not_core_get } from "@/lib/api/core";
 
 export function ClientTokenInfo() {
@@ -33,6 +32,11 @@ export function ClientTokenInfo() {
                     setStatus("success");
                     setMessage("Copied to clipboard");
                     navigator.clipboard.writeText(token.client_token);
+                    setTimeout(() => {
+                        setStatus(null);
+                        setMessage(null);
+                    }, 2500);
+                    
                 }
             } catch (error) {
                 console.log(error);
@@ -71,7 +75,7 @@ export function ClientTokenInfo() {
                         <EmbloyInput disabled={true} onChange={(e) => set_client_token_note(e.target.value)} value={client_token_note} className="landscape:w-6/12" placeholder="Note"/>
                     </EmbloyH>
                     <EmbloyH className="items-center justify-end ">
-                        <EmbloyButton name="Generate" onStatus={status} onMessage={message} className="landscape:w-44" onClick={generate_client_token}/>
+                        <EmbloyButton name="Generate" onStatus={status} onMessage={message} disabled={status !== null} className="landscape:w-44" onClick={generate_client_token}/>
                     </EmbloyH>
 
                     

@@ -4,11 +4,11 @@ import '@/app/globals.css'
 import {AvatarButton} from "@/app/components/ui/misc/avatar";
 import { not_core_get } from "@/lib/api/core";
 import '@/app/globals.css'
-import { EmbloyLHPV, EmbloyV, EmbloyH, EmbloySpacer, EmbloyToggle} from "@/app/components/ui/misc/stuff";
+import { EmbloyLHPV, EmbloyV, EmbloyH, EmbloySpacer, EmbloyToggle, EmbloyButton} from "@/app/components/ui/misc/stuff";
 import { EmbloyInput, EmbloyInputbox, EmbloyInputboxElement, EmbloyRadioOption } from "@/app/components/ui/misc/input";
 import { patch_user, set_avatar as post_avatar, remove_avatar } from "@/lib/api/user";
 export function ProfileInfo(reload) {
-    let user = useContext(UserContext)
+    let {user, company, subscription} = useContext(UserContext)
     const [changesMade, setChangesMade] = useState(false);
     const [nameIsClicked, setNameIsClicked] = useState(false);
     const [firstName, setFirstName] = useState('');
@@ -36,7 +36,6 @@ export function ProfileInfo(reload) {
             set_avatar(false);
         } catch (error) {
             setRemoving(false);
-            console.error(error);
             setRemoveError('error');
         }
     };
@@ -44,6 +43,9 @@ export function ProfileInfo(reload) {
         const file = e.target.files[0];
         if (file) {
             try {
+                if (file.size > 2000000) {
+                    throw new Error('File too large');
+                }
                 setUploadError(null);
                 setUploading(true);
                 const result = await post_avatar(file);
@@ -56,7 +58,6 @@ export function ProfileInfo(reload) {
 
             } catch (error) {
                 setUploading(false);
-                console.error(error);
                 setUploadError('error');
             }
         }
@@ -83,7 +84,7 @@ export function ProfileInfo(reload) {
             } else {
                 set_last_name(user.last_name);
             }
-        } else { console.log('no changes made') }
+        } else {  }
     }
 
     const handleEmailChange = async (e) => {
@@ -132,7 +133,7 @@ export function ProfileInfo(reload) {
     }, [user]);
 
     return (  
-        <EmbloyV className="gap-4">
+        <EmbloyV className="gap-4" >
             <EmbloyInputbox>
                 <EmbloyInputboxElement head="Name" description="Your full name">
                     <EmbloyInput
@@ -205,20 +206,26 @@ export function ProfileInfo(reload) {
                         </EmbloyInput>
                     </EmbloyH>
 
-                    <EmbloyH className="justify-end">
+                    <EmbloyH className="justify-end" >
                         <EmbloyInput
                             variant="file"
                             ref={fileInputRef}
-                            style={{ display: 'none' }} // Hide the file input
-                            onChange={handleImageChange} // Handle file change
+                            style={{ display: 'none' }} 
+                            onChange={handleImageChange} 
                         />
-                        <AvatarButton
-                            updated_image={newImageUrl}
-                            user={user}
-                            w={80}
-                            h={80}
-                            styles="max-h-fit rounded-full bg-transparent hover:bg-transparent"
-                        />
+
+                            
+                        <button onClick={() => {handleAvatarChange('image')}} >
+                            <AvatarButton
+                                updated_image={newImageUrl}
+                                user={user}
+                                w={80}
+                                h={80}
+                                styles="max-h-fit rounded-full bg-transparent hover:bg-transparent"
+                                btn={false}
+                            />
+                        </button>
+                        
                     </EmbloyH>
                 </EmbloyInputboxElement>
             </EmbloyInputbox>
@@ -229,7 +236,7 @@ export function ProfileInfo(reload) {
                         disabled={true}
                         value={user.id}
                         required={true}
-                        sandboxed={false}
+                        sandboxed={true}
                     />
                 </EmbloyInputboxElement>
             </EmbloyInputbox>

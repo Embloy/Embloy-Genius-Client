@@ -1,5 +1,5 @@
 "use client";
-import React, {useState, useEffect, use} from "react";
+import React, {useState, useEffect} from "react";
 import '@/app/globals.css'
 import { Tooltip } from "@nextui-org/react";
 import {EmbloyP} from '@/app/components/ui/misc/text'
@@ -12,9 +12,9 @@ export const EmbloyV = ({children, className}) => {
     );
 }
 
-export const EmbloyH = ({children, className}) => {
+export const EmbloyH = ({children, className, ...props}) => {
     return (
-        <div className={`w-full flex flex-row items-start justify-start ${className}`}>
+        <div className={`w-full flex flex-row items-start justify-start ${className}`} {...props}>
             {children}
         </div>
     );
@@ -48,31 +48,64 @@ export const EmbloySpacer = ({className}) => {
         <div className={`w-full h-20px ${className}`} />
     );
 }
-export const EmbloyChildrenAdvanced = ({className, children, tooltip, disabled, ...props}) => {
-    if (tooltip) {
+export const EmbloyChildrenAdvanced = ({className, children, tooltip, disabled=false, ...props}) => {
+    const [os, setOs] = useState("Unknown");
+    useEffect(() => {
+        const userAgent = navigator.userAgent;
+        if (userAgent.includes('Win')) {
+            setOs('Windows');
+          } else if (userAgent.includes('Mac')) {
+            setOs('MacOS');
+          } else if (userAgent.includes('Linux')) {
+            setOs('Linux');
+          } else if (userAgent.includes('Android')) {
+            setOs('Android');
+          } else if (/iPad|iPhone|iPod/.test(userAgent)) {
+            setOs('iOS');
+          }
+    }, []);
+
+    if (disabled === false && tooltip && props.html === true) {
         return (
             <Tooltip
                 title={`${tooltip}`}
                 placement="top"
                 content={
-                    <EmbloyP className="text-xs">
+                    <div className={`${os === 'Windows' && 'bg-white border border-etna rounded-md dark:bg-ciliegiolo dark:border-biferno'} ${className}`}>
                         {tooltip}
-                    </EmbloyP>
-                    }
+                    </div>
+                }
             >
-                <div className={`${className} ${disabled && 'cursor-not-allowed'}`}>
+                <div>
                     {children}
                 </div>
             </Tooltip>
         )
 
-    } else {
+    } else if (disabled === false && tooltip && !props.html) {
         return (
-            <div className={`${className} ${disabled && 'cursor-not-allowed'}`}>
-                {children}
-            </div>
+            <Tooltip
+                title={`${tooltip}`}
+                placement="top"
+                content={
+                    <EmbloyP className={`text-xs ${os === 'Windows' && 'px-2 bg-white border border-etna rounded-md dark:bg-ciliegiolo dark:border-biferno'} ${props.box === true && 'w-44'}`}>
+                        {tooltip}
+                    </EmbloyP>
+                    }
+            >
+                <div className={`${className}`}>
+                    {children}
+                </div>
+            </Tooltip>
         )
+
     }
+    return (
+        <div className={`${className} ${disabled && 'cursor-not-allowed'}`}>
+            {children}
+        </div>
+    )
+    
 }
 
 
@@ -154,7 +187,7 @@ export const EmbloyButton = ({ name, className, disabled=false, unlock=true, var
         }
     }
     if (loading===false && disabled === false) {
-        color = color + " hover:bg-leidoveneta dark:hover:bg-barbera hover:border-leidoveneta dark:hover:border-barbera ";
+        color = color + " hover:bg-capri dark:hover:bg-barbera hover:border-capri dark:hover:border-barbera ";
     }
     if (variant === "paypal") {
         color = "bg-golfotrieste dark:bg-nebbiolo border-golfotrieste dark:border-rubeno x";
@@ -162,6 +195,10 @@ export const EmbloyButton = ({ name, className, disabled=false, unlock=true, var
             color = color + " hover:bg-golfonapoli dark:hover:bg-barbera hover:border-golfonapoli dark:hover:border-barbera";
         }
     } 
+    if (variant === "bold") {
+        color = "bg-transparent dark:bg-transparent border-black dark:border-amarone hover:border-capri dark:hover:border-barbera "; 
+        textcolor = "text-black dark:text-white ";
+    }
     if (loading) {
         color = color + " cursor-wait";
     }

@@ -7,7 +7,7 @@ import '@/app/globals.css'
 
 
 export function TwoFactorAuthentication() {
-    let user = useContext(UserContext)
+    let {user, company, subscription} = useContext(UserContext)
     const router = useRouter();
     const [disableRequest, setDisableRequest] = useState(false);
     const [timeOutID, setTimeOutID] = useState(null);

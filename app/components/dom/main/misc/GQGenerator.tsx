@@ -64,7 +64,7 @@ export function GenerateGQButton({ position, jobSlug, jobId }) {
         handleGenerate();
             generateModal.onOpen();
       }}>
-        <EmbloyToolboxImgAdvanced tooltip={"Generate Embedding"} path="/icons/svg/black/urllink.svg" path_hovered="/icons/svg/leidoveneta/urllink.svg" dark_path="/icons/svg/amarone/urllink.svg" dark_path_hovered="/icons/svg/barbera/urllink.svg" height="12" width="12" disabled={undefined} path_disabled={undefined} dark_path_disabled={undefined} failure={undefined} path_failure={undefined} path_failure_hovered={undefined} success={undefined} action={undefined} path_success={undefined} path_success_hovered={undefined} path_action={undefined} path_hovered_action={undefined} dark_path_action={undefined} dark_path_hovered_action={undefined} />
+        <EmbloyToolboxImgAdvanced tooltip={"Generate Embedding"} path="/icons/svg/black/urllink.svg" path_hovered="/icons/svg/capri/urllink.svg" dark_path="/icons/svg/amarone/urllink.svg" dark_path_hovered="/icons/svg/barbera/urllink.svg" height="12" width="12" disabled={undefined} path_disabled={undefined} dark_path_disabled={undefined} failure={undefined} path_failure={undefined} path_failure_hovered={undefined} success={undefined} action={undefined} path_success={undefined} path_success_hovered={undefined} path_action={undefined} path_hovered_action={undefined} dark_path_action={undefined} dark_path_hovered_action={undefined} />
       </button>
       <Modal
         isOpen={generateModal.isOpen}

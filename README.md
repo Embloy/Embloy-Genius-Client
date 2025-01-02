@@ -1,6 +1,5 @@
 <h1><a href="https://about.embloy.com">Embloy Genius</a></h1>
 
-
 This repository contains the code for the web application of Embloy Genius. In the future it will be available online at: [https://genius.embloy.com](https://genius.embloy.com) 
 ## License
 

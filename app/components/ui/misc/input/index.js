@@ -49,6 +49,12 @@ export const EmbloyInput = forwardRef(({ sandboxed=true, children, className, va
           {children}
         </select>
       );
+    } else if (variant === "select-light") {
+      return (
+        <select className={`h-4 w-full rounded-sm border-none text-black dark:text-white placeholder-etna dark:placeholder-amarone select-all ${props.disabled && disabledColorStyle} ${className}`} {...props}>
+          {children}
+        </select>
+      );
     } else if (variant === "file") {
       return (
         <input type="file" ref={ref} {...props} />
@@ -85,14 +91,14 @@ export const EmbloyInput = forwardRef(({ sandboxed=true, children, className, va
 });
 EmbloyInput.displayName = "EmbloyInput";
 
-export const EmbloySelectOption = ({ placeholder=false, children, value, head }) => {
+export const EmbloySelectOption = ({ placeholder=false, children, value, head, className=undefined}) => {
   if (placeholder) {
     return (
-      <option value="" disabled>{children ?? head}</option>
+      <option className={className} value="" disabled>{children ?? head}</option>
     )
   }
   return (
-    <option value={value}>{children ?? head}</option>
+    <option className={className} value={value}>{children ?? head}</option>
   );
 };
 

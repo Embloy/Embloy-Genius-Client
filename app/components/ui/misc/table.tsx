@@ -145,6 +145,7 @@ const JobTableRowExtendable = React.forwardRef<
     onUploadSuccess: () => void;
     onClose: () => void;
     onExtending: () => number;
+    onRemove: () => void;
   }
 >(
   (
@@ -155,6 +156,7 @@ const JobTableRowExtendable = React.forwardRef<
       onClose,
       extended,
       job,
+      onRemove,
       ...props
     },
     ref
@@ -174,12 +176,13 @@ const JobTableRowExtendable = React.forwardRef<
         <tr
           className={cn(
             rowClasses,
-            "relative, w-screen, bg-transparent, hover:bg-transparent"
+            "relative, w-screen, bg-transparent, hover:bg-transparent, dark:hover:bg-transparent"
           )}
         >
           <td colSpan={onExtending()}>
             <div className="h-full">
               <JobDetails
+                onRemove={() => {onRemove()}}
                 job={job}
                 onUploadSuccess={() => onUploadSuccess()}
                 onClose={() => onClose()}
@@ -206,7 +209,7 @@ const TableHead = React.forwardRef<
   <th
     ref={ref}
     className={cn(
-      "h-8 px-2 text-left align-middle font-normal text-xs text-muted-foreground [&:has([role=checkbox])]:pr-0",
+      "h-8 px-2 border-b border-etna dark:border-biferno text-left align-middle font-normal text-xs text-muted-foreground [&:has([role=checkbox])]:pr-0",
       className
     )}
     {...props}

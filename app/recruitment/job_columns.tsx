@@ -3,7 +3,9 @@ import {ColumnDef} from "@tanstack/react-table"
 import {Checkbox} from "@/app/components/ui/misc/checkbox"
 import {DataTableColumnHeader} from "@/app/components/dom/main/datatable/DataTableColumnHeader";
 import {Job} from "@/lib/types/job";
-import {cast_date} from "@/lib/utils/formats";
+import {cast_date_no_null, job_slug_to_host} from "@/lib/utils/cast";
+import { EmbloyP } from "../components/ui/misc/text";
+import { job_areas } from "@/lib/types/stuff";
 
 export const jobColumns: ColumnDef<Job>[] = [
     {
@@ -29,18 +31,47 @@ export const jobColumns: ColumnDef<Job>[] = [
         enableHiding: false,
     },
     {
-        accessorKey: "position",
+        accessorKey: "title",
         header: ({column}) => (
-            <DataTableColumnHeader column={column} title="Position"/>
+            <DataTableColumnHeader column={column} title="Title"/>
         ),
+        cell: ({row}) => {
+            let value = row.getValue('title')
+            if (!value && row.getValue('job_slug') === "new") {
+                value = "Draft"
+            } 
+            return <EmbloyP className={`text-xs ${!value && 'text-testaccio dark:text-nebbiolo italic'}`} >{value || "N/A"}</EmbloyP>
+        },
         enableSorting: false,
         enableHiding: true,
     },
     {
-        accessorKey: "job_id",
+        accessorKey: "position",
+        header: ({column}) => (
+            <DataTableColumnHeader column={column} title="Position"/>
+        ),
+        cell: ({row}) => {
+            let value = row.getValue('position')
+            if (!value && row.getValue('job_slug') === "new") {
+                value = "Draft"
+            } 
+            return <EmbloyP className={`text-xs ${!value && 'text-testaccio dark:text-nebbiolo italic'}`} >{value || "N/A"}</EmbloyP>
+        },
+        enableSorting: false,
+        enableHiding: true,
+    },
+    {
+        accessorKey: "id",
         header: ({column}) => (
             <DataTableColumnHeader column={column} title="Job ID"/>
         ),
+        cell: ({row}) => {
+            let value = row.getValue('id')
+            if (!value && row.getValue('job_slug') === "new") {
+                value = "Draft"
+            } 
+            return <EmbloyP className={`text-xs ${!value && 'text-testaccio dark:text-nebbiolo italic'}`} >{value || "N/A"}</EmbloyP>
+        },
         enableSorting: true,
         enableHiding: true,
     },
@@ -49,6 +80,9 @@ export const jobColumns: ColumnDef<Job>[] = [
         header: ({column}) => (
             <DataTableColumnHeader column={column} title="Jobslug"/>
         ),
+        cell: ({row}) => {
+            return <EmbloyP className="text-xs" >{row.getValue('job_slug')}</EmbloyP>
+        },
         enableSorting: true,
         enableHiding: true,
     },
@@ -64,9 +98,8 @@ export const jobColumns: ColumnDef<Job>[] = [
             let provider = "Embloy"
             if (bin.length > 1) {
                 provider = bin[0][0].toUpperCase() + bin[0].slice(1)
-            }
-            
-            return <div>{provider}</div>
+            }            
+            return <EmbloyP className="text-xs" >{job_slug_to_host(row.getValue('job_slug'))}</EmbloyP>
 
         },
     },
@@ -75,6 +108,13 @@ export const jobColumns: ColumnDef<Job>[] = [
         header: ({column}) => (
             <DataTableColumnHeader column={column} title="Category"/>
         ),
+        cell: ({row}) => {
+            let value = row.getValue('job_type')
+            if (!value && row.getValue('job_slug') === "new") {
+                value = "Draft"
+            } 
+            return <EmbloyP className="text-xs" >{job_areas.find(area => area.value === value)?.label}</EmbloyP>
+        },
         enableSorting: false,
         enableHiding: true,
     },
@@ -95,9 +135,9 @@ export const jobColumns: ColumnDef<Job>[] = [
             } else if (row.getValue('job_status') === 'archived') {
                 visibility = "Archived"
             } else {
-                visibility = undefined
+                visibility = "Draft"
             }
-            return <div>{visibility}</div>
+            return <EmbloyP className="text-xs" >{visibility}</EmbloyP>
 
         },
     },
@@ -109,23 +149,44 @@ export const jobColumns: ColumnDef<Job>[] = [
         enableSorting: true,
         enableHiding: true,
         cell: ({row}) => {
-            const date = cast_date(row.getValue('start_slot'), 'us')
-            return <div>{date}</div>
+            let value = row.getValue('start_slot')
+            if (!value && row.getValue('job_slug') === "new") {
+                value = "Draft"
+            } else {
+                value = cast_date_no_null(value)
+            }
+            return <EmbloyP className={`text-xs ${!value && 'text-testaccio dark:text-nebbiolo italic'}`} >{value || "N/A"}</EmbloyP>
         },
     },
+    /*
     {
         accessorKey: "view_count",
         header: ({column}) => (
             <DataTableColumnHeader column={column} title="Views"/>
         ),
+        cell: ({row}) => {
+            let value = row.getValue('view_count')
+            if (!value) {
+                value = 0
+            }
+            return <EmbloyP className={`text-xs ${!value && 'text-testaccio dark:text-nebbiolo italic'}`} >{value || "N/A"}</EmbloyP>
+        },
         enableSorting: true,
         enableHiding: true,
     },
+    */
     {
         accessorKey: "applications_count",
         header: ({column}) => (
             <DataTableColumnHeader column={column} title="Applications"/>
         ),
+        cell: ({row}) => {
+            let value = row.getValue('applications_count')
+            if (!value) {
+                value = 0
+            }
+            return <EmbloyP className={`text-xs`} >{value || "0"}</EmbloyP>
+        },
         enableSorting: true,
         enableHiding: true,
     },
@@ -137,8 +198,13 @@ export const jobColumns: ColumnDef<Job>[] = [
         enableSorting: true,
         enableHiding: true,
         cell: ({row}) => {
-            const date = cast_date(row.getValue('created_at'), 'us')
-            return <div>{date}</div>
+            let value = row.getValue('created_at')
+            if (!value && row.getValue('job_slug') === "new") {
+                value = "Draft"
+            } else {
+                value = cast_date_no_null(value)
+            }
+            return <EmbloyP className={`text-xs ${!value && 'text-testaccio dark:text-nebbiolo italic'}`} >{value || "N/A"}</EmbloyP>
         },
     },
 

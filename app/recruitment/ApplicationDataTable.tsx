@@ -37,6 +37,10 @@ import { extractContent } from "@/lib/utils/helpers";
 import { Application } from "@/lib/types/application";
 import LoadingScreen from "@/app/components/dom/main/screens/LoadingScreen";
 import { useRouter } from "next/navigation";
+import { EmbloyH1, EmbloyP } from "../components/ui/misc/text";
+import { EmbloyLHPV, EmbloyV, EmbloyH, EmbloySpacer} from "@/app/components/ui/misc/stuff";
+import { EmbloyToolbox, EmbloyToolboxImgA, EmbloyToolboxImgAdvanced } from "@/app/components/ui/misc/toolbox";
+import '@/app/globals.css'
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -50,22 +54,8 @@ export function ApplicationDataTable<TData extends Application, TValue>({
   handleDataReload,
 }: DataTableProps<TData, TValue>) {
   const router = useRouter();
-  const [filterIsHovered, setFilterIsHovered] = useState(false);
-  const [columnsIsHovered, setColumnsIsHovered] = useState(false);
 
-  const handleFilterHover = () => {
-    setFilterIsHovered(true);
-  };
-  const handleFilterNotHover = () => {
-    setFilterIsHovered(false);
-  };
 
-  const handleColumnsHover = () => {
-    setColumnsIsHovered(true);
-  };
-  const handleColumnsNotHover = () => {
-    setColumnsIsHovered(false);
-  };
 
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
@@ -91,8 +81,7 @@ export function ApplicationDataTable<TData extends Application, TValue>({
     },
   });
   const default_hides = () => {
-    table.getColumn("job_id").toggleVisibility(false);
-    table.getColumn("user_id").toggleVisibility(false);
+    table.getColumn("updated_at").toggleVisibility(false);
   };
   useEffect(() => {
     default_hides();
@@ -126,95 +115,37 @@ export function ApplicationDataTable<TData extends Application, TValue>({
   }
 
   return (
-    <div>
-      <div className="text-sm w-full flex flex-row items-center justify-between select-none">
-        <div
-          className="px-4 bg-black hover:bg-gray-900 flex flex-row items-center justify-between"
-          onMouseEnter={handleFilterHover}
-          onMouseLeave={handleFilterNotHover}
-        >
-          <Image
-            src={"/icons/filter-dark.svg"}
-            alt="Logo"
-            height="25"
-            width="25"
-            className="relative"
-          />
-          <input
-            className={
-              filterIsHovered
-                ? "bg-transparent dark:bg-transparent text-white h-10 w-96 px-2 placeholder-gray-900 border-none outline-none select-all"
-                : "bg-transparent dark:bg-transparent text-white h-10 w-96 px-2 placeholder-gray-900 border-none outline-none select-all"
-            }
-            type="text"
-            name="name"
-            placeholder="Filter"
-            value={
-              (table.getColumn("application_text")?.getFilterValue() as string) ?? ""
-            }
-            onChange={(event) => {
-              if (window.scrollY !== 0) {
-                window.scrollTo({
-                  top: 0,
-                  behavior: "smooth",
-                });
-              }
-              table.getColumn("application_text")?.setFilterValue(event.target.value);
-            }}
-          />
-        </div>
-        <div className="px-4 flex flex-row items-center justify-end">
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild className="outline-none">
-              <button className="px-0.5 bg0-r-full">
-                <Image
-                  src={cn(
-                    columnsIsHovered
-                      ? "/icons/sm-cols-light.svg"
-                      : "/icons/sm-cols-dark.svg"
-                  )}
-                  alt="columns"
-                  height="25"
-                  width="25"
-                  className="relative"
-                  onMouseEnter={handleColumnsHover}
-                  onMouseLeave={handleColumnsNotHover}
-                />
-              </button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuLabel>Hide columns</DropdownMenuLabel>
-              {table
-                .getAllColumns()
-                .filter((column) => column.getCanHide())
-                .map((column) => {
-                  const column_title = extractContent(
-                    column.columnDef.header.toString(),
-                    "title"
-                  );
-                  return (
-                    <DropdownMenuCheckboxItem
-                      key={column.id}
-                      className="capitalize text-gray-400 hover:text-white cursor-pointer"
-                      checked={column.getIsVisible()}
-                      onCheckedChange={(value) =>
-                        column.toggleVisibility(!!value)
+    <EmbloyV className={"gap-2"}>
+      <EmbloyH className={"items-center justify-end px-1.5"}>
+        <input
+          className={"rounded-lg text-sm bg-white dark:bg-chianti dark:border-chianti text-black dark:text-white h-7 w-48 px-2 placeholder-etna dark:placeholder-amarone border-[1px] border-etna dark:border-none outline-none focus:outline-none focus:ring-2 focus:ring-golfotrieste dark:focus:ring-amarone select-all"}
+          type="text"
+          name="name"
+          placeholder="Filter..."
+          value={(table.getColumn("status")?.getFilterValue() as string) ?? ""}
+          onChange=
+              {
+                  (event) => {
+                      if (window.scrollY !== 0) {
+                          window.scrollTo({
+                              top: 0,
+                              behavior: "smooth"
+                          });
                       }
-                    >
-                      {column_title}
-                    </DropdownMenuCheckboxItem>
-                  );
-                })}
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </div>
-      </div>
-      <div className="rounded-sm border-x-0 border-y border-gray-700 text-gray-400">
+                      table.getColumn("status")?.setFilterValue(event.target.value)
+                  }
+              }
+
+      />
+     
+    
+      </EmbloyH>
+      <div className="text-black dark:text-white w-full border-t border-b border-etna dark:border-biferno">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow
-                className="border-gray-700 hover:bg-gray-900"
+                className="border-etna dark:border-biferno"
                 key={headerGroup.id}
               >
                 {headerGroup.headers.map((header) => {
@@ -247,11 +178,11 @@ export function ApplicationDataTable<TData extends Application, TValue>({
               </TableRow>
             ))}
           </TableHeader>
-          <TableBody className="text-gray-200">
+          <TableBody className="text-white">
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
                 <ApplicationTableRowExtendable
-                  className="border-gray-700 hover:bg-gray-900 cursor-pointer"
+                  className="cursor-pointer border-etna dark:border-biferno hover:bg-ferrara dark:hover:bg-biferno"
                   key={row.id}
                   extended={!!(openRow !== null && openRow === Number(row.id))}
                   application={data.at(Number(row.id))}
@@ -286,27 +217,24 @@ export function ApplicationDataTable<TData extends Application, TValue>({
               <TableRow>
                 <TableCell
                   colSpan={columns.length}
-                  className="h-24 text-center"
+                  className="h-fit text-center"
                 >
-                  No results.
+                  <EmbloyP className={"text-xs"}>No applications</EmbloyP>
                 </TableCell>
               </TableRow>
             )}
           </TableBody>
         </Table>
       </div>
-      <div className="p-4 flex flex-row items-center justify-between">
+      <EmbloyH className="bg-body dark:bg-chianti gap-1.5 items-center rounded-lg max-w-fit pb-2">
+        <DataTablePagination table={table}/>
         <div className="flex items-center justify-start space-x-2">
-          {table.getFilteredSelectedRowModel().rows.length > 0 && (
-            // If the condition is true
-            <p className="text-sm font-normal text-gray-700">
-              {table.getFilteredSelectedRowModel().rows.length} of{" "}
-              {table.getFilteredRowModel().rows.length} row(s) selected.
-            </p>
-          )}
+            {table.getFilteredSelectedRowModel().rows.length > 0 && (
+                <EmbloyP className="text-xs">{table.getFilteredSelectedRowModel().rows.length} of{" "}
+                    {table.getFilteredRowModel().rows.length} row(s) selected.</EmbloyP>
+            )}
         </div>
-        <DataTablePagination table={table} />
-      </div>
-    </div>
+      </EmbloyH>
+    </EmbloyV>
   );
 }
